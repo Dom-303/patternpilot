@@ -1,0 +1,6 @@
+build_vs_borrow;description
+build_core;EventBär sollte diese Fähigkeit als Kern selbst besitzen
+adapt_pattern;Grundidee wertvoll aber nur in angepasster Form sinnvoll
+borrow_optional;Optional übernehmbar oder als Hilfsschicht nutzbar aber nicht Kern
+observe_only;Interessant aber noch keine konkrete Umsetzungsbasis
+avoid_as_core_dependency;Nicht als Kernabhängigkeit verwenden

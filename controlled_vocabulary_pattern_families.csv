@@ -1,0 +1,11 @@
+pattern_family;description
+single_source_connector;Eng auf eine einzelne Plattform oder Quelle fokussierter Connector
+niche_vertical_connector;Connector für eine spezielle Unterdomäne oder Szene
+local_multi_source_aggregator;Lokaler oder regionaler Aggregator aus mehreren Quellen
+portal_fed_by_many_scrapers;Zentrales Portal das von vielen einzelnen Scraper-Modulen beliefert wird
+local_source_infra_framework;Wiederverwendbares Framework für lokale Source-Infrastruktur und Standardisierung
+place_data_infrastructure;Eigenständige Infrastruktur für Places Venues oder ortsbezogene Daten
+platform_based_place_enrichment;Plattformabhängiger Enricher für Place- oder Business-Daten
+cms_distribution_plugin;Plugin- oder CMS-getriebenes Distributionsmuster
+event_discovery_frontend;Discovery-orientierte Event-Oberfläche oder Nutzerfläche
+research_signal;Strategisch interessantes Signal ohne direkte Zielmuster-Eignung
