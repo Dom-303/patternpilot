@@ -16,6 +16,7 @@
     "init:env": "node scripts/patternpilot.mjs init-env",
     "init:project": "node scripts/patternpilot.mjs init-project",
     "intake": "node scripts/patternpilot.mjs intake",
+    "review:watchlist": "node scripts/patternpilot.mjs review-watchlist",
     "setup:checklist": "node scripts/patternpilot.mjs setup-checklist",
     "sync:all": "node scripts/patternpilot.mjs sync-all-watchlists",
     "sync:watchlist": "node scripts/patternpilot.mjs sync-watchlist",

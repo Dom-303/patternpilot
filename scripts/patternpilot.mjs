@@ -1,7 +1,10 @@
 #!/usr/bin/env node
+import fs from "node:fs/promises";
 import path from "node:path";
 import {
   appendUrlsToWatchlist,
+  buildWatchlistReview,
+  buildWatchlistReviewReport,
   buildPromotionCandidate,
   buildPromotionDocPath,
   buildSetupChecklist,
@@ -57,6 +60,7 @@ Commands:
   list-projects Show configured Patternpilot project bindings
   intake        Create intake queue entries and dossiers from GitHub URLs
   promote       Prepare or apply promotion candidates from queue to curated artifacts
+  review-watchlist  Compare watchlist-backed intake repos against the target project
   setup-checklist  Show exactly which secrets or IDs are still needed and where to find them
   sync-all-watchlists  Run watchlist intake across all configured projects
   sync-watchlist  Run intake against the configured project watchlist file
@@ -65,8 +69,9 @@ Commands:
 Examples:
   npm run automation:run -- --all-projects --promotion-mode prepared --dry-run
   npm run doctor -- --offline
-  npm run patternpilot -- discover --project eventbear-worker --limit 8 --dry-run
+  npm run patternpilot -- discover --project eventbear-worker --discovery-profile balanced --dry-run
   npm run patternpilot -- discover --project eventbear-worker --query "scraper calendar venue" --intake
+  npm run patternpilot -- review-watchlist --project eventbear-worker --analysis-profile architecture --analysis-depth deep
   npm run init:env
   npm run init:project -- --project sample-worker --target ../sample-worker --label "Sample Worker"
   npm run discover:workspace
@@ -341,6 +346,63 @@ async function runDiscover(rootDir, config, options) {
         ? `auto-discovered | ${options.notes}`
         : "auto-discovered via patternpilot discovery"
     });
+  }
+}
+
+async function runReviewWatchlist(rootDir, config, options) {
+  const projectKey = options.project || config.defaultProject;
+  const { project, binding } = await loadProjectBinding(rootDir, config, projectKey);
+  const alignmentRules = await loadProjectAlignmentRules(rootDir, project, binding);
+  const projectProfile = await loadProjectProfile(rootDir, project, binding, alignmentRules);
+  const review = await buildWatchlistReview(
+    rootDir,
+    config,
+    project,
+    binding,
+    alignmentRules,
+    projectProfile,
+    options
+  );
+  const createdAt = review.createdAt;
+  const runId = createRunId(new Date(createdAt));
+  const report = buildWatchlistReviewReport(review);
+  const reportPath = path.join(
+    rootDir,
+    "projects",
+    binding.projectKey,
+    "reviews",
+    `watchlist-review-${review.analysisProfile.id}-${review.analysisDepth.id}.md`
+  );
+  const reportRelativePath = path.relative(rootDir, reportPath);
+  const manifest = {
+    runId,
+    projectKey,
+    createdAt,
+    dryRun: options.dryRun,
+    reportPath: reportRelativePath,
+    review
+  };
+  const runDir = await writeRunArtifacts({
+    rootDir,
+    config,
+    projectKey,
+    runId,
+    manifest,
+    summary: report,
+    projectProfile,
+    dryRun: options.dryRun
+  });
+
+  if (!options.dryRun) {
+    await ensureDirectory(path.dirname(reportPath), false);
+    await fs.writeFile(reportPath, `${report}\n`, "utf8");
+  }
+
+  console.log(report);
+  console.log(`Run directory: ${path.relative(rootDir, runDir)}`);
+  console.log(`Review report: ${reportRelativePath}`);
+  if (options.dryRun) {
+    console.log("Dry run only: review report was not written.");
   }
 }
 
@@ -859,6 +921,11 @@ async function main() {
 
   if (command === "discover") {
     await runDiscover(rootDir, config, options);
+    return;
+  }
+
+  if (command === "review-watchlist") {
+    await runReviewWatchlist(rootDir, config, options);
     return;
   }
 

@@ -67,6 +67,7 @@ Es hat jetzt einen lokalen Motor plus Workspace-Modus:
 
 - `npm run intake -- --project eventbear-worker <github-url>`
 - `npm run discover:github -- --project eventbear-worker --limit 8 --dry-run`
+- `npm run review:watchlist -- --project eventbear-worker --analysis-profile balanced`
 - `npm run init:project -- --project <key> --target <repo-pfad>`
 - `npm run discover:workspace`
 - `npm run doctor -- --offline`
@@ -85,6 +86,7 @@ Dieser Motor:
 - erstellt Queue-Eintraege
 - reichert GitHub-Metadaten und README-Inhalte an
 - gleicht externe Muster gegen das Zielprojekt ab
+- kann Watchlist-Repos gesammelt gegen das Zielprojekt vergleichen
 - legt projektbezogene Intake-Dossiers an
 - schreibt Run-Protokolle
 - kann Promotion-Pakete vorbereiten oder direkt anwenden
@@ -203,11 +205,38 @@ npm run doctor -- --offline
 npm run discover:github -- --project eventbear-worker --limit 8 --dry-run
 ```
 
+Discovery-Profile:
+
+- `focused`: kleine, schnelle Suchmenge
+- `balanced`: sinnvoller Standard
+- `expansive`: breiter Discovery-Sweep
+- `max`: bis maximal 100 Kandidaten, nur fuer gezielte grosse Suchlaeufe
+
 ### Discovery mit zusaetzlichem Suchfokus und direktem Intake
 
 ```bash
 npm run patternpilot -- discover --project eventbear-worker --query "calendar scraper venue" --intake
 ```
+
+### Watchlist-Repos gesammelt gegen das Zielprojekt vergleichen
+
+```bash
+npm run review:watchlist -- --project eventbear-worker --analysis-profile architecture --analysis-depth deep --dry-run
+```
+
+Analyse-Profile:
+
+- `balanced`: Architektur, Chancen und Risiken gemeinsam
+- `architecture`: Worker-Schichten und wiederverwendbare Muster
+- `sources`: Connector-Familien, Source-Systeme und Acquisition
+- `distribution`: API, Feed, Plugin und Discovery-Surfaces
+- `risk`: Lock-in, Wartung und Anti-Patterns
+
+Analyse-Tiefen:
+
+- `quick`: kompaktes Top-Level Review
+- `standard`: sinnvoller Standard mit Repo-Matrix
+- `deep`: breiterer Vergleich mit mehr Top-Kandidaten
 
 ### Lokale Env-Dateien anlegen
 

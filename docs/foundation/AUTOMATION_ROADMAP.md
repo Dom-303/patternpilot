@@ -117,3 +117,22 @@ Nutzen:
 - Patternpilot wartet nicht mehr nur auf manuell eingegebene Links
 - passende Repositories koennen systematischer und stabiler gefunden werden
 - die spaetere optionale LLM-Schicht wird auf ein sauberes, verifiziertes Fundament gesetzt
+
+---
+
+## Stufe 7: Vergleichende Watchlist-Reviews
+
+Status: jetzt umgesetzt
+
+Was dazu kommt:
+
+- Watchlist-Repos koennen als Vergleichsraum gegen das Zielprojekt ausgewertet werden
+- Analyse-Profile erlauben verschiedene Richtungen wie Architektur, Sources, Distribution oder Risk
+- Analyse-Tiefen erlauben kompakte oder tiefere Review-Laeufe
+- Review-Reports landen unter `projects/<projekt>/reviews/`
+
+Nutzen:
+
+- Patternpilot endet nicht mehr beim Einsammeln
+- Staerken, Schwachstellen und konkrete Vergleichspotenziale werden sichtbar
+- Nutzer koennen den Fokus des letzten Vergleichs-Runs bewusst steuern
