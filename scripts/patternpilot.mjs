@@ -1,7 +1,9 @@
+#!/usr/bin/env node
 import path from "node:path";
 import {
   buildPromotionCandidate,
   buildPromotionDocPath,
+  buildSetupChecklist,
   buildIntakeDocPath,
   buildLandkarteCandidate,
   buildProjectAlignment,
@@ -13,8 +15,11 @@ import {
   ensureDirectory,
   guessClassification,
   initializeProjectBinding,
+  initializeEnvFiles,
   inspectGithubAuth,
+  inspectGithubAppAuth,
   loadConfig,
+  loadEnvFiles,
   loadQueueEntries,
   loadProjectAlignmentRules,
   loadPatternpilotRoot,
@@ -43,10 +48,12 @@ Commands:
   automation-run  Run watchlist intake across one or all projects and optionally promote
   doctor        Show GitHub auth, rate-limit and workspace readiness
   init-project  Bind a new local repo/workspace project to Patternpilot
+  init-env      Create local env files from checked-in examples
   discover-workspace  Scan workspace roots for git repos and binding candidates
   list-projects Show configured Patternpilot project bindings
   intake        Create intake queue entries and dossiers from GitHub URLs
   promote       Prepare or apply promotion candidates from queue to curated artifacts
+  setup-checklist  Show exactly which secrets or IDs are still needed and where to find them
   sync-all-watchlists  Run watchlist intake across all configured projects
   sync-watchlist  Run intake against the configured project watchlist file
   show-project  Show the binding and reference context for a project
@@ -54,8 +61,10 @@ Commands:
 Examples:
   npm run automation:run -- --all-projects --promotion-mode prepared --dry-run
   npm run doctor -- --offline
+  npm run init:env
   npm run init:project -- --project sample-worker --target ../sample-worker --label "Sample Worker"
   npm run discover:workspace
+  npm run setup:checklist
   npm run sync:all -- --dry-run
   npm run patternpilot -- sync-watchlist --project eventbear-worker --dry-run
   npm run intake -- --project eventbear-worker https://github.com/City-Bureau/city-scrapers
@@ -283,8 +292,9 @@ function printProjectList(rootDir, config) {
   }
 }
 
-async function runDoctor(rootDir, config, options) {
+async function runDoctor(rootDir, config, options, envFiles) {
   const auth = inspectGithubAuth(config);
+  const githubApp = inspectGithubAppAuth();
   const doctor = await runGithubDoctor(config, { offline: options.offline });
   const discovered = await discoverWorkspaceProjects(rootDir, config, {
     workspaceRoot: options.workspaceRoot,
@@ -295,13 +305,50 @@ async function runDoctor(rootDir, config, options) {
   const githubAppScaffoldPath = path.join(rootDir, "deployment", "github-app", "README.md");
   const automationOpsPath = path.join(rootDir, "automation", "README.md");
 
+  if (options.json) {
+    console.log(
+      JSON.stringify(
+        {
+          envFiles,
+          githubAuth: auth,
+          githubApp,
+          githubApi: doctor,
+          discovered,
+          productization: {
+            pluginScaffold: path.relative(rootDir, pluginScaffoldPath),
+            marketplaceManifest: path.relative(rootDir, marketplacePath),
+            githubAppScaffold: path.relative(rootDir, githubAppScaffoldPath),
+            automationOps: path.relative(rootDir, automationOpsPath)
+          }
+        },
+        null,
+        2
+      )
+    );
+    return;
+  }
+
   console.log(`# Patternpilot Doctor`);
+  console.log(``);
+  console.log(`## Env Files`);
+  if (envFiles.length === 0) {
+    console.log(`- loaded: none`);
+  } else {
+    for (const envFile of envFiles) {
+      console.log(`- ${envFile.path} (${envFile.entries} entries)`);
+    }
+  }
   console.log(``);
   console.log(`## GitHub Auth`);
   console.log(`- auth_mode: ${auth.authMode}`);
   console.log(`- auth_source: ${auth.authSource ?? "-"}`);
   console.log(`- token_present: ${auth.tokenPresent ? "yes" : "no"}`);
   console.log(`- configured_env_vars: ${auth.configuredEnvVars.join(", ") || "-"}`);
+  console.log(``);
+  console.log(`## GitHub App Auth`);
+  console.log(`- app_ready: ${githubApp.appReady ? "yes" : "no"}`);
+  console.log(`- present_vars: ${githubApp.presentVars.join(", ") || "-"}`);
+  console.log(`- missing_vars: ${githubApp.missingVars.join(", ") || "-"}`);
   console.log(``);
   console.log(`## GitHub API`);
   console.log(`- network_status: ${doctor.networkStatus}`);
@@ -332,6 +379,47 @@ async function runDoctor(rootDir, config, options) {
   console.log(`- marketplace_manifest: ${path.relative(rootDir, marketplacePath)}`);
   console.log(`- github_app_scaffold: ${path.relative(rootDir, githubAppScaffoldPath)}`);
   console.log(`- automation_ops: ${path.relative(rootDir, automationOpsPath)}`);
+}
+
+async function runInitEnv(rootDir, options) {
+  const results = await initializeEnvFiles(rootDir, options);
+  console.log(`# Patternpilot Env Init`);
+  console.log(``);
+  if (results.length === 0) {
+    console.log(`- no env templates found`);
+    return;
+  }
+  for (const result of results) {
+    console.log(`- ${result.path}: ${result.status}`);
+  }
+}
+
+function runSetupChecklist(options) {
+  const checklist = buildSetupChecklist();
+  const githubApp = inspectGithubAppAuth();
+
+  if (options.json) {
+    console.log(JSON.stringify({ checklist, githubApp }, null, 2));
+    return;
+  }
+
+  console.log(`# Patternpilot Setup Checklist`);
+  console.log(``);
+  console.log(`## PAT`);
+  console.log(`- env_var: ${checklist.pat.envVar}`);
+  console.log(`- put_it_here: ${checklist.pat.filePath}`);
+  console.log(`- where_to_find_it: ${checklist.pat.whereToFind}`);
+  console.log(`- docs: ${checklist.pat.docsUrl}`);
+  console.log(`- note: ${checklist.pat.note}`);
+  console.log(``);
+  console.log(`## GitHub App`);
+  for (const item of checklist.githubApp) {
+    const status = githubApp.presentVars.includes(item.key) ? "present" : "missing";
+    console.log(`- ${item.key}: ${status}`);
+    console.log(`  file: ${item.filePath}`);
+    console.log(`  where: ${item.whereToFind}`);
+    console.log(`  docs: ${item.docsUrl}`);
+  }
 }
 
 async function runInitProject(rootDir, config, options) {
@@ -655,6 +743,7 @@ async function runPromote(rootDir, config, options) {
 
 async function main() {
   const rootDir = await loadPatternpilotRoot(import.meta.url);
+  const envFiles = await loadEnvFiles(rootDir);
   const config = await loadConfig(rootDir);
   const { command, options } = parseArgs(process.argv.slice(2));
 
@@ -669,7 +758,12 @@ async function main() {
   }
 
   if (command === "doctor") {
-    await runDoctor(rootDir, config, options);
+    await runDoctor(rootDir, config, options, envFiles);
+    return;
+  }
+
+  if (command === "init-env") {
+    await runInitEnv(rootDir, options);
     return;
   }
 
@@ -685,6 +779,11 @@ async function main() {
 
   if (command === "discover-workspace") {
     await runDiscoverWorkspace(rootDir, config, options);
+    return;
+  }
+
+  if (command === "setup-checklist") {
+    runSetupChecklist(options);
     return;
   }
 

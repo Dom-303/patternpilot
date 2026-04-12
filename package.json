@@ -3,14 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "bin": {
+    "patternpilot": "./scripts/patternpilot.mjs"
+  },
   "description": "Patternpilot intake and repo intelligence tooling",
   "scripts": {
     "patternpilot": "node scripts/patternpilot.mjs",
     "automation:run": "node scripts/patternpilot.mjs automation-run",
     "doctor": "node scripts/patternpilot.mjs doctor",
     "discover:workspace": "node scripts/patternpilot.mjs discover-workspace",
+    "init:env": "node scripts/patternpilot.mjs init-env",
     "init:project": "node scripts/patternpilot.mjs init-project",
     "intake": "node scripts/patternpilot.mjs intake",
+    "setup:checklist": "node scripts/patternpilot.mjs setup-checklist",
     "sync:all": "node scripts/patternpilot.mjs sync-all-watchlists",
     "sync:watchlist": "node scripts/patternpilot.mjs sync-watchlist",
     "promote": "node scripts/patternpilot.mjs promote",

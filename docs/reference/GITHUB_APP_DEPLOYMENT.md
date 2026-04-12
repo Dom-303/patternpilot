@@ -32,6 +32,8 @@ Diese Datei beschreibt den naechsten Produktisierungsschritt von Patternpilot we
 - GitHub App Private Key
 - optional Installation IDs oder Ziel-Org/Repoliste
 
+Eine konkrete Fundstellenliste steht auch in `docs/reference/SETUP_CHECKLIST.md`.
+
 ## Bis dahin
 
 - PAT bleibt ein guter Zwischenzustand

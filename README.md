@@ -69,6 +69,8 @@ Es hat jetzt einen lokalen Motor plus Workspace-Modus:
 - `npm run init:project -- --project <key> --target <repo-pfad>`
 - `npm run discover:workspace`
 - `npm run doctor -- --offline`
+- `npm run init:env`
+- `npm run setup:checklist`
 - `npm run sync:watchlist -- --project eventbear-worker`
 - `npm run sync:all -- --dry-run`
 - `npm run automation:run -- --all-projects --promotion-mode prepared`
@@ -192,6 +194,18 @@ npm run automation:run -- --all-projects --promotion-mode prepared --dry-run
 npm run doctor -- --offline
 ```
 
+### Lokale Env-Dateien anlegen
+
+```bash
+npm run init:env
+```
+
+### Fehlende Angaben und Fundstellen anzeigen
+
+```bash
+npm run setup:checklist
+```
+
 ### GitHub-Links als Intake anlegen
 
 ```bash
@@ -264,6 +278,7 @@ npm run intake -- --project eventbear-worker --skip-enrich https://github.com/Ci
 - `docs/reference/PROJECT_ALIGNMENT_MODEL.md`
 - `docs/reference/GITHUB_TOKEN_SETUP.md`
 - `docs/reference/GITHUB_APP_DEPLOYMENT.md`
+- `docs/reference/SETUP_CHECKLIST.md`
 - `docs/reference/WORKSPACE_PLUGIN_MODE.md`
 
 ### Kontrollierte Vokabulare
