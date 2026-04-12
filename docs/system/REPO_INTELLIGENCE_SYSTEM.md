@@ -145,6 +145,26 @@ Die Erkenntnisse in Architektur, Produktoberflächen oder spätere Maßnahmen ü
 
 ---
 
+## Operative Intake-Schicht
+
+Zwischen "Finden" und "Einordnen" existiert nun bewusst eine operative Intake-Schicht.
+
+Sie verhindert, dass rohe GitHub-Funde direkt als kuratierte Repo-Intelligence behandelt werden.
+
+Neue Repos durchlaufen deshalb zuerst:
+
+1. `repo_intake_queue.csv`
+2. projektbezogenes Intake-Dossier unter `projects/<projekt>/intake/`
+3. Run-Protokoll unter `runs/<projekt>/<run-id>/`
+
+Erst nach Review darf ein Fund in die kuratierten Artefakte uebergehen:
+
+- `repo_landkarte.csv`
+- `repo_learnings.md`
+- `repo_decisions.md`
+
+---
+
 ## Analyseobjekte
 
 Jeder Fund wird zunächst als eines der folgenden Analyseobjekte gelesen:
@@ -201,6 +221,11 @@ Ohne diese Frage bleibt der Fund nur ein interessanter Link.
 
 Die Datei `repo_landkarte.csv` ist die operative Kernübersicht.
 
+Wichtig:
+
+Sie ist die kuratierte Landkarte, nicht der rohe Eingang fuer neue GitHub-Links.
+Der rohe Eingang liegt in `repo_intake_queue.csv`.
+
 Pflichtspalten:
 
 - `name`
@@ -242,7 +267,27 @@ Darum gilt:
 
 - allgemeine Arbeitslogik bleibt im Repo-Root
 - projektspezifische Kontexte liegen unter `projects/<projektname>/`
+- projektspezifische Bindings liegen ebenfalls unter `projects/<projektname>/`
 - projektbezogene Deutung darf die allgemeine Kernlogik nicht still überschreiben
+
+---
+
+## Projektbindung
+
+Damit `patternpilot` wie eine Erweiterung fuer verschiedene Repos andocken kann, braucht jedes Zielprojekt eine explizite Bindung.
+
+Diese besteht aus:
+
+- `PROJECT_CONTEXT.md` fuer die strategische Lesart
+- `PROJECT_BINDING.md` fuer die menschlich lesbare Arbeitsbindung
+- `PROJECT_BINDING.json` fuer die maschinenlesbare Intake- und Automationsbindung
+
+Diese Bindung legt fest:
+
+- auf welches Referenz-Repo sich Patternpilot bezieht
+- welche Dateien zuerst gelesen werden
+- welche Verzeichnisse besonders wichtig sind
+- welche Fragen fuer dieses Projekt im Zentrum stehen
 
 ---
 

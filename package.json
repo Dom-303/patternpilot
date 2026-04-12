@@ -1,0 +1,12 @@
+{
+  "name": "patternpilot",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Patternpilot intake and repo intelligence tooling",
+  "scripts": {
+    "patternpilot": "node scripts/patternpilot.mjs",
+    "intake": "node scripts/patternpilot.mjs intake",
+    "show:project": "node scripts/patternpilot.mjs show-project"
+  }
+}

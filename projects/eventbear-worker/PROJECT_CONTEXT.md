@@ -41,6 +41,8 @@ Für `eventbear-worker` soll Patternpilot helfen bei:
 - Identifikation fehlender Schichten
 - Distribution-Denken außerhalb des Worker-Kerns
 - Entscheidungsvorbereitung für spätere Ausbauschritte
+- strukturiertem Intake externer GitHub-Repos statt loser Link-Sammlungen
+- automatischer Rueckbindung neuer Funde an die Worker-Schichten
 
 ---
 
@@ -73,3 +75,16 @@ Die wichtigsten Lernachsen für EventBär sind aktuell:
 Jede Patternpilot-Analyse zu EventBär soll am Ende diese Frage beantworten:
 
 **Was bedeutet das konkret für den Worker oder das spätere Produktsystem von EventBär?**
+
+---
+
+## Operativer Default
+
+Fuer neue GitHub-Funde ist `eventbear-worker` aktuell das Default-Zielprojekt von Patternpilot.
+
+Das bedeutet:
+
+- neue GitHub-Links koennen direkt fuer dieses Projekt als Intake angelegt werden
+- die projektbezogene Bindung liegt in `PROJECT_BINDING.md` und `PROJECT_BINDING.json`
+- kuratierte Uebernahme in Landkarte, Learnings und Entscheidungen erfolgt erst nach Review
+- GitHub-Metadaten und README-Kontext koennen bereits im Intake automatisch angereichert werden

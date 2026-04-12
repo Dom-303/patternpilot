@@ -2,16 +2,23 @@
 
 ## Zweck
 
-`patternpilot` ist ein eigenständiges Meta- und Arbeitsrepo für strukturierte Repo-, Produkt- und Pattern-Analyse.
+`patternpilot` ist das Repo-Intelligence- und Entscheidungs-System fuer externe GitHub-Funde, Tools, Produkte und Muster.
 
-Es dient dazu, externe Repositories, Tools, Produkte, Distribution-Surfaces und Architekturansätze systematisch zu analysieren und daraus konkrete Learnings, Entscheidungen und mögliche Weiterentwicklungen für EventBär abzuleiten.
+Es dient dazu, aus externen Repositories und Produktsignalen nicht nur interessante Beobachtungen, sondern verwertbare Konsequenzen fuer ein Zielprojekt abzuleiten.
 
-Der Fokus liegt nicht auf losem Sammeln von Links, sondern auf einem klaren Arbeitsprinzip:
+Fuer den aktuellen Stand bedeutet das:
 
-- relevante externe Lösungen finden
+- GitHub-Link rein
+- projektgebundener Intake raus
+- Muster, Relevanz und naechste Schritte sichtbar
+- spaetere Promotion in Landkarte, Learnings und Entscheidungen
+
+Der Fokus liegt nicht auf losem Sammeln, sondern auf einem klaren Arbeitsprinzip:
+
+- relevante externe Loesungen finden
 - sie sauber einordnen
-- ihre Stärken und Schwächen verstehen
-- daraus konkrete Bedeutung für EventBär ableiten
+- ihre Staerken und Schwaechen verstehen
+- daraus konkrete Bedeutung fuer das Zielprojekt ableiten
 - Entscheidungen dokumentieren
 - wiederverwendbare Muster sichtbar machen
 
@@ -37,7 +44,7 @@ Der Fokus liegt nicht auf losem Sammeln von Links, sondern auf einem klaren Arbe
 
 ---
 
-## Verhältnis zu EventBär
+## Verhaeltnis zu EventBaer
 
 `patternpilot` lebt bewusst **außerhalb** des `eventbear-worker`-Repos.
 
@@ -48,7 +55,31 @@ Warum:
 - spätere Wiederverwendung über EventBär hinaus bleibt so möglich
 - Repo-Scope und Verantwortungen bleiben sauber getrennt
 
-EventBär ist trotzdem der **erste echte Testfall** von Patternpilot.
+EventBaer ist trotzdem der **erste echte Testfall** von Patternpilot.
+
+---
+
+## Neuer Betriebszustand
+
+Patternpilot ist nicht mehr nur ein Dokumentations-Seed.
+
+Es hat jetzt einen ersten lokalen Motor:
+
+- `npm run intake -- --project eventbear-worker <github-url>`
+
+Dieser Motor:
+
+- nimmt GitHub-Links entgegen
+- normalisiert sie
+- erstellt Queue-Eintraege
+- reichert GitHub-Metadaten und README-Inhalte an
+- legt projektbezogene Intake-Dossiers an
+- schreibt Run-Protokolle
+
+Wichtig:
+
+Die Intake-Queue ist bewusst **vor** der kuratierten Landkarte geschaltet.
+Neue Links landen zuerst in `repo_intake_queue.csv` und im jeweiligen Dossier, nicht direkt in `repo_landkarte.csv`.
 
 ---
 
@@ -56,7 +87,7 @@ EventBär ist trotzdem der **erste echte Testfall** von Patternpilot.
 
 Dieses Repo startet bewusst klein, aber strukturiert.
 
-Es enthält:
+Es enthaelt:
 
 - Leitdateien für Bewertungs- und Entscheidungslogik
 - kontrollierte Vokabulare
@@ -65,6 +96,8 @@ Es enthält:
 - erste Entscheidungen
 - Projektkontext für `eventbear-worker`
 - Startprompts für Coding- und Research-Agenten
+- einen ersten Intake-Motor fuer GitHub-Links
+- projektgebundene Binding-Dateien fuer `eventbear-worker`
 
 Wichtig:
 
@@ -73,7 +106,7 @@ Sie enthält erste, bereits gesichtete Repos als Startmaterial und soll iterativ
 
 ---
 
-## Ziel für EventBär
+## Ziel fuer EventBaer
 
 `patternpilot` soll EventBär helfen bei:
 
@@ -84,6 +117,7 @@ Sie enthält erste, bereits gesichtete Repos als Startmaterial und soll iterativ
 - Bewertung von Distribution-Surfaces wie API, Widget, WordPress Plugin oder White-Label
 - klaren Build-vs-Borrow-Entscheidungen
 - strategischer Weiterentwicklung statt bloßem Bauchgefühl
+- strukturiertem Intake statt losem Link-Sammeln
 
 ---
 
@@ -100,22 +134,69 @@ Sie enthält erste, bereits gesichtete Repos als Startmaterial und soll iterativ
 
 ---
 
+## Schnellstart
+
+### Projektbindung ansehen
+
+```bash
+npm run show:project -- --project eventbear-worker
+```
+
+### GitHub-Links als Intake anlegen
+
+```bash
+npm run intake -- --project eventbear-worker https://github.com/City-Bureau/city-scrapers
+```
+
+Wenn `PATTERNPILOT_GITHUB_TOKEN`, `GITHUB_TOKEN` oder `GITHUB_PAT` gesetzt ist, nutzt Patternpilot dieses Token fuer hoehere GitHub-API-Limits und spaeter auch fuer private Repos.
+
+### Mehrere Links aus Datei einlesen
+
+```bash
+npm run intake -- --project eventbear-worker --file links.txt
+```
+
+### Erst testen ohne Dateien zu schreiben
+
+```bash
+npm run intake -- --project eventbear-worker --file links.txt --dry-run
+```
+
+### Remote-Anreicherung bewusst ueberspringen
+
+```bash
+npm run intake -- --project eventbear-worker --skip-enrich https://github.com/City-Bureau/city-scrapers
+```
+
+---
+
 ## Repo-Struktur
+
+### Identitaet und Betrieb
+
+- `docs/foundation/MISSION_VISION.md`
+- `docs/foundation/OPERATING_MODEL.md`
+- `docs/foundation/AUTOMATION_ROADMAP.md`
+- `AGENT_CONTEXT.md`
+- `CLAUDE.md`
+- `patternpilot.config.json`
+- `package.json`
 
 ### Kernlogik
 
-- `REPO_INTELLIGENCE_SYSTEM.md`
-- `PATTERN_FAMILIES.md`
-- `EVENTBAER_GAP_AREAS.md`
-- `BUILD_VS_BORROW.md`
-- `PRIORITY_FOR_REVIEW.md`
+- `docs/system/REPO_INTELLIGENCE_SYSTEM.md`
+- `docs/taxonomy/PATTERN_FAMILIES.md`
+- `docs/taxonomy/EVENTBAER_GAP_AREAS.md`
+- `docs/taxonomy/BUILD_VS_BORROW.md`
+- `docs/taxonomy/PRIORITY_FOR_REVIEW.md`
 
 ### Operative Arbeitsdateien
 
 - `repo_landkarte.csv`
+- `repo_intake_queue.csv`
 - `repo_learnings.md`
 - `repo_decisions.md`
-- `distribution_surfaces.md`
+- `docs/reference/distribution_surfaces.md`
 
 ### Kontrollierte Vokabulare
 
@@ -134,7 +215,15 @@ Sie enthält erste, bereits gesichtete Repos als Startmaterial und soll iterativ
 ### Projektkontext
 
 - `projects/eventbear-worker/PROJECT_CONTEXT.md`
+- `projects/eventbear-worker/PROJECT_BINDING.md`
+- `projects/eventbear-worker/PROJECT_BINDING.json`
 - `projects/eventbear-worker/project_notes.md`
+- `projects/eventbear-worker/intake/`
+
+### Motor
+
+- `scripts/patternpilot.mjs`
+- `lib/patternpilot-engine.mjs`
 
 ---
 
@@ -144,11 +233,13 @@ Dieses System soll klein, klar und lebendig bleiben.
 
 Das bedeutet:
 
-- lieber wenige saubere Einträge als viele lose
+- lieber wenige saubere Eintraege als viele lose
 - lieber klare Learnings als bloße Repo-Beschreibungen
 - lieber harte Entscheidungen als endlose Sammlung
 - lieber sichtbare Priorisierung als Informationsmüll
 - lieber saubere Projekttrennung als bequeme Vermischung
+- lieber Intake plus Review als vorschnelle Wahrheit
+- lieber wiederverwendbare Produktlogik als EventBaer-Sonderfall
 
 ---
 
@@ -156,7 +247,7 @@ Das bedeutet:
 
 `patternpilot` kann sich später zu einem eigenständigen Produkt entwickeln, das Menschen oder Teams hilft, vorhandenes Wissen aus GitHub, Web, Tools und Produktmustern gezielt zu analysieren, zu strukturieren und für eigene Vorhaben nutzbar zu machen.
 
-Aktuell dient es zuerst EventBär.
+Aktuell dient es zuerst EventBaer.
 
 ---
 

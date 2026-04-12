@@ -21,20 +21,25 @@ Wichtig:
 Erstelle in `D:\eventbaer\dev\patternpilot` exakt diese Struktur:
 
 - `README.md`
-- `REPO_INTELLIGENCE_SYSTEM.md`
-- `PATTERN_FAMILIES.md`
-- `EVENTBAER_GAP_AREAS.md`
-- `BUILD_VS_BORROW.md`
-- `PRIORITY_FOR_REVIEW.md`
+- `docs/system/REPO_INTELLIGENCE_SYSTEM.md`
+- `docs/taxonomy/PATTERN_FAMILIES.md`
+- `docs/taxonomy/EVENTBAER_GAP_AREAS.md`
+- `docs/taxonomy/BUILD_VS_BORROW.md`
+- `docs/taxonomy/PRIORITY_FOR_REVIEW.md`
 - `repo_landkarte.csv`
 - `repo_learnings.md`
 - `repo_decisions.md`
-- `distribution_surfaces.md`
+- `docs/reference/distribution_surfaces.md`
+- `docs/foundation/MISSION_VISION.md`
+- `docs/foundation/OPERATING_MODEL.md`
+- `docs/foundation/AUTOMATION_ROADMAP.md`
 - `controlled_vocabulary_pattern_families.csv`
 - `controlled_vocabulary_eventbaer_gap_areas.csv`
 - `controlled_vocabulary_build_vs_borrow.csv`
 - `controlled_vocabulary_priority_for_review.csv`
 - `projects/eventbear-worker/PROJECT_CONTEXT.md`
+- `projects/eventbear-worker/PROJECT_BINDING.md`
+- `projects/eventbear-worker/PROJECT_BINDING.json`
 - `projects/eventbear-worker/project_notes.md`
 - `prompts/CLAUDE_VSCODE_SETUP_PROMPT.md`
 - `prompts/repo_intake_prompt.md`

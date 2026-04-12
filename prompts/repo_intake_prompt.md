@@ -2,6 +2,11 @@
 
 Lies das Zielrepo zuerst als System, nicht als lose Dateimenge.
 
+Wichtig:
+- neue Funde zuerst als Intake behandeln, nicht direkt als kuratierte Wahrheit
+- Intake-Dossier und Projektbindung lesen, bevor die Landkarte aktualisiert wird
+- GitHub-Metadaten, README und Aktivitaetssignale vor dem Review mitlesen
+
 Arbeite in dieser Reihenfolge:
 
 1. Zweck des Repos verstehen

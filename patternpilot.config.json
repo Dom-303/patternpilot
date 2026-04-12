@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "defaultProject": "eventbear-worker",
+  "runtimeRoot": "runs",
+  "queueFile": "repo_intake_queue.csv",
+  "docsRoot": "docs",
+  "github": {
+    "apiBaseUrl": "https://api.github.com",
+    "requestTimeoutMs": 12000,
+    "readmeExcerptMaxChars": 1600,
+    "authEnvVars": [
+      "PATTERNPILOT_GITHUB_TOKEN",
+      "GITHUB_TOKEN",
+      "GITHUB_PAT"
+    ],
+    "userAgent": "patternpilot-stage2"
+  },
+  "projects": {
+    "eventbear-worker": {
+      "label": "EventBaer Worker",
+      "projectRoot": "../eventbear-worker",
+      "projectContextFile": "projects/eventbear-worker/PROJECT_CONTEXT.md",
+      "projectBindingFile": "projects/eventbear-worker/PROJECT_BINDING.json",
+      "intakeRoot": "projects/eventbear-worker/intake"
+    }
+  }
+}
