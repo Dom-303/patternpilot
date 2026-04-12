@@ -9,4 +9,8 @@ Diese Dokumentation enthaelt die dauerhaft wichtigen Patternpilot-Grundlagen.
 - `taxonomy/` fuer kontrollierte Bewertungslogik
 - `reference/` fuer ergaenzende Referenzdokumente
 
+Wichtige Referenz fuer Stage 3:
+
+- `reference/PROJECT_ALIGNMENT_MODEL.md`
+
 Die Root von `patternpilot` bleibt damit staerker auf Einstieg, Konfiguration, Motor und operative Artefakte fokussiert.

@@ -46,13 +46,14 @@ Nutzen:
 
 ## Stufe 3: Projektabgleich gegen Referenz-Repo
 
-Sehr sinnvoll fuer EventBaer
+Status: jetzt umgesetzt
 
 Was dazu kommt:
 
 - Patternpilot liest definierte Referenzdateien aus dem Zielrepo automatisch
 - externe Muster werden gegen bekannte Worker-Schichten gemappt
 - Luecken und Anschlussfaehigkeit werden konkreter benannt
+- projektgebundene Alignment-Regeln liefern Fit-Band, Worker-Areas und naechste Schritte
 
 Nutzen:
 

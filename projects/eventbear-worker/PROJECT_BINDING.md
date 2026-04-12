@@ -5,6 +5,7 @@
 Diese Datei beschreibt die operative Bindung zwischen `patternpilot` und `eventbear-worker`.
 
 Sie beantwortet nicht nur, **fuer welches Projekt** gearbeitet wird, sondern auch, **welche Teile des Zielrepos dabei als Referenz zuerst gelesen werden sollen**.
+Zusaetzlich verweist sie auf die Alignment-Regeln, mit denen Patternpilot externe Muster gegen die reale Zielarchitektur von EventBaer mappt.
 
 ---
 
@@ -53,3 +54,10 @@ Sie beantwortet nicht nur, **fuer welches Projekt** gearbeitet wird, sondern auc
 - Patternpilot fuehrt keine stillen Scope-Erweiterungen im Worker ein
 - Distribution-Ideen und Worker-Kern sauber trennen
 - externe Scraper nie automatisch als Kernarchitektur missverstehen
+
+---
+
+## Alignment-Regeln
+
+- Maschinenlesbare Alignment-Regeln: `ALIGNMENT_RULES.json`
+- Zweck: externe Repos gegen reale Worker-Faehigkeiten, Spannungen und naechste Schritte mappen

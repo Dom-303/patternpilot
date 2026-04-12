@@ -73,6 +73,7 @@ Dieser Motor:
 - normalisiert sie
 - erstellt Queue-Eintraege
 - reichert GitHub-Metadaten und README-Inhalte an
+- gleicht externe Muster gegen das Zielprojekt ab
 - legt projektbezogene Intake-Dossiers an
 - schreibt Run-Protokolle
 
@@ -197,6 +198,7 @@ npm run intake -- --project eventbear-worker --skip-enrich https://github.com/Ci
 - `repo_learnings.md`
 - `repo_decisions.md`
 - `docs/reference/distribution_surfaces.md`
+- `docs/reference/PROJECT_ALIGNMENT_MODEL.md`
 
 ### Kontrollierte Vokabulare
 
@@ -217,6 +219,7 @@ npm run intake -- --project eventbear-worker --skip-enrich https://github.com/Ci
 - `projects/eventbear-worker/PROJECT_CONTEXT.md`
 - `projects/eventbear-worker/PROJECT_BINDING.md`
 - `projects/eventbear-worker/PROJECT_BINDING.json`
+- `projects/eventbear-worker/ALIGNMENT_RULES.json`
 - `projects/eventbear-worker/project_notes.md`
 - `projects/eventbear-worker/intake/`
 

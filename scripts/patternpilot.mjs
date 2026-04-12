@@ -2,6 +2,7 @@ import path from "node:path";
 import {
   buildIntakeDocPath,
   buildLandkarteCandidate,
+  buildProjectAlignment,
   buildProjectRelevanceNote,
   collectUrls,
   createRunId,
@@ -9,8 +10,10 @@ import {
   ensureDirectory,
   guessClassification,
   loadConfig,
+  loadProjectAlignmentRules,
   loadPatternpilotRoot,
   loadProjectBinding,
+  loadProjectProfile,
   normalizeGithubUrl,
   parseArgs,
   renderIntakeDoc,
@@ -42,6 +45,8 @@ async function runIntake(rootDir, config, options) {
   }
   const projectKey = options.project || config.defaultProject;
   const { project, binding } = await loadProjectBinding(rootDir, config, projectKey);
+  const alignmentRules = await loadProjectAlignmentRules(rootDir, project, binding);
+  const projectProfile = await loadProjectProfile(rootDir, project, binding, alignmentRules);
   const urls = await collectUrls(rootDir, options);
   if (urls.length === 0) {
     throw new Error("No GitHub URLs supplied. Pass URLs directly or via --file.");
@@ -70,6 +75,13 @@ async function runIntake(rootDir, config, options) {
     }
     const guess = guessClassification(repo, enrichment);
     const landkarteCandidate = buildLandkarteCandidate(repo, guess, enrichment);
+    const projectAlignment = buildProjectAlignment(
+      repo,
+      guess,
+      enrichment,
+      projectProfile,
+      alignmentRules
+    );
     const intakeDocPath = buildIntakeDocPath(rootDir, project, repo);
     const intakeDocRelativePath = path.relative(rootDir, intakeDocPath);
     const projectRoot = path.resolve(rootDir, binding.projectRoot);
@@ -84,6 +96,12 @@ async function runIntake(rootDir, config, options) {
       updated_at: createdAt,
       last_api_sync_at: enrichment.fetchedAt ?? "",
       enrichment_status: enrichment.status ?? "unknown",
+      alignment_status: projectAlignment.status,
+      project_fit_band: projectAlignment.fitBand,
+      project_fit_score: String(projectAlignment.fitScore),
+      matched_capabilities: projectAlignment.matchedCapabilities.join(","),
+      recommended_worker_areas: projectAlignment.recommendedWorkerAreas.join(","),
+      suggested_next_step: projectAlignment.suggestedNextStep,
       repo_url: rawUrl,
       normalized_repo_url: repo.normalizedRepoUrl,
       owner: repo.owner,
@@ -119,6 +137,8 @@ async function runIntake(rootDir, config, options) {
       guess,
       enrichment,
       landkarteCandidate,
+      projectAlignment,
+      projectProfile,
       binding,
       projectLabel,
       repoRoot: projectRoot,
@@ -137,6 +157,7 @@ async function runIntake(rootDir, config, options) {
       guess,
       enrichment,
       landkarteCandidate,
+      projectAlignment,
       action: options.dryRun ? "planned" : docWrite.created ? "created_or_updated" : "reused_existing_doc",
       intakeDocRelativePath
     });
@@ -160,6 +181,7 @@ async function runIntake(rootDir, config, options) {
       guess: item.guess,
       enrichment: item.enrichment,
       landkarteCandidate: item.landkarteCandidate,
+      projectAlignment: item.projectAlignment,
       intakeDoc: item.intakeDocRelativePath,
       action: item.action
     }))
@@ -171,6 +193,7 @@ async function runIntake(rootDir, config, options) {
     runId,
     manifest,
     summary,
+    projectProfile,
     dryRun: options.dryRun
   });
 
@@ -192,6 +215,7 @@ async function runShowProject(rootDir, config, options) {
   console.log(`- label: ${binding.projectLabel ?? project.label}`);
   console.log(`- project_root: ${projectRoot}`);
   console.log(`- binding_file: ${path.relative(rootDir, bindingPath)}`);
+  console.log(`- alignment_rules: ${binding.alignmentRulesFile ?? project.alignmentRulesFile ?? "-"}`);
   console.log(``);
   console.log(`## Read Before Analysis`);
   for (const item of binding.readBeforeAnalysis) {

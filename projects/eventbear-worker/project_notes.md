@@ -33,3 +33,4 @@ Sie dient dazu, bei laufender Patternpilot-Arbeit für EventBär kurz zu notiere
 - GitHub-Metadaten und README-Auswertung automatisch in Intake-Dossiers ziehen
 - Promotion-Regeln von `repo_intake_queue.csv` nach `repo_landkarte.csv` weiter halbautomatisieren
 - Patternpilot spaeter repo-agnostisch halten, damit EventBaer nur der erste Referenzfall bleibt
+- Alignment-Regeln jetzt weiter schaerfen, sobald die ersten 5-10 Stage-3-Analysen echte Reibungspunkte zeigen

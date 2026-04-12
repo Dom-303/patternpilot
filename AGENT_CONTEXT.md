@@ -37,6 +37,7 @@ Diese Dateien in dieser Reihenfolge zuerst lesen:
 - Entscheidungen muessen am Zielprojekt rueckgebunden sein.
 - Projektbindung nie implizit ueberschreiben: pro Analyse ist klar, fuer welches Projekt gearbeitet wird.
 - Patternpilot soll den Worker staerken, nicht seinen Scope still aufblaehen.
+- Projekt-Alignment ist verpflichtender Teil ab Stage 3, wenn ein Zielprojekt Bindings und Alignment-Regeln hat.
 
 ---
 
