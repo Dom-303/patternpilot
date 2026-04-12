@@ -12,7 +12,7 @@ Sie ist bewusst kein Sammelbecken fuer beliebige Ideen.
 
 Diese Datei wird zusammen mit `STATUS.md` als operative Uebergabeflaeche mitgefuehrt.
 
-- last_updated: 2026-04-12T17:44:50.675Z
+- last_updated: 2026-04-12T17:55:17.631Z
 - latest_run_reference: eventbear-worker/2026-04-12T10-39-29-927Z
 
 ## Aktuell offene Fragen

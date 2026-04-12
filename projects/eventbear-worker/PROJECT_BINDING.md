@@ -14,8 +14,8 @@ Ab Stage 4 entstehen daraus ausserdem Promotion-Pakete, die kontrolliert in Land
 
 - Pfad: `../eventbear-worker`
 - Rolle: operativer Daten-Worker und Zielsystem fuer die von Patternpilot abgeleiteten Entscheidungen
-- Primaerer Referenzpfad: `../eventbear-worker/docs`
-- Leselogik: Patternpilot liest weiterhin einzelne Leitdateien am Repo-Root, behandelt aber `docs/` als wichtigste Referenzoberflaeche fuer Architektur, Zielbild und Betriebslogik
+- Leselogik: Patternpilot verankert keine harte Primaeroberflaeche, sondern liest fuer diesen Zielkontext zuerst die konfigurierten Leitdateien und Verzeichnisse
+- Wenn `docs/` vorhanden und gepflegt ist, ist es ein schneller, hochwertiger Kontextlieferant, aber kein fest verdrahteter Produktbestandteil von Patternpilot
 
 ---
 
@@ -33,7 +33,7 @@ Ab Stage 4 entstehen daraus ausserdem Promotion-Pakete, die kontrolliert in Land
 
 ## Besonders relevante Verzeichnisse
 
-- `docs/` als primaere Referenzoberflaeche
+- `docs/` als schnelle Kontextquelle fuer Architektur, Zielbild und Betriebslogik
 - `lib/`
 - `scripts/`
 - `sources/`

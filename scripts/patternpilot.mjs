@@ -309,6 +309,8 @@ async function runDiscover(rootDir, config, options) {
     projectKey,
     createdAt,
     discovery,
+    projectProfile,
+    binding,
     reportView: options.reportView
   });
   const projectReportPath = path.join(
@@ -496,10 +498,10 @@ async function runShowProject(rootDir, config, options) {
   console.log(`- project: ${projectKey}`);
   console.log(`- label: ${binding.projectLabel ?? project.label}`);
   console.log(`- project_root: ${projectRoot}`);
-  console.log(`- primary_reference_root: ${binding.referenceRoot ?? binding.referenceDirectories?.[0] ?? "."}`);
   console.log(`- binding_file: ${path.relative(rootDir, bindingPath)}`);
   console.log(`- alignment_rules: ${binding.alignmentRulesFile ?? project.alignmentRulesFile ?? "-"}`);
   console.log(`- watchlist_file: ${project.watchlistFile ?? "-"}`);
+  console.log(`- context_strategy: markdown_first + configured_context_scan`);
   console.log(``);
   console.log(`## Read Before Analysis`);
   for (const item of binding.readBeforeAnalysis) {

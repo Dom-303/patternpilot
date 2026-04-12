@@ -31,10 +31,17 @@ HTML ist die Schicht fuer:
 - standardisierte Zusammenfassungen
 - spaetere Produktoberflaechen
 
+Jeder HTML-Report soll dabei auch offenlegen:
+
+- welche Kontextquellen aus dem Zielrepo gelesen wurden
+- welche Verzeichnisse als Strukturkontext gescannt wurden
+- welche Signale daraus in Discovery oder Review eingeflossen sind
+
 ## Report-Ziele
 
 Ein guter Patternpilot-Report soll immer schnell sichtbar machen:
 
+- welche Zielrepo-Kontextquellen fuer diesen Lauf gelesen wurden
 - welche Repos jetzt oben rauskommen
 - warum sie relevant sind
 - was daraus fuer das Zielprojekt uebernommen oder gelernt werden koennte

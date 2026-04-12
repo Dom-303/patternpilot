@@ -81,6 +81,7 @@ Es hat jetzt einen lokalen Motor plus Workspace-Modus:
 Dieser Motor:
 
 - leitet projektbezogene Discovery-Suchplaene aus Repo-Kontext und Alignment-Regeln ab
+- liest dafuer zuerst die konfigurierten Markdown- und Strukturquellen des Zielrepos
 - durchsucht GitHub heuristisch nach passenden Repositories
 - nimmt GitHub-Links entgegen
 - normalisiert sie
@@ -98,6 +99,11 @@ Wichtig:
 
 Die Intake-Queue ist bewusst **vor** der kuratierten Landkarte geschaltet.
 Neue Links landen zuerst in `repo_intake_queue.csv` und im jeweiligen Dossier, nicht direkt in `repo_landkarte.csv`.
+
+Ebenso wichtig:
+
+Patternpilot verankert keine harte Projektoberflaeche wie `docs/` in seinem Produktkern.
+Es nutzt pro Zielprojekt nur die dort konfigurierten Kontextquellen als schnelle Einleseschicht und zeigt in Reports transparent, was fuer den jeweiligen Lauf tatsaechlich gelesen wurde.
 
 ---
 

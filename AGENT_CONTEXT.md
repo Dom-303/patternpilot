@@ -41,6 +41,7 @@ Diese Dateien in dieser Reihenfolge zuerst lesen:
 - Entscheidungen muessen am Zielprojekt rueckgebunden sein.
 - Projektbindung nie implizit ueberschreiben: pro Analyse ist klar, fuer welches Projekt gearbeitet wird.
 - Patternpilot soll den Worker staerken, nicht seinen Scope still aufblaehen.
+- Repo-Kontext ist laufbezogen: Patternpilot liest die konfigurierten Kontextquellen eines Zielrepos, verankert aber keine harte Projektidentitaet in seinem Produktkern.
 - Projekt-Alignment ist verpflichtender Teil ab Stage 3, wenn ein Zielprojekt Bindings und Alignment-Regeln hat.
 - `STATUS.md` und `OPEN_QUESTION.md` sind die operative Uebergabeschicht fuer den naechsten Agenten und muessen aktuell bleiben.
 - menschenfreundliche HTML-Reports sind verbindlicher Teil der Output-Schicht, nicht nur nettes Beiwerk.

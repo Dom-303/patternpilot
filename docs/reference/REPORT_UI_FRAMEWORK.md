@@ -22,6 +22,7 @@ Ganz oben muss sofort sichtbar werden:
 
 - worum es in diesem Run geht
 - fuer welches Projekt er gilt
+- welche Zielrepo-Kontextquellen gelesen wurden
 - was die wichtigsten Zahlen sind
 - was die Top-Empfehlungen jetzt sind
 
