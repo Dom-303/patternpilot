@@ -4,6 +4,9 @@
   "runtimeRoot": "runs",
   "queueFile": "repo_intake_queue.csv",
   "docsRoot": "docs",
+  "workspaceRoots": [
+    ".."
+  ],
   "github": {
     "apiBaseUrl": "https://api.github.com",
     "requestTimeoutMs": 12000,
@@ -13,7 +16,7 @@
       "GITHUB_TOKEN",
       "GITHUB_PAT"
     ],
-    "userAgent": "patternpilot-stage2"
+    "userAgent": "patternpilot-stage5"
   },
   "projects": {
     "eventbear-worker": {
@@ -22,6 +25,7 @@
       "projectContextFile": "projects/eventbear-worker/PROJECT_CONTEXT.md",
       "projectBindingFile": "projects/eventbear-worker/PROJECT_BINDING.json",
       "alignmentRulesFile": "projects/eventbear-worker/ALIGNMENT_RULES.json",
+      "watchlistFile": "projects/eventbear-worker/WATCHLIST.txt",
       "intakeRoot": "projects/eventbear-worker/intake",
       "promotionRoot": "projects/eventbear-worker/promotions"
     }

@@ -63,9 +63,13 @@ EventBaer ist trotzdem der **erste echte Testfall** von Patternpilot.
 
 Patternpilot ist nicht mehr nur ein Dokumentations-Seed.
 
-Es hat jetzt einen ersten lokalen Motor:
+Es hat jetzt einen lokalen Motor plus Workspace-Modus:
 
 - `npm run intake -- --project eventbear-worker <github-url>`
+- `npm run init:project -- --project <key> --target <repo-pfad>`
+- `npm run discover:workspace`
+- `npm run doctor -- --offline`
+- `npm run sync:watchlist -- --project eventbear-worker`
 
 Dieser Motor:
 
@@ -144,6 +148,36 @@ Sie enthält erste, bereits gesichtete Repos als Startmaterial und soll iterativ
 npm run show:project -- --project eventbear-worker
 ```
 
+### Gebundene Projekte anzeigen
+
+```bash
+npm run list:projects
+```
+
+### Workspace nach Git-Repos scannen
+
+```bash
+npm run discover:workspace
+```
+
+### Neues Projekt an Patternpilot anbinden
+
+```bash
+npm run init:project -- --project sample-worker --target ../sample-worker --label "Sample Worker"
+```
+
+### Projekt-Watchlist einsammeln
+
+```bash
+npm run sync:watchlist -- --project eventbear-worker --dry-run
+```
+
+### GitHub-/Token-Diagnose laufen lassen
+
+```bash
+npm run doctor -- --offline
+```
+
 ### GitHub-Links als Intake anlegen
 
 ```bash
@@ -215,6 +249,7 @@ npm run intake -- --project eventbear-worker --skip-enrich https://github.com/Ci
 - `docs/reference/distribution_surfaces.md`
 - `docs/reference/PROJECT_ALIGNMENT_MODEL.md`
 - `docs/reference/GITHUB_TOKEN_SETUP.md`
+- `docs/reference/WORKSPACE_PLUGIN_MODE.md`
 
 ### Kontrollierte Vokabulare
 
@@ -237,6 +272,7 @@ npm run intake -- --project eventbear-worker --skip-enrich https://github.com/Ci
 - `projects/eventbear-worker/PROJECT_BINDING.json`
 - `projects/eventbear-worker/ALIGNMENT_RULES.json`
 - `projects/eventbear-worker/project_notes.md`
+- `projects/eventbear-worker/WATCHLIST.txt`
 - `projects/eventbear-worker/intake/`
 - `projects/eventbear-worker/promotions/`
 

@@ -81,7 +81,7 @@ Nutzen:
 
 ## Stufe 5: Repo-/Workspace-Plugin-Modus
 
-Endstufe
+Status: jetzt umgesetzt
 
 Was dazu kommt:
 
@@ -89,6 +89,9 @@ Was dazu kommt:
 - Projektbindung wird einmal konfiguriert und danach automatisch genutzt
 - neue GitHub-Links, Watchlists oder Quellen koennen automatisch eingespeist werden
 - der Kontext fuer das Zielprojekt wird aktiv mitgefuehrt
+- Workspace-Discovery fuer lokale Git-Repos
+- `init-project` fuer neue Projektbindungen ohne Handarbeit
+- `doctor` fuer GitHub-Token-, API- und Workspace-Diagnose
 
 Nutzen:
 

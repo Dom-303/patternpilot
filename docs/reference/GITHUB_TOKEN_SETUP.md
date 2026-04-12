@@ -28,6 +28,22 @@ Patternpilot prueft derzeit diese Umgebungsvariablen:
 
 Wenn eine davon gesetzt ist, authentifiziert sich der Intake gegen die GitHub-REST-API.
 
+Als Startpunkt liegt jetzt auch eine `.env.example` im Repo.
+
+## Diagnose
+
+Du kannst den aktuellen Zustand mit dem Doctor pruefen:
+
+```bash
+npm run doctor -- --offline
+```
+
+Oder mit API-Check:
+
+```bash
+npm run doctor
+```
+
 ## Empfohlene Stufen
 
 ### Jetzt

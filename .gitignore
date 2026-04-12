@@ -1,2 +1,3 @@
 /runs/
 npm-debug.log*
+.env

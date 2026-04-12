@@ -6,8 +6,13 @@
   "description": "Patternpilot intake and repo intelligence tooling",
   "scripts": {
     "patternpilot": "node scripts/patternpilot.mjs",
+    "doctor": "node scripts/patternpilot.mjs doctor",
+    "discover:workspace": "node scripts/patternpilot.mjs discover-workspace",
+    "init:project": "node scripts/patternpilot.mjs init-project",
     "intake": "node scripts/patternpilot.mjs intake",
+    "sync:watchlist": "node scripts/patternpilot.mjs sync-watchlist",
     "promote": "node scripts/patternpilot.mjs promote",
-    "show:project": "node scripts/patternpilot.mjs show-project"
+    "show:project": "node scripts/patternpilot.mjs show-project",
+    "list:projects": "node scripts/patternpilot.mjs list-projects"
   }
 }
