@@ -12,5 +12,6 @@ Diese Dokumentation enthaelt die dauerhaft wichtigen Patternpilot-Grundlagen.
 Wichtige Referenz fuer Stage 3:
 
 - `reference/PROJECT_ALIGNMENT_MODEL.md`
+- `reference/GITHUB_TOKEN_SETUP.md`
 
 Die Root von `patternpilot` bleibt damit staerker auf Einstieg, Konfiguration, Motor und operative Artefakte fokussiert.

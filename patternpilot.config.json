@@ -22,7 +22,8 @@
       "projectContextFile": "projects/eventbear-worker/PROJECT_CONTEXT.md",
       "projectBindingFile": "projects/eventbear-worker/PROJECT_BINDING.json",
       "alignmentRulesFile": "projects/eventbear-worker/ALIGNMENT_RULES.json",
-      "intakeRoot": "projects/eventbear-worker/intake"
+      "intakeRoot": "projects/eventbear-worker/intake",
+      "promotionRoot": "projects/eventbear-worker/promotions"
     }
   }
 }

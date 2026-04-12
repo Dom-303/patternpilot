@@ -1,5 +1,7 @@
 import path from "node:path";
 import {
+  buildPromotionCandidate,
+  buildPromotionDocPath,
   buildIntakeDocPath,
   buildLandkarteCandidate,
   buildProjectAlignment,
@@ -10,6 +12,7 @@ import {
   ensureDirectory,
   guessClassification,
   loadConfig,
+  loadQueueEntries,
   loadProjectAlignmentRules,
   loadPatternpilotRoot,
   loadProjectBinding,
@@ -17,9 +20,15 @@ import {
   normalizeGithubUrl,
   parseArgs,
   renderIntakeDoc,
+  renderLearningBlock,
+  renderDecisionBlock,
+  renderPromotionPacket,
   renderRunSummary,
   upsertQueueEntry,
+  upsertLandkarteEntry,
+  upsertManagedMarkdownBlock,
   writeIntakeDoc,
+  writePromotionPacket,
   writeRunArtifacts
 } from "../lib/patternpilot-engine.mjs";
 
@@ -28,12 +37,15 @@ function printHelp() {
 
 Commands:
   intake        Create intake queue entries and dossiers from GitHub URLs
+  promote       Prepare or apply promotion candidates from queue to curated artifacts
   show-project  Show the binding and reference context for a project
 
 Examples:
   npm run intake -- --project eventbear-worker https://github.com/City-Bureau/city-scrapers
   npm run intake -- --project eventbear-worker --file links.txt --dry-run
   npm run intake -- --project eventbear-worker --skip-enrich https://github.com/City-Bureau/city-scrapers
+  npm run patternpilot -- promote --project eventbear-worker --from-status pending_review
+  npm run patternpilot -- promote --project eventbear-worker --apply --from-status pending_review
   npm run show:project -- --project eventbear-worker
 `);
 }
@@ -122,6 +134,20 @@ async function runIntake(rootDir, config, options) {
       eventbaer_gap_area_guess: guess.gapArea,
       build_vs_borrow_guess: guess.buildVsBorrow,
       priority_guess: guess.priority,
+      secondary_layers: landkarteCandidate.secondary_layers,
+      source_focus: landkarteCandidate.source_focus,
+      geographic_model: landkarteCandidate.geographic_model,
+      data_model: landkarteCandidate.data_model,
+      distribution_type: landkarteCandidate.distribution_type,
+      activity_status: landkarteCandidate.activity_status,
+      maturity: landkarteCandidate.maturity,
+      strengths: landkarteCandidate.strengths,
+      weaknesses: landkarteCandidate.weaknesses,
+      risks: landkarteCandidate.risks,
+      learning_for_eventbaer: landkarteCandidate.learning_for_eventbaer,
+      possible_implication: landkarteCandidate.possible_implication,
+      decision_guess: landkarteCandidate.decision,
+      eventbaer_relevance_guess: landkarteCandidate.eventbaer_relevance,
       project_relevance_note: projectRelevanceNote,
       intake_doc: intakeDocRelativePath,
       run_id: runId,
@@ -228,6 +254,150 @@ async function runShowProject(rootDir, config, options) {
   }
 }
 
+function buildPromotionSummary({ runId, projectKey, createdAt, items, dryRun, apply }) {
+  const lines = items.map((item) => {
+    const mode = item.applied ? "applied" : "prepared";
+    return `- ${item.repo.owner}/${item.repo.name} -> ${item.promotionDocRelativePath} (${mode}; queue_status=${item.queueStatus})`;
+  });
+
+  return `# Patternpilot Promotion Run
+
+- run_id: ${runId}
+- project: ${projectKey}
+- created_at: ${createdAt}
+- dry_run: ${dryRun ? "yes" : "no"}
+- apply: ${apply ? "yes" : "no"}
+
+## Items
+
+${lines.join("\n")}
+`;
+}
+
+async function runPromote(rootDir, config, options) {
+  const projectKey = options.project || config.defaultProject;
+  const { project, binding } = await loadProjectBinding(rootDir, config, projectKey);
+  const queueRows = await loadQueueEntries(rootDir, config);
+  const requestedUrls = options.urls.map((url) => normalizeGithubUrl(url).normalizedRepoUrl);
+
+  let targets = queueRows.filter((row) => row.project_key === projectKey);
+  if (requestedUrls.length > 0) {
+    targets = targets.filter((row) => requestedUrls.includes(row.normalized_repo_url || row.repo_url));
+  } else {
+    const fromStatus = options.fromStatus || "pending_review";
+    targets = targets.filter((row) => row.status === fromStatus);
+  }
+
+  if (options.limit && Number.isFinite(options.limit) && options.limit > 0) {
+    targets = targets.slice(0, options.limit);
+  }
+
+  if (targets.length === 0) {
+    throw new Error("No matching queue entries found for promotion. Run intake first or adjust --from-status.");
+  }
+
+  const createdAt = new Date().toISOString();
+  const runId = createRunId(new Date(createdAt));
+  const items = [];
+
+  await ensureDirectory(path.join(rootDir, project.promotionRoot), options.dryRun);
+
+  for (const queueEntry of targets) {
+    const promotion = buildPromotionCandidate(queueEntry, binding);
+    const promotionDocPath = buildPromotionDocPath(rootDir, project, promotion.repo);
+    const promotionDocRelativePath = path.relative(rootDir, promotionDocPath);
+    const promotionPacket = renderPromotionPacket({
+      queueEntry,
+      promotion,
+      binding,
+      createdAt,
+      applyMode: options.apply
+    });
+
+    await writePromotionPacket({
+      promotionDocPath,
+      content: promotionPacket,
+      dryRun: options.dryRun
+    });
+
+    let nextStatus = "promotion_prepared";
+    if (options.apply) {
+      await upsertLandkarteEntry(rootDir, promotion.landkarteRow, options.dryRun);
+      await upsertManagedMarkdownBlock({
+        filePath: path.join(rootDir, "repo_learnings.md"),
+        sectionKey: "learning-candidates",
+        sectionTitle: "Patternpilot Candidate Learnings",
+        blockKey: promotion.repo.slug,
+        blockContent: renderLearningBlock(promotion, queueEntry),
+        dryRun: options.dryRun
+      });
+      await upsertManagedMarkdownBlock({
+        filePath: path.join(rootDir, "repo_decisions.md"),
+        sectionKey: "decision-candidates",
+        sectionTitle: "Patternpilot Candidate Decisions",
+        blockKey: promotion.repo.slug,
+        blockContent: renderDecisionBlock(promotion, queueEntry, binding),
+        dryRun: options.dryRun
+      });
+      nextStatus = "promoted";
+    }
+
+    const queueUpdate = {
+      ...queueEntry,
+      project_key: projectKey,
+      status: nextStatus,
+      updated_at: createdAt,
+      promotion_status: options.apply ? "applied" : "prepared",
+      promotion_packet: promotionDocRelativePath,
+      promoted_at: options.apply ? createdAt : queueEntry.promoted_at ?? ""
+    };
+
+    if (!options.dryRun) {
+      await upsertQueueEntry(rootDir, config, queueUpdate);
+    }
+
+    items.push({
+      repo: promotion.repo,
+      applied: options.apply,
+      queueStatus: nextStatus,
+      promotionDocRelativePath
+    });
+  }
+
+  const summary = buildPromotionSummary({
+    runId,
+    projectKey,
+    createdAt,
+    items,
+    dryRun: options.dryRun,
+    apply: options.apply
+  });
+  const manifest = {
+    runId,
+    projectKey,
+    createdAt,
+    dryRun: options.dryRun,
+    apply: options.apply,
+    items
+  };
+  const runDir = await writeRunArtifacts({
+    rootDir,
+    config,
+    projectKey,
+    runId,
+    manifest,
+    summary,
+    projectProfile: null,
+    dryRun: options.dryRun
+  });
+
+  console.log(summary);
+  console.log(`Run directory: ${path.relative(rootDir, runDir)}`);
+  if (options.dryRun) {
+    console.log("Dry run only: promotion files and curated artifacts were not written.");
+  }
+}
+
 async function main() {
   const rootDir = await loadPatternpilotRoot(import.meta.url);
   const config = await loadConfig(rootDir);
@@ -245,6 +415,11 @@ async function main() {
 
   if (command === "show-project") {
     await runShowProject(rootDir, config, options);
+    return;
+  }
+
+  if (command === "promote") {
+    await runPromote(rootDir, config, options);
     return;
   }
 

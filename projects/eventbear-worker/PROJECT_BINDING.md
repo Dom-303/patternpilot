@@ -6,6 +6,7 @@ Diese Datei beschreibt die operative Bindung zwischen `patternpilot` und `eventb
 
 Sie beantwortet nicht nur, **fuer welches Projekt** gearbeitet wird, sondern auch, **welche Teile des Zielrepos dabei als Referenz zuerst gelesen werden sollen**.
 Zusaetzlich verweist sie auf die Alignment-Regeln, mit denen Patternpilot externe Muster gegen die reale Zielarchitektur von EventBaer mappt.
+Ab Stage 4 entstehen daraus ausserdem Promotion-Pakete, die kontrolliert in Landkarte, Learnings und Entscheidungen ueberfuehrt werden koennen.
 
 ---
 
@@ -61,3 +62,11 @@ Zusaetzlich verweist sie auf die Alignment-Regeln, mit denen Patternpilot extern
 
 - Maschinenlesbare Alignment-Regeln: `ALIGNMENT_RULES.json`
 - Zweck: externe Repos gegen reale Worker-Faehigkeiten, Spannungen und naechste Schritte mappen
+
+---
+
+## Promotion-Fluss
+
+- Intake-Dossiers landen unter `intake/`
+- Promotion-Pakete landen unter `promotions/`
+- Erst der Promotion-Schritt darf kuratierte Artefakte wie `repo_landkarte.csv`, `repo_learnings.md` und `repo_decisions.md` veraendern

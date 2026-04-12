@@ -11,7 +11,7 @@ Fuer den aktuellen Stand bedeutet das:
 - GitHub-Link rein
 - projektgebundener Intake raus
 - Muster, Relevanz und naechste Schritte sichtbar
-- spaetere Promotion in Landkarte, Learnings und Entscheidungen
+- Promotion-Pakete und kuratierbare Kandidaten fuer Landkarte, Learnings und Entscheidungen
 
 Der Fokus liegt nicht auf losem Sammeln, sondern auf einem klaren Arbeitsprinzip:
 
@@ -76,6 +76,7 @@ Dieser Motor:
 - gleicht externe Muster gegen das Zielprojekt ab
 - legt projektbezogene Intake-Dossiers an
 - schreibt Run-Protokolle
+- kann Promotion-Pakete vorbereiten oder direkt anwenden
 
 Wichtig:
 
@@ -151,6 +152,8 @@ npm run intake -- --project eventbear-worker https://github.com/City-Bureau/city
 
 Wenn `PATTERNPILOT_GITHUB_TOKEN`, `GITHUB_TOKEN` oder `GITHUB_PAT` gesetzt ist, nutzt Patternpilot dieses Token fuer hoehere GitHub-API-Limits und spaeter auch fuer private Repos.
 
+Ein GitHub-Token ist hier ein API-Zugangsschluessel fuer GitHub, nicht die abrechnungsrelevanten Modell-Tokens eines LLMs.
+
 ### Mehrere Links aus Datei einlesen
 
 ```bash
@@ -161,6 +164,18 @@ npm run intake -- --project eventbear-worker --file links.txt
 
 ```bash
 npm run intake -- --project eventbear-worker --file links.txt --dry-run
+```
+
+### Promotion-Pakete aus der Queue vorbereiten
+
+```bash
+npm run promote -- --project eventbear-worker --from-status pending_review
+```
+
+### Promotion direkt auf kuratierte Artefakte anwenden
+
+```bash
+npm run promote -- --project eventbear-worker --apply --from-status pending_review
 ```
 
 ### Remote-Anreicherung bewusst ueberspringen
@@ -199,6 +214,7 @@ npm run intake -- --project eventbear-worker --skip-enrich https://github.com/Ci
 - `repo_decisions.md`
 - `docs/reference/distribution_surfaces.md`
 - `docs/reference/PROJECT_ALIGNMENT_MODEL.md`
+- `docs/reference/GITHUB_TOKEN_SETUP.md`
 
 ### Kontrollierte Vokabulare
 
@@ -222,6 +238,7 @@ npm run intake -- --project eventbear-worker --skip-enrich https://github.com/Ci
 - `projects/eventbear-worker/ALIGNMENT_RULES.json`
 - `projects/eventbear-worker/project_notes.md`
 - `projects/eventbear-worker/intake/`
+- `projects/eventbear-worker/promotions/`
 
 ### Motor
 

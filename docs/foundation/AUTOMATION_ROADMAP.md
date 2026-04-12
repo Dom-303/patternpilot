@@ -63,13 +63,15 @@ Nutzen:
 
 ## Stufe 4: Teilautomatische Decision-Promotion
 
-Spaetere Ausbaustufe
+Status: jetzt umgesetzt
 
 Was dazu kommt:
 
-- Vorschlaege fuer `repo_learnings.md` und `repo_decisions.md`
-- Watchlists und Clusterbildung ueber aehnliche Repos
-- priorisierte Review-Queues je Gap Area oder Pattern Family
+- eigener Promotion-Schritt zwischen Intake und kuratierten Artefakten
+- Promotion-Pakete pro Repo unter `projects/<projekt>/promotions/`
+- halbautomatische Updates fuer `repo_landkarte.csv`
+- candidate sections fuer `repo_learnings.md` und `repo_decisions.md`
+- Queue-Status fuer `promotion_prepared` und `promoted`
 
 Nutzen:
 
