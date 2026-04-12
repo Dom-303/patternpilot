@@ -87,6 +87,7 @@ Dieser Motor:
 - reichert GitHub-Metadaten und README-Inhalte an
 - gleicht externe Muster gegen das Zielprojekt ab
 - kann Watchlist-Repos gesammelt gegen das Zielprojekt vergleichen
+- schreibt menschenfreundliche HTML-Reports fuer Discovery- und Review-Laeufe
 - legt projektbezogene Intake-Dossiers an
 - schreibt Run-Protokolle
 - kann Promotion-Pakete vorbereiten oder direkt anwenden
@@ -202,7 +203,7 @@ npm run doctor -- --offline
 ### Heuristische GitHub-Discovery fuer ein Projekt laufen lassen
 
 ```bash
-npm run discover:github -- --project eventbear-worker --limit 8 --dry-run
+npm run discover:github -- --project eventbear-worker --discovery-profile balanced --report-view standard --dry-run
 ```
 
 Discovery-Profile:
@@ -223,6 +224,18 @@ npm run patternpilot -- discover --project eventbear-worker --query "calendar sc
 ```bash
 npm run review:watchlist -- --project eventbear-worker --analysis-profile architecture --analysis-depth deep --dry-run
 ```
+
+Report-Views:
+
+- `compact`: knapper Report mit wenig Ueberforderung
+- `standard`: sinnvoller Standard
+- `full`: mehr Kandidaten und mehr Vergleichsdetails
+
+HTML-Ausgabe:
+
+- Discovery schreibt nach `projects/<project>/reports/discovery-<profil>.html`
+- Watchlist-Review schreibt nach `projects/<project>/reports/watchlist-review-<profil>-<tiefe>.html`
+- zusaetzlich liegt pro Run auch `summary.html` im Run-Ordner
 
 Analyse-Profile:
 

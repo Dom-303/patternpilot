@@ -95,8 +95,22 @@ Die Arbeitsdatei fuer Review, Projektbezug und spaetere Promotion.
 
 `runs/<project>/<run-id>/manifest.json`
 `runs/<project>/<run-id>/summary.md`
+`runs/<project>/<run-id>/summary.html`
 
 Nachvollziehbarkeit fuer einzelne Intake-Laeufe.
+
+### HTML-Reports
+
+`projects/<project>/reports/*.html`
+
+Die menschenfreundliche Schicht fuer Discovery- und Vergleichslaeufe.
+Sie soll auch bei groesseren Repo-Mengen schnell zeigen:
+
+- welche Repos oben rauskommen
+- warum sie relevant sind
+- was daraus uebernommen werden koennte
+- welche Risiken oder Spannungen sichtbar sind
+- welche naechsten Schritte jetzt wirklich Sinn machen
 
 ---
 

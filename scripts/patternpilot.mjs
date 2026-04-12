@@ -32,12 +32,14 @@ import {
   loadProjectProfile,
   normalizeGithubUrl,
   parseArgs,
+  renderDiscoveryHtmlReport,
   renderDiscoverySummary,
   renderIntakeDoc,
   renderLearningBlock,
   renderDecisionBlock,
   renderPromotionPacket,
   renderRunSummary,
+  renderWatchlistReviewHtmlReport,
   runGithubDoctor,
   upsertQueueEntry,
   upsertLandkarteEntry,
@@ -69,9 +71,9 @@ Commands:
 Examples:
   npm run automation:run -- --all-projects --promotion-mode prepared --dry-run
   npm run doctor -- --offline
-  npm run patternpilot -- discover --project eventbear-worker --discovery-profile balanced --dry-run
+  npm run patternpilot -- discover --project eventbear-worker --discovery-profile balanced --report-view standard --dry-run
   npm run patternpilot -- discover --project eventbear-worker --query "scraper calendar venue" --intake
-  npm run patternpilot -- review-watchlist --project eventbear-worker --analysis-profile architecture --analysis-depth deep
+  npm run patternpilot -- review-watchlist --project eventbear-worker --analysis-profile architecture --analysis-depth deep --report-view full
   npm run init:env
   npm run init:project -- --project sample-worker --target ../sample-worker --label "Sample Worker"
   npm run discover:workspace
@@ -290,6 +292,20 @@ async function runDiscover(rootDir, config, options) {
     discovery,
     dryRun: options.dryRun
   });
+  const htmlReport = renderDiscoveryHtmlReport({
+    projectKey,
+    createdAt,
+    discovery,
+    reportView: options.reportView
+  });
+  const projectReportPath = path.join(
+    rootDir,
+    "projects",
+    binding.projectKey,
+    "reports",
+    `discovery-${discovery.discoveryProfile.id}.html`
+  );
+  const projectReportRelativePath = path.relative(rootDir, projectReportPath);
   const manifest = {
     runId,
     projectKey,
@@ -298,6 +314,8 @@ async function runDiscover(rootDir, config, options) {
     query: options.query,
     intake: options.intake,
     appendWatchlist: options.appendWatchlist,
+    reportView: options.reportView,
+    htmlReportPath: projectReportRelativePath,
     discovery
   };
   const runDir = await writeRunArtifacts({
@@ -310,9 +328,17 @@ async function runDiscover(rootDir, config, options) {
     projectProfile,
     dryRun: options.dryRun
   });
+  const runHtmlPath = path.join(runDir, "summary.html");
+
+  if (!options.dryRun) {
+    await ensureDirectory(path.dirname(projectReportPath), false);
+    await fs.writeFile(projectReportPath, `${htmlReport}\n`, "utf8");
+    await fs.writeFile(runHtmlPath, `${htmlReport}\n`, "utf8");
+  }
 
   console.log(summary);
   console.log(`Run directory: ${path.relative(rootDir, runDir)}`);
+  console.log(`HTML report: ${projectReportRelativePath}`);
 
   const candidateUrls = discovery.candidates.map((candidate) => candidate.repo.normalizedRepoUrl);
   if (options.appendWatchlist) {
@@ -366,6 +392,7 @@ async function runReviewWatchlist(rootDir, config, options) {
   const createdAt = review.createdAt;
   const runId = createRunId(new Date(createdAt));
   const report = buildWatchlistReviewReport(review);
+  const htmlReport = renderWatchlistReviewHtmlReport(review, options.reportView);
   const reportPath = path.join(
     rootDir,
     "projects",
@@ -373,13 +400,23 @@ async function runReviewWatchlist(rootDir, config, options) {
     "reviews",
     `watchlist-review-${review.analysisProfile.id}-${review.analysisDepth.id}.md`
   );
+  const htmlReportPath = path.join(
+    rootDir,
+    "projects",
+    binding.projectKey,
+    "reports",
+    `watchlist-review-${review.analysisProfile.id}-${review.analysisDepth.id}.html`
+  );
   const reportRelativePath = path.relative(rootDir, reportPath);
+  const htmlReportRelativePath = path.relative(rootDir, htmlReportPath);
   const manifest = {
     runId,
     projectKey,
     createdAt,
     dryRun: options.dryRun,
     reportPath: reportRelativePath,
+    htmlReportPath: htmlReportRelativePath,
+    reportView: options.reportView,
     review
   };
   const runDir = await writeRunArtifacts({
@@ -392,15 +429,20 @@ async function runReviewWatchlist(rootDir, config, options) {
     projectProfile,
     dryRun: options.dryRun
   });
+  const runHtmlPath = path.join(runDir, "summary.html");
 
   if (!options.dryRun) {
     await ensureDirectory(path.dirname(reportPath), false);
+    await ensureDirectory(path.dirname(htmlReportPath), false);
     await fs.writeFile(reportPath, `${report}\n`, "utf8");
+    await fs.writeFile(htmlReportPath, `${htmlReport}\n`, "utf8");
+    await fs.writeFile(runHtmlPath, `${htmlReport}\n`, "utf8");
   }
 
   console.log(report);
   console.log(`Run directory: ${path.relative(rootDir, runDir)}`);
   console.log(`Review report: ${reportRelativePath}`);
+  console.log(`HTML report: ${htmlReportRelativePath}`);
   if (options.dryRun) {
     console.log("Dry run only: review report was not written.");
   }

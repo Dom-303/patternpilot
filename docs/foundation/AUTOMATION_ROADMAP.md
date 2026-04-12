@@ -136,3 +136,22 @@ Nutzen:
 - Patternpilot endet nicht mehr beim Einsammeln
 - Staerken, Schwachstellen und konkrete Vergleichspotenziale werden sichtbar
 - Nutzer koennen den Fokus des letzten Vergleichs-Runs bewusst steuern
+
+---
+
+## Stufe 8: Nutzerfreundliche Report-Schicht
+
+Status: jetzt umgesetzt
+
+Was dazu kommt:
+
+- Discovery- und Review-Laeufe erzeugen standardisierte HTML-Reports
+- Report-Views steuern die Detailtiefe der Ausgabe
+- dieselben zugrunde liegenden Daten koennen so roh oder nutzerfreundlich gelesen werden
+- die HTML-Schicht ist bewusst als Vorstufe einer spaeteren Produkt-UI gebaut
+
+Nutzen:
+
+- auch groessere Repo-Mengen bleiben lesbar
+- Empfehlungen und Transferpotenziale werden schneller sichtbar
+- Patternpilot wird produktreifer und weniger nur ein CLI-/Dokumentensystem

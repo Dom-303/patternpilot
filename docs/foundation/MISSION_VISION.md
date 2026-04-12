@@ -11,6 +11,7 @@ Es soll nicht nur zeigen, **was es da draussen gibt**, sondern vor allem:
 - welche Schicht dadurch sichtbar wird
 - was das fuer das Zielprojekt konkret bedeutet
 - welcher naechste Schritt daraus folgt
+- wie diese Erkenntnisse fuer Menschen klar, schnell und nutzerfreundlich lesbar werden
 
 ---
 
@@ -24,6 +25,7 @@ Die Zielvision ist:
 - Zielprojekt und Referenz-Repo bekannt
 - Patternpilot versteht die Projektlinse
 - Patternpilot erzeugt strukturierte Intake-Artefakte, Review-Grundlagen und Entscheidungsvorschlaege
+- Patternpilot erzeugt daraus auch menschenfreundliche HTML-Reports statt nur Rohdaten und Markdown
 - daraus entstehen echte Produkt- und Architekturbewegung statt Link-Sammlungen
 
 Langfristig soll `patternpilot` nicht nur fuer EventBaer funktionieren, sondern fuer mehrere Produkt- und Infra-Projekte.
@@ -66,6 +68,7 @@ Ein guter Patternpilot-Output erzeugt immer drei Dinge:
 1. Ein klares Verstaendnis des externen Fundes
 2. Eine klare Rueckbindung auf das Zielprojekt
 3. Einen naechsten sinnvollen Schritt
+4. Eine Ausgabeform, die auch bei 20, 40 oder 70 Repos noch gut lesbar bleibt
 
 Wenn eines davon fehlt, fehlt Wirkung.
 
