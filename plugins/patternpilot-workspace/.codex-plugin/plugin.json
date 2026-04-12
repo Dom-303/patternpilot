@@ -38,8 +38,8 @@
       "Diagnose GitHub auth and workspace readiness for Patternpilot."
     ],
     "brandColor": "#0F4C5C",
-    "composerIcon": "./assets/icon.svg",
-    "logo": "./assets/logo.svg",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/logo.png",
     "screenshots": []
   }
 }

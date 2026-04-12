@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 96">
-  <rect width="320" height="96" rx="24" fill="#0F4C5C"/>
-  <circle cx="48" cy="48" r="24" fill="#F4F1DE"/>
-  <path d="M40 62V34h10c8 0 14 5 14 12 0 7-6 12-14 12h-3v4H40zm7-10h3c4 0 7-2 7-6s-3-6-7-6h-3v12z" fill="#0F4C5C"/>
-  <text x="88" y="58" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#F4F1DE">Patternpilot</text>
-</svg>

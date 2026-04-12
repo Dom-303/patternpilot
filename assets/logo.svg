@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 54" fill="none">
-  <title>Patternpilot</title>
-  <!-- Tetris-inspired staircase: 5 interlocking blocks representing patterns navigating forward -->
-  <rect x="0" y="0" width="14" height="14" rx="3" fill="#00e5ff"/>
-  <rect x="18" y="0" width="14" height="14" rx="3" fill="#e040fb"/>
-  <rect x="18" y="18" width="14" height="14" rx="3" fill="#ff9100"/>
-  <rect x="36" y="18" width="14" height="14" rx="3" fill="#00e676"/>
-  <rect x="36" y="36" width="14" height="14" rx="3" fill="#2979ff"/>
-</svg>
