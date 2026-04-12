@@ -26,17 +26,17 @@ Erstelle in `D:\eventbaer\dev\patternpilot` exakt diese Struktur:
 - `docs/taxonomy/EVENTBAER_GAP_AREAS.md`
 - `docs/taxonomy/BUILD_VS_BORROW.md`
 - `docs/taxonomy/PRIORITY_FOR_REVIEW.md`
-- `repo_landkarte.csv`
-- `repo_learnings.md`
-- `repo_decisions.md`
+- `knowledge/repo_landkarte.csv`
+- `knowledge/repo_learnings.md`
+- `knowledge/repo_decisions.md`
 - `docs/reference/distribution_surfaces.md`
 - `docs/foundation/MISSION_VISION.md`
 - `docs/foundation/OPERATING_MODEL.md`
 - `docs/foundation/AUTOMATION_ROADMAP.md`
-- `controlled_vocabulary_pattern_families.csv`
-- `controlled_vocabulary_eventbaer_gap_areas.csv`
-- `controlled_vocabulary_build_vs_borrow.csv`
-- `controlled_vocabulary_priority_for_review.csv`
+- `taxonomy/controlled_vocabulary/controlled_vocabulary_pattern_families.csv`
+- `taxonomy/controlled_vocabulary/controlled_vocabulary_eventbaer_gap_areas.csv`
+- `taxonomy/controlled_vocabulary/controlled_vocabulary_build_vs_borrow.csv`
+- `taxonomy/controlled_vocabulary/controlled_vocabulary_priority_for_review.csv`
 - `projects/eventbear-worker/PROJECT_CONTEXT.md`
 - `projects/eventbear-worker/PROJECT_BINDING.md`
 - `projects/eventbear-worker/PROJECT_BINDING.json`
@@ -51,9 +51,9 @@ Erstelle in `D:\eventbaer\dev\patternpilot` exakt diese Struktur:
 - Nur diese Dateien erzeugen
 - Keine zusätzlichen Dateien
 - Keine Refactors außerhalb dieses neuen Repos
-- `repo_landkarte.csv` mit Semikolon `;` als Trenner schreiben
+- `knowledge/repo_landkarte.csv` mit Semikolon `;` als Trenner schreiben
 - Inhalte exakt aus dem gelieferten Paket übernehmen
-- `repo_landkarte.csv` als Seed-Stand behandeln, nicht als abgeschlossene Wahrheit
+- `knowledge/repo_landkarte.csv` als Seed-Stand behandeln, nicht als abgeschlossene Wahrheit
 
 ## Abschluss
 

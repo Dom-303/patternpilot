@@ -33,7 +33,7 @@ Was dazu kommt:
 - GitHub-Metadaten automatisch anreichern
 - Repo-Readme oder Kerninfos in das Dossier ziehen
 - Review-Fragen halbautomatisch vorbefuellen
-- Promotion-Kandidaten fuer `repo_landkarte.csv` vorschlagen
+- Promotion-Kandidaten fuer `knowledge/repo_landkarte.csv` vorschlagen
 - Queue-Felder mit Aktivitaets- und Repo-Signalen anreichern
 - mit optionalem GitHub-Token auf hoehere API-Limits vorbereiten
 
@@ -69,8 +69,8 @@ Was dazu kommt:
 
 - eigener Promotion-Schritt zwischen Intake und kuratierten Artefakten
 - Promotion-Pakete pro Repo unter `projects/<projekt>/promotions/`
-- halbautomatische Updates fuer `repo_landkarte.csv`
-- candidate sections fuer `repo_learnings.md` und `repo_decisions.md`
+- halbautomatische Updates fuer `knowledge/repo_landkarte.csv`
+- candidate sections fuer `knowledge/repo_learnings.md` und `knowledge/repo_decisions.md`
 - Queue-Status fuer `promotion_prepared` und `promoted`
 
 Nutzen:

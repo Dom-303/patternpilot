@@ -4,7 +4,7 @@
 
 Diese Datei definiert die kanonischen `pattern_family`-Werte für `patternpilot`.
 
-Sie verhindert, dass die Spalte `pattern_family` in `repo_landkarte.csv` zu einer freien Notizspalte wird.
+Sie verhindert, dass die Spalte `pattern_family` in `knowledge/repo_landkarte.csv` zu einer freien Notizspalte wird.
 
 `pattern_family` beschreibt das wiederkehrende Grundmuster eines Repos oder Produkts.
 

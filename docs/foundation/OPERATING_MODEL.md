@@ -26,11 +26,11 @@ Damit wird festgelegt:
 
 ### 2. Intake statt Direktbewertung
 
-Neue GitHub-Links werden nicht sofort in `repo_landkarte.csv` geschrieben.
+Neue GitHub-Links werden nicht sofort in `knowledge/repo_landkarte.csv` geschrieben.
 
 Stattdessen entstehen:
 
-- ein Queue-Eintrag in `repo_intake_queue.csv`
+- ein Queue-Eintrag in `state/repo_intake_queue.csv`
 - ein Intake-Dossier unter `projects/<project>/intake/`
 - ein Run-Protokoll unter `runs/<project>/<run-id>/`
 
@@ -40,9 +40,9 @@ Das trennt rohe Funde von kuratierter Repo-Intelligence.
 
 Erst nach Review darf ein Fund aufsteigen in:
 
-- `repo_landkarte.csv`
-- `repo_learnings.md`
-- `repo_decisions.md`
+- `knowledge/repo_landkarte.csv`
+- `knowledge/repo_learnings.md`
+- `knowledge/repo_decisions.md`
 
 ### 4. Projektwirksamer Output
 
@@ -81,7 +81,7 @@ Sie macht bewusst noch nicht:
 
 ### Queue
 
-`repo_intake_queue.csv`
+`state/repo_intake_queue.csv`
 
 Der operative Eingang fuer neue Repos.
 

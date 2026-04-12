@@ -33,6 +33,8 @@ import {
   normalizeGithubUrl,
   parseArgs,
   refreshOperationalDocs,
+  resolveLearningsPath,
+  resolveDecisionsPath,
   renderDiscoveryHtmlReport,
   renderDiscoverySummary,
   renderIntakeDoc,
@@ -913,7 +915,7 @@ async function runPromote(rootDir, config, options) {
     if (options.apply) {
       await upsertLandkarteEntry(rootDir, promotion.landkarteRow, options.dryRun);
       await upsertManagedMarkdownBlock({
-        filePath: path.join(rootDir, "repo_learnings.md"),
+        filePath: resolveLearningsPath(rootDir, config),
         sectionKey: "learning-candidates",
         sectionTitle: "Patternpilot Candidate Learnings",
         blockKey: promotion.repo.slug,
@@ -921,7 +923,7 @@ async function runPromote(rootDir, config, options) {
         dryRun: options.dryRun
       });
       await upsertManagedMarkdownBlock({
-        filePath: path.join(rootDir, "repo_decisions.md"),
+        filePath: resolveDecisionsPath(rootDir, config),
         sectionKey: "decision-candidates",
         sectionTitle: "Patternpilot Candidate Decisions",
         blockKey: promotion.repo.slug,

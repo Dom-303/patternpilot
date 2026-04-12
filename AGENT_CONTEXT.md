@@ -35,8 +35,8 @@ Diese Dateien in dieser Reihenfolge zuerst lesen:
 
 ## Betriebsregeln
 
-- `repo_landkarte.csv` ist kuratierter Wissensbestand, nicht rohe Intake-Ablage.
-- Neue GitHub-Links gehen zuerst in `repo_intake_queue.csv` und in ein projektbezogenes Intake-Dossier.
+- `knowledge/repo_landkarte.csv` ist kuratierter Wissensbestand, nicht rohe Intake-Ablage.
+- Neue GitHub-Links gehen zuerst in `state/repo_intake_queue.csv` und in ein projektbezogenes Intake-Dossier.
 - Auto-Guesses sind Hilfssignale, keine Wahrheit.
 - Entscheidungen muessen am Zielprojekt rueckgebunden sein.
 - Projektbindung nie implizit ueberschreiben: pro Analyse ist klar, fuer welches Projekt gearbeitet wird.
@@ -44,6 +44,7 @@ Diese Dateien in dieser Reihenfolge zuerst lesen:
 - Repo-Kontext ist laufbezogen: Patternpilot liest die konfigurierten Kontextquellen eines Zielrepos, verankert aber keine harte Projektidentitaet in seinem Produktkern.
 - Projekt-Alignment ist verpflichtender Teil ab Stage 3, wenn ein Zielprojekt Bindings und Alignment-Regeln hat.
 - `STATUS.md` und `OPEN_QUESTION.md` sind die operative Uebergabeschicht fuer den naechsten Agenten und muessen aktuell bleiben.
+- `knowledge/repo_decisions.md` gehoert zur kuratierten Wissensschicht und nicht neben `STATUS.md` / `OPEN_QUESTION.md`.
 - menschenfreundliche HTML-Reports sind verbindlicher Teil der Output-Schicht, nicht nur nettes Beiwerk.
 
 ---
@@ -54,7 +55,7 @@ Diese Dateien in dieser Reihenfolge zuerst lesen:
 2. Queue-Eintrag und Intake-Dossier erzeugen
 3. GitHub-Metadaten und README anreichern
 4. Dossier gegen Projektkontext und Referenz-Repo lesen
-5. Nur nach Review in `repo_landkarte.csv`, `repo_learnings.md` oder `repo_decisions.md` ueberfuehren
+5. Nur nach Review in `knowledge/repo_landkarte.csv`, `knowledge/repo_learnings.md` oder `knowledge/repo_decisions.md` ueberfuehren
 
 ---
 

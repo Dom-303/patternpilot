@@ -2,7 +2,10 @@
   "version": 1,
   "defaultProject": "eventbear-worker",
   "runtimeRoot": "runs",
-  "queueFile": "repo_intake_queue.csv",
+  "queueFile": "state/repo_intake_queue.csv",
+  "landkarteFile": "knowledge/repo_landkarte.csv",
+  "learningsFile": "knowledge/repo_learnings.md",
+  "decisionsFile": "knowledge/repo_decisions.md",
   "docsRoot": "docs",
   "workspaceRoots": [
     ".."

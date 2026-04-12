@@ -25,8 +25,8 @@ Die Discovery-Linse speist sich aus:
 - Verzeichnisstruktur aus `referenceDirectories`
 - optionalen `discoveryHints`
 - bereits bekannten Repos in:
-  - `repo_landkarte.csv`
-  - `repo_intake_queue.csv`
+  - `knowledge/repo_landkarte.csv`
+  - `state/repo_intake_queue.csv`
   - `WATCHLIST.txt`
 
 ## Warum erst ohne LLM

@@ -153,15 +153,15 @@ Sie verhindert, dass rohe GitHub-Funde direkt als kuratierte Repo-Intelligence b
 
 Neue Repos durchlaufen deshalb zuerst:
 
-1. `repo_intake_queue.csv`
+1. `state/repo_intake_queue.csv`
 2. projektbezogenes Intake-Dossier unter `projects/<projekt>/intake/`
 3. Run-Protokoll unter `runs/<projekt>/<run-id>/`
 
 Erst nach Review darf ein Fund in die kuratierten Artefakte uebergehen:
 
-- `repo_landkarte.csv`
-- `repo_learnings.md`
-- `repo_decisions.md`
+- `knowledge/repo_landkarte.csv`
+- `knowledge/repo_learnings.md`
+- `knowledge/repo_decisions.md`
 
 ---
 
@@ -232,12 +232,12 @@ Ohne diese Frage bleibt der Fund nur ein interessanter Link.
 
 ## Zentrale Felder der Landkarte
 
-Die Datei `repo_landkarte.csv` ist die operative Kernübersicht.
+Die Datei `knowledge/repo_landkarte.csv` ist die operative Kernübersicht.
 
 Wichtig:
 
 Sie ist die kuratierte Landkarte, nicht der rohe Eingang fuer neue GitHub-Links.
-Der rohe Eingang liegt in `repo_intake_queue.csv`.
+Der rohe Eingang liegt in `state/repo_intake_queue.csv`.
 
 Pflichtspalten:
 
@@ -362,7 +362,7 @@ Aktuell nicht relevant oder nicht tragfähig.
 
 ## Learnings-Ebene
 
-`repo_learnings.md` ist bewusst keine Wiederholung der Tabelle.
+`knowledge/repo_learnings.md` ist bewusst keine Wiederholung der Tabelle.
 
 Dort werden verdichtete Erkenntnisse dokumentiert wie:
 
@@ -378,7 +378,7 @@ Dort werden verdichtete Erkenntnisse dokumentiert wie:
 
 ## Entscheidungs-Ebene
 
-`repo_decisions.md` dokumentiert konkrete Konsequenzen.
+`knowledge/repo_decisions.md` dokumentiert konkrete Konsequenzen.
 
 Nicht:
 - lange Beschreibung fremder Repos

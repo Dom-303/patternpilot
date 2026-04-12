@@ -98,12 +98,17 @@ Dieser Motor:
 Wichtig:
 
 Die Intake-Queue ist bewusst **vor** der kuratierten Landkarte geschaltet.
-Neue Links landen zuerst in `repo_intake_queue.csv` und im jeweiligen Dossier, nicht direkt in `repo_landkarte.csv`.
+Neue Links landen zuerst in `state/repo_intake_queue.csv` und im jeweiligen Dossier, nicht direkt in `knowledge/repo_landkarte.csv`.
 
 Ebenso wichtig:
 
 Patternpilot verankert keine harte Projektoberflaeche wie `docs/` in seinem Produktkern.
 Es nutzt pro Zielprojekt nur die dort konfigurierten Kontextquellen als schnelle Einleseschicht und zeigt in Reports transparent, was fuer den jeweiligen Lauf tatsaechlich gelesen wurde.
+
+Ordnungslogik:
+
+- `STATUS.md` und `OPEN_QUESTION.md` bleiben im Repo-Root als operative Handoff-Schicht.
+- `knowledge/repo_decisions.md` gehoert nicht in diese Handoff-Schicht, sondern zur kuratierten Wissensebene zusammen mit `knowledge/repo_landkarte.csv` und `knowledge/repo_learnings.md`.
 
 ---
 
@@ -125,7 +130,7 @@ Es enthaelt:
 
 Wichtig:
 
-Die Datei `repo_landkarte.csv` ist **ein Seed-Stand**, kein endgültiger Wahrheitsbestand.
+Die Datei `knowledge/repo_landkarte.csv` ist **ein Seed-Stand**, kein endgültiger Wahrheitsbestand.
 Sie enthält erste, bereits gesichtete Repos als Startmaterial und soll iterativ geschärft, erweitert und bereinigt werden.
 
 ---
@@ -342,10 +347,10 @@ npm run intake -- --project eventbear-worker --skip-enrich https://github.com/Ci
 
 ### Operative Arbeitsdateien
 
-- `repo_landkarte.csv`
-- `repo_intake_queue.csv`
-- `repo_learnings.md`
-- `repo_decisions.md`
+- `knowledge/repo_landkarte.csv`
+- `state/repo_intake_queue.csv`
+- `knowledge/repo_learnings.md`
+- `knowledge/repo_decisions.md`
 - `docs/reference/distribution_surfaces.md`
 - `docs/reference/PROJECT_ALIGNMENT_MODEL.md`
 - `docs/reference/GITHUB_TOKEN_SETUP.md`
@@ -355,10 +360,10 @@ npm run intake -- --project eventbear-worker --skip-enrich https://github.com/Ci
 
 ### Kontrollierte Vokabulare
 
-- `controlled_vocabulary_pattern_families.csv`
-- `controlled_vocabulary_eventbaer_gap_areas.csv`
-- `controlled_vocabulary_build_vs_borrow.csv`
-- `controlled_vocabulary_priority_for_review.csv`
+- `taxonomy/controlled_vocabulary/controlled_vocabulary_pattern_families.csv`
+- `taxonomy/controlled_vocabulary/controlled_vocabulary_eventbaer_gap_areas.csv`
+- `taxonomy/controlled_vocabulary/controlled_vocabulary_build_vs_borrow.csv`
+- `taxonomy/controlled_vocabulary/controlled_vocabulary_priority_for_review.csv`
 
 ### Prompts
 

@@ -85,4 +85,4 @@ Ab Stage 4 entstehen daraus ausserdem Promotion-Pakete, die kontrolliert in Land
 - Watchlist-Datei: `WATCHLIST.txt`
 - Intake-Dossiers landen unter `intake/`
 - Promotion-Pakete landen unter `promotions/`
-- Erst der Promotion-Schritt darf kuratierte Artefakte wie `repo_landkarte.csv`, `repo_learnings.md` und `repo_decisions.md` veraendern
+- Erst der Promotion-Schritt darf kuratierte Artefakte wie `knowledge/repo_landkarte.csv`, `knowledge/repo_learnings.md` und `knowledge/repo_decisions.md` veraendern
