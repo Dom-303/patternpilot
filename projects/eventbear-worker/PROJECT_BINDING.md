@@ -14,6 +14,8 @@ Ab Stage 4 entstehen daraus ausserdem Promotion-Pakete, die kontrolliert in Land
 
 - Pfad: `../eventbear-worker`
 - Rolle: operativer Daten-Worker und Zielsystem fuer die von Patternpilot abgeleiteten Entscheidungen
+- Primaerer Referenzpfad: `../eventbear-worker/docs`
+- Leselogik: Patternpilot liest weiterhin einzelne Leitdateien am Repo-Root, behandelt aber `docs/` als wichtigste Referenzoberflaeche fuer Architektur, Zielbild und Betriebslogik
 
 ---
 
@@ -31,9 +33,9 @@ Ab Stage 4 entstehen daraus ausserdem Promotion-Pakete, die kontrolliert in Land
 
 ## Besonders relevante Verzeichnisse
 
+- `docs/` als primaere Referenzoberflaeche
 - `lib/`
 - `scripts/`
-- `docs/`
 - `sources/`
 - `templates/`
 

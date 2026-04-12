@@ -20,12 +20,16 @@ Aus externen Repos, Tools und Produktmustern belastbare Entscheidungen und umset
 Diese Dateien in dieser Reihenfolge zuerst lesen:
 
 1. `README.md`
-2. `docs/foundation/MISSION_VISION.md`
-3. `docs/system/REPO_INTELLIGENCE_SYSTEM.md`
-4. `docs/foundation/OPERATING_MODEL.md`
-5. `patternpilot.config.json`
-6. `projects/<project>/PROJECT_CONTEXT.md`
-7. `projects/<project>/PROJECT_BINDING.md`
+2. `STATUS.md`
+3. `OPEN_QUESTION.md`
+4. `docs/foundation/MISSION_VISION.md`
+5. `docs/system/REPO_INTELLIGENCE_SYSTEM.md`
+6. `docs/foundation/OPERATING_MODEL.md`
+7. `docs/reference/REPORT_OUTPUT_MODEL.md`
+8. `docs/reference/REPORT_UI_FRAMEWORK.md`
+9. `patternpilot.config.json`
+10. `projects/<project>/PROJECT_CONTEXT.md`
+11. `projects/<project>/PROJECT_BINDING.md`
 
 ---
 
@@ -38,6 +42,8 @@ Diese Dateien in dieser Reihenfolge zuerst lesen:
 - Projektbindung nie implizit ueberschreiben: pro Analyse ist klar, fuer welches Projekt gearbeitet wird.
 - Patternpilot soll den Worker staerken, nicht seinen Scope still aufblaehen.
 - Projekt-Alignment ist verpflichtender Teil ab Stage 3, wenn ein Zielprojekt Bindings und Alignment-Regeln hat.
+- `STATUS.md` und `OPEN_QUESTION.md` sind die operative Uebergabeschicht fuer den naechsten Agenten und muessen aktuell bleiben.
+- menschenfreundliche HTML-Reports sind verbindlicher Teil der Output-Schicht, nicht nur nettes Beiwerk.
 
 ---
 

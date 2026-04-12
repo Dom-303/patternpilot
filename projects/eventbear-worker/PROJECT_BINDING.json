@@ -2,6 +2,7 @@
   "projectKey": "eventbear-worker",
   "projectLabel": "EventBaer Worker",
   "projectRoot": "../eventbear-worker",
+  "referenceRoot": "docs",
   "readBeforeAnalysis": [
     "AGENT_CONTEXT.md",
     "WORKER_CONTRACT.md",

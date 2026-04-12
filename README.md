@@ -68,6 +68,7 @@ Es hat jetzt einen lokalen Motor plus Workspace-Modus:
 - `npm run intake -- --project eventbear-worker <github-url>`
 - `npm run discover:github -- --project eventbear-worker --limit 8 --dry-run`
 - `npm run review:watchlist -- --project eventbear-worker --analysis-profile balanced`
+- `npm run refresh:context`
 - `npm run init:project -- --project <key> --target <repo-pfad>`
 - `npm run discover:workspace`
 - `npm run doctor -- --offline`
@@ -88,6 +89,7 @@ Dieser Motor:
 - gleicht externe Muster gegen das Zielprojekt ab
 - kann Watchlist-Repos gesammelt gegen das Zielprojekt vergleichen
 - schreibt menschenfreundliche HTML-Reports fuer Discovery- und Review-Laeufe
+- haelt `STATUS.md` und `OPEN_QUESTION.md` als Uebergabeflaechen fuer Agenten aktuell
 - legt projektbezogene Intake-Dossiers an
 - schreibt Run-Protokolle
 - kann Promotion-Pakete vorbereiten oder direkt anwenden
@@ -236,6 +238,13 @@ HTML-Ausgabe:
 - Discovery schreibt nach `projects/<project>/reports/discovery-<profil>.html`
 - Watchlist-Review schreibt nach `projects/<project>/reports/watchlist-review-<profil>-<tiefe>.html`
 - zusaetzlich liegt pro Run auch `summary.html` im Run-Ordner
+
+Uebergabedateien:
+
+- `STATUS.md` zeigt den aktuellen Patternpilot-Betriebsstand
+- `OPEN_QUESTION.md` haelt die wirklich offenen Produkt- und Betriebsfragen sichtbar
+- die Kernlaeufe aktualisieren diese Dateien automatisch
+- zusaetzlich gibt es `npm run refresh:context`
 
 Analyse-Profile:
 

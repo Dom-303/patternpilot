@@ -112,6 +112,19 @@ Sie soll auch bei groesseren Repo-Mengen schnell zeigen:
 - welche Risiken oder Spannungen sichtbar sind
 - welche naechsten Schritte jetzt wirklich Sinn machen
 
+### Uebergabe- und Einstiegsschicht
+
+`STATUS.md`
+`OPEN_QUESTION.md`
+
+Diese beiden Dateien bilden die operative Uebergabe fuer neue Agenten und spaetere Sessions.
+
+Sie sollen sichtbar halten:
+
+- wo Patternpilot aktuell steht
+- was der letzte sinnvolle Einstiegspunkt ist
+- welche Fragen wirklich noch offen sind
+
 ---
 
 ## Plugin-Richtung

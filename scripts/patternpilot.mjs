@@ -32,6 +32,7 @@ import {
   loadProjectProfile,
   normalizeGithubUrl,
   parseArgs,
+  refreshOperationalDocs,
   renderDiscoveryHtmlReport,
   renderDiscoverySummary,
   renderIntakeDoc,
@@ -62,6 +63,7 @@ Commands:
   list-projects Show configured Patternpilot project bindings
   intake        Create intake queue entries and dossiers from GitHub URLs
   promote       Prepare or apply promotion candidates from queue to curated artifacts
+  refresh-context  Refresh STATUS.md and OPEN_QUESTION.md
   review-watchlist  Compare watchlist-backed intake repos against the target project
   setup-checklist  Show exactly which secrets or IDs are still needed and where to find them
   sync-all-watchlists  Run watchlist intake across all configured projects
@@ -73,6 +75,7 @@ Examples:
   npm run doctor -- --offline
   npm run patternpilot -- discover --project eventbear-worker --discovery-profile balanced --report-view standard --dry-run
   npm run patternpilot -- discover --project eventbear-worker --query "scraper calendar venue" --intake
+  npm run patternpilot -- refresh-context
   npm run patternpilot -- review-watchlist --project eventbear-worker --analysis-profile architecture --analysis-depth deep --report-view full
   npm run init:env
   npm run init:project -- --project sample-worker --target ../sample-worker --label "Sample Worker"
@@ -87,6 +90,10 @@ Examples:
   npm run patternpilot -- promote --project eventbear-worker --apply --from-status pending_review
   npm run show:project -- --project eventbear-worker
 `);
+}
+
+async function refreshContext(rootDir, config, context) {
+  await refreshOperationalDocs(rootDir, config, context);
 }
 
 async function runIntake(rootDir, config, options) {
@@ -267,6 +274,12 @@ async function runIntake(rootDir, config, options) {
   if (options.dryRun) {
     console.log("Dry run only: queue and files were not written.");
   }
+  await refreshContext(rootDir, config, {
+    command: "intake",
+    projectKey,
+    mode: options.dryRun ? "dry_run" : "write",
+    reportPath: path.relative(rootDir, runDir)
+  });
 }
 
 async function runDiscover(rootDir, config, options) {
@@ -373,6 +386,12 @@ async function runDiscover(rootDir, config, options) {
         : "auto-discovered via patternpilot discovery"
     });
   }
+  await refreshContext(rootDir, config, {
+    command: "discover",
+    projectKey,
+    mode: options.dryRun ? "dry_run" : "write",
+    reportPath: projectReportRelativePath
+  });
 }
 
 async function runReviewWatchlist(rootDir, config, options) {
@@ -446,6 +465,25 @@ async function runReviewWatchlist(rootDir, config, options) {
   if (options.dryRun) {
     console.log("Dry run only: review report was not written.");
   }
+  await refreshContext(rootDir, config, {
+    command: "review-watchlist",
+    projectKey,
+    mode: options.dryRun ? "dry_run" : "write",
+    reportPath: htmlReportRelativePath
+  });
+}
+
+async function runRefreshContext(rootDir, config) {
+  await refreshContext(rootDir, config, {
+    command: "refresh-context",
+    projectKey: config.defaultProject,
+    mode: "manual",
+    reportPath: "-"
+  });
+  console.log(`# Patternpilot Context Refreshed`);
+  console.log(``);
+  console.log(`- status_file: STATUS.md`);
+  console.log(`- open_questions_file: OPEN_QUESTION.md`);
 }
 
 async function runShowProject(rootDir, config, options) {
@@ -458,6 +496,7 @@ async function runShowProject(rootDir, config, options) {
   console.log(`- project: ${projectKey}`);
   console.log(`- label: ${binding.projectLabel ?? project.label}`);
   console.log(`- project_root: ${projectRoot}`);
+  console.log(`- primary_reference_root: ${binding.referenceRoot ?? binding.referenceDirectories?.[0] ?? "."}`);
   console.log(`- binding_file: ${path.relative(rootDir, bindingPath)}`);
   console.log(`- alignment_rules: ${binding.alignmentRulesFile ?? project.alignmentRulesFile ?? "-"}`);
   console.log(`- watchlist_file: ${project.watchlistFile ?? "-"}`);
@@ -643,6 +682,12 @@ async function runInitProject(rootDir, config, options) {
   for (const item of result.referenceDirectories) {
     console.log(`- ref_dir: ${item}/`);
   }
+  await refreshContext(rootDir, config, {
+    command: "init-project",
+    projectKey: result.projectKey,
+    mode: options.dryRun ? "dry_run" : "write",
+    reportPath: `projects/${result.projectKey}`
+  });
 }
 
 async function runDiscoverWorkspace(rootDir, config, options) {
@@ -938,6 +983,12 @@ async function runPromote(rootDir, config, options) {
   if (options.dryRun) {
     console.log("Dry run only: promotion files and curated artifacts were not written.");
   }
+  await refreshContext(rootDir, config, {
+    command: "promote",
+    projectKey,
+    mode: options.dryRun ? "dry_run" : options.apply ? "apply" : "prepare",
+    reportPath: path.relative(rootDir, runDir)
+  });
 }
 
 async function main() {
@@ -968,6 +1019,11 @@ async function main() {
 
   if (command === "review-watchlist") {
     await runReviewWatchlist(rootDir, config, options);
+    return;
+  }
+
+  if (command === "refresh-context") {
+    await runRefreshContext(rootDir, config);
     return;
   }
 

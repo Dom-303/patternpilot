@@ -5,6 +5,8 @@ Diese Datei ist der knappe Einstiegspunkt fuer Claude Code in `patternpilot`.
 ## Erst lesen
 
 @AGENT_CONTEXT.md
+@STATUS.md
+@OPEN_QUESTION.md
 @docs/foundation/MISSION_VISION.md
 @docs/system/REPO_INTELLIGENCE_SYSTEM.md
 
@@ -26,3 +28,4 @@ Wenn projektbezogen gearbeitet wird, zusaetzlich:
 - Auto-Guesses sichtbar als vorlaeufig markieren
 - jedes Ergebnis auf Projektwirkung herunterbrechen
 - lieber wenige klare Entscheidungen als viel lose Sammlung
+- `STATUS.md` und `OPEN_QUESTION.md` als Einstieg und Uebergabe immer mitlesen
