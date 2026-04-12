@@ -28,6 +28,16 @@
       "watchlistFile": "projects/eventbear-worker/WATCHLIST.txt",
       "intakeRoot": "projects/eventbear-worker/intake",
       "promotionRoot": "projects/eventbear-worker/promotions"
+    },
+    "eventbear-web": {
+      "label": "EventBaer Web",
+      "projectRoot": "../eventbear-web",
+      "projectContextFile": "projects/eventbear-web/PROJECT_CONTEXT.md",
+      "projectBindingFile": "projects/eventbear-web/PROJECT_BINDING.json",
+      "alignmentRulesFile": "projects/eventbear-web/ALIGNMENT_RULES.json",
+      "watchlistFile": "projects/eventbear-web/WATCHLIST.txt",
+      "intakeRoot": "projects/eventbear-web/intake",
+      "promotionRoot": "projects/eventbear-web/promotions"
     }
   }
 }
