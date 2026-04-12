@@ -48,7 +48,7 @@ import {
   writeIntakeDoc,
   writePromotionPacket,
   writeRunArtifacts
-} from "../lib/patternpilot-engine.mjs";
+} from "../lib/index.mjs";
 
 function printHelp() {
   console.log(`Patternpilot CLI
