@@ -174,15 +174,17 @@ Sections in der Nav:
 
 ### 4.3 Stats-Leiste
 
-Grid mit auto-fit, minmax(200px, 1fr). Zwei visuelle Ebenen:
+Zwei separate Grid-Rows für klare visuelle Hierarchie:
 
-**Primary Stats** (große Darstellung, farbiger Wert mit Glow):
+**Primary Stats** (eigene Row, große Darstellung, farbiger Wert mit Glow):
 - Discovery: Candidates, Scanned, Known Skipped
 - Review: Reviewed Repos, Top Items, Missing Intake
+- Grid: auto-fit, minmax(200px, 1fr)
 
-**Secondary Stats** (kleinere Darstellung, muted Wert ohne Glow):
+**Secondary Stats** (eigene Row darunter, kleinere Darstellung, muted Wert ohne Glow):
 - Discovery: Profile, Profile Limit, Queries, Created, View
 - Review: Analysis Profile, Depth, Watchlist URLs, Created, View
+- Grid: auto-fit, minmax(160px, 1fr), kleinere Gap
 
 Jede Stat-Card:
 - Glasmorphismus-Surface (nur Hauptflächen)
@@ -206,11 +208,21 @@ Glasmorphismus-Box mit Cyan-Border-Left, größeres Padding (40px 48px).
 |------|--------|--------|
 | Best match | Top-1-Kandidat mit Score und Fit | `candidates[0]` |
 | Key action | Wichtigste Handlungsempfehlung | `candidates[0].projectAlignment.suggestedNextStep` |
-| Biggest gap | Häufigster Gap-Bereich | Aus Alignment-Daten aggregiert |
-| Confidence | Wie belastbar ist die Analyse? | Abgeleitet: "high" bei >5 Kandidaten mit fit=high, "medium" bei gemischtem Bild, "low" bei wenig/schwachen Daten |
+| Most repeated gap signal | Häufigster Gap-Bereich über alle Kandidaten — zeigt, wo die Daten konvergieren, nicht wo die größte Lücke ist | Aus Alignment-Daten aggregiert |
+| Signal confidence (heuristic) | Wie belastbar ist die Analyse? Heuristisch abgeleitet, kein Engine-Score | Abgeleitet: "high" bei >40% Kandidaten mit fit=high, "medium" bei gemischtem Bild, "low" bei wenig/schwachen Daten |
+| Recommended move | Klare Handlungsaussage — der Report hat eine Meinung | Abgeleitet aus Top-1-Fit + Disposition: z.B. "Adopt top candidate and prototype immediately" oder "No strong match — expand search scope" |
 | Report scope | Profil + Kandidatenanzahl | Aus Manifest |
 
-**Confidence-Anzeige:** Farbcodiert (Green/Orange/Muted) als Badge. Bei "low" zusätzlicher Hinweis: "Few strong signals — expand search or review manually."
+**Recommended Move Logik:**
+- Top-1 fit=high + disposition=intake_now → "Adopt [name] and prototype immediately"
+- Top-1 fit=high + disposition=review_queue → "Study [name] in detail before committing"
+- Top-1 fit=medium → "No strong match — review top candidates manually"
+- Top-1 fit=low/unknown oder <3 Kandidaten → "No strong match — expand search scope"
+
+**Signal-Confidence-Anzeige:** Farbcodiert (Green/Orange/Muted) als Badge mit Label "heuristic". Kurzer Reason-Text darunter:
+- High: "Strong convergence across candidates"
+- Medium: "Mixed signals — few high-fit candidates"
+- Low: "Decision not reliable. Expand search or review manually."
 
 **Hinweis:** Die Datenqualität der Decision Summary hängt von der Engine ab. Das Template zeigt an, was vorhanden ist, und markiert fehlende Felder ehrlich als "needs_review" statt sie mit Platzhaltern zu füllen.
 
@@ -242,9 +254,9 @@ Kompakte Gruppierung aller Kandidaten nach Handlungstyp. Macht aus Analyse → B
 
 | Gruppe | Label | Farbe | Inhalt |
 |--------|-------|-------|--------|
-| Adopt/Study | "Read & Prototype" | Green | Repos mit `intake_now` oder `review_queue` + fit=high |
-| Borrow | "Borrow Ideas" | Blue | Repos mit fit=medium, `observe_only` aber nützliche Patterns |
-| Watch | "Keep Watching" | Orange | Repos mit `observe_only` |
+| Adopt | "Adopt" | Green | Repos mit `intake_now` oder `review_queue` + fit=high |
+| Study | "Study" | Cyan | Repos mit `review_queue` |
+| Watch | "Watch" | Orange | Repos mit `observe_only` |
 | Open | "Needs Review" | Muted | Repos mit unknown fit oder fehlenden Daten |
 
 Pro Repo in der Gruppe: nur Name + 1-Zeile-Grund (max 80 Zeichen). Klickbar → scrollt zur Card.
@@ -262,7 +274,7 @@ Grid-Layout:
 
 Alle Inputs: Glasmorphismus-Style, 14px border-radius, focus-glow in Cyan.
 
-**Filter-Indikator:** Wenn Filter aktiv → über den Cards erscheint "Showing X of Y candidates" mit Glow-Puls.
+**Filter-Indikator:** Wenn Filter aktiv → über den Cards erscheint "Showing X of Y candidate cards" mit Glow-Puls.
 
 Live-Filterung: Cards + Tabellen-Rows werden per JS getoggelt (classList hidden-by-filter).
 
@@ -273,13 +285,14 @@ Grid: auto-fit, minmax(380px, 1fr). Jede Card:
 - **Großzügiges Padding** (36px 40px)
 - Glasmorphismus-Surface, border-radius 20px
 - Farbiger Top-Border (3px, rotierend durch die 5 Akzentfarben)
-- **Header:** Repo-Name (Syne 700, 18px) + Badges (Score, Fit, Disposition-Type)
+- **Header:** Repo-Name (Syne 700, 18px) + Badges (max 3: Score, Fit, Type — Disposition-Type nur bei Discovery, nicht bei Review)
 - **URL:** Klickbar, 15px
+- **Why it matters:** Sichtbar direkt unter Header (nicht im Mini-Grid versteckt), 15px, Cyan-Akzent-Label, aus `reasoning[0]` oder `learningForEventbaer`, max 160 Zeichen
 - **Beschreibung:** Muted, 15px, **max 220 Zeichen** (CSS text-overflow ellipsis)
 - **Mini-Grid:** 4 Felder — Label uppercase 11px, Wert 15px, **mit Content-Limits:**
-  - Why relevant: max 160 Zeichen
   - Strong area: max 160 Zeichen
   - Transfer idea: max 160 Zeichen
+  - Why relevant: max 160 Zeichen
   - Risks: max 140 Zeichen
 - **Aufklappbare Details:** `<details>` Element, Summary in Cyan uppercase
 
@@ -430,7 +443,53 @@ Browser-native PDF-Erzeugung via `window.print()` mit optimiertem Print-Styleshe
 
 Nutzt ausschließlich `window.print()` und CSS `@media print`. Der Browser erzeugt das PDF über "Speichern als PDF" im Druckdialog.
 
-## 8. Was nicht in Scope ist
+## 8. Content Limits (Produktregel)
+
+| Feld | Max Zeichen | Methode |
+|------|-------------|---------|
+| Card description | 220 | CSS text-overflow ellipsis |
+| Why relevant | 160 | `truncateText()` |
+| Strong area | 160 | `truncateText()` |
+| Transfer idea | 160 | `truncateText()` |
+| Risks | 140 | `truncateText()` |
+| Recommendation reason | 120 | `truncateText()` |
+| Action group reason | 80 | `truncateText()` |
+| Key action (Decision Summary) | 160 | `truncateText()` |
+
+Diese Limits gelten als Produktregel, nicht als technische Einschränkung. Sie können bei Bedarf angepasst werden, aber Änderungen sollten bewusst und konsistent sein.
+
+## 9. Badge-Disziplin
+
+- **Max 3 Badges pro Card:** Score + Fit + Type (bei Discovery) oder Score + Fit (bei Review)
+- Type-Badge nur bei Discovery (Disposition-Daten vorhanden), nicht bei Review (Daten fehlen noch)
+- Unknown-Fit als sichtbares Badge anzeigen, nicht verstecken
+
+## 10. Review-Report-Asymmetrie
+
+Review-Reports sind strukturell schwächer als Discovery-Reports:
+
+- Kein `discoveryDisposition` → kein Type-Badge, kein Decision Vocabulary Mapping
+- Weniger Alignment-Daten → Decision Summary und Recommended Actions arbeiten mit Fallbacks
+- Keine Recommended Actions Gruppierung nach Disposition möglich → Section wird bei Review ausgelassen oder zeigt nur Fit-basierte Gruppierung
+
+Dies ist kein Template-Defekt, sondern eine Engine-Limitation. Das Template zeigt ehrlich an, was vorhanden ist. Verbesserung erfordert Engine-Erweiterung (Review-Disposition, Review-Alignment).
+
+## 11. Naming-Konsistenz
+
+Im gesamten UI wird einheitlich verwendet:
+- **Candidate** (nicht "Repo", nicht "Item") für analysierte Repositories
+- **Report** für das Gesamtdokument
+- **Section** für die Hauptbereiche
+- **Card** für die visuellen Karten-Elemente
+
+## 12. Zukünftige Engine-Erweiterungen (nicht in Scope, aber vorbereitet)
+
+- **Effort-Light:** Heuristik für Aufwand (low/medium/high) basierend auf Repo-Größe und Dependencies — erfordert Engine-Logik
+- **Explizite Confidence-Scores:** Engine-seitig statt heuristisch im Template
+- **Review-Disposition:** Disposition-Daten für Watchlist Items
+- **Cross-Candidate Pattern Analysis:** Muster über mehrere Candidates erkennen
+
+## 13. Was nicht in Scope ist
 
 - Kein Dark/Light-Toggle (bleibt Dark Theme)
 - Keine Chart-Library (Bar-Charts bleiben CSS-basiert)

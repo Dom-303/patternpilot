@@ -58,7 +58,7 @@ Functions to **add**:
 - `renderTopRecommendations()` — Ranked recommendation cards with type badges and anchors
 - `renderRecommendedActions()` — Candidates grouped by action type (Adopt/Study/Borrow/Watch)
 - `renderCollapsibleSection()` — Wrapper for collapsible sections with chevron
-- `renderFilterIndicator()` — "Showing X of Y" display
+- `renderFilterIndicator()` — "Showing X of Y candidate cards" display
 - `renderPdfExportButton()` — Ghost button triggering window.print()
 - `renderFooter()` — Centered footer with muted logo
 - `mapDispositionToType()` — Maps discoveryDisposition to Decision Vocabulary (Adopt/Study/Watch/Defer)
@@ -455,6 +455,12 @@ a:hover { color: #80f0ff; }
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
 }
+.stats-grid-secondary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
 .stat-card {
   padding: 32px 36px;
   background: var(--surface);
@@ -841,6 +847,11 @@ a:hover { color: #80f0ff; }
 /* === Decision Summary === */
 .summary-grid { display: grid; gap: 20px; }
 .summary-item { display: flex; flex-direction: column; gap: 4px; }
+.summary-item.recommended-move {
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--surface-border);
+  margin-bottom: 4px;
+}
 .summary-label {
   font-size: 11px;
   text-transform: uppercase;
@@ -910,6 +921,7 @@ a:hover { color: #80f0ff; }
   .hero-project-card { padding: 20px 28px; }
   .hero-project-name { font-size: 18px; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .stats-grid-secondary { grid-template-columns: repeat(2, 1fr); gap: 10px; }
   .stat-card { padding: 24px; }
   .stat-value { font-size: 28px; }
   .section-card { padding: 36px 28px; border-radius: var(--radius); }
@@ -1165,11 +1177,33 @@ function renderDecisionSummary({ candidates, reportType }) {
   const ratio = candidates.length > 0 ? highFitCount / candidates.length : 0;
   const confidence = candidates.length < 3 ? "low" : ratio > 0.4 ? "high" : ratio > 0.15 ? "medium" : "low";
   const confidenceTone = confidence === "high" ? "accent" : confidence === "medium" ? "warn" : "neutral";
+  const confidenceReason = confidence === "high"
+    ? "Strong convergence across candidates"
+    : confidence === "medium"
+      ? "Mixed signals \u2014 few high-fit candidates"
+      : "Decision not reliable. Expand search or review manually.";
+
+  // Recommended move — the report has an opinion
+  const topDisposition = reportType === "discovery" ? top.discoveryDisposition : null;
+  let recommendedMove;
+  if (topFit === "high" && topDisposition === "intake_now") {
+    recommendedMove = `Adopt ${topName} and prototype immediately`;
+  } else if (topFit === "high" && topDisposition === "review_queue") {
+    recommendedMove = `Study ${topName} in detail before committing`;
+  } else if (topFit === "medium") {
+    recommendedMove = "No strong match \u2014 review top candidates manually";
+  } else {
+    recommendedMove = "No strong match \u2014 expand search scope";
+  }
 
   return `<section class="section-card accent" id="decision-summary">
   <header class="section-head"><h2>Decision Summary</h2></header>
   <div class="section-body">
     <div class="summary-grid">
+      <div class="summary-item recommended-move">
+        <span class="summary-label">Recommended move</span>
+        <span class="summary-value" style="font-size:16px;color:var(--ink-bright);font-weight:600">${escapeHtml(recommendedMove)}</span>
+      </div>
       <div class="summary-item">
         <span class="summary-label">Best match</span>
         <span class="summary-value">${escapeHtml(topName)} ${renderBadge("Score " + topScore, "accent")} ${renderBadge("Fit " + topFit, fitTone(topFit))}</span>
@@ -1179,12 +1213,12 @@ function renderDecisionSummary({ candidates, reportType }) {
         <span class="summary-value">${escapeHtml(truncateText(keyAction, 160))}</span>
       </div>
       <div class="summary-item">
-        <span class="summary-label">Biggest gap area</span>
+        <span class="summary-label">Most repeated gap signal</span>
         <span class="summary-value">${escapeHtml(biggestGap)}</span>
       </div>
       <div class="summary-item">
-        <span class="summary-label">Confidence</span>
-        <span class="summary-value">${renderBadge(confidence, confidenceTone)}${confidence === "low" ? " <em style='color:var(--ink-muted);font-size:13px;margin-left:8px'>Few strong signals \u2014 expand search or review manually.</em>" : ""}</span>
+        <span class="summary-label">Signal confidence <em style="font-weight:400;color:var(--ink-muted)">(heuristic)</em></span>
+        <span class="summary-value">${renderBadge(confidence, confidenceTone)} <span style="color:var(--ink-muted);font-size:13px;margin-left:8px">${confidenceReason}</span></span>
       </div>
       <div class="summary-item">
         <span class="summary-label">Report scope</span>
@@ -1232,9 +1266,9 @@ function renderRecommendedActions(candidates, reportType) {
   });
 
   const configs = [
-    { key: "adopt", label: "Read & Prototype", color: "var(--green)", items: groups.adopt },
-    { key: "study", label: "Borrow Ideas", color: "var(--blue)", items: groups.study },
-    { key: "watch", label: "Keep Watching", color: "var(--orange)", items: groups.watch },
+    { key: "adopt", label: "Adopt", color: "var(--green)", items: groups.adopt },
+    { key: "study", label: "Study", color: "var(--cyan)", items: groups.study },
+    { key: "watch", label: "Watch", color: "var(--orange)", items: groups.watch },
     { key: "defer", label: "Needs Review", color: "var(--ink-muted)", items: groups.defer }
   ].filter((g) => g.items.length > 0);
 
@@ -1245,7 +1279,8 @@ function renderRecommendedActions(candidates, reportType) {
   <div class="section-body">
     <div class="actions-grid">${configs.map((g) => `<div class="action-group">
       <h3 style="color:${g.color};font-size:13px;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:12px;font-weight:700">${escapeHtml(g.label)} (${g.items.length})</h3>
-      ${g.items.map((item) => `<a href="#repo-${item.slug}" class="action-item" style="display:block;padding:8px 0;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--surface-border);font-size:14px;transition:color 0.2s">
+      ${g.items.map((item, idx) => `<a href="#repo-${item.slug}" class="action-item" style="display:block;padding:8px 0;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--surface-border);font-size:14px;transition:color 0.2s${g.key === "adopt" && idx < 3 ? ";font-weight:600" : ""}">
+        ${g.key === "adopt" ? `<span style="color:${g.color};font-size:12px;margin-right:6px;font-weight:700">${idx + 1}.</span>` : ""}
         <strong style="color:var(--ink-bright)">${escapeHtml(item.name)}</strong>
         ${item.reason ? `<span style="color:var(--ink-muted);margin-left:8px">${escapeHtml(item.reason)}</span>` : ""}
       </a>`).join("")}
@@ -1400,7 +1435,10 @@ return `<!doctype html>
 
     <section class="stats-strip" id="stats">
       <div class="stats-grid">
-        ${renderHtmlStatCards(stats)}
+        ${renderHtmlStatCards(stats.filter(s => s.primary !== false))}
+      </div>
+      <div class="stats-grid-secondary">
+        ${renderHtmlStatCards(stats.filter(s => s.primary === false))}
       </div>
     </section>
 
@@ -1518,7 +1556,7 @@ Replace the entire JS block at the bottom of the HTML document.
       const hasFilter = search || fit || mode || layer;
       indicator.classList.toggle("active", hasFilter);
       if (hasFilter) {
-        indicator.textContent = "Showing " + visibleCount + " of " + totalCount + " candidates";
+        indicator.textContent = "Showing " + visibleCount + " of " + totalCount + " candidate cards";
       }
     }
   };
@@ -2045,11 +2083,14 @@ git commit -m "chore(report): delete old discovery-focused.html, verify new temp
 
 - **The CSS block is large (~450 lines).** It's a single inline `<style>` inside `renderHtmlDocument()`. This is intentional — the report must be a standalone HTML file.
 - **The JS block is ~150 lines.** Also inline, also intentional.
-- **Decision Summary** is derived from existing candidate data. `confidence` is heuristic (based on ratio of high-fit candidates). The engine can later provide explicit confidence scores.
-- **Decision Vocabulary** maps `discoveryDisposition` → Adopt/Study/Watch/Defer. For Review reports, the mapping needs extension once the engine provides disposition data for watchlist items.
-- **Recommended Actions** groups candidates by disposition into actionable lanes. The grouping logic is in the template; future engine enrichment (effort, value) can be plugged in.
-- **Stats primary/secondary** split: Primary stats get full-size colored values with glow. Secondary stats get smaller muted values. Controlled by `stat.primary` flag.
-- **Content truncation** uses `truncateText()` for recommendation actions (120 chars) and card fields. CSS `.truncate` class provides visual line-clamp for longer texts.
+- **Decision Summary** is derived from existing candidate data. "Signal confidence" is explicitly labeled as heuristic (based on ratio of high-fit candidates). The engine can later provide explicit confidence scores. "Most repeated gap signal" shows data convergence, not necessarily the biggest gap.
+- **Decision Vocabulary** maps `discoveryDisposition` → Adopt/Study/Watch/Defer. Action groups use the same vocabulary. For Review reports, type badges and action grouping are omitted until the engine provides disposition data for watchlist items.
+- **Recommended Actions** groups candidates by disposition into actionable lanes using Decision Vocabulary labels (Adopt/Study/Watch, not "Read & Prototype" etc). The grouping logic is in the template; future engine enrichment (effort, value) can be plugged in.
+- **Stats primary/secondary** split: Primary stats in their own grid row with full-size colored values and glow. Secondary stats in a separate grid row below with smaller muted values. Controlled by `stat.primary` flag.
+- **Content truncation** uses `truncateText()` with documented limits (see spec §8). CSS `.truncate` class provides visual line-clamp for longer texts.
+- **Badge discipline:** Max 3 badges per candidate card (Score + Fit + Type for Discovery, Score + Fit for Review). Type badges only for Discovery where disposition data exists.
+- **Review asymmetry:** Review reports lack disposition data, so type badges, Decision Vocabulary mapping, and Recommended Actions grouping are structurally weaker. This is an engine limitation, not a template defect.
+- **Filter indicator** says "candidate cards" not just "candidates" for precision.
 - **Bar fill widths** use `data-width` instead of inline `style` so the IntersectionObserver can trigger the animation. The CSS default is `width: 0%`.
 - **Counter animation** only triggers on numeric stat values. String values (like profile names) are displayed as-is.
 - **Collapsible sections** use `max-height` transitions. The JS sets an explicit `maxHeight` on mount for open sections, then toggles to `0px` for collapsed.
