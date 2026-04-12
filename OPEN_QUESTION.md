@@ -12,8 +12,13 @@ Sie ist bewusst kein Sammelbecken fuer beliebige Ideen.
 
 Diese Datei wird zusammen mit `STATUS.md` als operative Uebergabeflaeche mitgefuehrt.
 
-- last_updated: 2026-04-12T17:55:17.631Z
+- last_updated: 2026-04-12T17:57:57.187Z
 - latest_run_reference: eventbear-worker/2026-04-12T10-39-29-927Z
+
+## Handoff Note
+
+- settled_now: target-repo context is run-scoped and transparent, not a hardwired product identity.
+- next_recommended_step: build the automatic chain run with blacklist, allowlist, limits, and quality gates.
 
 ## Aktuell offene Fragen
 
