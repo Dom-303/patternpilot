@@ -66,6 +66,7 @@ Patternpilot ist nicht mehr nur ein Dokumentations-Seed.
 Es hat jetzt einen lokalen Motor plus Workspace-Modus:
 
 - `npm run intake -- --project eventbear-worker <github-url>`
+- `npm run discover:github -- --project eventbear-worker --limit 8 --dry-run`
 - `npm run init:project -- --project <key> --target <repo-pfad>`
 - `npm run discover:workspace`
 - `npm run doctor -- --offline`
@@ -77,6 +78,8 @@ Es hat jetzt einen lokalen Motor plus Workspace-Modus:
 
 Dieser Motor:
 
+- leitet projektbezogene Discovery-Suchplaene aus Repo-Kontext und Alignment-Regeln ab
+- durchsucht GitHub heuristisch nach passenden Repositories
 - nimmt GitHub-Links entgegen
 - normalisiert sie
 - erstellt Queue-Eintraege
@@ -192,6 +195,18 @@ npm run automation:run -- --all-projects --promotion-mode prepared --dry-run
 
 ```bash
 npm run doctor -- --offline
+```
+
+### Heuristische GitHub-Discovery fuer ein Projekt laufen lassen
+
+```bash
+npm run discover:github -- --project eventbear-worker --limit 8 --dry-run
+```
+
+### Discovery mit zusaetzlichem Suchfokus und direktem Intake
+
+```bash
+npm run patternpilot -- discover --project eventbear-worker --query "calendar scraper venue" --intake
 ```
 
 ### Lokale Env-Dateien anlegen

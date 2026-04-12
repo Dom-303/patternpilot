@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import path from "node:path";
 import {
+  appendUrlsToWatchlist,
   buildPromotionCandidate,
   buildPromotionDocPath,
   buildSetupChecklist,
@@ -10,6 +11,7 @@ import {
   buildProjectRelevanceNote,
   collectUrls,
   createRunId,
+  discoverGithubCandidates,
   discoverWorkspaceProjects,
   enrichGithubRepo,
   ensureDirectory,
@@ -27,6 +29,7 @@ import {
   loadProjectProfile,
   normalizeGithubUrl,
   parseArgs,
+  renderDiscoverySummary,
   renderIntakeDoc,
   renderLearningBlock,
   renderDecisionBlock,
@@ -47,6 +50,7 @@ function printHelp() {
 Commands:
   automation-run  Run watchlist intake across one or all projects and optionally promote
   doctor        Show GitHub auth, rate-limit and workspace readiness
+  discover      Search GitHub heuristically for project-fit repos before intake
   init-project  Bind a new local repo/workspace project to Patternpilot
   init-env      Create local env files from checked-in examples
   discover-workspace  Scan workspace roots for git repos and binding candidates
@@ -61,6 +65,8 @@ Commands:
 Examples:
   npm run automation:run -- --all-projects --promotion-mode prepared --dry-run
   npm run doctor -- --offline
+  npm run patternpilot -- discover --project eventbear-worker --limit 8 --dry-run
+  npm run patternpilot -- discover --project eventbear-worker --query "scraper calendar venue" --intake
   npm run init:env
   npm run init:project -- --project sample-worker --target ../sample-worker --label "Sample Worker"
   npm run discover:workspace
@@ -256,6 +262,88 @@ async function runIntake(rootDir, config, options) {
   }
 }
 
+async function runDiscover(rootDir, config, options) {
+  const projectKey = options.project || config.defaultProject;
+  const { project, binding } = await loadProjectBinding(rootDir, config, projectKey);
+  const alignmentRules = await loadProjectAlignmentRules(rootDir, project, binding);
+  const projectProfile = await loadProjectProfile(rootDir, project, binding, alignmentRules);
+  const createdAt = new Date().toISOString();
+  const runId = createRunId(new Date(createdAt));
+  const discovery = await discoverGithubCandidates(
+    rootDir,
+    config,
+    project,
+    binding,
+    alignmentRules,
+    projectProfile,
+    options
+  );
+  const summary = renderDiscoverySummary({
+    runId,
+    projectKey,
+    createdAt,
+    discovery,
+    dryRun: options.dryRun
+  });
+  const manifest = {
+    runId,
+    projectKey,
+    createdAt,
+    dryRun: options.dryRun,
+    query: options.query,
+    intake: options.intake,
+    appendWatchlist: options.appendWatchlist,
+    discovery
+  };
+  const runDir = await writeRunArtifacts({
+    rootDir,
+    config,
+    projectKey,
+    runId,
+    manifest,
+    summary,
+    projectProfile,
+    dryRun: options.dryRun
+  });
+
+  console.log(summary);
+  console.log(`Run directory: ${path.relative(rootDir, runDir)}`);
+
+  const candidateUrls = discovery.candidates.map((candidate) => candidate.repo.normalizedRepoUrl);
+  if (options.appendWatchlist) {
+    const watchlistResult = await appendUrlsToWatchlist(
+      rootDir,
+      project,
+      candidateUrls,
+      options.dryRun
+    );
+    console.log(``);
+    console.log(`## Watchlist Update`);
+    console.log(`- status: ${watchlistResult.status}`);
+    console.log(`- appended: ${watchlistResult.appended}`);
+    console.log(`- kept_existing: ${watchlistResult.keptExisting}`);
+  }
+
+  if (options.intake) {
+    if (candidateUrls.length === 0) {
+      console.log(``);
+      console.log(`## Intake Handoff`);
+      console.log(`- status: skipped_no_candidates`);
+      return;
+    }
+    console.log(``);
+    console.log(`## Intake Handoff`);
+    await runIntake(rootDir, config, {
+      ...options,
+      file: null,
+      urls: candidateUrls,
+      notes: options.notes
+        ? `auto-discovered | ${options.notes}`
+        : "auto-discovered via patternpilot discovery"
+    });
+  }
+}
+
 async function runShowProject(rootDir, config, options) {
   const projectKey = options.project || config.defaultProject;
   const { project, binding, bindingPath } = await loadProjectBinding(rootDir, config, projectKey);
@@ -278,6 +366,13 @@ async function runShowProject(rootDir, config, options) {
   console.log(`## Reference Directories`);
   for (const item of binding.referenceDirectories) {
     console.log(`- ${item}/`);
+  }
+  if (binding.discoveryHints?.length > 0) {
+    console.log(``);
+    console.log(`## Discovery Hints`);
+    for (const item of binding.discoveryHints) {
+      console.log(`- ${item}`);
+    }
   }
 }
 
@@ -759,6 +854,11 @@ async function main() {
 
   if (command === "doctor") {
     await runDoctor(rootDir, config, options, envFiles);
+    return;
+  }
+
+  if (command === "discover") {
+    await runDiscover(rootDir, config, options);
     return;
   }
 

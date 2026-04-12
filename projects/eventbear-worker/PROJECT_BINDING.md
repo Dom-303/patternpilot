@@ -39,6 +39,19 @@ Ab Stage 4 entstehen daraus ausserdem Promotion-Pakete, die kontrolliert in Land
 
 ---
 
+## Discovery-Hinweise fuer die GitHub-Suche
+
+- `events`
+- `calendar`
+- `scraper`
+- `connector`
+- `venue`
+- `location`
+- `feed`
+- `wordpress plugin`
+
+---
+
 ## Fragen, die Patternpilot fuer EventBaer beantworten soll
 
 - Welche Schicht im Worker wird durch das externe Repo beleuchtet?

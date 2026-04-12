@@ -18,6 +18,16 @@
     "sources",
     "templates"
   ],
+  "discoveryHints": [
+    "events",
+    "calendar",
+    "scraper",
+    "connector",
+    "venue",
+    "location",
+    "feed",
+    "wordpress plugin"
+  ],
   "alignmentRulesFile": "projects/eventbear-worker/ALIGNMENT_RULES.json",
   "analysisQuestions": [
     "Welche Schicht im Worker wird durch das externe Repo beleuchtet?",

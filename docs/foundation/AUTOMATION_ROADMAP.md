@@ -98,3 +98,22 @@ Was dazu kommt:
 Nutzen:
 
 - Patternpilot wird zu einem wiederverwendbaren Meta-System statt zu einer Einmal-Loesung fuer EventBaer
+
+---
+
+## Stufe 6: Autonome GitHub-Discovery
+
+Status: jetzt umgesetzt
+
+Was dazu kommt:
+
+- Patternpilot leitet aus Projektkontext, Discovery-Hinweisen und Alignment-Signalen eigene GitHub-Suchplaene ab
+- GitHub-Repositories werden heuristisch gesucht, vorgerankt und gegen bekannte Queue-, Watchlist- und Landkarten-Eintraege dedupliziert
+- Kandidaten bekommen Discovery-Score, Disposition und direkten Handoff in Watchlist oder Intake
+- der Kern bleibt bewusst ohne LLM und arbeitet zuerst mit GitHub-Metadaten, Readmes und projektbezogenen Regeln
+
+Nutzen:
+
+- Patternpilot wartet nicht mehr nur auf manuell eingegebene Links
+- passende Repositories koennen systematischer und stabiler gefunden werden
+- die spaetere optionale LLM-Schicht wird auf ein sauberes, verifiziertes Fundament gesetzt

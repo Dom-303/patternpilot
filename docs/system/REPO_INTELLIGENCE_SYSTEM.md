@@ -165,6 +165,19 @@ Erst nach Review darf ein Fund in die kuratierten Artefakte uebergehen:
 
 ---
 
+## Autonome Discovery-Schicht
+
+Vor dem manuellen Intake kann `patternpilot` nun auch selbst nach passenden GitHub-Repositories suchen.
+
+Wichtig:
+
+- Discovery ist eine Such- und Priorisierungsschicht, noch keine Wahrheit
+- der Kern arbeitet zunaechst heuristikbasiert und bewusst ohne LLM
+- bekannte Repos aus Watchlist, Queue und Landkarte werden vorab dedupliziert
+- erst der Intake- und Review-Fluss macht aus einem Treffer einen verwertbaren Fund
+
+---
+
 ## Analyseobjekte
 
 Jeder Fund wird zunächst als eines der folgenden Analyseobjekte gelesen:

@@ -10,6 +10,7 @@
   "scripts": {
     "patternpilot": "node scripts/patternpilot.mjs",
     "automation:run": "node scripts/patternpilot.mjs automation-run",
+    "discover:github": "node scripts/patternpilot.mjs discover",
     "doctor": "node scripts/patternpilot.mjs doctor",
     "discover:workspace": "node scripts/patternpilot.mjs discover-workspace",
     "init:env": "node scripts/patternpilot.mjs init-env",
