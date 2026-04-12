@@ -11,7 +11,9 @@ Diese Datei beschreibt den wiederverwendbaren Endzustand von Patternpilot als Wo
 - einmal gebundene Projekte dauerhaft in `patternpilot.config.json` hinterlegen
 - dieselben Intake-, Alignment- und Promotion-Flows auf neue Zielrepos anwenden
 - projektgebundene Watchlists mit `sync-watchlist` abarbeiten
+- mehrere Projekte gesammelt mit `sync-all-watchlists` oder `automation-run` fahren
 - GitHub-Zugang und Workspace-Zustand mit `doctor` pruefen
+- lokales Codex-Plugin-Scaffold fuer Verteilung vorbereiten
 
 ## Wichtige Kommandos
 
@@ -21,6 +23,7 @@ npm run init:project -- --project sample-worker --target ../sample-worker --labe
 npm run list:projects
 npm run doctor -- --offline
 npm run sync:watchlist -- --project sample-worker --dry-run
+npm run automation:run -- --all-projects --promotion-mode prepared --dry-run
 ```
 
 ## Betriebsprinzip
@@ -37,3 +40,4 @@ npm run sync:watchlist -- --project sample-worker --dry-run
 - neue Zielprojekte koennen ohne manuelles Nachziehen der Struktur starten
 - die Betriebslogik bleibt fuer jedes Repo gleich
 - spaetere GitHub-App- oder Watchlist-Automatisierung bekommt eine saubere Basis
+- die lokale Plugin-Huelle macht spaetere Distribution in Codex-Umgebungen realistischer

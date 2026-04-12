@@ -66,6 +66,8 @@ Geeignet fuer:
 - sauberere Rechtevergabe
 - spaeteren Plugin- oder Workspace-Modus
 
+Das Repo enthaelt dafuer jetzt auch ein erstes Scaffold unter `deployment/github-app/`.
+
 ## Wichtige Einordnung zu Kosten
 
 - Das GitHub-Token selbst ist normalerweise kein nutzungsbasierter Kostenposten.

@@ -1,0 +1,14 @@
+{
+  "jobs": [
+    {
+      "name": "all-project-watchlists",
+      "command": "npm run automation:run -- --all-projects --promotion-mode prepared",
+      "description": "Sync all configured project watchlists and prepare promotion packets."
+    },
+    {
+      "name": "eventbear-worker-apply",
+      "command": "npm run automation:run -- --project eventbear-worker --promotion-mode apply",
+      "description": "Run the full intake and promotion pipeline for EventBaer Worker."
+    }
+  ]
+}

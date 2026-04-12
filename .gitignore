@@ -1,3 +1,5 @@
 /runs/
 npm-debug.log*
 .env
+**/.env
+*.pem

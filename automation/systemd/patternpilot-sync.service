@@ -1,0 +1,7 @@
+[Unit]
+Description=Patternpilot watchlist automation
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/[TODO]/eventbaer/dev/patternpilot
+ExecStart=/usr/bin/npm run automation:run -- --all-projects --promotion-mode prepared

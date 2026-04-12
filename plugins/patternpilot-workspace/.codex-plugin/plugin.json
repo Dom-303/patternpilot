@@ -1,0 +1,45 @@
+{
+  "name": "patternpilot-workspace",
+  "version": "0.1.0",
+  "description": "Workspace-bound repo intelligence automation for Patternpilot.",
+  "author": {
+    "name": "Domi",
+    "email": "noreply@example.com",
+    "url": "https://github.com/Dom-303"
+  },
+  "homepage": "https://github.com/Dom-303/patternpilot",
+  "repository": "https://github.com/Dom-303/patternpilot",
+  "license": "UNLICENSED",
+  "keywords": [
+    "patternpilot",
+    "repo-intelligence",
+    "workspace-automation"
+  ],
+  "skills": "./skills/",
+  "hooks": "./hooks.json",
+  "mcpServers": "./.mcp.json",
+  "apps": "./.app.json",
+  "interface": {
+    "displayName": "Patternpilot Workspace",
+    "shortDescription": "Attach Patternpilot to repos and automate watchlist intake.",
+    "longDescription": "Repo-local plugin scaffold for Patternpilot workspace discovery, project binding and watchlist automation.",
+    "developerName": "Domi",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/Dom-303/patternpilot",
+    "privacyPolicyURL": "https://github.com/Dom-303/patternpilot",
+    "termsOfServiceURL": "https://github.com/Dom-303/patternpilot",
+    "defaultPrompt": [
+      "Bind this repo to Patternpilot and show me the project context.",
+      "Run the watchlist sync and prepare promotions for all projects.",
+      "Diagnose GitHub auth and workspace readiness for Patternpilot."
+    ],
+    "brandColor": "#0F4C5C",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/logo.svg",
+    "screenshots": []
+  }
+}

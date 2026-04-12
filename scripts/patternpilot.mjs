@@ -40,19 +40,23 @@ function printHelp() {
   console.log(`Patternpilot CLI
 
 Commands:
+  automation-run  Run watchlist intake across one or all projects and optionally promote
   doctor        Show GitHub auth, rate-limit and workspace readiness
   init-project  Bind a new local repo/workspace project to Patternpilot
   discover-workspace  Scan workspace roots for git repos and binding candidates
   list-projects Show configured Patternpilot project bindings
   intake        Create intake queue entries and dossiers from GitHub URLs
   promote       Prepare or apply promotion candidates from queue to curated artifacts
+  sync-all-watchlists  Run watchlist intake across all configured projects
   sync-watchlist  Run intake against the configured project watchlist file
   show-project  Show the binding and reference context for a project
 
 Examples:
+  npm run automation:run -- --all-projects --promotion-mode prepared --dry-run
   npm run doctor -- --offline
   npm run init:project -- --project sample-worker --target ../sample-worker --label "Sample Worker"
   npm run discover:workspace
+  npm run sync:all -- --dry-run
   npm run patternpilot -- sync-watchlist --project eventbear-worker --dry-run
   npm run intake -- --project eventbear-worker https://github.com/City-Bureau/city-scrapers
   npm run intake -- --project eventbear-worker --file links.txt --dry-run
@@ -286,6 +290,10 @@ async function runDoctor(rootDir, config, options) {
     workspaceRoot: options.workspaceRoot,
     maxDepth: options.maxDepth
   });
+  const pluginScaffoldPath = path.join(rootDir, "plugins", "patternpilot-workspace", ".codex-plugin", "plugin.json");
+  const marketplacePath = path.join(rootDir, ".agents", "plugins", "marketplace.json");
+  const githubAppScaffoldPath = path.join(rootDir, "deployment", "github-app", "README.md");
+  const automationOpsPath = path.join(rootDir, "automation", "README.md");
 
   console.log(`# Patternpilot Doctor`);
   console.log(``);
@@ -318,6 +326,12 @@ async function runDoctor(rootDir, config, options) {
   if (discovered.length > 20) {
     console.log(`- more: ${discovered.length - 20} additional repos not shown`);
   }
+  console.log(``);
+  console.log(`## Productization`);
+  console.log(`- plugin_scaffold: ${path.relative(rootDir, pluginScaffoldPath)}`);
+  console.log(`- marketplace_manifest: ${path.relative(rootDir, marketplacePath)}`);
+  console.log(`- github_app_scaffold: ${path.relative(rootDir, githubAppScaffoldPath)}`);
+  console.log(`- automation_ops: ${path.relative(rootDir, automationOpsPath)}`);
 }
 
 async function runInitProject(rootDir, config, options) {
@@ -372,11 +386,127 @@ async function runSyncWatchlist(rootDir, config, options) {
   if (!project.watchlistFile) {
     throw new Error(`Project '${projectKey}' has no watchlistFile configured.`);
   }
-  await runIntake(rootDir, config, {
+  const watchlistUrls = await collectUrls(rootDir, {
     ...options,
     file: project.watchlistFile,
     urls: options.urls ?? []
   });
+  if (watchlistUrls.length === 0) {
+    console.log(`# Patternpilot Watchlist Sync`);
+    console.log(``);
+    console.log(`- project: ${projectKey}`);
+    console.log(`- status: skipped_empty_watchlist`);
+    return;
+  }
+  await runIntake(rootDir, config, {
+    ...options,
+    file: null,
+    urls: watchlistUrls
+  });
+}
+
+async function runSyncAllWatchlists(rootDir, config, options) {
+  const projectEntries = Object.entries(config.projects ?? {});
+  const targetEntries = options.project && !options.allProjects
+    ? projectEntries.filter(([projectKey]) => projectKey === options.project)
+    : projectEntries;
+
+  console.log(`# Patternpilot Watchlist Sync`);
+  console.log(``);
+  console.log(`- projects: ${targetEntries.length}`);
+  console.log(`- dry_run: ${options.dryRun ? "yes" : "no"}`);
+  console.log(``);
+
+  for (const [projectKey, project] of targetEntries) {
+    if (!project.watchlistFile) {
+      console.log(`- ${projectKey}: skipped (no watchlist_file configured)`);
+      continue;
+    }
+    const watchlistUrls = await collectUrls(rootDir, {
+      ...options,
+      file: project.watchlistFile,
+      urls: []
+    });
+    if (watchlistUrls.length === 0) {
+      console.log(`- ${projectKey}: skipped (empty watchlist)`);
+      continue;
+    }
+    console.log(`## Sync ${projectKey}`);
+    await runIntake(rootDir, config, {
+      ...options,
+      project: projectKey,
+      file: null,
+      urls: watchlistUrls
+    });
+    console.log(``);
+  }
+}
+
+async function runAutomation(rootDir, config, options) {
+  const projectEntries = Object.entries(config.projects ?? {});
+  const targetEntries = options.project && !options.allProjects
+    ? projectEntries.filter(([projectKey]) => projectKey === options.project)
+    : projectEntries;
+  const promotionMode = options.promotionMode ?? "skip";
+
+  console.log(`# Patternpilot Automation Run`);
+  console.log(``);
+  console.log(`- projects: ${targetEntries.length}`);
+  console.log(`- promotion_mode: ${promotionMode}`);
+  console.log(`- dry_run: ${options.dryRun ? "yes" : "no"}`);
+  console.log(``);
+
+  for (const [projectKey, project] of targetEntries) {
+    if (!project.watchlistFile) {
+      console.log(`- ${projectKey}: skipped (no watchlist_file configured)`);
+      continue;
+    }
+    const watchlistUrls = await collectUrls(rootDir, {
+      ...options,
+      file: project.watchlistFile,
+      urls: []
+    });
+    if (watchlistUrls.length === 0) {
+      console.log(`- ${projectKey}: skipped (empty watchlist)`);
+      console.log(``);
+      continue;
+    }
+
+    console.log(`## Intake ${projectKey}`);
+    await runIntake(rootDir, config, {
+      ...options,
+      project: projectKey,
+      file: null,
+      urls: watchlistUrls
+    });
+
+    if (promotionMode === "prepared" || promotionMode === "apply") {
+      if (options.dryRun) {
+        console.log(``);
+        console.log(`## Promote ${projectKey}`);
+        console.log(`Skipped promotion because dry-run intake does not persist queue entries.`);
+        console.log(``);
+        continue;
+      }
+      console.log(``);
+      console.log(`## Promote ${projectKey}`);
+      try {
+        await runPromote(rootDir, config, {
+          ...options,
+          project: projectKey,
+          apply: promotionMode === "apply"
+        });
+      } catch (error) {
+        if (error.message.includes("No matching queue entries found for promotion")) {
+          console.log(`No promotion candidates for ${projectKey}.`);
+        } else {
+          throw error;
+        }
+      }
+    }
+
+    console.log(``);
+  }
 }
 
 function buildPromotionSummary({ runId, projectKey, createdAt, items, dryRun, apply }) {
@@ -543,6 +673,11 @@ async function main() {
     return;
   }
 
+  if (command === "automation-run") {
+    await runAutomation(rootDir, config, options);
+    return;
+  }
+
   if (command === "init-project") {
     await runInitProject(rootDir, config, options);
     return;
@@ -555,6 +690,11 @@ async function main() {
 
   if (command === "sync-watchlist") {
     await runSyncWatchlist(rootDir, config, options);
+    return;
+  }
+
+  if (command === "sync-all-watchlists") {
+    await runSyncAllWatchlists(rootDir, config, options);
     return;
   }
 

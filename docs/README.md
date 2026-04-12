@@ -13,6 +13,7 @@ Wichtige Referenz fuer Stage 3:
 
 - `reference/PROJECT_ALIGNMENT_MODEL.md`
 - `reference/GITHUB_TOKEN_SETUP.md`
+- `reference/GITHUB_APP_DEPLOYMENT.md`
 - `reference/WORKSPACE_PLUGIN_MODE.md`
 
 Die Root von `patternpilot` bleibt damit staerker auf Einstieg, Konfiguration, Motor und operative Artefakte fokussiert.

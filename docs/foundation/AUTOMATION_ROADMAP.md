@@ -92,6 +92,8 @@ Was dazu kommt:
 - Workspace-Discovery fuer lokale Git-Repos
 - `init-project` fuer neue Projektbindungen ohne Handarbeit
 - `doctor` fuer GitHub-Token-, API- und Workspace-Diagnose
+- projektuebergreifende Watchlist-Syncs und `automation-run`
+- GitHub-App- und Plugin-Scaffolds fuer spaetere Distribution
 
 Nutzen:
 

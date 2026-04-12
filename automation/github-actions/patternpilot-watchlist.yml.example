@@ -1,0 +1,21 @@
+name: Patternpilot Watchlist Automation
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "15 5 * * *"
+
+jobs:
+  patternpilot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run Patternpilot automation
+        env:
+          PATTERNPILOT_GITHUB_TOKEN: ${{ secrets.PATTERNPILOT_GITHUB_TOKEN }}
+        run: npm run automation:run -- --all-projects --promotion-mode prepared

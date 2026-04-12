@@ -70,6 +70,8 @@ Es hat jetzt einen lokalen Motor plus Workspace-Modus:
 - `npm run discover:workspace`
 - `npm run doctor -- --offline`
 - `npm run sync:watchlist -- --project eventbear-worker`
+- `npm run sync:all -- --dry-run`
+- `npm run automation:run -- --all-projects --promotion-mode prepared`
 
 Dieser Motor:
 
@@ -172,6 +174,18 @@ npm run init:project -- --project sample-worker --target ../sample-worker --labe
 npm run sync:watchlist -- --project eventbear-worker --dry-run
 ```
 
+### Alle Watchlists einsammeln
+
+```bash
+npm run sync:all -- --dry-run
+```
+
+### Vollen Automationslauf fahren
+
+```bash
+npm run automation:run -- --all-projects --promotion-mode prepared --dry-run
+```
+
 ### GitHub-/Token-Diagnose laufen lassen
 
 ```bash
@@ -249,6 +263,7 @@ npm run intake -- --project eventbear-worker --skip-enrich https://github.com/Ci
 - `docs/reference/distribution_surfaces.md`
 - `docs/reference/PROJECT_ALIGNMENT_MODEL.md`
 - `docs/reference/GITHUB_TOKEN_SETUP.md`
+- `docs/reference/GITHUB_APP_DEPLOYMENT.md`
 - `docs/reference/WORKSPACE_PLUGIN_MODE.md`
 
 ### Kontrollierte Vokabulare
@@ -280,6 +295,13 @@ npm run intake -- --project eventbear-worker --skip-enrich https://github.com/Ci
 
 - `scripts/patternpilot.mjs`
 - `lib/patternpilot-engine.mjs`
+
+### Produktisierung
+
+- `automation/`
+- `deployment/github-app/`
+- `plugins/patternpilot-workspace/`
+- `.agents/plugins/marketplace.json`
 
 ---
 

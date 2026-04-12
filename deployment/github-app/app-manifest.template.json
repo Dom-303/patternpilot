@@ -1,0 +1,24 @@
+{
+  "name": "Patternpilot",
+  "url": "https://github.com/Dom-303/patternpilot",
+  "hook_attributes": {
+    "url": "https://[TODO: patternpilot-webhook-host]/github/webhook"
+  },
+  "redirect_url": "https://[TODO: patternpilot-webhook-host]/github/callback",
+  "callback_urls": [
+    "https://[TODO: patternpilot-webhook-host]/github/callback"
+  ],
+  "description": "Patternpilot repo-intelligence automation for workspace-bound project analysis.",
+  "public": false,
+  "default_permissions": {
+    "contents": "read",
+    "metadata": "read",
+    "pull_requests": "read"
+  },
+  "default_events": [
+    "installation",
+    "installation_repositories",
+    "push",
+    "repository"
+  ]
+}
