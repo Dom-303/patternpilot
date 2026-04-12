@@ -15,6 +15,48 @@ Kompletter Neubau des HTML-Report-Templates für Patternpilot. Ersetzt das bishe
 
 Ein Report-Template, das sich anfühlt wie eine professionelle Produktoberfläche — nicht wie ein Debug-Output. Modern, interaktiv, großzügig, mit klarem Patternpilot-Branding.
 
+### Design-Prinzipien
+
+1. **Erkenntnis vor Effekt** — Jedes visuelle Element muss Verständnis erzeugen, nicht nur gut aussehen
+2. **Entscheidung vor Dekoration** — Der Report führt zu konkreten Handlungen, nicht zu Bewunderung
+3. **Scanbarkeit vor Vollständigkeit** — Lieber 3 klare Signale als 20 gleichwertige Felder
+4. **Priorisierung vor Neutralität** — Nicht alles gleich behandeln; das Wichtigste muss sofort erkennbar sein
+
+### Informationshierarchie
+
+1. Decision Summary (sofortige Orientierung)
+2. Recommended Actions (was tun?)
+3. Top Recommendations (warum diese Repos?)
+4. Candidate Cards (Details bei Bedarf)
+5. Evidence (Coverage, Signals)
+6. Context (Transparenz über den Run)
+7. Diagnostics (Errors, Matrix)
+
+### Decision Vocabulary
+
+Einheitliche Begriffe über alle Reports hinweg:
+
+| Type | Bedeutung | Farbe |
+|------|-----------|-------|
+| `Adopt` | Direkt übernehmen oder starten | Green |
+| `Study` | Genauer untersuchen, Muster extrahieren | Cyan |
+| `Borrow` | Idee adaptieren, nicht das Repo selbst | Blue |
+| `Watch` | Beobachten, noch nicht handeln | Orange |
+| `Defer` | Bewusst zurückstellen | Muted |
+| `Reject` | Bewusst ablehnen | Red/Muted |
+
+Mapping aus vorhandenen Daten:
+- `intake_now` → Adopt
+- `review_queue` → Study
+- `observe_only` → Watch
+- Kein Disposition / unknown → Defer
+
+### Umgang mit Unsicherheit
+
+- `unknown` Fit-Band wird sichtbar als Badge angezeigt, nicht versteckt
+- Fehlende Daten werden als "needs_review" markiert, nicht mit Platzhaltern gefüllt
+- Niedrige Scores bekommen visuell gedämpfte Darstellung (opacity, muted border)
+
 ---
 
 ## 1. Architektur
@@ -80,7 +122,7 @@ Abgeleitet aus den neuen Logos:
 - Radiale Gradients im Hintergrund (Cyan, Magenta, Green, Orange — subtil)
 - Film-Grain-Overlay (SVG feTurbulence, opacity 0.022)
 - Glasmorphismus-Surfaces (backdrop-filter: blur)
-- Neon-Glow-Effekte auf Akzent-Elementen (drop-shadow, text-shadow, box-shadow)
+- Neon-Glow-Effekte **sparsam und fokussiert**: Glow nur für Fokus-Elemente (Hero-Logo, Top-1-Empfehlung, aktiver Nav-Item). Nicht flächendeckend auf allen Cards. Glass (backdrop-filter) nur für Hauptflächen (Section-Cards, Hero-Project-Card, Sticky Nav), nicht für jeden Badge oder Button.
 
 ### Logo-Einbettung
 
@@ -132,32 +174,84 @@ Sections in der Nav:
 
 ### 4.3 Stats-Leiste
 
-Grid mit auto-fit, minmax(200px, 1fr). Jede Stat-Card:
-- Glasmorphismus-Surface
+Grid mit auto-fit, minmax(200px, 1fr). Zwei visuelle Ebenen:
+
+**Primary Stats** (große Darstellung, farbiger Wert mit Glow):
+- Discovery: Candidates, Scanned, Known Skipped
+- Review: Reviewed Repos, Top Items, Missing Intake
+
+**Secondary Stats** (kleinere Darstellung, muted Wert ohne Glow):
+- Discovery: Profile, Profile Limit, Queries, Created, View
+- Review: Analysis Profile, Depth, Watchlist URLs, Created, View
+
+Jede Stat-Card:
+- Glasmorphismus-Surface (nur Hauptflächen)
 - Farbiger Top-Border (3px, rotierend durch Cyan/Magenta/Orange/Green/Blue)
 - Label: 11px uppercase, muted
-- Wert: Syne 800, 38px, in der jeweiligen Section-Farbe mit Neon-Glow
+- Primary Wert: Syne 800, 38px, farbig mit Text-Shadow
+- Secondary Wert: Syne 800, 28px, ink-bright ohne Glow
 - Hover: translateY(-4px), tieferer Shadow
 
 **Animierte Counter:** Zahlen zählen von 0 zum Zielwert hoch (1.2s, ease-out cubic), getriggert per IntersectionObserver wenn die Cards ins Blickfeld scrollen.
 
-Discovery-Stats: Profile, Profile Limit, Queries, Known Skipped, Scanned, Candidates, Created, View
-Review-Stats: Analysis Profile, Depth, Watchlist URLs, Reviewed Repos, Missing Intake, Top Items, Created, View
+### 4.4 Decision Summary
 
-### 4.4 Top Recommendations
+Direkt nach den Stats. Die wichtigste Section des Reports — gibt dem Nutzer sofortige Orientierung.
 
-Gestapelte Karten mit visueller Hierarchie:
+Glasmorphismus-Box mit Cyan-Border-Left, größeres Padding (40px 48px).
 
-- **Nr. 1:** Größer (padding 28px 32px), Rank-Nummer 28px in Cyan-Magenta-Gradient-Box (52x52px), größerer Repo-Name (17px), subtiler Cyan-Border + Background
+**Felder:**
+
+| Feld | Inhalt | Quelle |
+|------|--------|--------|
+| Best match | Top-1-Kandidat mit Score und Fit | `candidates[0]` |
+| Key action | Wichtigste Handlungsempfehlung | `candidates[0].projectAlignment.suggestedNextStep` |
+| Biggest gap | Häufigster Gap-Bereich | Aus Alignment-Daten aggregiert |
+| Confidence | Wie belastbar ist die Analyse? | Abgeleitet: "high" bei >5 Kandidaten mit fit=high, "medium" bei gemischtem Bild, "low" bei wenig/schwachen Daten |
+| Report scope | Profil + Kandidatenanzahl | Aus Manifest |
+
+**Confidence-Anzeige:** Farbcodiert (Green/Orange/Muted) als Badge. Bei "low" zusätzlicher Hinweis: "Few strong signals — expand search or review manually."
+
+**Hinweis:** Die Datenqualität der Decision Summary hängt von der Engine ab. Das Template zeigt an, was vorhanden ist, und markiert fehlende Felder ehrlich als "needs_review" statt sie mit Platzhaltern zu füllen.
+
+### 4.5 Top Recommendations
+
+Gestapelte Karten mit visueller Hierarchie und **Decision Vocabulary**.
+
+Jede Empfehlung enthält:
+- **Type-Badge:** Adopt (Green) / Study (Cyan) / Borrow (Blue) / Watch (Orange) / Defer (Muted) / Reject (Red/Muted)
+  - Mapping: `intake_now` → Adopt, `review_queue` → Study, `observe_only` → Watch, sonst Defer
+- **Repo-Name** (Syne 700)
+- **Why:** Kurzer Grund, warum jetzt relevant (aus `reasoning[0]`, max 120 Zeichen)
+- **Action-Text:** Was konkret tun (aus `suggestedNextStep`, max 120 Zeichen)
+
+Visuelle Hierarchie:
+- **Nr. 1:** Größer (padding 28px 32px), Rank-Nummer in Cyan-Magenta-Gradient-Box (52x52px), größerer Repo-Name (17px), subtiler Cyan-Border + Background
 - **Nr. 2:** Standard-Größe, Rank in Magenta-Box
 - **Nr. 3:** Standard-Größe, Rank in Orange-Box
 
 Jede Empfehlung:
 - Klickbar → scrollt zur passenden Repo-Card (Anchor-Link auf Card-ID)
 - Hover: translateX(6px), Cyan-Border, Pfeil-Icon bewegt sich nach rechts
-- Repo-Name (Syne 700) + Aktions-Text (Manrope, muted)
 
-### 4.5 Search & Filter Toolbar
+### 4.6 Recommended Actions
+
+Kompakte Gruppierung aller Kandidaten nach Handlungstyp. Macht aus Analyse → Bewegung.
+
+4 Spalten im Grid (1fr):
+
+| Gruppe | Label | Farbe | Inhalt |
+|--------|-------|-------|--------|
+| Adopt/Study | "Read & Prototype" | Green | Repos mit `intake_now` oder `review_queue` + fit=high |
+| Borrow | "Borrow Ideas" | Blue | Repos mit fit=medium, `observe_only` aber nützliche Patterns |
+| Watch | "Keep Watching" | Orange | Repos mit `observe_only` |
+| Open | "Needs Review" | Muted | Repos mit unknown fit oder fehlenden Daten |
+
+Pro Repo in der Gruppe: nur Name + 1-Zeile-Grund (max 80 Zeichen). Klickbar → scrollt zur Card.
+
+Wenn eine Gruppe leer ist, wird sie nicht angezeigt.
+
+### 4.7 Search & Filter Toolbar
 
 Grid-Layout:
 - Textsuche (input type="search", Placeholder "Filter repos, layers, capabilities")
@@ -172,17 +266,21 @@ Alle Inputs: Glasmorphismus-Style, 14px border-radius, focus-glow in Cyan.
 
 Live-Filterung: Cards + Tabellen-Rows werden per JS getoggelt (classList hidden-by-filter).
 
-### 4.6 Candidate Cards (Discovery) / Top Compared Repos (Review)
+### 4.8 Candidate Cards (Discovery) / Top Compared Repos (Review)
 
 Grid: auto-fit, minmax(380px, 1fr). Jede Card:
 
 - **Großzügiges Padding** (36px 40px)
 - Glasmorphismus-Surface, border-radius 20px
 - Farbiger Top-Border (3px, rotierend durch die 5 Akzentfarben)
-- **Header:** Repo-Name (Syne 700, 18px) + Badges (Score, Fit, Disposition)
+- **Header:** Repo-Name (Syne 700, 18px) + Badges (Score, Fit, Disposition-Type)
 - **URL:** Klickbar, 15px
-- **Beschreibung:** Muted, 15px
-- **Mini-Grid:** 4 Felder (Why relevant, Strong area, Transfer idea, Risks) — Label uppercase 11px, Wert 15px
+- **Beschreibung:** Muted, 15px, **max 220 Zeichen** (CSS text-overflow ellipsis)
+- **Mini-Grid:** 4 Felder — Label uppercase 11px, Wert 15px, **mit Content-Limits:**
+  - Why relevant: max 160 Zeichen
+  - Strong area: max 160 Zeichen
+  - Transfer idea: max 160 Zeichen
+  - Risks: max 140 Zeichen
 - **Aufklappbare Details:** `<details>` Element, Summary in Cyan uppercase
 
 **Farb-Glow auf Hover:** Jede n-te Card hat eine eigene Akzentfarbe. Beim Hover:
@@ -193,7 +291,7 @@ Grid: auto-fit, minmax(380px, 1fr). Jede Card:
 
 Badges: Pill-Style (border-radius 999px), farblich nach Typ (accent/info/warn/neutral).
 
-### 4.7 Coverage & Signals (nur Review)
+### 4.9 Coverage & Signals (nur Review)
 
 Grid mit 3 Coverage-Cards (Main Layers, Gap Areas, Capabilities).
 
@@ -206,7 +304,7 @@ Bar-Charts in jeder Card:
 
 Section ist einklappbar (Klick auf Header toggelt Body-Sichtbarkeit).
 
-### 4.8 Target Repo Context / Discovery Lenses
+### 4.10 Target Repo Context / Discovery Lenses
 
 Coverage-Grid mit 4 Sub-Cards:
 - Read-first Files
@@ -218,7 +316,7 @@ Section ist einklappbar.
 - Discovery: Default offen (zeigt Discovery Lenses / Queries)
 - Review: Default eingeklappt (Kontext ist Transparenz, nicht Kerninhalt)
 
-### 4.9 Repo Matrix / Errors / Risks
+### 4.11 Repo Matrix / Errors / Risks
 
 **Repo Matrix** (nur Standard/Full View):
 - Responsive Tabelle (overflow-x scroll)
@@ -232,7 +330,7 @@ Section ist einklappbar.
 
 Sections sind einklappbar.
 
-### 4.10 Footer
+### 4.12 Footer
 
 Zentriert:
 - P-Icon (32px, opacity 0.25, kein Glow)
