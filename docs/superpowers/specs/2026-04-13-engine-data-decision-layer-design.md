@@ -29,8 +29,9 @@ Der Nutzer merkt nach Umsetzung im Report:
 1. Das `(heuristic)`-Label am Confidence-Badge ist weg. Stattdessen steht dort eine kuratierte Aussage aus der Engine mit strukturierter Begruendung.
 2. Die Top-3-Adopt-Liste ist echt priorisiert nach Wert minus Aufwand, nicht nach Array-Reihenfolge. Der `.ranked`-CSS-Hervorheber hat endlich Bedeutung.
 3. Review-Reports und Discovery-Reports verhalten sich symmetrisch. Keine parallelen Logik-Zweige mehr im Template.
-4. Bei den Top-Adopt-Empfehlungen ist sichtbar, welche Lizenz das Repo hat — speziell wenn Copyleft oder unbekannt.
+4. Bei *jeder* Top-Adopt-Empfehlung ist die Lizenz sichtbar — Permissive, Copyleft *und* Unknown. Unknown erscheint als eigenes `License ?`-Badge, nicht als stille Auslassung.
 5. Der Dossier-Eintrag pro Kandidat zeigt zusaetzlich zu `fit_band` auch `effort`, `value` und `review_disposition` — drei Zeilen mehr, nicht mehr.
+6. Wenn ein Run mehr als 30% Items mit unvollstaendigen Engine-Daten hat (Fallback oder Stale), sieht der Nutzer einen expliziten Warn-Banner in der Decision Summary — keine stille falsche Sicherheit in der Top-3-Adopt-Liste.
 
 Der Entwickler merkt:
 1. `lib/html-renderer.mjs` hat keine Heuristik-Rechnungen mehr. Weniger Code, klarere Verantwortung.
@@ -38,6 +39,8 @@ Der Entwickler merkt:
 3. Kein neuer Datenwrapper, keine neue Pipeline-Stufe, kein Migrations-Skript.
 4. Pruefbare Deterministik: jede Bewertung traegt einen `rules_fingerprint`, und pro Kandidat liegen im Dossier strukturierte `decision_reason_codes` — wenn ein Ranking unintuitiv wird, ist die Antwort nicht "heuristisch", sondern ein Blick ins Dossier.
 5. Explizite Schema-Version im Report-Payload. Alte Runs erzeugen einen klaren Missing-Data-Error, nicht stilles Null-Rauschen.
+6. Der Fingerprint deckt *JSON und Code-Logik* ab. Ein Bump der `EVALUATION_VERSION`-Konstante reicht, damit alte Queue-Rows beim naechsten Review-Run automatisch als `stale` markiert werden. Keine manuelle Migration, kein Schema-Bump.
+7. Jedes Review-Item traegt `decisionDataState` (`complete` / `fallback` / `stale`). Das Run-Aggregat im Report-Payload macht "wie vollstaendig war dieser Run wirklich?" testbar.
 
 ## Architektur-Prinzipien
 
@@ -47,8 +50,9 @@ Der Entwickler merkt:
 4. **Hard cutover.** Das Template behaelt keine Heuristik-Fallbacks. Fehlt ein Engine-Feld, zeigt das Template eine explizite Fehlermeldung "Engine-Daten unvollstaendig — Lauf erneut ausfuehren". Kein stiller Dual-Pfad.
 5. **Keine Alignment-Rules-Pflege-Explosion.** `effort_bias` lebt nur auf `layerMappings`, `value_bias` lebt nur auf `gapMappings`. Semantisch sauber, halbiert die Kurations-Arbeit.
 6. **Eine gemeinsame Disposition-Funktion fuer Discovery und Review.** Discovery und Review berechnen ihre Disposition durch *dieselbe* `deriveDisposition`-Funktion mit derselben 3x3-Matrix und denselben Overrides. Field-Namen auf den In-Memory-Objekten bleiben unterschiedlich (`discoveryDisposition` / `reviewDisposition`) fuer API-Klarheit, aber die Berechnung ist eine. Das ist der eigentliche EB-001-Schliesspunkt.
-7. **Nachvollziehbarkeit ohne neues Subsystem.** Jede persistierte Bewertung traegt einen `rules_fingerprint`, damit ein Queue-Eintrag gegen eine bestimmte Regel-Version identifizierbar ist. Pro Kandidat landet im *Dossier* — nicht in der Queue-CSV — ein minimaler `decision_reason_codes`-Block (z.B. `["layer_bias:+8", "matched_capabilities:+16", "matrix:effort_low_value_high"]`). Kein Explain-System, kein Flag-Zoo: nur die Rohdaten, die eine spaetere Diskussion kurz halten.
-8. **Unknown ist kein stiller Mittelwert.** `unknown` wird konsequent als "zu wenig Information fuer ein Adopt-Signal" behandelt. Es blockiert `intake_now` immer, cappt `runConfidence` bei genug Haeufung, und wird im Dossier sichtbar als Unsicherheit ausgewiesen.
+7. **Nachvollziehbarkeit deckt JSON *und* Code ab.** Der `rules_fingerprint` fingerprintet *beide* Quellen der Bewertungslogik: die Bias-Werte aus `ALIGNMENT_RULES.json` und die Formel-Version aus `classification.mjs` (Konstante `EVALUATION_VERSION`). Wenn nur der Code-Teil sich aendert (neue Schwellenwerte, andere Override-Reihenfolge), aendert sich der Fingerprint trotzdem, weil die Konstante manuell gebumpt wird. So sieht der Fingerprint nicht "gleich" aus, waehrend die Bewertung in Wahrheit eine andere ist. Pro Kandidat landet im *Dossier* — nicht in der Queue-CSV — ein minimaler `decision_reason_codes`-Block. Kein Explain-System, kein Flag-Zoo: nur die Rohdaten, die eine spaetere Diskussion kurz halten.
+8. **Unknown ist kein stiller Mittelwert.** `unknown` wird konsequent als "zu wenig Information fuer ein Adopt-Signal" behandelt. Es blockiert `intake_now` immer, cappt `runConfidence` bei genug Haeufung, und wird im Dossier *und im Template* sichtbar als Unsicherheit ausgewiesen.
+9. **Vollstaendigkeit der Daten ist pro Item sichtbar.** `reportSchemaVersion: 2` sagt "Engine-Pipeline lief", nicht "alle Items sind vollstaendig". Jedes Item traegt zusaetzlich `decisionDataState`: `complete`, `fallback` oder `stale`. Das Run-Payload aggregiert diese drei Zaehler. Wenn zu viele Items nicht `complete` sind, zeigt das Template einen Warn-Banner — sonst wird stille falsche Sicherheit erzeugt.
 
 ## Beruehrte Dateien
 
@@ -82,11 +86,11 @@ Der Entwickler merkt:
     "intake_now" | "review_queue" | "observe_only" | "skip",
 
   // NEU — Provenance-Feld
-  rulesFingerprint: string                              // SHA-1 der relevanten ALIGNMENT_RULES-Section, 12-stellig
+  rulesFingerprint: string                              // SHA-1 ueber ALIGNMENT_RULES-Section + EVALUATION_VERSION, 12-stellig
 }
 ```
 
-### Per Kandidat (ephemer, nur Dossier)
+### Per Kandidat (ephemer, nur Dossier und Run-Payload)
 
 ```js
 {
@@ -95,9 +99,20 @@ Der Entwickler merkt:
   effortReasons: string[],         // z.B. ["layer_bias:+8", "language_match:-8", "size_penalty:+5"]
   valueReasons: string[],          // z.B. ["gap_bias:+22", "matched_capabilities:+16"]
   dispositionReason: string,       // z.B. "matrix:effort_low_value_high" oder "override:archived_cap"
-  decisionSummary: string          // eine Zeile natuerlichsprachlich, z.B. "High value, medium effort, review before adoption"
+  decisionSummary: string,         // eine Zeile natuerlichsprachlich, z.B. "High value, medium effort, review before adoption"
+
+  // NEU — Data-State-Marker, nur ephemer, wandert ins Run-Report-Payload
+  decisionDataState: "complete" | "fallback" | "stale"
 }
 ```
+
+**Semantik `decisionDataState`:**
+
+- **`complete`**: Alle Engine-Felder sind aus der Queue-Row gelesen worden (Review) oder frisch berechnet (Discovery/Intake), und `rulesFingerprint` stimmt mit dem aktuellen Fingerprint des Runs ueberein.
+- **`fallback`**: Mindestens eines der Engine-Felder fehlte in der Queue-Row und wurde durch `deriveDisposition` rekonstruiert. Oder: `effortBand`/`valueBand` ist `unknown`, weil die Row vor Schema-Erweiterung geschrieben wurde. Das Item hat eine Disposition, aber sie basiert auf unvollstaendigen Daten.
+- **`stale`**: Alle Felder sind da, aber `rulesFingerprint` weicht vom aktuellen Fingerprint ab. Das Item wurde gegen eine alte Regel-/Code-Version bewertet und muesste beim naechsten Intake neu bewertet werden.
+
+Discovery setzt immer `complete` (keine Queue-Rows beteiligt). Review setzt den echten Zustand pro Item.
 
 ### Per Run (ephemer, im Report-Payload)
 
@@ -112,11 +127,18 @@ Der Entwickler merkt:
     unknownFitCount: number,
     riskyCount: number,           // Kandidaten mit archived_repo oder source_lock_in in risks
     capabilityDiversity: number   // 0..1
+  },
+  itemsDataStateSummary: {        // Aggregat ueber decisionDataState aller Items im Run
+    complete: number,
+    fallback: number,
+    stale: number
   }
 }
 ```
 
 `reportSchemaVersion` ist die explizite Umschaltung fuer den Template-Cutover. Das Template prueft diese Version, statt nullable Engine-Felder abzufragen. Ein alter Report-Payload aus einem Run vor der Umsetzung hat `reportSchemaVersion: 1` oder fehlend — beides loest den Missing-Data-Error aus.
+
+`itemsDataStateSummary` ist der zweite Schutz: selbst wenn `reportSchemaVersion: 2` ist, kann das Template sehen, wie viele Items eigentlich mit vollwertigen Daten bewertet wurden. Das Template rechnet daraus einen Anteil und zeigt bei ueber 30% non-complete einen Warn-Banner.
 
 ### Queue-CSV Schema-Erweiterung
 
@@ -376,10 +398,40 @@ export function buildRunConfidence(candidates, totalCapabilitiesInRules) {
   // }
 }
 
+/**
+ * EVALUATION_VERSION ist ein manuell gepflegter Versions-Counter fuer die
+ * Bewertungs-Logik in diesem Modul. Er wird NICHT automatisch aus Code-Hash
+ * abgeleitet (zu fragil gegen Whitespace-Aenderungen).
+ *
+ * Bumpen bei jeder fachlichen Aenderung an:
+ *   - buildCandidateEvaluation (Score-Summanden, Schwellenwerte)
+ *   - deriveDisposition (Matrix-Zellen, Override-Reihenfolge, neue Overrides)
+ *   - buildRunConfidence (Base-Entscheidung, Reality-Guards)
+ *   - classifyLicense (Kategorien)
+ *
+ * NICHT bumpen bei:
+ *   - Refactor ohne Verhaltensaenderung
+ *   - Kommentar-Aenderungen
+ *   - Test-Aenderungen
+ *
+ * Bump = alte Queue-Rows bekommen bei naechstem Fingerprint-Vergleich
+ * automatisch `decisionDataState: "stale"`.
+ */
+export const EVALUATION_VERSION = 1;
+
 export function computeRulesFingerprint(alignmentRules) {
-  // Stabile 12-Zeichen-Kurz-Hash der bewertungsrelevanten Teile:
-  // layerMappings, gapMappings, capabilities, patternTensions.
-  // NICHT ueber Meta-Felder wie "updated_at" oder Kommentare.
+  // Stabile 12-Zeichen-Kurz-Hash aus ZWEI Quellen:
+  //   1. bewertungsrelevante Teile der JSON: layerMappings, gapMappings,
+  //      capabilities, patternTensions. NICHT Meta-Felder wie "updated_at".
+  //   2. EVALUATION_VERSION aus diesem Modul.
+  //
+  // Implementation: canonical JSON-stringify der relevanten Sections,
+  // anhaengen von `::v${EVALUATION_VERSION}`, sha1-hashen, erste 12 Zeichen.
+  //
+  // Wichtig: die Funktion MUSS deterministisch sein — gleicher JSON-Input
+  // + gleiche EVALUATION_VERSION = gleicher Output. Canonical serialization
+  // (stabile Key-Reihenfolge) ist deswegen Pflicht.
+  //
   // Returns: string (z.B. "a3f9c1b2d4e5")
 }
 
@@ -445,12 +497,13 @@ const { disposition, dispositionReason } = deriveDisposition(
   projectAlignment.fitBand
 );
 candidate.discoveryDisposition = disposition;
-candidate.dispositionReason = dispositionReason;   // ephemer, fuer Run-Report-Payload
+candidate.dispositionReason = dispositionReason;      // ephemer, fuer Run-Report-Payload
+candidate.decisionDataState = "complete";             // Discovery baut frisch, nie fallback/stale
 ```
 
 Discovery und Review teilen sich die `deriveDisposition`-Funktion. Der Field-Name auf dem In-Memory-Kandidaten bleibt `discoveryDisposition`, damit vorhandene Konsumenten (z.B. alte Report-Snapshots oder Downstream-Checks) stabil bleiben — aber die Berechnung ist dieselbe wie in Review.
 
-`rulesFingerprint` wird im Discovery-Run *nicht* gesetzt, weil Discovery den Kandidaten nicht persistiert. Erst wenn der Fund spaeter durch Intake laeuft, bekommt er seinen Fingerprint.
+`rulesFingerprint` wird im Discovery-Run *nicht* gesetzt, weil Discovery den Kandidaten nicht persistiert. Erst wenn der Fund spaeter durch Intake laeuft, bekommt er seinen Fingerprint. `decisionDataState` ist fuer Discovery-Kandidaten immer `"complete"`, weil alles frisch berechnet wurde — es gibt keine alten Daten, die Fallback oder Stale sein koennten.
 
 Am Ende des Discovery-Runs, bevor das Report-Payload gebaut wird:
 
@@ -460,13 +513,20 @@ discovery.reportSchemaVersion = 2;
 discovery.runConfidence = confidenceResult.runConfidence;
 discovery.runConfidenceReason = confidenceResult.runConfidenceReason;
 discovery.confidenceFactors = confidenceResult.confidenceFactors;
+discovery.itemsDataStateSummary = {
+  complete: candidates.length,
+  fallback: 0,
+  stale: 0
+};
 ```
 
 ### `lib/review.mjs`
 
-Beim Item-Build aus Queue-Rows zusaetzliche Felder lesen:
+Beim Item-Build aus Queue-Rows zusaetzliche Felder lesen und `decisionDataState` setzen:
 
 ```js
+const currentFingerprint = computeRulesFingerprint(alignmentRules);
+
 const item = {
   // ... bestehende Felder
   effortBand: row.effort_band || "unknown",
@@ -477,6 +537,9 @@ const item = {
   rulesFingerprint: row.rules_fingerprint || null
 };
 
+// State-Bestimmung PRO Item
+let usedFallback = false;
+
 if (!item.reviewDisposition) {
   const fallback = deriveDisposition(
     { effortBand: item.effortBand, valueBand: item.valueBand },
@@ -485,21 +548,50 @@ if (!item.reviewDisposition) {
   );
   item.reviewDisposition = fallback.disposition;
   item.dispositionReason = fallback.dispositionReason;
+  usedFallback = true;
+}
+
+// Auch als Fallback gilt: wenn effort/value selbst "unknown" sind,
+// ist das Item nicht komplett.
+if (item.effortBand === "unknown" || item.valueBand === "unknown") {
+  usedFallback = true;
+}
+
+// Jetzt State-Kategorie
+if (usedFallback) {
+  item.decisionDataState = "fallback";
+} else if (item.rulesFingerprint && item.rulesFingerprint !== currentFingerprint) {
+  item.decisionDataState = "stale";
+} else if (!item.rulesFingerprint) {
+  // Fingerprint fehlt ganz (sehr alte Row) → auch stale, nicht silent complete
+  item.decisionDataState = "stale";
+} else {
+  item.decisionDataState = "complete";
 }
 ```
 
-`deriveDisposition` wird als Fallback aufgerufen, falls Queue-Row-Feld fehlt (z.B. Row wurde vor Schema-Erweiterung geschrieben). Nach einem erneuten Intake-Lauf ist das Feld persistiert und der Fallback wird nicht mehr gebraucht. Dies ist dieselbe Funktion, die Discovery aufruft — kein zweiter Code-Pfad.
+`deriveDisposition` wird als Fallback aufgerufen, falls Queue-Row-Feld fehlt (z.B. Row wurde vor Schema-Erweiterung geschrieben). Dies ist dieselbe Funktion, die Discovery aufruft — kein zweiter Code-Pfad. Aber ein Item, das auf Fallback angewiesen war, wird klar als solches markiert.
 
-**Staleness-Check (Hinweis, noch nicht enforced):** Nach dem Item-Build kann der Review-Run `computeRulesFingerprint(alignmentRules)` berechnen und mit den `item.rulesFingerprint`-Werten vergleichen. Wenn ein Item einen alten Fingerprint traegt, kann das im Logging vermerkt werden — aber Neubewerten ist fuer diese Spec out-of-scope. Die Info liegt bereit, ein spaeteres `re-evaluate`-Subcommand kann sie nutzen.
+**Staleness wird hier bereits aktiv erkannt** (im Unterschied zur vorherigen Version der Spec, wo es nur als Logging-Hinweis gedacht war). Der Review-Lauf markiert jedes Item mit einem Mismatch-Fingerprint als `stale`. Das Template liest das Aggregat und zeigt einen Warn-Banner. Neubewerten selbst (automatisches Re-Run-Intake) bleibt weiterhin out-of-scope.
 
 Am Ende des Review-Runs:
 
 ```js
 const confidenceResult = buildRunConfidence(items, alignmentRules.capabilities.length);
+
+const itemsDataStateSummary = items.reduce(
+  (acc, i) => {
+    acc[i.decisionDataState] = (acc[i.decisionDataState] ?? 0) + 1;
+    return acc;
+  },
+  { complete: 0, fallback: 0, stale: 0 }
+);
+
 review.reportSchemaVersion = 2;
 review.runConfidence = confidenceResult.runConfidence;
 review.runConfidenceReason = confidenceResult.runConfidenceReason;
 review.confidenceFactors = confidenceResult.confidenceFactors;
+review.itemsDataStateSummary = itemsDataStateSummary;
 ```
 
 ### `lib/queue.mjs`
@@ -576,23 +668,56 @@ Nur `adopt` wird sortiert. Die `.ranked`-Klasse auf den ersten 3 Eintraegen blei
 
 **Lizenz-Tag in Top-3-Adopt:**
 
-Im `action-item`-Template fuer Adopt-Bucket wird zusaetzlich ein `.action-item__license` Span gerendert, wenn `item.license` gesetzt ist:
+Im `action-item`-Template fuer Adopt-Bucket wird *immer* ein `.action-item__license` Span gerendert — auch wenn `item.license` fehlt oder `"NOASSERTION"` ist. Es gibt keine Sonderfall-Auslassung:
+
+```js
+// In renderRecommendedActions, fuer jeden Adopt-Eintrag:
+const licenseCategory = classifyLicense(item.license);   // "permissive" | "copyleft" | "unknown"
+const licenseLabel =
+  licenseCategory === "unknown"
+    ? "License ?"
+    : (item.license || "");
+
+// Im HTML:
+// <span class="action-item__license license-${licenseCategory}">${licenseLabel}</span>
+```
+
+Rendering-Beispiele:
 
 ```html
+<!-- Permissive: MIT-Repo -->
 <a href="..." class="action-item ranked">
   <span class="action-item__rank">1.</span>
   <strong class="action-item__name">owner/name</strong>
   <span class="action-item__license license-permissive">MIT</span>
-  <span class="action-item__reason">...</span>
+  <span class="action-item__reason">High value, low effort</span>
+</a>
+
+<!-- Copyleft: GPL-Repo -->
+<a href="..." class="action-item ranked">
+  <span class="action-item__rank">2.</span>
+  <strong class="action-item__name">owner/other</strong>
+  <span class="action-item__license license-copyleft">GPL-3.0</span>
+  <span class="action-item__reason">High value, medium effort</span>
+</a>
+
+<!-- Unknown: kein License-Feld im Enrichment -->
+<a href="..." class="action-item ranked">
+  <span class="action-item__rank">3.</span>
+  <strong class="action-item__name">owner/third</strong>
+  <span class="action-item__license license-unknown">License ?</span>
+  <span class="action-item__reason">High value, low effort</span>
 </a>
 ```
 
 Drei Varianten des License-Tags:
 - `license-permissive` (MIT, Apache-2.0, BSD-*, ISC, Unlicense) — grauer Text, dezent
 - `license-copyleft` (GPL-*, AGPL-*, LGPL-*) — orange Warn-Styling
-- `license-unknown` (kein License-Feld) — grauer Text mit `?` Suffix
+- `license-unknown` (kein License-Feld oder `NOASSERTION`) — grauer Text mit `License ?` als Label
 
 Lizenz-Klassifikation kommt aus der gemeinsamen `classifyLicense`-Funktion in `lib/classification.mjs` — dieselbe, die die Engine fuer `effortScore.license_adjustment` verwendet. Das Template importiert sie und ruft sie auf. So gibt es *eine* Wahrheit, was eine Lizenz ist.
+
+**Warum immer rendern:** Erfolgskriterium #4 dieser Spec verspricht, dass Lizenz-Unsicherheit in der UI sichtbar ist, nicht nur bei bekannten Lizenzen aufblitzt. Eine bedingte Rendering-Regel (`if (item.license)`) waere ein stilles Verstecken genau der Information, die ein Adopter am dringendsten sehen will — "kann ich das ueberhaupt einbinden?". `license-unknown` ist ein *Warn-Signal*, nicht Nicht-Information.
 
 Lizenz-Tag erscheint nur in der Adopt-Gruppe, nicht in Study/Watch/Defer. Nicht in Repo-Cards. Nicht in Decision Summary.
 
@@ -610,6 +735,56 @@ Lizenz-Tag erscheint nur in der Adopt-Gruppe, nicht in Study/Watch/Defer. Nicht 
 .license-copyleft  { color: var(--orange); background: rgba(255,145,0,0.12); }
 .license-unknown   { color: var(--ink-muted); background: rgba(255,255,255,0.04); opacity: 0.7; }
 ```
+
+### Data-State-Warn-Banner
+
+Auch wenn `reportSchemaVersion === 2` ist, kann das Report-Payload noch halbgare Item-Daten enthalten — Items mit `decisionDataState: "fallback"` oder `"stale"`. Das Template muss das sichtbar machen, sonst wuerde ein Run mit 80% Fallback-Items aussehen wie ein stabiler Run.
+
+In `renderDecisionSummary`, nach dem `reportSchemaVersion`-Check und vor dem Confidence-Block:
+
+```js
+const stateSummary = runRoot.itemsDataStateSummary || { complete: 0, fallback: 0, stale: 0 };
+const totalItems =
+  stateSummary.complete + stateSummary.fallback + stateSummary.stale;
+const nonCompleteRatio =
+  totalItems > 0 ? (stateSummary.fallback + stateSummary.stale) / totalItems : 0;
+
+const dataStateWarn = nonCompleteRatio > 0.3;
+```
+
+Wenn `dataStateWarn === true`, wird ein Warn-Banner als erste Kind-Section der Decision Summary gerendert:
+
+```html
+<div class="section-warn">
+  <strong>Engine-Daten nur teilweise vollstaendig.</strong>
+  ${stateSummary.fallback} Items mit Fallback-Bewertung,
+  ${stateSummary.stale} Items gegen alte Regelversion bewertet
+  (${Math.round(nonCompleteRatio * 100)}% nicht vollstaendig).
+  Die Top-Empfehlungen koennen sich nach einem frischen Intake-Lauf verschieben.
+</div>
+```
+
+CSS:
+
+```css
+.section-warn {
+  margin: 0 0 16px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background: rgba(255, 145, 0, 0.12);
+  border-left: 3px solid var(--orange);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.section-warn strong { color: var(--orange); display: block; margin-bottom: 4px; }
+```
+
+Die 30%-Schwelle ist bewusst konservativ: bei >30% unvollstaendigen Items ist die Adopt-Rangliste unten auf Sand gebaut, und der Nutzer sollte das vor der Entscheidung sehen. Bei `<= 30%` bleibt der Report visuell ruhig — einzelne Fallback-Items sind operativ normal.
+
+Unter 30% zeigt das Template nichts zu DataState; auch die einzelnen Items tragen *kein* sichtbares State-Badge in der Report-UI. Die Information wandert ausschliesslich ueber das Run-Aggregat in den Banner. So vermeidet das Template ein Badge-Gewitter fuer einen zweitrangigen Meta-Zustand.
+
+**Warum das nicht redundant zu `runConfidence` ist:** `runConfidence` bewertet die *inhaltliche Qualitaet des Run-Ergebnisses* (Anzahl High-Fits, Risky-Anteil, Diversity). `decisionDataState` bewertet die *Datenqualitaet der einzelnen Bewertungen*. Ein Run kann `runConfidence: high` haben und trotzdem 60% stale Items — das sind unterschiedliche Fragen und brauchen unterschiedliche Signale.
 
 ### Missing-Data-Fehlerfall
 
@@ -665,6 +840,7 @@ Die anderen Sections rendern weiter (Kandidaten-Grid, Coverage etc.), damit der 
   - Sensitiv: layer_bias-Aenderung → anderer Fingerprint
   - Insensitiv: Whitespace- oder Kommentar-Aenderungen aendern den Fingerprint NICHT
   - Laenge 12 Zeichen
+  - **Sensitiv auf `EVALUATION_VERSION`-Bump:** gleicher JSON-Input, aber `EVALUATION_VERSION: 1 → 2`, liefert anderen Fingerprint. Test mocked die Konstante oder laedt das Modul mit einem Stub nach.
 - `classifyLicense`:
   - "MIT", "Apache-2.0", "BSD-3-Clause", "ISC" → `"permissive"`
   - "GPL-3.0", "AGPL-3.0", "LGPL-2.1" → `"copyleft"`
@@ -673,10 +849,27 @@ Die anderen Sections rendern weiter (Kandidaten-Grid, Coverage etc.), damit der 
 ### Integration-Tests (erweitern)
 
 `test/discovery.test.mjs` und `test/review.test.mjs`:
-- Full Discovery-Run mit Fixture Alignment-Rules, assert: jeder Kandidat hat `effortBand`, `valueBand`, `discoveryDisposition`; Run hat `reportSchemaVersion: 2`, `runConfidence`, `runConfidenceReason`, `confidenceFactors`
-- Full Review-Run mit Fixture Queue-Seed, assert: jedes Item hat `reviewDisposition`, `rulesFingerprint`; Run hat `reportSchemaVersion: 2`; das Resultat ist deterministisch ueber mehrere Runs
+- Full Discovery-Run mit Fixture Alignment-Rules, assert: jeder Kandidat hat `effortBand`, `valueBand`, `discoveryDisposition`, `decisionDataState: "complete"`; Run hat `reportSchemaVersion: 2`, `runConfidence`, `runConfidenceReason`, `confidenceFactors`, `itemsDataStateSummary`
+- Full Review-Run mit Fixture Queue-Seed (alle Rows vollstaendig, aktueller Fingerprint), assert: jedes Item hat `reviewDisposition`, `rulesFingerprint`, `decisionDataState: "complete"`; Run hat `reportSchemaVersion: 2`, `itemsDataStateSummary.complete === items.length`; das Resultat ist deterministisch ueber mehrere Runs
 - Snapshot-Test: Adopt-Sortierung mit bewusst kollidierendem `valueScore - effortScore` ist deterministisch (Tiebreaker greift)
-- Fallback-Test: Review-Run mit einer Queue-Row ohne `review_disposition` ruft `deriveDisposition` und liefert ein Ergebnis
+
+**`decisionDataState`-State-Machine-Tests (review.mjs):**
+- Queue-Row ohne `review_disposition` → Item bekommt Disposition via `deriveDisposition`-Fallback → `decisionDataState === "fallback"`
+- Queue-Row mit `effort_band: ""` (vor Schema-Erweiterung geschrieben) → Item hat `effortBand === "unknown"` → `decisionDataState === "fallback"` (auch wenn `review_disposition` in der Row stand)
+- Queue-Row mit vollstaendigen Feldern aber `rules_fingerprint` von vor zwei Tagen, der jetzt nicht mehr stimmt → `decisionDataState === "stale"`
+- Queue-Row mit vollstaendigen Feldern und fehlendem `rules_fingerprint` (Altlast) → `decisionDataState === "stale"` (nicht silent complete)
+- Queue-Row mit vollstaendigen Feldern und passendem `rules_fingerprint` → `decisionDataState === "complete"`
+- Gemischter Review-Run mit allen drei States → `itemsDataStateSummary` hat korrekte Zaehler: `{ complete: 2, fallback: 1, stale: 1 }` fuer 4-Item-Fixture
+
+**Template-Tests (html-renderer.test.mjs):**
+- Report-Payload mit `reportSchemaVersion: 2` + `itemsDataStateSummary: { complete: 10, fallback: 0, stale: 0 }` → Template rendert *keinen* `.section-warn`-Block
+- Report-Payload mit `itemsDataStateSummary: { complete: 5, fallback: 3, stale: 2 }` (50% non-complete) → Template rendert `.section-warn`-Block mit Text, der die Zahlen `3`, `2`, `50%` enthaelt
+- Report-Payload mit `itemsDataStateSummary: { complete: 10, fallback: 2, stale: 1 }` (~23% non-complete) → *kein* Warn-Banner (unter 30%-Schwelle)
+- Adopt-Kandidat mit `license: "MIT"` → Template rendert `<span class="action-item__license license-permissive">MIT</span>`
+- Adopt-Kandidat mit `license: "GPL-3.0"` → `<span class="action-item__license license-copyleft">GPL-3.0</span>`
+- Adopt-Kandidat mit `license: null` → `<span class="action-item__license license-unknown">License ?</span>` — der Span *existiert* im Output, wird nicht weggelassen
+- Adopt-Kandidat mit `license: "NOASSERTION"` → `<span class="action-item__license license-unknown">License ?</span>`
+- Snapshot-Test Unknown-License-Sichtbarkeit: Ein Adopt-Kandidat ohne License-Feld ist in der gerenderten HTML-Ausgabe per Substring-Match auffindbar (`"license-unknown"` und `"License ?"` beide im Output)
 
 ### Smoke-Test (manual)
 
@@ -689,10 +882,10 @@ Nach Umsetzung einmalig:
 Sechs Phasen, in dieser Reihenfolge. Jede Phase ist ein eigener Task-Block im Implementierungs-Plan.
 
 1. **Schema & Alignment-Rules** — Queue-CSV-Header um 6 Spalten erweitern (inkl. `rules_fingerprint`), Row-Writer/Parser anpassen, `ALIGNMENT_RULES.json` um `effort_bias`/`value_bias`-Felder erweitern. Foundation, keine Verhaltensaenderung.
-2. **Classification-Funktionen** — `buildCandidateEvaluation`, `deriveDisposition`, `buildRunConfidence`, `computeRulesFingerprint`, `classifyLicense` als pure Funktionen mit Unit-Tests. Isoliert testbar, kein Pipeline-Touch.
+2. **Classification-Funktionen** — `buildCandidateEvaluation`, `deriveDisposition`, `buildRunConfidence`, `computeRulesFingerprint`, `classifyLicense`, `EVALUATION_VERSION`-Konstante als pure Funktionen/Werte mit Unit-Tests. Isoliert testbar, kein Pipeline-Touch.
 3. **Intake-Integration** — `intake.mjs` ruft neue Funktionen, persistiert 6 Felder in Queue, schreibt `## Decision Signals`-Block mit Reasons + Summary + Fingerprint in Intake-Dossier. Erste Stelle, an der die Engine-Felder real entstehen.
-4. **Pipeline-Integration** — `discovery.mjs` + `review.mjs` lesen/schreiben die Felder, setzen `reportSchemaVersion: 2`, berechnen `runConfidence` + `confidenceFactors` pro Run. Report-Payload enthaelt jetzt die neuen Daten.
-5. **Template-Cutover** — `html-renderer.mjs` Heuristik-Pfade loeschen, Schema-Version pruefen, Engine-Felder lesen, Adopt-Sort mit Tiebreakern, Lizenz-Tags via `classifyLicense`, Missing-Data-Error. Das sichtbare Delta fuer den Nutzer.
+4. **Pipeline-Integration** — `discovery.mjs` + `review.mjs` lesen/schreiben die Felder, setzen `reportSchemaVersion: 2`, berechnen `runConfidence` + `confidenceFactors` + `itemsDataStateSummary` pro Run. Review implementiert zusaetzlich die `decisionDataState`-State-Machine (complete/fallback/stale) pro Item. Report-Payload enthaelt jetzt die neuen Daten.
+5. **Template-Cutover** — `html-renderer.mjs` Heuristik-Pfade loeschen, Schema-Version pruefen, Engine-Felder lesen, Adopt-Sort mit Tiebreakern, Lizenz-Tags via `classifyLicense` (immer rendern, auch Unknown), Data-State-Warn-Banner bei >30% non-complete, Missing-Data-Error. Das sichtbare Delta fuer den Nutzer.
 6. **Smoke-Test & Validation** — End-to-End-Lauf, visuelle Pruefung, Deterministik-Check (zwei Runs, diff leer), Commit.
 
 Reihenfolge ist gewaehlt, damit jeder Task unabhaengig committen kann und das Template-Delta (Phase 5) erst greift, nachdem die Engine tatsaechlich liefert (Phasen 1-4).
@@ -717,6 +910,8 @@ Reihenfolge ist gewaehlt, damit jeder Task unabhaengig committen kann und das Te
 - **`runConfidence`-Schwellenwerte.** Die `capabilityDiversity >= 0.4`-Grenze und die Reality-Guard-Grenzen (30% unknown, 40% risky) sind Schaetzwerte. Bei EventBaer gibt es 6 Capabilities, also muessen 2-3 davon matchen fuer `0.4+`. Das ist der richtige Anspruchs-Level fuer `high`, muss aber im ersten Run validiert werden.
 - **Lizenz-Information ist nicht immer im Enrichment**. Der GitHub-API-Call fuer Repo-Metadaten liefert `license` nur, wenn GitHub es erkannt hat. Fuer Repos ohne License-Feld rechnet `effortScore` mit `+4` (Unsicherheits-Malus) und das Template zeigt `license-unknown`. Das ist die richtige Aussage, nicht ein Bug.
 - **Reason-Code-Drift zwischen Tests und Engine.** Die `effortReasons`/`valueReasons`-Token-Formate werden von Unit-Tests asserted. Wenn die Engine spaeter einen Format-Shift macht (z.B. `layer_bias:+8` → `layer:+8`), muessen Tests mit ziehen. Das ist der Preis fuer pruefbare Deterministik — akzeptabel, solange die Format-Entscheidung dokumentiert ist.
+- **Vergessener `EVALUATION_VERSION`-Bump.** Der Entwickler aendert `deriveDisposition` ohne die Konstante hochzuziehen → alte Rows wirken faelschlich `complete`, obwohl sie gegen eine andere Logik bewertet wurden. Mitigation: Kommentarblock an der Konstante listet exakt, wann gebumpt werden muss, und die Unit-Test-Suite enthaelt einen "version-sensitive"-Test, der fehlschlaegt, wenn ein Matrix-Pfad mutiert wurde ohne dass sich der Fingerprint geaendert hat. Das ist nicht hermetisch (Tests koennen angepasst werden), aber macht das Vergessen sichtbar.
+- **30%-Schwelle des Data-State-Warn-Banners.** Der Wert ist aus der Hueftschussschaetzung "weniger als ein Drittel unvollstaendig ist operativer Normalbetrieb" abgeleitet. In einem produktiven Zielprojekt mit vielen gealterten Queue-Rows koennte er zu niedrig sein (Banner dauerhaft an) oder zu hoch (Banner nie an). Mitigation: Schwelle ist eine Template-Konstante, kein externes Config-Feld — wenn sie in der Praxis nicht passt, ist der Fix ein Einzeiler.
 
 ## Verhaeltnis zu ENGINE_BACKLOG.md
 
