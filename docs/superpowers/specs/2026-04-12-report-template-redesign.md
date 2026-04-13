@@ -396,13 +396,13 @@ Zentriert:
 
 2. **`lib/constants.mjs`** — Report-Pfad-Pattern anpassen auf neues Namensschema
 
-3. **`lib/patternpilot-engine.mjs`** — Report-Pfad-Generierung anpassen
+3. **`scripts/patternpilot.mjs`** und **`lib/html-renderer.mjs`** — Report-Pfad-Generierung und HTML-Ausgabe anpassen
 
 4. **Alte Reports löschen:**
    - `projects/eventbear-worker/reports/discovery-focused.html`
    - `runs/*/summary.html` werden NICHT gelöscht — sie werden beim nächsten Run automatisch mit dem neuen Template generiert, da der Renderer zentral ist
 
-5. **Report-Pfad-Logik:** Die Entscheidung ob überschrieben oder neu erstellt wird, liegt in der Engine (`patternpilot-engine.mjs`), nicht im Template. Das Template selbst ist nur die HTML-Ausgabe.
+5. **Report-Pfad-Logik:** Die Entscheidung ob überschrieben oder neu erstellt wird, liegt in der CLI-/Modulschicht (`scripts/patternpilot.mjs` plus `lib/html-renderer.mjs`), nicht im Template. Das Template selbst ist nur die HTML-Ausgabe.
 
 ### Keine externen Dependencies
 

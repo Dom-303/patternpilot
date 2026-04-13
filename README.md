@@ -386,7 +386,15 @@ npm run intake -- --project eventbear-worker --skip-enrich https://github.com/Ci
 ### Motor
 
 - `scripts/patternpilot.mjs`
-- `lib/patternpilot-engine.mjs`
+- `lib/index.mjs`
+- `lib/config.mjs`
+- `lib/project.mjs`
+- `lib/queue.mjs`
+- `lib/discovery.mjs`
+- `lib/review.mjs`
+- `lib/html-renderer.mjs`
+- `lib/intake.mjs`
+- `lib/promotion.mjs`
 
 ### Produktisierung
 
