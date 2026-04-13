@@ -17,17 +17,10 @@ Diese Datei wird zusammen mit `STATUS.md` als operative Uebergabeflaeche mitgefu
 
 ## Handoff Note
 
-- settled_now: target-repo context is run-scoped and transparent, not a hardwired product identity.
-- next_recommended_step: build the automatic chain run with blacklist, allowlist, limits, and quality gates.
+- settled_now: HTML-Report-Schicht hat jetzt eine verbindliche, decision-first Landing-Page-UI mit Decision Summary, Recommended Actions, Sticky Nav und geteilten Stats-Bloecken. OQ-001 ist damit erledigt.
+- next_recommended_step: Chain-Run-Automation (OQ-002) mit Blacklist, Allowlist, Limits und Quality-Gates bauen; parallel dazu die Engine-Daten-Luecken aus `docs/foundation/ENGINE_BACKLOG.md` in die Engine-Roadmap einplanen.
 
 ## Aktuell offene Fragen
-
-### OQ-001 — REPORT_UI_DIRECTION
-
-- prioritaet: BALD
-- frage: Welche finale visuelle Richtung soll die HTML-Report-Schicht bekommen, bevor daraus eine spaetere App- oder Web-Oberflaeche wird?
-- warum_offen: Die technische HTML-Schicht steht, aber Designsystem, visuelle Sprache und moegliche Branding-Regeln sind noch nicht final entschieden.
-- naechster_sinnvoller_schritt: Ein verbindliches Report-UI-Framework mit Farben, Typografie, Komponenten und Chart-Patterns festziehen.
 
 ### OQ-002 — CHAIN_RUN_AUTOMATION
 
@@ -56,4 +49,13 @@ Diese Datei wird zusammen mit `STATUS.md` als operative Uebergabeflaeche mitgefu
 - frage: Wo ergaenzt spaeter eine LLM-Schicht die heuristische Engine sinnvoll, ohne den belastbaren Kern zu verwischen?
 - warum_offen: Der aktuelle Fokus liegt bewusst auf einer halluzinationsarmen, reproduzierbaren Basis.
 - naechster_sinnvoller_schritt: Erst nach stabiler Discovery-, Review- und Report-Schicht LLM-Einsatz nur fuer Verdichtung und Briefing pruefen.
+
+## Erledigte Fragen
+
+### OQ-001 — REPORT_UI_DIRECTION (settled 2026-04-13)
+
+- frage: Welche finale visuelle Richtung soll die HTML-Report-Schicht bekommen, bevor daraus eine spaetere App- oder Web-Oberflaeche wird?
+- entscheidung: Decision-first Landing-Page-Ansatz. Dark Glassmorphism mit Neon-Akzenten (Cyan #00e5ff, Magenta #e040fb, Orange #ff9100, Green #00e676, Blue #2979ff). Hero + Sticky Nav + Decision Summary + Top Recommendations + Recommended Actions + Filterable Candidate Grid.
+- umsetzung: `lib/html-renderer.mjs` komplett ueberarbeitet in 10-Task Subagent-Run, plus Phase A/B Stabilisierungspass. Reference: `docs/reference/REPORT_UI_FRAMEWORK.md` bleibt massgeblich fuer zukuenftige Report-Typen.
+- follow_up: Offene Engine-Daten-Luecken, die das Report-UI voll ausschoepfen koennen, liegen in `docs/foundation/ENGINE_BACKLOG.md`.
 
