@@ -315,12 +315,13 @@ async function runDiscover(rootDir, config, options) {
     binding,
     reportView: options.reportView
   });
+  const dateStr = createdAt.slice(0, 10);
   const projectReportPath = path.join(
     rootDir,
     "projects",
     binding.projectKey,
     "reports",
-    `discovery-${discovery.discoveryProfile.id}.html`
+    `patternpilot-report-${binding.projectKey}-${dateStr}.html`
   );
   const projectReportRelativePath = path.relative(rootDir, projectReportPath);
   const manifest = {
@@ -345,7 +346,7 @@ async function runDiscover(rootDir, config, options) {
     projectProfile,
     dryRun: options.dryRun
   });
-  const runHtmlPath = path.join(runDir, "summary.html");
+  const runHtmlPath = path.join(runDir, `patternpilot-report-${projectKey}-${dateStr}.html`);
 
   if (!options.dryRun) {
     await ensureDirectory(path.dirname(projectReportPath), false);
@@ -423,12 +424,13 @@ async function runReviewWatchlist(rootDir, config, options) {
     "reviews",
     `watchlist-review-${review.analysisProfile.id}-${review.analysisDepth.id}.md`
   );
+  const reviewDateStr = review.createdAt.slice(0, 10);
   const htmlReportPath = path.join(
     rootDir,
     "projects",
     binding.projectKey,
     "reports",
-    `watchlist-review-${review.analysisProfile.id}-${review.analysisDepth.id}.html`
+    `patternpilot-report-${binding.projectKey}-${reviewDateStr}.html`
   );
   const reportRelativePath = path.relative(rootDir, reportPath);
   const htmlReportRelativePath = path.relative(rootDir, htmlReportPath);
@@ -452,7 +454,7 @@ async function runReviewWatchlist(rootDir, config, options) {
     projectProfile,
     dryRun: options.dryRun
   });
-  const runHtmlPath = path.join(runDir, "summary.html");
+  const runHtmlPath = path.join(runDir, `patternpilot-report-${projectKey}-${reviewDateStr}.html`);
 
   if (!options.dryRun) {
     await ensureDirectory(path.dirname(reportPath), false);
