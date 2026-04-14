@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 1,
+  "projectKey": "eventbear-worker",
+  "generatedAt": "2026-04-14T20:55:06.741Z",
+  "workbenchId": "2026-04-14T20-38-38-495Z",
+  "sourceRunId": "2026-04-14T20-37-53-197Z",
+  "suggestion": {
+    "rowCount": 2,
+    "manualVerdictCount": 0,
+    "heuristicFalseBlockCount": 2,
+    "suggestions": [
+      {
+        "type": "allow_disposition",
+        "changed": true,
+        "confidence": "medium",
+        "heuristicOnly": true,
+        "value": "observe_only",
+        "sources": [
+          "citybureau/city-scrapers",
+          "oc/openevents"
+        ],
+        "rationale": "Allow disposition 'observe_only' so strong blocked candidates remain visible."
+      }
+    ],
+    "changed": true,
+    "nextPolicy": {
+      "projectKey": "eventbear-worker",
+      "blockedOwners": [],
+      "blockedRepoPatterns": [
+        "/awesome-",
+        "/example-"
+      ],
+      "blockedTopics": [],
+      "blockedPatternFamilies": [],
+      "blockedMainLayers": [],
+      "blockedGapAreas": [],
+      "blockedLicenseCategories": [],
+      "blockedLicenses": [],
+      "blockedHomepageHosts": [
+        "facebook.com",
+        "meetup.com"
+      ],
+      "blockedSignalPatterns": [
+        "awesome list",
+        "boilerplate",
+        "starter template"
+      ],
+      "blockedRiskFlags": [],
+      "minStars": 0,
+      "minProjectFitScore": 20,
+      "allowDispositions": [
+        "intake_now",
+        "observe_only",
+        "review_queue"
+      ],
+      "allowGapAreas": [],
+      "allowCapabilitiesAny": [],
+      "preferredPatternFamilies": [
+        "local_source_infra_framework",
+        "portal_fed_by_many_scrapers",
+        "place_data_infrastructure"
+      ],
+      "preferredMainLayers": [
+        "source_intake",
+        "access_fetch",
+        "parsing_extraction",
+        "location_place_enrichment"
+      ],
+      "preferredTopics": [
+        "scraper",
+        "events",
+        "calendar",
+        "venue",
+        "location"
+      ],
+      "preferredGapAreas": [
+        "source_systems_and_families",
+        "adapter_handoff_contracts",
+        "location_and_gastro_intelligence"
+      ],
+      "preferredCapabilities": [
+        "source_first",
+        "candidate_first",
+        "evidence_acquisition"
+      ]
+    },
+    "comparison": {
+      "reviewedRuns": 1,
+      "changedRuns": 1,
+      "sourceCandidates": 2,
+      "baseline": {
+        "auditFlagged": 2,
+        "auditPreferred": 2,
+        "enforceHidden": 2
+      },
+      "candidate": {
+        "auditFlagged": 0,
+        "auditPreferred": 2,
+        "enforceHidden": 0
+      },
+      "delta": {
+        "auditFlagged": -2,
+        "auditPreferred": 0,
+        "enforceHidden": -2
+      },
+      "recommendations": [
+        "Candidate policy would reveal 2 candidate slots that the current policy would hide.",
+        "Candidate policy flags 2 fewer candidate slots in audit mode."
+      ],
+      "runs": [
+        {
+          "runId": "2026-04-14T20-37-53-197Z",
+          "manifestPath": "runs/eventbear-worker/2026-04-14T20-37-53-197Z/manifest.json",
+          "sourceCandidates": 2,
+          "baseline": {
+            "sourceCandidates": 2,
+            "auditFlagged": 2,
+            "auditPreferred": 2,
+            "auditStatus": "strict_needs_review",
+            "enforceHidden": 2,
+            "enforcePreferred": 2,
+            "enforceStatus": "strict_needs_review"
+          },
+          "candidate": {
+            "sourceCandidates": 2,
+            "auditFlagged": 0,
+            "auditPreferred": 2,
+            "auditStatus": "permissive_needs_review",
+            "enforceHidden": 0,
+            "enforcePreferred": 2,
+            "enforceStatus": "permissive_needs_review"
+          },
+          "delta": {
+            "auditFlagged": -2,
+            "auditPreferred": 0,
+            "enforceHidden": -2
+          },
+          "changed": true
+        }
+      ]
+    },
+    "recommendations": [
+      "Test whether allowing observe_only reveals strong candidates without introducing too much noise.",
+      "Suggested policy would reveal 2 candidate slots on the source run."
+    ]
+  }
+}

@@ -1,0 +1,877 @@
+{
+  "createdAt": "2026-04-14T21:14:28.752Z",
+  "offline": true,
+  "imported": true,
+  "importSource": "policy-cycle-2026-04-14T20-38-38-495Z",
+  "plan": {
+    "projectKey": "eventbear-worker",
+    "domainKeywords": [
+      "sind",
+      "wenn",
+      "keine",
+      "kein",
+      "docs",
+      "events",
+      "gastro",
+      "gilt",
+      "fachlich",
+      "quelle"
+    ],
+    "discoveryProfile": {
+      "id": "balanced",
+      "label": "Balanced",
+      "defaultLimit": 24,
+      "maxLimit": 40,
+      "perQuery": 12,
+      "queryBudget": 7,
+      "shortlistMultiplier": 2,
+      "limit": 24
+    },
+    "plans": [
+      {
+        "id": "imported-candidates",
+        "label": "Imported candidates",
+        "capabilityId": null,
+        "query": "policy-cycle-2026-04-14T20-38-38-495Z",
+        "terms": [
+          "policy-cycle-2026-04-14T20-38-38-495Z"
+        ],
+        "reasons": [
+          "Built from an imported candidate fixture instead of a live GitHub search."
+        ]
+      }
+    ]
+  },
+  "discoveryProfile": {
+    "id": "balanced",
+    "label": "Balanced",
+    "defaultLimit": 24,
+    "maxLimit": 40,
+    "perQuery": 12,
+    "queryBudget": 7,
+    "shortlistMultiplier": 2,
+    "limit": 24
+  },
+  "scanned": 2,
+  "knownUrlCount": 11,
+  "candidateCount": 2,
+  "rawCandidateCount": 2,
+  "evaluatedCandidates": [
+    {
+      "repo": {
+        "owner": "oc",
+        "name": "openevents",
+        "normalizedRepoUrl": "https://github.com/oc/openevents",
+        "slug": "oc__openevents",
+        "host": "github.com",
+        "fullName": "oc/openevents",
+        "description": "",
+        "homepage": "",
+        "topics": [],
+        "defaultBranch": "",
+        "visibility": "public",
+        "archived": false,
+        "fork": false,
+        "stars": 0,
+        "forks": 0,
+        "openIssues": 0,
+        "watchers": 0,
+        "language": "",
+        "license": "",
+        "createdAt": "",
+        "updatedAt": "",
+        "pushedAt": ""
+      },
+      "enrichment": {
+        "status": "success",
+        "source": "imported_candidates",
+        "authMode": "offline",
+        "authSource": null,
+        "fetchedAt": "2026-04-14T20:37:53.200Z",
+        "repo": {
+          "fullName": "oc/openevents",
+          "description": "Open source events platform with structured event and venue concepts.",
+          "homepage": "https://openevents.io",
+          "topics": [
+            "events",
+            "calendar",
+            "venue",
+            "open-data"
+          ],
+          "defaultBranch": "",
+          "visibility": "public",
+          "archived": false,
+          "fork": false,
+          "stars": 84,
+          "forks": 0,
+          "openIssues": 0,
+          "watchers": 0,
+          "language": "TypeScript",
+          "license": "MIT",
+          "createdAt": "",
+          "updatedAt": "",
+          "pushedAt": ""
+        },
+        "languages": [
+          "TypeScript"
+        ],
+        "readme": {
+          "path": null,
+          "htmlUrl": null,
+          "excerpt": "Structured event platform with APIs, venue handling and event ingestion surface."
+        }
+      },
+      "guess": {
+        "category": "aggregator",
+        "patternFamily": "place_data_infrastructure",
+        "mainLayer": "location_place_enrichment",
+        "gapArea": "location_and_gastro_intelligence",
+        "buildVsBorrow": "adapt_pattern",
+        "priority": "soon"
+      },
+      "landkarteCandidate": {
+        "name": "openevents",
+        "repo_url": "https://github.com/oc/openevents",
+        "owner": "oc",
+        "category": "aggregator",
+        "pattern_family": "place_data_infrastructure",
+        "main_layer": "location_place_enrichment",
+        "secondary_layers": "export_feed_api",
+        "source_focus": "places",
+        "geographic_model": "platform_bound",
+        "data_model": "places_only",
+        "distribution_type": "api",
+        "stars": "84",
+        "activity_status": "unknown",
+        "last_checked_at": "2026-04-14",
+        "maturity": "solid",
+        "strengths": "Open source events platform with structured event and venue concepts. | Topics: events, calendar, venue, open-data | Languages: TypeScript",
+        "weaknesses": "Needs deeper repo reading to confirm system depth",
+        "risks": "needs_review",
+        "learning_for_eventbaer": "Location and venue intelligence deserve their own deliberate layer next to event truth.",
+        "possible_implication": "Review and adapt the pattern into the EventBaer worker architecture, not as direct dependency.",
+        "eventbaer_gap_area": "location_and_gastro_intelligence",
+        "build_vs_borrow": "adapt_pattern",
+        "priority_for_review": "soon",
+        "eventbaer_relevance": "medium",
+        "decision": "adapt",
+        "notes": "stage2_candidate:success"
+      },
+      "risks": [
+        "platform_bias"
+      ],
+      "projectAlignment": {
+        "status": "ready",
+        "fitBand": "high",
+        "fitScore": 73,
+        "matchedCapabilities": [
+          "source_first",
+          "location_intelligence",
+          "distribution_surfaces"
+        ],
+        "recommendedWorkerAreas": [
+          "lib/geo-validator.mjs",
+          "scripts/run-locations.mjs",
+          "templates/locations_template.csv"
+        ],
+        "reviewDocs": [
+          "WORKER_CONTRACT.md",
+          "docs/SOURCE_GEO_REFERENCE.md",
+          "docs/SOURCE_MASTERLIST_POLICY.md",
+          "docs/SOURCE_SYSTEMS_TARGET_ARCHITECTURE.md",
+          "docs/UI_FRAMEWORK.md",
+          "docs/WEB_PLATFORM_OVERVIEW.md"
+        ],
+        "tensions": [],
+        "suggestedNextStep": "Review against location/gastro layers and geo-validation capabilities.",
+        "rationale": [
+          "Primary layer 'location_place_enrichment' maps into EventBaer worker areas: lib/geo-validator.mjs, scripts/run-locations.mjs, templates/locations_template.csv.",
+          "Gap area 'location_and_gastro_intelligence' suggests: Review against location/gastro layers and geo-validation capabilities..",
+          "Matched project capabilities: source_first, location_intelligence, distribution_surfaces."
+        ]
+      },
+      "queryIds": [
+        "imported_candidates"
+      ],
+      "queryLabels": [
+        "manual_seed",
+        "event_platform"
+      ],
+      "capabilityIds": [],
+      "discoveryScore": 99,
+      "discoveryDisposition": "observe_only",
+      "reasoning": [
+        "Matched discovery lenses: manual_seed, event_platform.",
+        "Project fit is high (73).",
+        "Matched capabilities: source_first, location_intelligence, distribution_surfaces.",
+        "Stars: 84.",
+        "Project-keyword overlap: events."
+      ],
+      "importedCandidate": true,
+      "alreadyKnown": true,
+      "gapAreaCanonical": "location_and_gastro_intelligence",
+      "effortBand": "medium",
+      "effortScore": 42,
+      "valueBand": "medium",
+      "valueScore": 56,
+      "dispositionReason": "matrix:effort_medium_value_medium",
+      "decisionDataState": "complete",
+      "decisionSummary": "Medium value, medium effort, observe or defer",
+      "effortReasons": [
+        "layer_bias:+3",
+        "language_match:-8",
+        "license_adjustment:-3"
+      ],
+      "valueReasons": [
+        "gap_bias:+14",
+        "matched_capabilities:+24",
+        "build_vs_borrow:+10"
+      ],
+      "discoveryPolicyGate": {
+        "allowed": true,
+        "blockers": [],
+        "preferenceHits": [
+          "preferred_pattern_family:place_data_infrastructure",
+          "preferred_main_layer:location_place_enrichment",
+          "preferred_topic",
+          "preferred_gap_area:location_and_gastro_intelligence",
+          "preferred_capability"
+        ],
+        "summary": "allowed_with_preferences:preferred_pattern_family:place_data_infrastructure,preferred_main_layer:location_place_enrichment,preferred_topic,preferred_gap_area:location_and_gastro_intelligence,preferred_capability"
+      }
+    },
+    {
+      "repo": {
+        "owner": "citybureau",
+        "name": "city-scrapers",
+        "normalizedRepoUrl": "https://github.com/citybureau/city-scrapers",
+        "slug": "citybureau__city-scrapers",
+        "host": "github.com",
+        "fullName": "citybureau/city-scrapers",
+        "description": "",
+        "homepage": "",
+        "topics": [],
+        "defaultBranch": "",
+        "visibility": "public",
+        "archived": false,
+        "fork": false,
+        "stars": 0,
+        "forks": 0,
+        "openIssues": 0,
+        "watchers": 0,
+        "language": "",
+        "license": "",
+        "createdAt": "",
+        "updatedAt": "",
+        "pushedAt": ""
+      },
+      "enrichment": {
+        "status": "success",
+        "source": "imported_candidates",
+        "authMode": "offline",
+        "authSource": null,
+        "fetchedAt": "2026-04-14T20:37:53.200Z",
+        "repo": {
+          "fullName": "citybureau/city-scrapers",
+          "description": "Toolkit and scraper family for extracting civic data from many source systems.",
+          "homepage": "https://cityscrapers.org",
+          "topics": [
+            "scraper",
+            "events",
+            "open-data",
+            "python"
+          ],
+          "defaultBranch": "",
+          "visibility": "public",
+          "archived": false,
+          "fork": false,
+          "stars": 689,
+          "forks": 0,
+          "openIssues": 0,
+          "watchers": 0,
+          "language": "Python",
+          "license": "MIT",
+          "createdAt": "",
+          "updatedAt": "",
+          "pushedAt": ""
+        },
+        "languages": [
+          "Python"
+        ],
+        "readme": {
+          "path": null,
+          "htmlUrl": null,
+          "excerpt": "A family of scrapers and shared patterns for structured civic and event-like data extraction."
+        }
+      },
+      "guess": {
+        "category": "aggregator",
+        "patternFamily": "local_source_infra_framework",
+        "mainLayer": "source_intake",
+        "gapArea": "source_systems_and_families",
+        "buildVsBorrow": "adapt_pattern",
+        "priority": "now"
+      },
+      "landkarteCandidate": {
+        "name": "city-scrapers",
+        "repo_url": "https://github.com/citybureau/city-scrapers",
+        "owner": "citybureau",
+        "category": "aggregator",
+        "pattern_family": "local_source_infra_framework",
+        "main_layer": "source_intake",
+        "secondary_layers": "parsing_extraction",
+        "source_focus": "events",
+        "geographic_model": "regional",
+        "data_model": "events_only",
+        "distribution_type": "none_visible",
+        "stars": "689",
+        "activity_status": "unknown",
+        "last_checked_at": "2026-04-14",
+        "maturity": "solid",
+        "strengths": "Toolkit and scraper family for extracting civic data from many source systems. | Topics: scraper, events, open-data, python | Languages: Python | Likely decision-relevant for EventBaer soon",
+        "weaknesses": "Needs deeper repo reading to confirm system depth",
+        "risks": "brittle_platform_changes",
+        "learning_for_eventbaer": "Source infrastructure should be built as reusable families instead of isolated one-off connectors.",
+        "possible_implication": "Review and adapt the pattern into the EventBaer worker architecture, not as direct dependency.",
+        "eventbaer_gap_area": "source_systems_and_families",
+        "build_vs_borrow": "adapt_pattern",
+        "priority_for_review": "now",
+        "eventbaer_relevance": "high",
+        "decision": "adapt",
+        "notes": "stage2_candidate:success"
+      },
+      "risks": [
+        "brittle_platform_changes"
+      ],
+      "projectAlignment": {
+        "status": "ready",
+        "fitBand": "high",
+        "fitScore": 95,
+        "matchedCapabilities": [
+          "source_first",
+          "evidence_acquisition"
+        ],
+        "recommendedWorkerAreas": [
+          "docs/SOURCE_MASTERLIST_POLICY.md",
+          "docs/SOURCE_SYSTEMS_TARGET_ARCHITECTURE.md",
+          "sources/"
+        ],
+        "reviewDocs": [
+          "docs/SOURCE_MASTERLIST_POLICY.md",
+          "docs/SOURCE_SYSTEMS_TARGET_ARCHITECTURE.md",
+          "WORKER_CONTRACT.md",
+          "WORKER_FLOW.md",
+          "docs/EVIDENCE_ACQUISITION_LAYER_TARGET_ARCHITECTURE.md"
+        ],
+        "tensions": [],
+        "suggestedNextStep": "Compare the repo against EventBaer's source-system target architecture and family scaling goals.",
+        "rationale": [
+          "Primary layer 'source_intake' maps into EventBaer worker areas: docs/SOURCE_MASTERLIST_POLICY.md, docs/SOURCE_SYSTEMS_TARGET_ARCHITECTURE.md, sources/.",
+          "Gap area 'source_systems_and_families' suggests: Compare the repo against EventBaer's source-system target architecture and family scaling goals..",
+          "Matched project capabilities: source_first, evidence_acquisition."
+        ]
+      },
+      "queryIds": [
+        "imported_candidates"
+      ],
+      "queryLabels": [
+        "manual_seed",
+        "scraper_family"
+      ],
+      "capabilityIds": [],
+      "discoveryScore": 100,
+      "discoveryDisposition": "observe_only",
+      "reasoning": [
+        "Matched discovery lenses: manual_seed, scraper_family.",
+        "Project fit is high (95).",
+        "Matched capabilities: source_first, evidence_acquisition.",
+        "Stars: 689.",
+        "Project-keyword overlap: events."
+      ],
+      "importedCandidate": true,
+      "alreadyKnown": false,
+      "gapAreaCanonical": "source_systems_and_families",
+      "effortBand": "medium",
+      "effortScore": 47,
+      "valueBand": "medium",
+      "valueScore": 64,
+      "dispositionReason": "matrix:effort_medium_value_medium",
+      "decisionDataState": "complete",
+      "decisionSummary": "Medium value, medium effort, observe or defer",
+      "effortReasons": [
+        "layer_bias:-5",
+        "language_match:+5",
+        "license_adjustment:-3"
+      ],
+      "valueReasons": [
+        "gap_bias:+22",
+        "matched_capabilities:+16",
+        "build_vs_borrow:+10",
+        "priority:+8"
+      ],
+      "discoveryPolicyGate": {
+        "allowed": true,
+        "blockers": [],
+        "preferenceHits": [
+          "preferred_pattern_family:local_source_infra_framework",
+          "preferred_main_layer:source_intake",
+          "preferred_topic",
+          "preferred_gap_area:source_systems_and_families",
+          "preferred_capability"
+        ],
+        "summary": "allowed_with_preferences:preferred_pattern_family:local_source_infra_framework,preferred_main_layer:source_intake,preferred_topic,preferred_gap_area:source_systems_and_families,preferred_capability"
+      }
+    }
+  ],
+  "blockedCandidates": [],
+  "searchErrors": [],
+  "candidates": [
+    {
+      "repo": {
+        "owner": "citybureau",
+        "name": "city-scrapers",
+        "normalizedRepoUrl": "https://github.com/citybureau/city-scrapers",
+        "slug": "citybureau__city-scrapers",
+        "host": "github.com",
+        "fullName": "citybureau/city-scrapers",
+        "description": "",
+        "homepage": "",
+        "topics": [],
+        "defaultBranch": "",
+        "visibility": "public",
+        "archived": false,
+        "fork": false,
+        "stars": 0,
+        "forks": 0,
+        "openIssues": 0,
+        "watchers": 0,
+        "language": "",
+        "license": "",
+        "createdAt": "",
+        "updatedAt": "",
+        "pushedAt": ""
+      },
+      "enrichment": {
+        "status": "success",
+        "source": "imported_candidates",
+        "authMode": "offline",
+        "authSource": null,
+        "fetchedAt": "2026-04-14T20:37:53.200Z",
+        "repo": {
+          "fullName": "citybureau/city-scrapers",
+          "description": "Toolkit and scraper family for extracting civic data from many source systems.",
+          "homepage": "https://cityscrapers.org",
+          "topics": [
+            "scraper",
+            "events",
+            "open-data",
+            "python"
+          ],
+          "defaultBranch": "",
+          "visibility": "public",
+          "archived": false,
+          "fork": false,
+          "stars": 689,
+          "forks": 0,
+          "openIssues": 0,
+          "watchers": 0,
+          "language": "Python",
+          "license": "MIT",
+          "createdAt": "",
+          "updatedAt": "",
+          "pushedAt": ""
+        },
+        "languages": [
+          "Python"
+        ],
+        "readme": {
+          "path": null,
+          "htmlUrl": null,
+          "excerpt": "A family of scrapers and shared patterns for structured civic and event-like data extraction."
+        }
+      },
+      "guess": {
+        "category": "aggregator",
+        "patternFamily": "local_source_infra_framework",
+        "mainLayer": "source_intake",
+        "gapArea": "source_systems_and_families",
+        "buildVsBorrow": "adapt_pattern",
+        "priority": "now"
+      },
+      "landkarteCandidate": {
+        "name": "city-scrapers",
+        "repo_url": "https://github.com/citybureau/city-scrapers",
+        "owner": "citybureau",
+        "category": "aggregator",
+        "pattern_family": "local_source_infra_framework",
+        "main_layer": "source_intake",
+        "secondary_layers": "parsing_extraction",
+        "source_focus": "events",
+        "geographic_model": "regional",
+        "data_model": "events_only",
+        "distribution_type": "none_visible",
+        "stars": "689",
+        "activity_status": "unknown",
+        "last_checked_at": "2026-04-14",
+        "maturity": "solid",
+        "strengths": "Toolkit and scraper family for extracting civic data from many source systems. | Topics: scraper, events, open-data, python | Languages: Python | Likely decision-relevant for EventBaer soon",
+        "weaknesses": "Needs deeper repo reading to confirm system depth",
+        "risks": "brittle_platform_changes",
+        "learning_for_eventbaer": "Source infrastructure should be built as reusable families instead of isolated one-off connectors.",
+        "possible_implication": "Review and adapt the pattern into the EventBaer worker architecture, not as direct dependency.",
+        "eventbaer_gap_area": "source_systems_and_families",
+        "build_vs_borrow": "adapt_pattern",
+        "priority_for_review": "now",
+        "eventbaer_relevance": "high",
+        "decision": "adapt",
+        "notes": "stage2_candidate:success"
+      },
+      "risks": [
+        "brittle_platform_changes"
+      ],
+      "projectAlignment": {
+        "status": "ready",
+        "fitBand": "high",
+        "fitScore": 95,
+        "matchedCapabilities": [
+          "source_first",
+          "evidence_acquisition"
+        ],
+        "recommendedWorkerAreas": [
+          "docs/SOURCE_MASTERLIST_POLICY.md",
+          "docs/SOURCE_SYSTEMS_TARGET_ARCHITECTURE.md",
+          "sources/"
+        ],
+        "reviewDocs": [
+          "docs/SOURCE_MASTERLIST_POLICY.md",
+          "docs/SOURCE_SYSTEMS_TARGET_ARCHITECTURE.md",
+          "WORKER_CONTRACT.md",
+          "WORKER_FLOW.md",
+          "docs/EVIDENCE_ACQUISITION_LAYER_TARGET_ARCHITECTURE.md"
+        ],
+        "tensions": [],
+        "suggestedNextStep": "Compare the repo against EventBaer's source-system target architecture and family scaling goals.",
+        "rationale": [
+          "Primary layer 'source_intake' maps into EventBaer worker areas: docs/SOURCE_MASTERLIST_POLICY.md, docs/SOURCE_SYSTEMS_TARGET_ARCHITECTURE.md, sources/.",
+          "Gap area 'source_systems_and_families' suggests: Compare the repo against EventBaer's source-system target architecture and family scaling goals..",
+          "Matched project capabilities: source_first, evidence_acquisition."
+        ]
+      },
+      "queryIds": [
+        "imported_candidates"
+      ],
+      "queryLabels": [
+        "manual_seed",
+        "scraper_family"
+      ],
+      "capabilityIds": [],
+      "discoveryScore": 100,
+      "discoveryDisposition": "observe_only",
+      "reasoning": [
+        "Matched discovery lenses: manual_seed, scraper_family.",
+        "Project fit is high (95).",
+        "Matched capabilities: source_first, evidence_acquisition.",
+        "Stars: 689.",
+        "Project-keyword overlap: events."
+      ],
+      "importedCandidate": true,
+      "alreadyKnown": false,
+      "gapAreaCanonical": "source_systems_and_families",
+      "effortBand": "medium",
+      "effortScore": 47,
+      "valueBand": "medium",
+      "valueScore": 64,
+      "dispositionReason": "matrix:effort_medium_value_medium",
+      "decisionDataState": "complete",
+      "decisionSummary": "Medium value, medium effort, observe or defer",
+      "effortReasons": [
+        "layer_bias:-5",
+        "language_match:+5",
+        "license_adjustment:-3"
+      ],
+      "valueReasons": [
+        "gap_bias:+22",
+        "matched_capabilities:+16",
+        "build_vs_borrow:+10",
+        "priority:+8"
+      ],
+      "discoveryPolicyGate": {
+        "allowed": true,
+        "blockers": [],
+        "preferenceHits": [
+          "preferred_pattern_family:local_source_infra_framework",
+          "preferred_main_layer:source_intake",
+          "preferred_topic",
+          "preferred_gap_area:source_systems_and_families",
+          "preferred_capability"
+        ],
+        "summary": "allowed_with_preferences:preferred_pattern_family:local_source_infra_framework,preferred_main_layer:source_intake,preferred_topic,preferred_gap_area:source_systems_and_families,preferred_capability"
+      }
+    },
+    {
+      "repo": {
+        "owner": "oc",
+        "name": "openevents",
+        "normalizedRepoUrl": "https://github.com/oc/openevents",
+        "slug": "oc__openevents",
+        "host": "github.com",
+        "fullName": "oc/openevents",
+        "description": "",
+        "homepage": "",
+        "topics": [],
+        "defaultBranch": "",
+        "visibility": "public",
+        "archived": false,
+        "fork": false,
+        "stars": 0,
+        "forks": 0,
+        "openIssues": 0,
+        "watchers": 0,
+        "language": "",
+        "license": "",
+        "createdAt": "",
+        "updatedAt": "",
+        "pushedAt": ""
+      },
+      "enrichment": {
+        "status": "success",
+        "source": "imported_candidates",
+        "authMode": "offline",
+        "authSource": null,
+        "fetchedAt": "2026-04-14T20:37:53.200Z",
+        "repo": {
+          "fullName": "oc/openevents",
+          "description": "Open source events platform with structured event and venue concepts.",
+          "homepage": "https://openevents.io",
+          "topics": [
+            "events",
+            "calendar",
+            "venue",
+            "open-data"
+          ],
+          "defaultBranch": "",
+          "visibility": "public",
+          "archived": false,
+          "fork": false,
+          "stars": 84,
+          "forks": 0,
+          "openIssues": 0,
+          "watchers": 0,
+          "language": "TypeScript",
+          "license": "MIT",
+          "createdAt": "",
+          "updatedAt": "",
+          "pushedAt": ""
+        },
+        "languages": [
+          "TypeScript"
+        ],
+        "readme": {
+          "path": null,
+          "htmlUrl": null,
+          "excerpt": "Structured event platform with APIs, venue handling and event ingestion surface."
+        }
+      },
+      "guess": {
+        "category": "aggregator",
+        "patternFamily": "place_data_infrastructure",
+        "mainLayer": "location_place_enrichment",
+        "gapArea": "location_and_gastro_intelligence",
+        "buildVsBorrow": "adapt_pattern",
+        "priority": "soon"
+      },
+      "landkarteCandidate": {
+        "name": "openevents",
+        "repo_url": "https://github.com/oc/openevents",
+        "owner": "oc",
+        "category": "aggregator",
+        "pattern_family": "place_data_infrastructure",
+        "main_layer": "location_place_enrichment",
+        "secondary_layers": "export_feed_api",
+        "source_focus": "places",
+        "geographic_model": "platform_bound",
+        "data_model": "places_only",
+        "distribution_type": "api",
+        "stars": "84",
+        "activity_status": "unknown",
+        "last_checked_at": "2026-04-14",
+        "maturity": "solid",
+        "strengths": "Open source events platform with structured event and venue concepts. | Topics: events, calendar, venue, open-data | Languages: TypeScript",
+        "weaknesses": "Needs deeper repo reading to confirm system depth",
+        "risks": "needs_review",
+        "learning_for_eventbaer": "Location and venue intelligence deserve their own deliberate layer next to event truth.",
+        "possible_implication": "Review and adapt the pattern into the EventBaer worker architecture, not as direct dependency.",
+        "eventbaer_gap_area": "location_and_gastro_intelligence",
+        "build_vs_borrow": "adapt_pattern",
+        "priority_for_review": "soon",
+        "eventbaer_relevance": "medium",
+        "decision": "adapt",
+        "notes": "stage2_candidate:success"
+      },
+      "risks": [
+        "platform_bias"
+      ],
+      "projectAlignment": {
+        "status": "ready",
+        "fitBand": "high",
+        "fitScore": 73,
+        "matchedCapabilities": [
+          "source_first",
+          "location_intelligence",
+          "distribution_surfaces"
+        ],
+        "recommendedWorkerAreas": [
+          "lib/geo-validator.mjs",
+          "scripts/run-locations.mjs",
+          "templates/locations_template.csv"
+        ],
+        "reviewDocs": [
+          "WORKER_CONTRACT.md",
+          "docs/SOURCE_GEO_REFERENCE.md",
+          "docs/SOURCE_MASTERLIST_POLICY.md",
+          "docs/SOURCE_SYSTEMS_TARGET_ARCHITECTURE.md",
+          "docs/UI_FRAMEWORK.md",
+          "docs/WEB_PLATFORM_OVERVIEW.md"
+        ],
+        "tensions": [],
+        "suggestedNextStep": "Review against location/gastro layers and geo-validation capabilities.",
+        "rationale": [
+          "Primary layer 'location_place_enrichment' maps into EventBaer worker areas: lib/geo-validator.mjs, scripts/run-locations.mjs, templates/locations_template.csv.",
+          "Gap area 'location_and_gastro_intelligence' suggests: Review against location/gastro layers and geo-validation capabilities..",
+          "Matched project capabilities: source_first, location_intelligence, distribution_surfaces."
+        ]
+      },
+      "queryIds": [
+        "imported_candidates"
+      ],
+      "queryLabels": [
+        "manual_seed",
+        "event_platform"
+      ],
+      "capabilityIds": [],
+      "discoveryScore": 99,
+      "discoveryDisposition": "observe_only",
+      "reasoning": [
+        "Matched discovery lenses: manual_seed, event_platform.",
+        "Project fit is high (73).",
+        "Matched capabilities: source_first, location_intelligence, distribution_surfaces.",
+        "Stars: 84.",
+        "Project-keyword overlap: events."
+      ],
+      "importedCandidate": true,
+      "alreadyKnown": true,
+      "gapAreaCanonical": "location_and_gastro_intelligence",
+      "effortBand": "medium",
+      "effortScore": 42,
+      "valueBand": "medium",
+      "valueScore": 56,
+      "dispositionReason": "matrix:effort_medium_value_medium",
+      "decisionDataState": "complete",
+      "decisionSummary": "Medium value, medium effort, observe or defer",
+      "effortReasons": [
+        "layer_bias:+3",
+        "language_match:-8",
+        "license_adjustment:-3"
+      ],
+      "valueReasons": [
+        "gap_bias:+14",
+        "matched_capabilities:+24",
+        "build_vs_borrow:+10"
+      ],
+      "discoveryPolicyGate": {
+        "allowed": true,
+        "blockers": [],
+        "preferenceHits": [
+          "preferred_pattern_family:place_data_infrastructure",
+          "preferred_main_layer:location_place_enrichment",
+          "preferred_topic",
+          "preferred_gap_area:location_and_gastro_intelligence",
+          "preferred_capability"
+        ],
+        "summary": "allowed_with_preferences:preferred_pattern_family:place_data_infrastructure,preferred_main_layer:location_place_enrichment,preferred_topic,preferred_gap_area:location_and_gastro_intelligence,preferred_capability"
+      }
+    }
+  ],
+  "policySummary": {
+    "enabled": true,
+    "mode": "enforce",
+    "visible": 2,
+    "evaluated": 2,
+    "allowed": 2,
+    "blocked": 0,
+    "preferred": 2,
+    "blockerCounts": [],
+    "preferenceCounts": [
+      {
+        "value": "preferred_capability",
+        "count": 2
+      },
+      {
+        "value": "preferred_topic",
+        "count": 2
+      },
+      {
+        "value": "preferred_gap_area:location_and_gastro_intelligence",
+        "count": 1
+      },
+      {
+        "value": "preferred_gap_area:source_systems_and_families",
+        "count": 1
+      },
+      {
+        "value": "preferred_main_layer:location_place_enrichment",
+        "count": 1
+      },
+      {
+        "value": "preferred_main_layer:source_intake",
+        "count": 1
+      },
+      {
+        "value": "preferred_pattern_family:local_source_infra_framework",
+        "count": 1
+      },
+      {
+        "value": "preferred_pattern_family:place_data_infrastructure",
+        "count": 1
+      }
+    ],
+    "blockedPreview": [],
+    "enforcedBlocked": 0
+  },
+  "policyCalibration": {
+    "status": "permissive_needs_review",
+    "blockedRatio": 0,
+    "preferredRatio": 1,
+    "topBlockers": [],
+    "recommendations": [
+      "Policy flagged none of the evaluated candidates; it may still be too permissive for noisy discovery runs."
+    ]
+  },
+  "reportSchemaVersion": 2,
+  "runConfidence": "low",
+  "runConfidenceReason": "Only 2 candidate(s) evaluated - too few to draw a pattern",
+  "confidenceFactors": {
+    "candidateCount": 2,
+    "highFitCount": 2,
+    "unknownFitCount": 0,
+    "riskyCount": 0,
+    "capabilityDiversity": 0.6666666666666666
+  },
+  "itemsDataStateSummary": {
+    "complete": 2,
+    "fallback": 0,
+    "stale": 0
+  },
+  "runGapSignals": [
+    {
+      "gap": "source_systems_and_families",
+      "count": 1,
+      "strength": 100
+    },
+    {
+      "gap": "location_and_gastro_intelligence",
+      "count": 1,
+      "strength": 96
+    }
+  ]
+}

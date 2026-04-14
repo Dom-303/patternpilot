@@ -1,0 +1,68 @@
+[
+  {
+    "repoRef": "oc/openevents",
+    "repoUrl": "https://github.com/oc/openevents",
+    "discoveryScore": 99,
+    "disposition": "observe_only",
+    "fitBand": "high",
+    "fitScore": 73,
+    "mainLayer": "location_place_enrichment",
+    "patternFamily": "place_data_infrastructure",
+    "gapArea": "location_and_gastro_intelligence",
+    "license": "MIT",
+    "topics": [
+      "events",
+      "calendar",
+      "venue",
+      "open-data"
+    ],
+    "policyAllowed": false,
+    "policySummary": "blocked:disposition_not_allowed:observe_only",
+    "blockers": [
+      "disposition_not_allowed:observe_only"
+    ],
+    "preferenceHits": [
+      "preferred_pattern_family:place_data_infrastructure",
+      "preferred_main_layer:location_place_enrichment",
+      "preferred_topic",
+      "preferred_gap_area:location_and_gastro_intelligence",
+      "preferred_capability"
+    ],
+    "focus": "check_false_block",
+    "manualVerdict": "",
+    "manualNotes": ""
+  },
+  {
+    "repoRef": "citybureau/city-scrapers",
+    "repoUrl": "https://github.com/citybureau/city-scrapers",
+    "discoveryScore": 100,
+    "disposition": "observe_only",
+    "fitBand": "high",
+    "fitScore": 95,
+    "mainLayer": "source_intake",
+    "patternFamily": "local_source_infra_framework",
+    "gapArea": "source_systems_and_families",
+    "license": "MIT",
+    "topics": [
+      "scraper",
+      "events",
+      "open-data",
+      "python"
+    ],
+    "policyAllowed": false,
+    "policySummary": "blocked:disposition_not_allowed:observe_only",
+    "blockers": [
+      "disposition_not_allowed:observe_only"
+    ],
+    "preferenceHits": [
+      "preferred_pattern_family:local_source_infra_framework",
+      "preferred_main_layer:source_intake",
+      "preferred_topic",
+      "preferred_gap_area:source_systems_and_families",
+      "preferred_capability"
+    ],
+    "focus": "check_false_block",
+    "manualVerdict": "",
+    "manualNotes": ""
+  }
+]

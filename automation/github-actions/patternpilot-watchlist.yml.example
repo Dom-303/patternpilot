@@ -15,7 +15,14 @@ jobs:
         with:
           node-version: 20
 
-      - name: Run Patternpilot automation
+      - name: Show scheduler readiness
+        run: npm run automation:jobs
+
+      - name: Dispatch next Patternpilot job
         env:
           PATTERNPILOT_GITHUB_TOKEN: ${{ secrets.PATTERNPILOT_GITHUB_TOKEN }}
-        run: npm run automation:run -- --all-projects --promotion-mode prepared
+        run: npm run automation:dispatch
+
+      - name: Show automation alerts
+        if: always()
+        run: npm run automation:alerts

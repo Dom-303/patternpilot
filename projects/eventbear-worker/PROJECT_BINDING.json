@@ -29,6 +29,7 @@
     "wordpress plugin"
   ],
   "alignmentRulesFile": "projects/eventbear-worker/ALIGNMENT_RULES.json",
+  "discoveryPolicyFile": "projects/eventbear-worker/DISCOVERY_POLICY.json",
   "analysisQuestions": [
     "Welche Schicht im Worker wird durch das externe Repo beleuchtet?",
     "Welche konkrete Luecke oder Ausbauflaeche zeigt sich fuer EventBaer?",

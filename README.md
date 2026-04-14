@@ -42,6 +42,16 @@ Der Fokus liegt nicht auf losem Sammeln, sondern auf einem klaren Arbeitsprinzip
 - ein Ersatz für Architekturentscheidungen im Worker
 - ein Repo-Unterordner von `eventbear-worker`
 
+Wichtig fuer den heutigen Kern:
+
+- der primaere Modus ist `on-demand`
+- Nutzer sollen einen gezielten Lauf bewusst anstossen koennen
+- wiederkehrende Automation bleibt ein optionaler Betriebs-Layer, nicht der Produktkern
+
+Fuer eine grobe Einordnung von Kernreife, Vollautomatik-Ziel und naechsten Ausbauachsen:
+
+- siehe [docs/foundation/DELIVERY_STATUS.md](/home/domi/eventbaer/dev/patternpilot/docs/foundation/DELIVERY_STATUS.md)
+
 ---
 
 ## Verhaeltnis zu EventBaer
@@ -65,6 +75,29 @@ Patternpilot ist nicht mehr nur ein Dokumentations-Seed.
 
 Es hat jetzt einen lokalen Motor plus Workspace-Modus:
 
+- `npm run analyze -- --project eventbear-worker <github-url>`
+- `npm run run-plan -- --project eventbear-worker`
+- `npm run run-drift -- --project eventbear-worker`
+- `npm run run-requalify -- --project eventbear-worker --scope automation`
+- `npm run discover:import -- --project eventbear-worker --file projects/eventbear-worker/calibration/discovery-candidates.example.json --dry-run`
+- `npm run policy:audit -- --project eventbear-worker --dry-run`
+- `npm run policy:calibrate -- --project eventbear-worker`
+- `npm run policy:compare -- --project eventbear-worker --policy-file projects/eventbear-worker/DISCOVERY_POLICY.next.json`
+- `npm run policy:pack -- --project eventbear-worker --policy-file projects/eventbear-worker/DISCOVERY_POLICY.next.json`
+- `npm run policy:apply -- --project eventbear-worker --workbench-dir projects/eventbear-worker/calibration/workbench/<id>`
+- `npm run policy:review -- --project eventbear-worker`
+- `npm run policy:suggest -- --project eventbear-worker`
+- `npm run policy:cycle -- --project eventbear-worker`
+- `npm run policy:handoff -- --project eventbear-worker`
+- `npm run policy:curate -- --project eventbear-worker --prepare-promotions`
+- `npm run policy:curation-review -- --project eventbear-worker --limit 1`
+- `npm run policy:curation-batch-review -- --project eventbear-worker --limit 2`
+- `npm run policy:curation-batch-plan -- --project eventbear-worker --limit 3`
+- `npm run policy:curation-batch-apply -- --project eventbear-worker --limit 2`
+- `npm run policy:curation-apply -- --project eventbear-worker --limit 1`
+- `npm run policy:trial -- --project eventbear-worker`
+- `npm run policy:workbench -- --project eventbear-worker`
+- `npm run policy:workbench-review -- --project eventbear-worker`
 - `npm run intake -- --project eventbear-worker <github-url>`
 - `npm run discover:github -- --project eventbear-worker --limit 8 --dry-run`
 - `npm run review:watchlist -- --project eventbear-worker --analysis-profile balanced`
@@ -76,7 +109,11 @@ Es hat jetzt einen lokalen Motor plus Workspace-Modus:
 - `npm run setup:checklist`
 - `npm run sync:watchlist -- --project eventbear-worker`
 - `npm run sync:all -- --dry-run`
+- `npm run re-evaluate -- --project eventbear-worker --stale-only --dry-run`
 - `npm run automation:run -- --all-projects --promotion-mode prepared`
+- `npm run automation:jobs`
+- `npm run automation:alerts`
+- `npm run automation:dispatch`
 
 Dieser Motor:
 
@@ -88,8 +125,17 @@ Dieser Motor:
 - erstellt Queue-Eintraege
 - reichert GitHub-Metadaten und README-Inhalte an
 - gleicht externe Muster gegen das Zielprojekt ab
+- haertet Discovery-Handoffs mit projektbezogenen Policies
+- kann Discovery jetzt schon auf Repo-, Lizenz-, Host-, Signal- und Capability-Gates pro Projekt vorsortieren
+- kann stale oder fallback Decision-Daten in Queue und Intake-Dossiers neu berechnen
 - kann Watchlist-Repos gesammelt gegen das Zielprojekt vergleichen
+- schreibt fuer Kettenlaeufe eigene Automation-Audits mit Phasenstatus unter `runs/automation/`
+- haelt optionalen Scheduler-Job-State unter `state/automation_jobs_state.json`
+- schreibt Alert-Snapshots nach `state/automation_alerts.json` und `state/automation_alerts.md`
+- kann jetzt manuelle Requalify-Latches fuer Folge-Runs halten und mit `run-requalify` bewusst wieder freigeben
 - schreibt menschenfreundliche HTML-Reports fuer Discovery- und Review-Laeufe
+- haelt fuer jedes Projekt einen direkten Report-Pointer in `projects/<project>/reports/browser-link`
+- schreibt Metadaten zum letzten Projekt-Report nach `projects/<project>/reports/latest-report.json`
 - haelt `STATUS.md` und `OPEN_QUESTION.md` als Uebergabeflaechen fuer Agenten aktuell
 - legt projektbezogene Intake-Dossiers an
 - schreibt Run-Protokolle
@@ -171,6 +217,178 @@ Sie enthält erste, bereits gesichtete Repos als Startmaterial und soll iterativ
 npm run show:project -- --project eventbear-worker
 ```
 
+### Primaerer On-Demand-Flow mit explizitem Repo
+
+```bash
+npm run analyze -- --project eventbear-worker https://github.com/City-Bureau/city-scrapers
+```
+
+### Run-Typ vorab einordnen
+
+```bash
+npm run run-plan -- --project eventbear-worker
+npm run run-plan -- --project eventbear-worker --scope automation
+npm run run-drift -- --project eventbear-worker
+npm run run-governance -- --project eventbear-worker --scope automation
+npm run run-requalify -- --project eventbear-worker --scope automation
+```
+
+Damit wird ein geplanter Lauf als `first_run`, `follow_up_run` oder `maintenance_run` eingeordnet und mit einer Default-Phase-Form fuer Intake, Re-Evaluate, Review und Promote versehen.
+
+Zusatznutzen:
+
+- `maintenance_run` zieht jetzt standardmaessig `stale_only` fuer Re-Evaluate im Automation-Pfad nach sich
+- retrybare Fehler in fruehen Phasen koennen klarer als Auto-Resume-Faelle erkannt werden
+- Review- und Promote-Ausfaelle bleiben bewusst manuell zu pruefen
+- `run-drift` zeigt dazu jetzt auch den echten Mehrlauf-Zustand: URL-Delta, Queue-Staleness, Rules-Fingerprint-Mix und eine konkrete Resume-Empfehlung
+- `run-governance` setzt darauf auf und sagt explizit, ob ein Folge-Run manuell, nur begrenzt unattended oder wirklich unattended-ready ist
+- `run-requalify` zeigt danach bewusst, ob ein latched Instabilitaetsfall schon wieder freigegeben werden darf oder noch weiter manuelle Stabilisierung braucht
+
+### Discovery-Policy gegen echte Treffer kalibrieren
+
+```bash
+npm run policy:audit -- --project eventbear-worker --dry-run
+```
+
+Der Audit-Modus blendet policy-geflaggte Treffer nicht aus, sondern zeigt zusaetzlich Kalibrierungshinweise und Top-Blocker pro Lauf.
+
+### Discovery-Kandidaten offline importieren
+
+```bash
+npm run discover:import -- --project eventbear-worker --file projects/eventbear-worker/calibration/discovery-candidates.example.json --dry-run
+```
+
+Damit kannst du eine manuell kuratierte Kandidatenliste in einen echten Discovery-Run ueberfuehren, inklusive Policy-Gates, Summary, HTML-Report und spaeterer Review-/Calibration-Kompatibilitaet.
+
+### Mehrere gespeicherte Discovery-Runs zusammen kalibrieren
+
+```bash
+npm run policy:calibrate -- --project eventbear-worker
+```
+
+Das erzeugt eine projektweite Zusammenfassung ueber gespeicherte Discovery-Runs und zeigt, welche Policy-Blocker und Kalibrierungsstatus sich ueber mehrere Laeufe hinweg haeufig wiederholen.
+
+### Aktuelle Policy gegen alternative JSON-Datei vergleichen
+
+```bash
+npm run policy:compare -- --project eventbear-worker --policy-file projects/eventbear-worker/DISCOVERY_POLICY.next.json
+```
+
+Das vergleicht den aktuellen Projekt-Policy-Stand mit einer alternativen JSON-Datei gegen dieselben gespeicherten Discovery-Runs und zeigt, wie sich `audit_flagged`, `enforce_hidden` und `preferred_hits` veraendern wuerden.
+
+### Kalibrierungspaket fuer ein Projekt schreiben
+
+```bash
+npm run policy:pack -- --project eventbear-worker --policy-file projects/eventbear-worker/DISCOVERY_POLICY.next.json
+```
+
+Das schreibt unter `projects/<project>/calibration/packets/<packet-id>/` einen gebuendelten Arbeitsstand mit aktuellem Policy-Snapshot, Mehrlauf-Kalibrierung, optionalem Policy-Vergleich und einer kompakten `summary.md`.
+
+### Candidate-Level-Workbench fuer die Policy-Schaerfung schreiben
+
+```bash
+npm run policy:workbench -- --project eventbear-worker
+```
+
+Das schreibt unter `projects/<project>/calibration/workbench/<workbench-id>/` eine Kandidatenmatrix, kopiert die aktuelle Policy als `proposed-policy.json` und schafft damit eine saubere manuelle Schaerfungsschleife fuer `policy:compare` und `policy:pack`.
+
+### Kalibrierung als geschlossene Schleife ausfuehren
+
+```bash
+npm run policy:cycle -- --project eventbear-worker
+```
+
+Das fuehrt `review -> suggest -> trial -> replay` in einem gebuendelten Lauf zusammen und schreibt unter `projects/<project>/calibration/cycles/<cycle-id>/` einen kompletten Arbeitsstand mit:
+
+- `summary.md`
+- `suggested-policy.json`
+- `effective-policy.json`
+- `trial-candidate-matrix.json`
+- `replay-summary.md`
+- `replay-report.html`
+
+Optional kannst du die wirksame Policy auch direkt anwenden:
+
+```bash
+npm run policy:cycle -- --project eventbear-worker --apply
+```
+
+### Cycle-Kandidaten direkt in den normalen Review-Pfad uebergeben
+
+```bash
+npm run policy:handoff -- --project eventbear-worker
+```
+
+Das nimmt standardmaessig die `newly_visible` Kandidaten aus dem letzten `policy-cycle` und schiebt sie direkt in den normalen `on-demand` Intake-/Review-Pfad. So wird aus Kalibrierung ein echter fachlicher Handoff statt nur ein Policy-Artefakt.
+
+Wenn im Cycle bereits starke Replay-Kandidaten mit angereichertem Kontext vorliegen, nutzt der Handoff diese Seeds direkt fuer den Intake. Dadurch bleibt die Qualitaet zwischen Kalibrierung und echtem Review-Pfad stabiler und faellt nicht sofort auf schwaches Live-Enrichment zurueck.
+
+### Handoff-Kandidaten gezielt kuratieren und Promotion vorbereiten
+
+```bash
+npm run policy:curate -- --project eventbear-worker --prepare-promotions
+```
+
+Das rankt die Kandidaten aus dem letzten `policy-handoff`, schreibt einen eigenen Kurationsreport und kann direkt Promotion-Pakete vorbereiten. Damit wird aus dem Handoff ein echter Schritt Richtung Landkarte, Learnings und Decisions, ohne schon automatisch die kanonischen Wissensdateien zu veraendern.
+
+### Kurations-Apply erst previewen, dann gezielt anwenden
+
+```bash
+npm run policy:curation-review -- --project eventbear-worker --limit 1
+npm run policy:curation-batch-review -- --project eventbear-worker --limit 2
+npm run policy:curation-batch-plan -- --project eventbear-worker --limit 3
+npm run policy:curation-batch-apply -- --project eventbear-worker --limit 2
+npm run policy:curation-apply -- --project eventbear-worker --limit 1
+```
+
+`policy:curation-review` zeigt, welche kuratierten Kandidaten die kanonischen Wissensdateien beruehren wuerden. `policy:curation-batch-review` hebt denselben Schritt auf Batch-Ebene und zeigt Ueberschneidungen, bereits uebernommene Kandidaten und die verbleibende Apply-Menge. `policy:curation-batch-plan` baut daraus eine Governance-Sicht mit empfohlenen Teil-Batches, sicheren Apply-Kandidaten und expliziten Manual-Review-Faellen. `policy:curation-apply` nutzt genau diesen Review-Schritt als kontrollierte Vorstufe und fuehrt dann den eigentlichen `promote --apply` nur fuer die ausgewaehlten Kandidaten aus. `policy:curation-batch-apply` macht dasselbe fuer mehrere vorbereitete Kandidaten zusammen, laesst bereits promovierte Repos bewusst unberuehrt und nimmt standardmaessig nur die sicheren Batch-Kandidaten mit.
+
+### Workbench-Verdikte und Proposed Policy auswerten
+
+```bash
+npm run policy:workbench-review -- --project eventbear-worker
+```
+
+Das liest `rows.json`, fasst manuelle Verdikte wie `false_block` oder `confirm_block` zusammen und spiegelt die `proposed-policy.json` gegen den Source-Run der Workbench.
+
+### Policy-Vorschlag direkt aus der Workbench ableiten
+
+```bash
+npm run policy:suggest -- --project eventbear-worker
+```
+
+Das erzeugt `suggested-policy.json` plus eine Vergleichszusammenfassung. Mit `--apply` wird die vorgeschlagene Variante direkt nach `proposed-policy.json` gespiegelt.
+
+### Trial-Simulation vor dem Anwenden fahren
+
+```bash
+npm run policy:trial -- --project eventbear-worker
+```
+
+Das spielt die Trial-Policy gegen den Source-Run der Workbench durch und schreibt eine Candidate-Matrix mit `newly_visible` oder `newly_hidden`, bevor irgendetwas auf die echte Projekt-Policy zurueckgeschrieben wird.
+
+### Vorgeschlagene Policy sicher anwenden
+
+```bash
+npm run policy:apply -- --project eventbear-worker --workbench-dir projects/eventbear-worker/calibration/workbench/<workbench-id>
+```
+
+Das schreibt Snapshots in `projects/<project>/calibration/history/`, aktualisiert die Projekt-Policy und haelt die Anwendung in den Kalibrierungsnotizen fest.
+
+### Vorhandenen Discovery-Run gegen aktuelle Policy pruefen
+
+```bash
+npm run policy:review -- --project eventbear-worker
+```
+
+Damit kannst du einen gespeicherten Discovery-Run nachtraeglich gegen die aktuelle Policy spiegeln und sehen, was im `audit`- versus `enforce`-Modus sichtbar oder verborgen waere.
+
+### Primaerer On-Demand-Flow auf Basis der Watchlist
+
+```bash
+npm run patternpilot -- on-demand --project eventbear-worker --analysis-profile architecture
+```
+
 ### Gebundene Projekte anzeigen
 
 ```bash
@@ -201,7 +419,7 @@ npm run sync:watchlist -- --project eventbear-worker --dry-run
 npm run sync:all -- --dry-run
 ```
 
-### Vollen Automationslauf fahren
+### Optionalen Automationslauf fahren
 
 ```bash
 npm run automation:run -- --all-projects --promotion-mode prepared --dry-run
@@ -210,7 +428,32 @@ npm run automation:run -- --all-projects --promotion-mode prepared --dry-run
 Oder fuer einen projektgebundenen Kettenlauf mit Discovery-Gate:
 
 ```bash
-npm run automation:run -- --project eventbear-worker --automation-min-confidence medium --automation-max-new-candidates 5
+npm run automation:run -- --project eventbear-worker --automation-min-confidence medium --automation-max-new-candidates 5 --automation-re-evaluate-limit 20
+```
+
+### Scheduler-Job-Lage ansehen
+
+```bash
+npm run automation:jobs
+```
+
+### Naechsten Scheduler-Job dispatchen
+
+```bash
+npm run automation:dispatch -- --dry-run
+```
+
+### Alerts und Manual Resume
+
+```bash
+npm run automation:alerts
+npm run patternpilot -- automation-job-clear --automation-job eventbear-worker-apply --notes "manual resume after fix"
+```
+
+### Decision-Daten neu bewerten
+
+```bash
+npm run re-evaluate -- --project eventbear-worker --stale-only --dry-run
 ```
 
 ### GitHub-/Token-Diagnose laufen lassen

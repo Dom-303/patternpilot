@@ -176,3 +176,52 @@ Er ist als Startmaterial gedacht und soll mit jeder weiteren Analyse geschärft 
 - Welche Distribution-Surface bringt den größten Hebel?
 - Wo ist EventBär bereits stärker als der sichtbare Markt?
 - Wo fehlt noch eine echte, belastbare Schicht?
+
+## Patternpilot Candidate Learnings
+
+<!-- patternpilot:learning-candidates:start -->
+<!-- patternpilot:learning-candidates:citybureau__city-scrapers:start -->
+### Candidate: citybureau/city-scrapers
+
+**Quelle**
+- https://github.com/citybureau/city-scrapers
+
+**Beobachtung**
+- Toolkit and scraper family for extracting civic data from many source systems.
+
+**Wiederkehrende Muster**
+- Pattern Family: local_source_infra_framework
+- Main Layer: source_intake
+- Project Fit: high (95)
+- Matched Capabilities: source_first, evidence_acquisition
+
+**Bedeutung fuer EventBaer**
+- Source infrastructure should be built as reusable families instead of isolated one-off connectors.
+
+**Moegliche Konsequenz**
+- Review and adapt the pattern into the EventBaer worker architecture, not as direct dependency.
+<!-- patternpilot:learning-candidates:citybureau__city-scrapers:end -->
+
+<!-- patternpilot:learning-candidates:oc__openevents:start -->
+### Candidate: oc/openevents
+
+**Quelle**
+- https://github.com/oc/openevents
+
+**Beobachtung**
+- Open source events platform with structured event and venue concepts.
+
+**Wiederkehrende Muster**
+- Pattern Family: place_data_infrastructure
+- Main Layer: location_place_enrichment
+- Project Fit: high (73)
+- Matched Capabilities: source_first, location_intelligence, distribution_surfaces
+
+**Bedeutung fuer EventBaer**
+- Location and venue intelligence deserve their own deliberate layer next to event truth.
+
+**Moegliche Konsequenz**
+- Review and adapt the pattern into the EventBaer worker architecture, not as direct dependency.
+<!-- patternpilot:learning-candidates:oc__openevents:end -->
+
+<!-- patternpilot:learning-candidates:end -->

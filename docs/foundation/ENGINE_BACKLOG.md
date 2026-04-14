@@ -54,13 +54,13 @@ Die Eintraege hier sind kein Grund, das Template zu aendern. Sie sind Input fuer
 
 ## EB-004 — "Most repeated gap signal" braucht ein echtes Gap-Feld
 
-- status: offen
+- status: erledigt am 2026-04-14 ueber `gapAreaCanonical` und `runGapSignals`
 
 - betrifft: `renderDecisionSummary` (Most repeated gap signal Zelle)
-- heutiger Zustand: Das Template zaehlt heute einfach die haeufigste `matchedCapabilities[0]` bzw. `guess.mainLayer` bzw. `gapArea` ueber alle Kandidaten und nennt das "Gap". Das ist keine Luecke, das ist eine Konvergenz.
+- heutiger Zustand: Erledigt. Discovery- und Review-Payloads liefern jetzt pro Kandidat ein kanonisches `gapAreaCanonical`, und die Run-Felder enthalten `runGapSignals` als gewichtete Aggregation.
 - warum Engine-Thema: Eine echte Luecke waere eine Aussage wie "Diese Schicht fehlt dem Zielprojekt heute, und mehrere externe Repos zeigen sie stark". Das verlangt einen Abgleich mit dem Zielprojekt-Alignment, nicht nur Zaehlen.
-- gewuenschte Engine-Aenderung: Engine berechnet pro Kandidat `gapAreaCanonical` (normalisierte Gap-Kategorie), und der Run-Report-Payload liefert zusaetzlich `runGapSignals: [{ gap, count, strength }]`, bereits gegen die Projekt-Luecken-Matrix aus `ALIGNMENT_RULES.json` gewichtet.
-- Nutzen fuer das Report-UI: Aus dem belastbaren Wert wird eine echte strategische Aussage, nicht nur die haeufigste String-Token-Kollision.
+- umgesetzte Engine-Aenderung: Discovery und Review normalisieren Gap-Kategorien ueber `normalizeGapAreaCanonical(...)`; `buildDiscoveryRunFields(...)` und `buildReviewRunFields(...)` liefern `runGapSignals: [{ gap, count, strength }]`, wobei `strength` aus Gap-Mapping-Bias, Fit, Value und Capability-Treffern gewichtet wird.
+- Nutzen fuer das Report-UI: Die Decision Summary liest jetzt ein echtes Run-Signal aus der Engine statt einer Template-Heuristik.
 
 ---
 

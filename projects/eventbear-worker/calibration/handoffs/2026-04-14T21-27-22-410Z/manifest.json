@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "projectKey": "eventbear-worker",
+  "generatedAt": "2026-04-14T21:27:22.410Z",
+  "handoffId": "2026-04-14T21-27-22-410Z",
+  "cycleId": "2026-04-14T21-14-28-766Z",
+  "cycleDir": "projects/eventbear-worker/calibration/cycles/2026-04-14T21-14-28-766Z",
+  "sourceRunId": "2026-04-14T20-37-53-197Z",
+  "workbenchId": "2026-04-14T20-38-38-495Z",
+  "scope": "newly_visible",
+  "selection": {
+    "scope": "newly_visible",
+    "count": 2,
+    "urls": [
+      "https://github.com/citybureau/city-scrapers",
+      "https://github.com/oc/openevents"
+    ],
+    "repoRefs": [
+      "citybureau/city-scrapers",
+      "oc/openevents"
+    ],
+    "selected": [
+      {
+        "repoRef": "citybureau/city-scrapers",
+        "url": "https://github.com/citybureau/city-scrapers",
+        "reason": "newly_visible"
+      },
+      {
+        "repoRef": "oc/openevents",
+        "url": "https://github.com/oc/openevents",
+        "reason": "newly_visible"
+      }
+    ],
+    "recommendations": [
+      "Use the 2 newly visible repo(s) as the focused bridge into intake and review."
+    ]
+  },
+  "onDemandResult": {
+    "runId": "2026-04-14T21-27-22-411Z",
+    "runDir": "runs/eventbear-worker/2026-04-14T21-27-22-411Z",
+    "effectiveUrls": [
+      "https://github.com/citybureau/city-scrapers",
+      "https://github.com/oc/openevents"
+    ],
+    "intakeItems": 2,
+    "reviewItems": 2,
+    "reportPath": "projects/eventbear-worker/reports/patternpilot-report-eventbear-worker-2026-04-14-on-demand.html"
+  }
+}

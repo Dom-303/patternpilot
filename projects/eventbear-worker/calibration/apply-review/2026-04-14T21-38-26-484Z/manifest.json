@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "projectKey": "eventbear-worker",
+  "generatedAt": "2026-04-14T21:38:26.484Z",
+  "reviewId": "2026-04-14T21-38-26-484Z",
+  "curationDir": "projects/eventbear-worker/calibration/curation/2026-04-14T21-34-02-953Z",
+  "curationId": "2026-04-14T21-34-02-953Z",
+  "selectedCandidates": [
+    {
+      "repoRef": "citybureau/city-scrapers",
+      "url": "https://github.com/citybureau/city-scrapers"
+    }
+  ],
+  "review": {
+    "candidateCount": 1,
+    "rows": [
+      {
+        "repoRef": "citybureau/city-scrapers",
+        "repoUrl": "https://github.com/citybureau/city-scrapers",
+        "decisionGuess": "adapt",
+        "reviewDisposition": "observe_only",
+        "landkarteAlreadyPresent": false,
+        "learningMentions": 0,
+        "decisionMentions": 0
+      }
+    ],
+    "recommendations": [
+      "1 selected candidate(s) would be new additions to the repo landkarte.",
+      "1 selected candidate(s) still carry observe_only disposition, so apply should be treated as curated documentation, not automatic adoption."
+    ]
+  }
+}

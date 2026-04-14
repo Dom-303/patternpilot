@@ -72,6 +72,16 @@ Ein guter Patternpilot-Report soll immer schnell sichtbar machen:
 - pro Run: `runs/<project>/<run-id>/summary.html`
 - Discovery-Zielausgabe: `projects/<project>/reports/discovery-<profil>.html`
 - Watchlist-Review-Zielausgabe: `projects/<project>/reports/watchlist-review-<profil>-<tiefe>.html`
+- letzter Projekt-Report: `projects/<project>/reports/latest-report.json`
+- direkter lokale Oeffnungspfad: `projects/<project>/reports/browser-link`
+
+## On-Demand-Nutzung
+
+Fuer den primaeren manuellen Modus ist wichtig:
+
+- ein Nutzer soll nach einem Lauf sofort einen greifbaren Report-Pointer bekommen
+- explizit uebergebene Repos duerfen fokussiert reviewed werden
+- die Watchlist bleibt hilfreich, aber nicht der einzige Weg zu einem Report
 
 ## Produkt-Richtung
 

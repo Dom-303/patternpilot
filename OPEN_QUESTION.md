@@ -12,13 +12,20 @@ Sie ist bewusst kein Sammelbecken fuer beliebige Ideen.
 
 Diese Datei wird zusammen mit `STATUS.md` als operative Uebergabeflaeche mitgefuehrt.
 
-- last_updated: 2026-04-14T16:53:57.564Z
-- latest_run_reference: eventbear-worker/2026-04-14T16-41-54-444Z
+- last_updated: 2026-04-14T22:48:35.938Z
+- latest_run_reference: eventbear-worker/2026-04-14T21-50-19-764Z
 
 ## Handoff Note
 
 - settled_now: target-repo context is run-scoped and transparent, not a hardwired product identity.
-- next_recommended_step: build the automatic chain run with blacklist, allowlist, limits, and quality gates.
+- settled_now_too: chain-run automation, discovery quality policy, decision-data re-evaluation and scheduler-ready ops signals are now part of the kernel.
+- settled_now_three: scheduler job-state, manual clear and alert views are now available for the automation layer.
+- settled_now_four: external scheduler glue and alert artifacts are now available via automation-dispatch and automation-alerts.
+- settled_now_five: the on-demand primary flow can now run explicit repo URLs end-to-end and writes stable report pointers per project.
+- settled_now_six: the last Decision Summary gap heuristic has been replaced by engine-level `gapAreaCanonical` and weighted `runGapSignals`.
+- settled_now_seven: discovery policies now gate repo, license, host, signal, risk and capability quality directly inside discovery and surface those results in reports.
+- settled_now_eight: policy-audit and discovery calibration hints now turn policy blocker counts into concrete tuning guidance per run.
+- next_recommended_step: run real policy audits and tune project-specific defaults before adding more onboarding or product-shell surface.
 
 ## Aktuell offene Fragen
 
@@ -31,17 +38,17 @@ Diese Datei wird zusammen mit `STATUS.md` als operative Uebergabeflaeche mitgefu
 
 ### OQ-002 — CHAIN_RUN_AUTOMATION
 
-- prioritaet: JETZT
-- frage: Wie soll der vollautomatische Kettenlauf `discover -> watchlist -> intake -> review` standardmaessig orchestriert werden?
-- warum_offen: Die einzelnen Bausteine existieren, aber der integrierte End-to-End-Run mit sauberen Guards, Limits und Quality-Gates ist noch nicht gebaut.
-- naechster_sinnvoller_schritt: Einen eigenen Chain-Run-Command mit Blacklist/Allowlist und Safety-Limits einfuehren.
+- prioritaet: BALD
+- frage: Wie wird der vorhandene Kettenlauf `discover -> watchlist -> intake -> re-evaluate -> review` operativ belastbar gemacht?
+- warum_offen: Der Kernlauf existiert, aber Run-Frequenz, Failure-Recovery, Projekt-uebergreifende Zeitfenster und spaetere Scheduling-Regeln sind noch offen. Diese Schicht bleibt bewusst optional gegenueber dem primaeren On-Demand-Modus.
+- naechster_sinnvoller_schritt: Betriebsmodus fuer wiederkehrende Laeufe, Retry-Regeln und projektweise Limits definieren, ohne den Produktkern scheduler-zentriert zu bauen.
 
 ### OQ-003 — QUALITY_FILTERS_FOR_DISCOVERY
 
-- prioritaet: JETZT
-- frage: Welche Blacklist-, Allowlist- und Qualitaetsregeln sollen Discovery-Kandidaten vor dem Watchlist-Handoff filtern?
-- warum_offen: Discovery ist heuristisch stabil, aber fuer echte Produktnutzung fehlen noch harte Ausschluss- und Vertrauensregeln.
-- naechster_sinnvoller_schritt: Policy-Dateien fuer ausgeschlossene Plattformen, Mindestsignale und bevorzugte Musterfamilien einfuehren.
+- prioritaet: BALD
+- frage: Wie fein muessen projektbezogene Discovery-Policies spaeter werden, damit sie echte Produktqualitaet tragen?
+- warum_offen: Die zweite Policy-Stufe und ein eigener Audit-/Calibration-Flow existieren jetzt. Offen ist vor allem noch die Kalibrierung an echten Discovery-Runs und die Frage, welche Gates pro Projekt wirklich hart statt nur bevorzugend wirken sollen.
+- naechster_sinnvoller_schritt: Mit echten Policy-Audit-Laeufen die auffaelligsten Blocker pruefen, daraus Projekt-Defaults schaerfen und erst dann weitere Gate-Typen hinzufuegen.
 
 ### OQ-004 — GITHUB_APP_CUTOVER
 
@@ -56,4 +63,25 @@ Diese Datei wird zusammen mit `STATUS.md` als operative Uebergabeflaeche mitgefu
 - frage: Wo ergaenzt spaeter eine LLM-Schicht die heuristische Engine sinnvoll, ohne den belastbaren Kern zu verwischen?
 - warum_offen: Der aktuelle Fokus liegt bewusst auf einer halluzinationsarmen, reproduzierbaren Basis.
 - naechster_sinnvoller_schritt: Erst nach stabiler Discovery-, Review- und Report-Schicht LLM-Einsatz nur fuer Verdichtung und Briefing pruefen.
+
+### OQ-006 — FIRST_RUN_ONBOARDING_AND_PROJECT_SETUP_FLOW
+
+- prioritaet: SPAETER
+- frage: Wie soll der erste Einstieg fuer neue Nutzer oder neue Projekte aussehen, ohne den stabilen Kern zu frueh zu ueberformen?
+- warum_offen: Ein gefuehrter Erststart mit Projektwahl, Kontextabfragen, Default-Profilen und klarer Pipeline ist sinnvoll, aber erst dann, wenn die innere Engine und der Kettenlauf wirklich stehen.
+- naechster_sinnvoller_schritt: Erst nach weiterer Kernel-Haertung den Setup-Flow gegen `init-project`, `doctor`, `setup-checklist` und spaetere Chain-Defaults modellieren.
+
+### OQ-007 — DECISION_DATA_REEVALUATION_OPERATIONS
+
+- prioritaet: JETZT
+- frage: Wann und wodurch sollen stale oder fallback Decision-Daten automatisch neu berechnet werden?
+- warum_offen: Ein Re-Evaluate-Flow existiert jetzt, aber Trigger wie Regel-Aenderungen, Batch-Groessen, Audit-Spuren und Benachrichtigung ueber Drift sind noch nicht final festgelegt.
+- naechster_sinnvoller_schritt: Operative Regeln fuer Drift-Erkennung, Batch-Limits, Logging und spaetere Scheduling-Hooks definieren.
+
+### OQ-008 — SCHEDULER_AND_FAILURE_RECOVERY_POLICY
+
+- prioritaet: JETZT
+- frage: Wie soll Patternpilot sich unter wiederkehrender Automation bei Teilfehlern, API-Ausfaellen oder projektweisen Blockern verhalten?
+- warum_offen: Locking, Retry-Klassifikation, Job-State, Alerting, Manual-Clear und Dispatch-Glue existieren jetzt, aber echte Benachrichtigungskanaele und spaetere Auto-Resume-Regeln sind noch nicht final festgelegt.
+- naechster_sinnvoller_schritt: Den ersten echten Kanal fuer Alerts festlegen, etwa GitHub Actions Summary oder Mail/Slack, und bestimmen, ob bestimmte Retry-Faelle nach genug Abstand automatisch wieder freigegeben werden duerfen.
 

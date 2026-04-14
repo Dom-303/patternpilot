@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "projectKey": "eventbear-worker",
+  "generatedAt": "2026-04-14T21:58:08.730Z",
+  "planId": "2026-04-14T21-58-08-730Z",
+  "curationDir": "projects/eventbear-worker/calibration/curation/2026-04-14T21-34-02-953Z",
+  "curationId": "2026-04-14T21-34-02-953Z",
+  "reviewId": "2026-04-14T21-58-08-702Z",
+  "governance": {
+    "safeApplyCandidates": [],
+    "manualReviewCandidates": [],
+    "recommendedBatches": [],
+    "recommendations": [
+      "No safe batch-apply candidates remain after promoted and manual-review cases are removed."
+    ]
+  }
+}

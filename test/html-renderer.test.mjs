@@ -3,8 +3,11 @@ import { strict as assert } from "node:assert";
 import {
   classifyLicense,
   renderDataStateWarnBanner,
+  renderDiscoveryHtmlReport,
   renderDecisionSummary,
   renderLicenseTag,
+  renderOnDemandRunHtmlReport,
+  renderWatchlistReviewHtmlReport,
   renderRecommendedActions,
   sortAdoptGroup
 } from "../lib/html-renderer.mjs";
@@ -15,6 +18,7 @@ function makeRunRoot(overrides = {}) {
     runConfidence: "medium",
     runConfidenceReason: "balanced signals",
     itemsDataStateSummary: { complete: 10, fallback: 0, stale: 0 },
+    runGapSignals: [{ gap: "source_systems_and_families", count: 2, strength: 81 }],
     ...overrides
   };
 }
@@ -57,7 +61,7 @@ describe("decision summary cutover", () => {
     assert.match(html, /unvollständig|unvollstaendig/);
   });
 
-  test("valid schema renders confidence and warn banner without heuristic label", () => {
+  test("valid schema renders confidence and top weighted gap signal without heuristic label", () => {
     const html = renderDecisionSummary({
       reportType: "discovery",
       runRoot: makeRunRoot({ itemsDataStateSummary: { complete: 5, fallback: 3, stale: 2 } }),
@@ -69,6 +73,9 @@ describe("decision summary cutover", () => {
     assert.match(html, /balanced signals/);
     assert.match(html, /section-warn/);
     assert.match(html, /50%/);
+    assert.match(html, /Top gap signal/);
+    assert.match(html, /source_systems_and_families/);
+    assert.match(html, /count 2 · strength 81/);
     assert.ok(!html.includes("(heuristic)"));
   });
 });
@@ -228,5 +235,228 @@ describe("recommended actions cutover", () => {
     });
 
     assert.equal(html, "");
+  });
+});
+
+describe("review html scope rendering", () => {
+  test("selected-url review renders scope section and missing selected title", () => {
+    const html = renderWatchlistReviewHtmlReport({
+      projectKey: "eventbear-worker",
+      createdAt: "2026-04-14T18:00:00.000Z",
+      analysisProfile: { id: "architecture", label: "Architecture" },
+      analysisDepth: { id: "standard" },
+      reviewScope: "selected_urls",
+      selectedUrls: ["https://github.com/acme/demo"],
+      inputUrlCount: 1,
+      watchlistCount: 3,
+      items: [
+        {
+          repoRef: "acme/demo",
+          reviewScore: 72,
+          projectFitBand: "high",
+          mainLayer: "source_intake",
+          gapArea: "source_systems_and_families",
+          matchedCapabilities: ["source_first"],
+          recommendedWorkerAreas: ["lib/fetch.mjs"],
+          learningForEventbaer: "useful",
+          possibleImplication: "adapt",
+          strengths: "clear source model",
+          weaknesses: "",
+          risks: [],
+          reason: "fit=high (82)",
+          suggestedNextStep: "compare deeply",
+          eventbaerRelevance: "high"
+        }
+      ],
+      topItems: [
+        {
+          repoRef: "acme/demo",
+          reviewScore: 72,
+          projectFitBand: "high",
+          mainLayer: "source_intake",
+          gapArea: "source_systems_and_families",
+          matchedCapabilities: ["source_first"],
+          recommendedWorkerAreas: ["lib/fetch.mjs"],
+          learningForEventbaer: "useful",
+          possibleImplication: "adapt",
+          strengths: "clear source model",
+          weaknesses: "",
+          risks: [],
+          reason: "fit=high (82)",
+          suggestedNextStep: "compare deeply",
+          eventbaerRelevance: "high"
+        }
+      ],
+      riskiestItems: [],
+      missingUrls: ["https://github.com/acme/missing"],
+      nextSteps: ["Review the selected repos."],
+      coverage: {
+        mainLayers: [{ value: "source_intake", count: 1 }],
+        gapAreas: [{ value: "source_systems_and_families", count: 1 }],
+        capabilities: [{ value: "source_first", count: 1 }],
+        workerAreas: [],
+        uncoveredCapabilities: []
+      },
+      projectProfile: { contextSources: { loadedFiles: [], missingFiles: [], scannedDirectories: [] }, capabilitiesPresent: [] },
+      binding: { readBeforeAnalysis: [], referenceDirectories: [] },
+      reportSchemaVersion: 2,
+      runConfidence: "medium",
+      runConfidenceReason: "balanced signals",
+      itemsDataStateSummary: { complete: 1, fallback: 0, stale: 0 }
+    }, "standard");
+
+    assert.match(html, /Run scope/);
+    assert.match(html, /Selected URLs/);
+    assert.match(html, /Missing selected intake/);
+    assert.match(html, /Input URLs/);
+  });
+});
+
+describe("discovery html policy rendering", () => {
+  test("discovery report renders discovery policy stats and section", () => {
+    const html = renderDiscoveryHtmlReport({
+      projectKey: "eventbear-worker",
+      createdAt: "2026-04-14T19:00:00.000Z",
+      binding: { projectKey: "eventbear-worker", readBeforeAnalysis: [], referenceDirectories: [] },
+      projectProfile: { contextSources: { loadedFiles: [], missingFiles: [], scannedDirectories: [] }, capabilitiesPresent: [] },
+      discovery: {
+        discoveryProfile: { id: "balanced", limit: 8 },
+        scanned: 12,
+        plan: { plans: [] },
+        searchErrors: [],
+        rawCandidateCount: 5,
+        candidates: [makeCandidate({
+          repo: { owner: "acme", name: "demo", normalizedRepoUrl: "https://github.com/acme/demo" },
+          guess: { mainLayer: "source_intake" },
+          queryLabels: ["Broad project scan"],
+          reasoning: ["seed match"],
+          landkarteCandidate: { possible_implication: "adapt", strengths: "clear source model", risks: "needs_review" }
+        })],
+        policySummary: {
+          enabled: true,
+          mode: "audit",
+          evaluated: 5,
+          visible: 5,
+          allowed: 1,
+          blocked: 4,
+          preferred: 1,
+          enforcedBlocked: 0,
+          blockerCounts: [{ value: "blocked_signal_pattern", count: 3 }],
+          preferenceCounts: [{ value: "preferred_capability", count: 1 }],
+          blockedPreview: [{ repoRef: "drop/demo", blockers: ["blocked_signal_pattern"], summary: "blocked:blocked_signal_pattern" }]
+        },
+        policyCalibration: {
+          status: "strict_needs_review",
+          topBlockers: [{ value: "blocked_signal_pattern", count: 3 }],
+          recommendations: ["Audit mode keeps flagged repos visible so blocker defaults can be calibrated before hiding candidates."]
+        },
+        reportSchemaVersion: 2,
+        runConfidence: "medium",
+        runConfidenceReason: "balanced signals",
+        itemsDataStateSummary: { complete: 1, fallback: 0, stale: 0 },
+        runGapSignals: [{ gap: "source_systems_and_families", count: 1, strength: 80 }]
+      }
+    });
+
+    assert.match(html, /Discovery policy/);
+    assert.match(html, /Policy flagged/);
+    assert.match(html, /Mode audit kept 5 of 5 evaluated candidates visible/);
+    assert.match(html, /Policy calibration/);
+    assert.match(html, /strict_needs_review/);
+    assert.match(html, /Audit mode keeps flagged repos visible/);
+    assert.match(html, /blocked_signal_pattern: 3/);
+    assert.match(html, /drop\/demo: blocked_signal_pattern/);
+    assert.match(html, /Raw found/);
+  });
+});
+
+describe("on-demand run html rendering", () => {
+  test("renders a landing page with artifacts and run summary", () => {
+    const html = renderOnDemandRunHtmlReport({
+      runId: "2026-04-14T18-30-00-000Z",
+      projectKey: "eventbear-worker",
+      createdAt: "2026-04-14T18:30:00.000Z",
+      sourceMode: "explicit_urls",
+      explicitUrls: ["https://github.com/acme/demo"],
+      effectiveUrls: ["https://github.com/acme/demo"],
+      appendWatchlist: false,
+      dryRun: false,
+      intakeRun: { items: [{ repo: { owner: "acme", name: "demo" } }] },
+      reEvaluateRun: { updates: [] },
+      reviewRun: {
+        review: {
+          analysisProfile: { id: "architecture" },
+          reviewScope: "selected_urls",
+          inputUrlCount: 1,
+          watchlistCount: 2,
+          selectedUrls: ["https://github.com/acme/demo"],
+          items: [
+            {
+              repoRef: "acme/demo",
+              reviewScore: 72,
+              projectFitBand: "high",
+              mainLayer: "source_intake",
+              gapArea: "source_systems_and_families",
+              matchedCapabilities: ["source_first"],
+              recommendedWorkerAreas: ["lib/fetch.mjs"],
+              learningForEventbaer: "useful",
+              possibleImplication: "adapt",
+              strengths: "clear source model",
+              weaknesses: "",
+              risks: [],
+              reason: "fit=high (82)",
+              suggestedNextStep: "compare deeply",
+              eventbaerRelevance: "high"
+            }
+          ],
+          topItems: [
+            {
+              repoRef: "acme/demo",
+              reviewScore: 72,
+              projectFitBand: "high",
+              mainLayer: "source_intake",
+              gapArea: "source_systems_and_families",
+              matchedCapabilities: ["source_first"],
+              recommendedWorkerAreas: ["lib/fetch.mjs"],
+              learningForEventbaer: "useful",
+              possibleImplication: "adapt",
+              strengths: "clear source model",
+              weaknesses: "",
+              risks: [],
+              reason: "fit=high (82)",
+              suggestedNextStep: "compare deeply",
+              eventbaerRelevance: "high"
+            }
+          ],
+          nextSteps: ["Open the review report and compare deeply."],
+          reportSchemaVersion: 2,
+          runConfidence: "medium",
+          runConfidenceReason: "balanced signals",
+          itemsDataStateSummary: { complete: 1, fallback: 0, stale: 0 }
+        }
+      },
+      promoteRun: null,
+      artifacts: {
+        reviewReportHref: "../../../projects/eventbear-worker/reports/patternpilot-report-eventbear-worker-2026-04-14-on-demand.html",
+        reviewReportLabel: "projects/eventbear-worker/reports/patternpilot-report-eventbear-worker-2026-04-14-on-demand.html",
+        latestReportHref: "../../../projects/eventbear-worker/reports/latest-report.json",
+        latestReportLabel: "projects/eventbear-worker/reports/latest-report.json",
+        browserLinkHref: "../../../projects/eventbear-worker/reports/browser-link",
+        browserLinkLabel: "projects/eventbear-worker/reports/browser-link"
+      },
+      nextActions: [
+        "Open the review report first.",
+        "Decide whether the repo should enter the watchlist."
+      ]
+    });
+
+    assert.match(html, /ON-DEMAND RUN/);
+    assert.match(html, /Run summary/);
+    assert.match(html, /Artifacts/);
+    assert.match(html, /What now/);
+    assert.match(html, /Review report/);
+    assert.match(html, /Latest report metadata/);
+    assert.match(html, /Browser link/);
+    assert.match(html, /Decide whether the repo should enter the watchlist/);
   });
 });

@@ -132,3 +132,60 @@ Sie sind ein Startzustand, kein Endstand.
 
 **Status**
 - offen / geplant / in arbeit / umgesetzt / verworfen
+
+## Patternpilot Candidate Decisions
+
+<!-- patternpilot:decision-candidates:start -->
+<!-- patternpilot:decision-candidates:citybureau__city-scrapers:start -->
+### Candidate: citybureau/city-scrapers fuer EventBaer Worker als 'adapt_pattern' behandeln
+
+**Datum**
+- 2026-04-14
+
+**Ausloeser**
+- citybureau/city-scrapers
+- local_source_infra_framework
+
+**Entscheidung**
+- adapt
+
+**Begruendung**
+- Toolkit and scraper family for extracting civic data from many source systems. Project fit is 'high' with score 95. Matched project capabilities: source_first,evidence_acquisition. Likely relevant for EventBaer Worker because it may inform 'source_systems_and_families' and the worker/project layer 'source_intake'.
+
+**Konkrete Bedeutung fuer EventBaer Worker**
+- Source infrastructure should be built as reusable families instead of isolated one-off connectors.
+
+**Naechster Schritt**
+- Compare the repo against EventBaer's source-system target architecture and family scaling goals.
+
+**Status**
+- proposed
+<!-- patternpilot:decision-candidates:citybureau__city-scrapers:end -->
+
+<!-- patternpilot:decision-candidates:oc__openevents:start -->
+### Candidate: oc/openevents fuer EventBaer Worker als 'adapt_pattern' behandeln
+
+**Datum**
+- 2026-04-14
+
+**Ausloeser**
+- oc/openevents
+- place_data_infrastructure
+
+**Entscheidung**
+- adapt
+
+**Begruendung**
+- Open source events platform with structured event and venue concepts. Project fit is 'high' with score 73. Matched project capabilities: source_first,location_intelligence,distribution_surfaces. Likely relevant for EventBaer Worker because it may inform 'location_and_gastro_intelligence' and the worker/project layer 'location_place_enrichment'.
+
+**Konkrete Bedeutung fuer EventBaer Worker**
+- Location and venue intelligence deserve their own deliberate layer next to event truth.
+
+**Naechster Schritt**
+- Review against location/gastro layers and geo-validation capabilities.
+
+**Status**
+- proposed
+<!-- patternpilot:decision-candidates:oc__openevents:end -->
+
+<!-- patternpilot:decision-candidates:end -->
