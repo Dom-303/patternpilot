@@ -56,12 +56,13 @@ import {
   deriveDisposition,
   computeRulesFingerprint
 } from "../lib/classification.mjs";
+import { selectAutomationDiscoveryCandidates } from "../lib/automation.mjs";
 
 function printHelp() {
   console.log(`Patternpilot CLI
 
 Commands:
-  automation-run  Run watchlist intake across one or all projects and optionally promote
+  automation-run  Run discover -> intake -> review and optionally promote
   doctor        Show GitHub auth, rate-limit and workspace readiness
   discover      Search GitHub heuristically for project-fit repos before intake
   init-project  Bind a new local repo/workspace project to Patternpilot
@@ -79,6 +80,7 @@ Commands:
 
 Examples:
   npm run automation:run -- --all-projects --promotion-mode prepared --dry-run
+  npm run automation:run -- --project eventbear-worker --automation-min-confidence medium --automation-max-new-candidates 5
   npm run doctor -- --offline
   npm run patternpilot -- discover --project eventbear-worker --discovery-profile balanced --report-view standard --dry-run
   npm run patternpilot -- discover --project eventbear-worker --query "scraper calendar venue" --intake
@@ -325,6 +327,8 @@ async function runIntake(rootDir, config, options) {
     mode: options.dryRun ? "dry_run" : "write",
     reportPath: path.relative(rootDir, runDir)
   });
+
+  return { runId, projectKey, createdAt, items, runDir };
 }
 
 async function runDiscover(rootDir, config, options) {
@@ -440,6 +444,16 @@ async function runDiscover(rootDir, config, options) {
     mode: options.dryRun ? "dry_run" : "write",
     reportPath: projectReportRelativePath
   });
+
+  return {
+    runId,
+    projectKey,
+    createdAt,
+    discovery,
+    runDir,
+    htmlReportPath: projectReportRelativePath,
+    candidateUrls
+  };
 }
 
 async function runReviewWatchlist(rootDir, config, options) {
@@ -520,6 +534,14 @@ async function runReviewWatchlist(rootDir, config, options) {
     mode: options.dryRun ? "dry_run" : "write",
     reportPath: htmlReportRelativePath
   });
+
+  return {
+    runId,
+    projectKey,
+    review,
+    runDir,
+    htmlReportPath: htmlReportRelativePath
+  };
 }
 
 async function runRefreshContext(rootDir, config) {
@@ -835,6 +857,10 @@ async function runAutomation(rootDir, config, options) {
   console.log(`- projects: ${targetEntries.length}`);
   console.log(`- promotion_mode: ${promotionMode}`);
   console.log(`- dry_run: ${options.dryRun ? "yes" : "no"}`);
+  console.log(`- skip_discovery: ${options.skipDiscovery ? "yes" : "no"}`);
+  console.log(`- skip_review: ${options.skipReview ? "yes" : "no"}`);
+  console.log(`- automation_min_confidence: ${options.automationMinConfidence}`);
+  console.log(`- automation_max_new_candidates: ${options.automationMaxNewCandidates}`);
   console.log(``);
 
   for (const [projectKey, project] of targetEntries) {
@@ -842,13 +868,56 @@ async function runAutomation(rootDir, config, options) {
       console.log(`- ${projectKey}: skipped (no watchlist_file configured)`);
       continue;
     }
+
     const watchlistUrls = await collectUrls(rootDir, {
       ...options,
       file: project.watchlistFile,
       urls: []
     });
-    if (watchlistUrls.length === 0) {
-      console.log(`- ${projectKey}: skipped (empty watchlist)`);
+    let discoveredUrls = [];
+
+    if (!options.skipDiscovery) {
+      console.log(`## Discover ${projectKey}`);
+      const discoveryRun = await runDiscover(rootDir, config, {
+        ...options,
+        project: projectKey,
+        appendWatchlist: false,
+        intake: false
+      });
+      const gate = selectAutomationDiscoveryCandidates(discoveryRun.discovery, {
+        minConfidence: options.automationMinConfidence,
+        maxCandidates: options.automationMaxNewCandidates
+      });
+
+      console.log(``);
+      console.log(`## Discovery Gate ${projectKey}`);
+      console.log(`- status: ${gate.status}`);
+      console.log(`- reason: ${gate.reason}`);
+      console.log(`- considered: ${gate.considered}`);
+      console.log(`- actionable: ${gate.actionable}`);
+      console.log(`- rejected: ${gate.rejected}`);
+
+      if (gate.selectedUrls.length > 0) {
+        const watchlistResult = await appendUrlsToWatchlist(
+          rootDir,
+          project,
+          gate.selectedUrls,
+          options.dryRun
+        );
+        console.log(`- selected_urls: ${gate.selectedUrls.length}`);
+        console.log(`- watchlist_status: ${watchlistResult.status}`);
+        console.log(`- watchlist_appended: ${watchlistResult.appended}`);
+        console.log(`- watchlist_kept_existing: ${watchlistResult.keptExisting}`);
+        discoveredUrls = gate.selectedUrls;
+      } else {
+        console.log(`- selected_urls: 0`);
+      }
+      console.log(``);
+    }
+
+    const effectiveUrls = [...new Set([...watchlistUrls, ...discoveredUrls])];
+    if (effectiveUrls.length === 0) {
+      console.log(`- ${projectKey}: skipped (no effective watchlist or discovery handoff)`);
       console.log(``);
       continue;
     }
@@ -858,8 +927,23 @@ async function runAutomation(rootDir, config, options) {
       ...options,
       project: projectKey,
       file: null,
-      urls: watchlistUrls
+      urls: effectiveUrls
     });
+
+    if (!options.skipReview) {
+      if (options.dryRun) {
+        console.log(``);
+        console.log(`## Review ${projectKey}`);
+        console.log(`Skipped review because dry-run intake does not persist queue entries for the follow-up comparison.`);
+      } else {
+      console.log(``);
+      console.log(`## Review ${projectKey}`);
+      await runReviewWatchlist(rootDir, config, {
+        ...options,
+        project: projectKey
+      });
+      }
+    }
 
     if (promotionMode === "prepared" || promotionMode === "apply") {
       if (options.dryRun) {

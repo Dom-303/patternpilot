@@ -207,6 +207,12 @@ npm run sync:all -- --dry-run
 npm run automation:run -- --all-projects --promotion-mode prepared --dry-run
 ```
 
+Oder fuer einen projektgebundenen Kettenlauf mit Discovery-Gate:
+
+```bash
+npm run automation:run -- --project eventbear-worker --automation-min-confidence medium --automation-max-new-candidates 5
+```
+
 ### GitHub-/Token-Diagnose laufen lassen
 
 ```bash

@@ -30,3 +30,21 @@ npm run automation:run -- --project eventbear-worker --promotion-mode apply
 - `promotion-mode skip`
 - `promotion-mode prepared`
 - `promotion-mode apply`
+
+## Kettenlauf
+
+`automation-run` ist jetzt der orchestrierte Einstieg fuer den Standardfluss:
+
+1. heuristische Discovery pro Projekt
+2. Quality Gate auf Discovery-Ergebnisse
+3. selektiver Watchlist-Handoff
+4. Intake ueber die effektive Menge
+5. Watchlist-Review
+6. optionale Promotion
+
+Die wichtigsten Guards sind:
+
+- `--automation-min-confidence <low|medium|high>`
+- `--automation-max-new-candidates <n>`
+- `--skip-discovery`
+- `--skip-review`

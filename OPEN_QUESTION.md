@@ -12,22 +12,13 @@ Sie ist bewusst kein Sammelbecken fuer beliebige Ideen.
 
 Diese Datei wird zusammen mit `STATUS.md` als operative Uebergabeflaeche mitgefuehrt.
 
-- last_updated: 2026-04-14T16:30:12.217Z
-- latest_run_reference: eventbear-worker/2026-04-13T14-11-11-441Z
+- last_updated: 2026-04-14T16:53:57.564Z
+- latest_run_reference: eventbear-worker/2026-04-14T16-41-54-444Z
 
 ## Handoff Note
 
-- settled_now: engine-data decision layer is shipped; target-repo context remains run-scoped and transparent.
+- settled_now: target-repo context is run-scoped and transparent, not a hardwired product identity.
 - next_recommended_step: build the automatic chain run with blacklist, allowlist, limits, and quality gates.
-
-## Geklaert
-
-### SQ-001 — ENGINE_DATA_DECISION_LAYER
-
-- status: settled on 2026-04-14
-- entscheidung: Die Report-Bewertungslogik lebt jetzt in der Engine statt im Template. Discovery und Review nutzen dieselbe Disposition-Logik, Runs tragen `reportSchemaVersion: 2`, `runConfidence` und `itemsDataStateSummary`.
-- referenzen: `docs/superpowers/plans/2026-04-13-engine-data-decision-layer.md`, `docs/superpowers/specs/2026-04-13-engine-data-decision-layer-design.md`
-- auswirkung: HTML-Reports haben keinen Heuristik-Fallback mehr fuer Decision Summary und Recommended Actions; unvollstaendige Engine-Daten werden explizit als Missing-Data-Zustand angezeigt.
 
 ## Aktuell offene Fragen
 
@@ -65,3 +56,4 @@ Diese Datei wird zusammen mit `STATUS.md` als operative Uebergabeflaeche mitgefu
 - frage: Wo ergaenzt spaeter eine LLM-Schicht die heuristische Engine sinnvoll, ohne den belastbaren Kern zu verwischen?
 - warum_offen: Der aktuelle Fokus liegt bewusst auf einer halluzinationsarmen, reproduzierbaren Basis.
 - naechster_sinnvoller_schritt: Erst nach stabiler Discovery-, Review- und Report-Schicht LLM-Einsatz nur fuer Verdichtung und Briefing pruefen.
+
