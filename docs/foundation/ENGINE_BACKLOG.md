@@ -10,13 +10,15 @@ Die Eintraege hier sind kein Grund, das Template zu aendern. Sie sind Input fuer
 
 ## Status
 
-- last_updated: 2026-04-13
+- last_updated: 2026-04-14
 - begleitet: `lib/html-renderer.mjs` (Decision Summary, Recommended Actions, Top Recommendations)
 - verwandt: `docs/reference/REPORT_OUTPUT_MODEL.md`, `docs/foundation/AUTOMATION_ROADMAP.md`
 
 ---
 
 ## EB-001 — Disposition fuer Watchlist-Review-Items
+
+- status: erledigt am 2026-04-14 ueber die Engine-Decision-Layer-Umsetzung (`reviewDisposition`, shared `deriveDisposition`)
 
 - betrifft: `renderRecommendedActions`, `renderDecisionSummary`, Decision-Vocabulary-Mapping
 - heutiger Zustand: Review-Items haben kein `discoveryDisposition`. Das Template faellt deshalb auf einen `projectFitBand`-Parallelpfad zurueck (`high -> Adopt`, `medium -> Study`, `low -> Watch`, sonst `Defer`).
@@ -28,6 +30,8 @@ Die Eintraege hier sind kein Grund, das Template zu aendern. Sie sind Input fuer
 
 ## EB-002 — Echtes Confidence-Signal statt Fit-Ratio-Heuristik
 
+- status: erledigt am 2026-04-14 ueber `runConfidence`, `runConfidenceReason` und `confidenceFactors`
+
 - betrifft: `renderDecisionSummary` (Signal confidence Badge)
 - heutiger Zustand: Das Template berechnet eine grobe Confidence aus (a) Anzahl Kandidaten und (b) Anteil `fit=high`. Bei wenig Kandidaten oder vielen mittelguten Treffern wird das Ergebnis als "heuristic" markiert.
 - warum Engine-Thema: Confidence ist eine Meta-Aussage ueber Lauf- und Quellqualitaet, nicht ueber Template-Logik. Ein Run mit drei starken Quellen und einer breiten Abdeckung ist vertrauenswuerdiger als ein Run mit einem einzigen guten Treffer.
@@ -37,6 +41,8 @@ Die Eintraege hier sind kein Grund, das Template zu aendern. Sie sind Input fuer
 ---
 
 ## EB-003 — Effort- und Value-Felder pro Kandidat
+
+- status: erledigt am 2026-04-14 ueber `effortBand/valueBand`, Scores und deterministische Reason-Codes
 
 - betrifft: `renderRecommendedActions` (Reihenfolge innerhalb Adopt/Study-Bucket)
 - heutiger Zustand: Innerhalb einer Empfehlungsgruppe wird nach Reihenfolge im Kandidatenarray sortiert. Die ersten drei `adopt`-Eintraege bekommen zusaetzlich das Ranking-Styling, aber "drei" ist willkuerlich und "erste" ist kein Ranking.
@@ -48,6 +54,8 @@ Die Eintraege hier sind kein Grund, das Template zu aendern. Sie sind Input fuer
 
 ## EB-004 — "Most repeated gap signal" braucht ein echtes Gap-Feld
 
+- status: offen
+
 - betrifft: `renderDecisionSummary` (Most repeated gap signal Zelle)
 - heutiger Zustand: Das Template zaehlt heute einfach die haeufigste `matchedCapabilities[0]` bzw. `guess.mainLayer` bzw. `gapArea` ueber alle Kandidaten und nennt das "Gap". Das ist keine Luecke, das ist eine Konvergenz.
 - warum Engine-Thema: Eine echte Luecke waere eine Aussage wie "Diese Schicht fehlt dem Zielprojekt heute, und mehrere externe Repos zeigen sie stark". Das verlangt einen Abgleich mit dem Zielprojekt-Alignment, nicht nur Zaehlen.
@@ -57,6 +65,8 @@ Die Eintraege hier sind kein Grund, das Template zu aendern. Sie sind Input fuer
 ---
 
 ## EB-005 — Konsistente `projectDisposition` fuer beide Report-Typen
+
+- status: erledigt am 2026-04-14 ueber den gemeinsamen Engine-Cutover ohne neuen Wrapper-Typ
 
 - betrifft: allgemeine Dokumenten-Konsistenz zwischen Discovery und Watchlist Review
 - heutiger Zustand: Discovery-Reports und Watchlist-Review-Reports transportieren teils ueberlappende, teils unterschiedliche Felder. Das Template enthaelt deshalb parallele Pfade pro Reportart.

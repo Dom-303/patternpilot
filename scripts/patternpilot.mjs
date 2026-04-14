@@ -51,6 +51,11 @@ import {
   writePromotionPacket,
   writeRunArtifacts
 } from "../lib/index.mjs";
+import {
+  buildCandidateEvaluation,
+  deriveDisposition,
+  computeRulesFingerprint
+} from "../lib/classification.mjs";
 
 function printHelp() {
   console.log(`Patternpilot CLI
@@ -142,6 +147,35 @@ async function runIntake(rootDir, config, options) {
       projectProfile,
       alignmentRules
     );
+    const evaluation = buildCandidateEvaluation(
+      repo,
+      guess,
+      enrichment,
+      projectAlignment,
+      alignmentRules
+    );
+    const rulesFingerprint = computeRulesFingerprint(alignmentRules);
+    const risks = String(landkarteCandidate.risks ?? "")
+      .split(",")
+      .map((item) => item.trim())
+      .filter(Boolean);
+    const disposition = deriveDisposition(
+      evaluation,
+      risks,
+      projectAlignment.fitBand
+    );
+    const decisionFields = {
+      effortBand: evaluation.effortBand,
+      effortScore: evaluation.effortScore,
+      valueBand: evaluation.valueBand,
+      valueScore: evaluation.valueScore,
+      reviewDisposition: disposition.disposition,
+      rulesFingerprint,
+      decisionSummary: evaluation.decisionSummary,
+      effortReasons: evaluation.effortReasons,
+      valueReasons: evaluation.valueReasons,
+      dispositionReason: disposition.dispositionReason
+    };
     const intakeDocPath = buildIntakeDocPath(rootDir, project, repo);
     const intakeDocRelativePath = path.relative(rootDir, intakeDocPath);
     const projectRoot = path.resolve(rootDir, binding.projectRoot);
@@ -159,6 +193,12 @@ async function runIntake(rootDir, config, options) {
       alignment_status: projectAlignment.status,
       project_fit_band: projectAlignment.fitBand,
       project_fit_score: String(projectAlignment.fitScore),
+      effort_band: decisionFields.effortBand,
+      effort_score: String(decisionFields.effortScore),
+      value_band: decisionFields.valueBand,
+      value_score: String(decisionFields.valueScore),
+      review_disposition: decisionFields.reviewDisposition,
+      rules_fingerprint: decisionFields.rulesFingerprint,
       matched_capabilities: projectAlignment.matchedCapabilities.join(","),
       recommended_worker_areas: projectAlignment.recommendedWorkerAreas.join(","),
       suggested_next_step: projectAlignment.suggestedNextStep,
@@ -217,7 +257,8 @@ async function runIntake(rootDir, config, options) {
       projectLabel,
       repoRoot: projectRoot,
       createdAt,
-      notes: options.notes
+      notes: options.notes,
+      candidate: decisionFields
     });
     const docWrite = await writeIntakeDoc({
       intakeDocPath,
@@ -231,6 +272,7 @@ async function runIntake(rootDir, config, options) {
       guess,
       enrichment,
       landkarteCandidate,
+      candidate: decisionFields,
       projectAlignment,
       action: options.dryRun ? "planned" : docWrite.created ? "created_or_updated" : "reused_existing_doc",
       intakeDocRelativePath
@@ -255,6 +297,7 @@ async function runIntake(rootDir, config, options) {
       guess: item.guess,
       enrichment: item.enrichment,
       landkarteCandidate: item.landkarteCandidate,
+      candidate: item.candidate,
       projectAlignment: item.projectAlignment,
       intakeDoc: item.intakeDocRelativePath,
       action: item.action

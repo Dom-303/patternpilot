@@ -1,0 +1,93 @@
+import fs from "node:fs";
+import { test } from "node:test";
+import assert from "node:assert/strict";
+
+import { loadQueueEntries, upsertQueueEntry } from "../lib/queue.mjs";
+import { makeTempQueueWorkspace } from "./helpers/fixtures.mjs";
+
+test("upsertQueueEntry auto-extends header with new engine-decision columns", async () => {
+  const legacyHeader = [
+    "intake_id",
+    "project_key",
+    "status",
+    "created_at",
+    "updated_at",
+    "repo_url",
+    "normalized_repo_url"
+  ];
+  const workspace = makeTempQueueWorkspace({
+    header: legacyHeader,
+    rows: [
+      {
+        intake_id: "1",
+        project_key: "eventbear-worker",
+        status: "queued",
+        created_at: "2025-04-01T00:00:00.000Z",
+        updated_at: "2025-04-01T00:00:00.000Z",
+        repo_url: "https://github.com/acme/eventbear-worker",
+        normalized_repo_url: "https://github.com/acme/eventbear-worker"
+      }
+    ]
+  });
+
+  try {
+    await upsertQueueEntry(workspace.rootDir, workspace.config, {
+      intake_id: "1",
+      project_key: "eventbear-worker",
+      status: "queued",
+      created_at: "2025-04-01T00:00:00.000Z",
+      updated_at: "2025-04-02T00:00:00.000Z",
+      repo_url: "https://github.com/acme/eventbear-worker",
+      normalized_repo_url: "https://github.com/acme/eventbear-worker",
+      effort_band: "low",
+      effort_score: 25,
+      value_band: "high",
+      value_score: 80,
+      review_disposition: "intake_now",
+      rules_fingerprint: "a3f9c1b2d4e5"
+    });
+
+    const headerLine = fs.readFileSync(workspace.queuePath, "utf8").split(/\r?\n/)[0];
+    for (const column of [
+      "effort_band",
+      "effort_score",
+      "value_band",
+      "value_score",
+      "review_disposition",
+      "rules_fingerprint"
+    ]) {
+      assert.ok(headerLine.includes(column), `expected header to include ${column}`);
+    }
+  } finally {
+    workspace.cleanup();
+  }
+});
+
+test("loadQueueEntries returns empty strings for missing new columns in legacy rows", async () => {
+  const legacyHeader = ["intake_id", "project_key", "status", "repo_url", "normalized_repo_url"];
+  const workspace = makeTempQueueWorkspace({
+    header: legacyHeader,
+    rows: [
+      {
+        intake_id: "7",
+        project_key: "eventbear-worker",
+        status: "queued",
+        repo_url: "https://github.com/acme/legacy",
+        normalized_repo_url: "https://github.com/acme/legacy"
+      }
+    ]
+  });
+
+  try {
+    const rows = await loadQueueEntries(workspace.rootDir, workspace.config);
+    assert.equal(rows.length, 1);
+    assert.equal(rows[0].effort_band, "");
+    assert.equal(rows[0].effort_score, "");
+    assert.equal(rows[0].value_band, "");
+    assert.equal(rows[0].value_score, "");
+    assert.equal(rows[0].review_disposition, "");
+    assert.equal(rows[0].rules_fingerprint, "");
+  } finally {
+    workspace.cleanup();
+  }
+});

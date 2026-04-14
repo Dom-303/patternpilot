@@ -12,15 +12,31 @@ Sie ist bewusst kein Sammelbecken fuer beliebige Ideen.
 
 Diese Datei wird zusammen mit `STATUS.md` als operative Uebergabeflaeche mitgefuehrt.
 
-- last_updated: 2026-04-13T14:11:12.239Z
+- last_updated: 2026-04-14T16:30:12.217Z
 - latest_run_reference: eventbear-worker/2026-04-13T14-11-11-441Z
 
 ## Handoff Note
 
-- settled_now: HTML-Report-Schicht hat jetzt eine verbindliche, decision-first Landing-Page-UI mit Decision Summary, Recommended Actions, Sticky Nav und geteilten Stats-Bloecken. OQ-001 ist damit erledigt.
-- next_recommended_step: Chain-Run-Automation (OQ-002) mit Blacklist, Allowlist, Limits und Quality-Gates bauen; parallel dazu die Engine-Daten-Luecken aus `docs/foundation/ENGINE_BACKLOG.md` in die Engine-Roadmap einplanen.
+- settled_now: engine-data decision layer is shipped; target-repo context remains run-scoped and transparent.
+- next_recommended_step: build the automatic chain run with blacklist, allowlist, limits, and quality gates.
+
+## Geklaert
+
+### SQ-001 — ENGINE_DATA_DECISION_LAYER
+
+- status: settled on 2026-04-14
+- entscheidung: Die Report-Bewertungslogik lebt jetzt in der Engine statt im Template. Discovery und Review nutzen dieselbe Disposition-Logik, Runs tragen `reportSchemaVersion: 2`, `runConfidence` und `itemsDataStateSummary`.
+- referenzen: `docs/superpowers/plans/2026-04-13-engine-data-decision-layer.md`, `docs/superpowers/specs/2026-04-13-engine-data-decision-layer-design.md`
+- auswirkung: HTML-Reports haben keinen Heuristik-Fallback mehr fuer Decision Summary und Recommended Actions; unvollstaendige Engine-Daten werden explizit als Missing-Data-Zustand angezeigt.
 
 ## Aktuell offene Fragen
+
+### OQ-001 — REPORT_UI_DIRECTION
+
+- prioritaet: BALD
+- frage: Welche finale visuelle Richtung soll die HTML-Report-Schicht bekommen, bevor daraus eine spaetere App- oder Web-Oberflaeche wird?
+- warum_offen: Die technische HTML-Schicht steht, aber Designsystem, visuelle Sprache und moegliche Branding-Regeln sind noch nicht final entschieden.
+- naechster_sinnvoller_schritt: Ein verbindliches Report-UI-Framework mit Farben, Typografie, Komponenten und Chart-Patterns festziehen.
 
 ### OQ-002 — CHAIN_RUN_AUTOMATION
 
@@ -49,13 +65,3 @@ Diese Datei wird zusammen mit `STATUS.md` als operative Uebergabeflaeche mitgefu
 - frage: Wo ergaenzt spaeter eine LLM-Schicht die heuristische Engine sinnvoll, ohne den belastbaren Kern zu verwischen?
 - warum_offen: Der aktuelle Fokus liegt bewusst auf einer halluzinationsarmen, reproduzierbaren Basis.
 - naechster_sinnvoller_schritt: Erst nach stabiler Discovery-, Review- und Report-Schicht LLM-Einsatz nur fuer Verdichtung und Briefing pruefen.
-
-## Erledigte Fragen
-
-### OQ-001 — REPORT_UI_DIRECTION (settled 2026-04-13)
-
-- frage: Welche finale visuelle Richtung soll die HTML-Report-Schicht bekommen, bevor daraus eine spaetere App- oder Web-Oberflaeche wird?
-- entscheidung: Decision-first Landing-Page-Ansatz. Dark Glassmorphism mit Neon-Akzenten (Cyan #00e5ff, Magenta #e040fb, Orange #ff9100, Green #00e676, Blue #2979ff). Hero + Sticky Nav + Decision Summary + Top Recommendations + Recommended Actions + Filterable Candidate Grid.
-- umsetzung: `lib/html-renderer.mjs` komplett ueberarbeitet in 10-Task Subagent-Run, plus Phase A/B Stabilisierungspass. Reference: `docs/reference/REPORT_UI_FRAMEWORK.md` bleibt massgeblich fuer zukuenftige Report-Typen.
-- follow_up: Offene Engine-Daten-Luecken, die das Report-UI voll ausschoepfen koennen, liegen in `docs/foundation/ENGINE_BACKLOG.md`.
-
