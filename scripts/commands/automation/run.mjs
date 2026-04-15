@@ -12,7 +12,7 @@ import {
   writeAutomationJobState,
   writeRunArtifacts
 } from "../../../lib/index.mjs";
-import { computeRulesFingerprint } from "../../../lib/classification.mjs";
+import { computeRulesFingerprint } from "../../../lib/classification/evaluation.mjs";
 import {
   acquireAutomationLock,
   buildAutomationOpsReport,

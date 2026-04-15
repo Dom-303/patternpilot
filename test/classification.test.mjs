@@ -10,7 +10,7 @@ import {
   classifyLicense,
   computeRulesFingerprint,
   deriveDisposition
-} from "../lib/classification.mjs";
+} from "../lib/classification/evaluation.mjs";
 import {
   makeFakeAlignmentRules,
   makeFakeEnrichment,

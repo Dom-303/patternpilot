@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { discoverImportedCandidates } from "../lib/discovery.mjs";
+import { discoverImportedCandidates } from "../lib/discovery/imported.mjs";
 import { defaultDiscoveryPolicy } from "../lib/policy/discovery-policy.mjs";
 import { makeFakeAlignmentRules } from "./helpers/fixtures.mjs";
 

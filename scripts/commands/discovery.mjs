@@ -32,7 +32,7 @@ import {
   buildCandidateEvaluation,
   computeRulesFingerprint,
   deriveDisposition
-} from "../../lib/classification.mjs";
+} from "../../lib/classification/evaluation.mjs";
 import { refreshContext } from "../shared/runtime-helpers.mjs";
 
 export async function runIntake(rootDir, config, options) {

@@ -20,7 +20,7 @@ import {
   buildWatchlistReviewReport,
   classifyReviewItemState
 } from "../../lib/review.mjs";
-import { computeRulesFingerprint } from "../../lib/classification.mjs";
+import { computeRulesFingerprint } from "../../lib/classification/evaluation.mjs";
 import { refreshContext } from "../shared/runtime-helpers.mjs";
 import { runIntake } from "./discovery.mjs";
 

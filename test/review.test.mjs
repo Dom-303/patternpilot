@@ -4,7 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import os from "node:os";
 import { classifyReviewItemState, buildReviewRunFields, buildWatchlistReview } from "../lib/review.mjs";
-import { computeRulesFingerprint } from "../lib/classification.mjs";
+import { computeRulesFingerprint } from "../lib/classification/evaluation.mjs";
 import { makeFakeAlignmentRules } from "./helpers/fixtures.mjs";
 
 describe("classifyReviewItemState", () => {

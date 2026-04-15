@@ -7,7 +7,7 @@ import {
   selectNextDispatchableAutomationJob,
   writeAutomationAlertArtifacts
 } from "../../../lib/index.mjs";
-import { computeRulesFingerprint } from "../../../lib/classification.mjs";
+import { computeRulesFingerprint } from "../../../lib/classification/evaluation.mjs";
 import {
   buildProjectRunDiagnostics,
   buildProjectRunGovernanceSnapshot

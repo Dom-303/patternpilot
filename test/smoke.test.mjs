@@ -6,7 +6,7 @@ import {
   bandFromScore,
   classifyLicense,
   computeRulesFingerprint
-} from "../lib/classification.mjs";
+} from "../lib/classification/evaluation.mjs";
 import { upsertQueueEntry } from "../lib/queue.mjs";
 
 test("smoke: core engine exports are wired", () => {
@@ -16,4 +16,3 @@ test("smoke: core engine exports are wired", () => {
   assert.equal(typeof computeRulesFingerprint, "function");
   assert.equal(Number.isInteger(EVALUATION_VERSION), true);
 });
-

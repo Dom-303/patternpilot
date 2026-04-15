@@ -11,7 +11,7 @@ import {
   decorateDiscoveryCandidate,
   buildDiscoveryRunFields,
   applyDiscoveryPolicyToCandidates
-} from "../lib/discovery.mjs";
+} from "../lib/discovery/candidates.mjs";
 import { defaultDiscoveryPolicy } from "../lib/policy/discovery-policy.mjs";
 
 describe("discovery run-level engine fields", () => {

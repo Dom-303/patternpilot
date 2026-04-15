@@ -639,7 +639,7 @@ npm run intake -- --project eventbear-worker --skip-enrich https://github.com/Ci
 - `lib/config.mjs`
 - `lib/project.mjs`
 - `lib/queue.mjs`
-- `lib/discovery.mjs`
+- `lib/discovery/`
 - `lib/review.mjs`
 - `lib/html-renderer.mjs`
 - `lib/intake.mjs`
