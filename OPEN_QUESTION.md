@@ -12,8 +12,8 @@ Sie ist bewusst kein Sammelbecken fuer beliebige Ideen.
 
 Diese Datei wird zusammen mit `STATUS.md` als operative Uebergabeflaeche mitgefuehrt.
 
-- last_updated: 2026-04-14T22:48:35.938Z
-- latest_run_reference: eventbear-worker/2026-04-14T21-50-19-764Z
+- last_updated: 2026-04-15T20:44:31.839Z
+- latest_run_reference: integration/github-app-dispatch
 
 ## Handoff Note
 

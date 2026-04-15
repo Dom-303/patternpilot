@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "contractKind": "resume_contract",
+  "generatedAt": "2026-04-15T19:00:00.000Z",
+  "deliveryId": "delivery-repository-dispatch-001",
+  "eventKey": "repository_dispatch.patternpilot_on_demand",
+  "repository": "Dom-303/patternpilot",
+  "selectedProjectKey": "eventbear-worker",
+  "routeStatus": "dispatchable",
+  "dispatchStatus": "ready_to_execute",
+  "contractStatus": "dispatch_ready_resume_contract",
+  "runnerMode": "external_runner_resume",
+  "applyRequested": true,
+  "forceRequested": true,
+  "dryRun": false,
+  "contractOnly": false,
+  "resumeFromCommand": "on-demand",
+  "previousExecutionStatus": "execution_failed",
+  "scheduledCommands": [
+    {
+      "order": 1,
+      "commandName": "on-demand",
+      "executionClass": "analysis_run",
+      "shellCommand": "\"npm\" \"run\" \"analyze\" \"--\" \"--project\" \"eventbear-worker\" \"https://github.com/oc/openevents\" \"https://github.com/citybureau/city-scrapers\"",
+      "forceRequired": true,
+      "cwd": "."
+    }
+  ],
+  "executionSummary": {
+    "finalStatus": "execution_failed",
+    "nextAction": "Resume execution from the remaining command boundary with github-app-execution-run."
+  },
+  "nextAction": "Resume execution from the remaining command boundary with github-app-execution-run."
+}

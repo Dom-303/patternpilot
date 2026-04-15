@@ -1,0 +1,5 @@
+{
+  "x-github-event": "installation_repositories",
+  "x-github-delivery": "delivery-installation-repositories-added",
+  "x-hub-signature-256": "sha256=placeholder"
+}

@@ -1,0 +1,21 @@
+{
+  "action": "patternpilot_on_demand",
+  "client_payload": {
+    "project": "eventbear-worker",
+    "urls": [
+      "https://github.com/oc/openevents",
+      "https://github.com/citybureau/city-scrapers"
+    ]
+  },
+  "repository": {
+    "id": 1,
+    "name": "patternpilot",
+    "full_name": "Dom-303/patternpilot",
+    "private": false,
+    "default_branch": "main",
+    "visibility": "public",
+    "owner": {
+      "login": "Dom-303"
+    }
+  }
+}

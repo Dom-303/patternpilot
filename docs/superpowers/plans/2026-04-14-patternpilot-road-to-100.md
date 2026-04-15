@@ -156,6 +156,7 @@ Das Produkt soll nicht nur den ersten Lauf gut koennen, sondern auch den zweiten
   - `automation:jobs` und `automation:dispatch` koennen diese Governance-Sicht jetzt live verwenden
   - `run-stability` misst jetzt stabile versus instabile Run-Streaks ueber mehrere Schleifen hinweg
   - Requalify-Latches fuer instabile Folge-Runs werden jetzt im Job-State gehalten und mit `run-requalify` bewusst geprueft, bevor weitere unattended Schleifen wieder freigegeben werden
+  - `automation-alert-deliver` kann Alert-Summaries jetzt ueber erste echte Adapter wie Datei, `GITHUB_STEP_SUMMARY`, lokale Hook-Commands oder den eingebauten Hook `patternpilot-alert-hook` ausliefern
 - current_limit: Die Folge-Run-Logik ist jetzt sichtbar, messbar und erstmals steuernd, aber noch nicht an breitere echte Resume-Strategien oder spaetere GitHub-App-/Produktkanal-Entscheidungen angebunden.
 
 ### Deliverables
@@ -169,7 +170,7 @@ Das Produkt soll nicht nur den ersten Lauf gut koennen, sondern auch den zweiten
 - [x] Folge-Run-Zustaende explizit modellieren: first_run, follow_up_run, maintenance_run
 - [~] bestimmen, welche Schritte bei Folge-Runs immer, manchmal oder nur bei Drift laufen
 - [~] Retry-/Backoff-/Resume-Politik aus realen Betriebsannahmen weiter gegen echte Resume- und Drift-Faelle schaerfen
-- [ ] ersten echten Alert-Kanal festlegen
+- [x] ersten echten Alert-Kanal festlegen
 - [~] definieren, welche Folge-Runs wirklich unattended laufen duerfen
 - [~] Requalify- und Wiederfreigabe-Regeln fuer instabile Folge-Run-Schleifen an echte Betriebsfaelle anbinden
 - [ ] Scheduler-Schicht weiterhin optional halten und nicht zum Produktkern machen
@@ -193,12 +194,43 @@ Das Produkt soll nicht nur den ersten Lauf gut koennen, sondern auch den zweiten
 - geklaerte Rechte, Ereignisse und Installationslogik
 - erste Live-nahe App-Roadmap
 
+### Progress Snapshot
+
+- status: started
+- groundwork_done:
+  - `github-app-readiness` zeigt jetzt explizit, wie nah der aktuelle CLI/PAT-Zustand schon an einem spaeteren GitHub-App-Pfad ist
+  - `github-app-plan` beschreibt jetzt Rechte, Event-Bindings, Artefakte und Command-Pfade fuer den spaeteren GitHub-App-Cutover
+  - `github-app-event-preview` kann jetzt einzelne Beispiel-Events gegen den heutigen Kernel spiegeln, bevor echte Webhook-Zustellung gebaut wird
+  - `github-app-webhook-preview` modelliert jetzt lokal Header, Delivery-ID, Signaturpruefung und Envelope-Artefakte fuer spaetere echte Webhook-Zustellung
+  - `github-app-webhook-route` baut jetzt aus einem verifizierten Envelope bereits konkrete lokale Route-Plaene und Command-Vorschlaege
+  - `github-app-webhook-dispatch` baut jetzt darueber eine kontrollierte lokale Dispatch-Schicht und trennt Preview, force-gated, ausfuehrbare und guarded Schritte sauber
+  - `github-app-execution-run` fuehrt den daraus entstehenden Contract jetzt in einer eigenen Runner-Schicht weiter
+  - die Runner-Schicht schreibt inzwischen `runner-state`, `resume-contract`, `recovery-assessment` und `recovery-contract`
+  - `github-app-execution-resume` und `github-app-execution-recover` machen Wiederaufnahme und Recovery-Governance jetzt als explizite CLI-Pfade sichtbar
+  - `github-app-execution-enqueue` und `github-app-service-tick` bilden jetzt die erste kleine lokale Queue-/Service-Schicht ueber diesen Contracts
+  - die Service-Schicht kennt jetzt zusaetzlich `claimed`-Zustaende, Worker-IDs und Lease-Zeiten fuer spaetere Runtime-Prozesse
+  - Duplicate-Schutz und ein erster `dead-letter`-Pfad sind jetzt ebenfalls vorbereitet
+  - `github-app-service-review` und `github-app-service-requeue` geben dieser Service-Schicht jetzt auch eine explizite manuelle Release-/Requeue-Governance
+  - `github-app-installation-review`, `github-app-installation-apply` und `github-app-installation-show` bilden jetzt die erste lokale Installations-/Repo-Scope-Registry fuer `installation.created` und `installation_repositories.added`
+  - `github-app-installation-scope` und `github-app-installation-handoff` bilden darauf jetzt den ersten kontrollierten Mehr-Repo-Handoff in Projekt-Watchlists
+  - `github-app-installation-governance-review` und `github-app-installation-governance-apply` geben dieser Linie jetzt eine explizite Installations-Policy vor dem Scope-/Handoff-Schritt
+  - `github-app-installation-runtime-review` und `github-app-installation-runtime-apply` koppeln diese Installations-Policy jetzt an einen eigenen Betriebsmodus pro Installation
+  - `github-app-installation-operations-review` und `github-app-installation-operations-apply` koppeln diese Linie jetzt an Watchlist-/Service-Betriebslogik pro Installation
+  - `github-app-service-review` und `github-app-service-tick` respektieren diese Installations-Operationslogik jetzt auch als echte Runtime-Gates
+  - `github-app-service-requeue` respektiert diese Installations-Operationslogik jetzt auch als Admin-/Manual-Release-Gate
+  - der bestehende Kernel bleibt weiter produktneutral, waehrend GitHub-spezifische Reife separat sichtbar gemacht wird
+- current_limit: Es gibt jetzt eine klare Reifeanzeige plus lokale Event-/Runner-/Recovery-/Service-/Installations-Vorstufen inklusive Installations-Policy und erstem Mehr-Repo-Handoff, aber noch keine ausgearbeitete Webhook-, Installations- oder Multi-Repo-Liveintegration.
+
 ### Tasks
 
-- [ ] GitHub-App-Anforderungen gegen aktuellen CLI-/PAT-Zustand abgleichen
+- [~] GitHub-App-Anforderungen gegen aktuellen CLI-/PAT-Zustand abgleichen
 - [ ] festhalten, welche Commands/Flows spaeter App-getrieben werden koennen
 - [ ] Webhook- und Event-Modell skizzieren
+- [~] lokale Runner-/Service-Governance inklusive Resume/Recovery/Requeue stabilisieren
 - [ ] Secrets-, Installations- und Multi-Repo-Modell klaeren
+- [~] lokale Installations-Registry und Repo-Scope-Governance als Vorstufe stabilisieren
+- [~] Installations-Registry in einen echten Multi-Repo-Handoff fuer Watchlist und spaetere Governance ueberfuehren
+- [~] explizite Installations-Policy vor Scope und Handoff scharfziehen
 - [ ] entscheiden, welche Outputs die App direkt erzeugt und welche weiter CLI-/Engine-Artefakte bleiben
 
 ### Exit Criteria

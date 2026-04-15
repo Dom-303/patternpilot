@@ -1,9 +1,11 @@
 import path from "node:path";
 import {
   clearAutomationJobState,
+  deliverAutomationAlertPayload,
   evaluateAutomationJobs,
   loadAutomationJobs,
   loadAutomationJobState,
+  renderAutomationAlertDeliverySummary,
   renderAutomationAlertSummary,
   renderAutomationJobsSummary,
   resolveAutomationDispatchJob,
@@ -48,6 +50,43 @@ export async function runAutomationJobs(rootDir, config, options) {
   return {
     generatedAt,
     evaluations
+  };
+}
+
+export async function runAutomationAlertDeliver(rootDir, config, options) {
+  const generatedAt = new Date().toISOString();
+  const { statePath, state } = await loadAutomationJobState(rootDir, config);
+  const { jobs } = await loadAutomationJobs(rootDir, config);
+  const baseEvaluations = evaluateAutomationJobs(jobs, state, new Date(generatedAt));
+  const evaluations = await enrichAutomationEvaluationsWithGovernance(rootDir, config, baseEvaluations);
+  const alertArtifacts = await writeAlertArtifacts(rootDir, config, generatedAt, evaluations, options.dryRun);
+  const delivery = await deliverAutomationAlertPayload(rootDir, config, alertArtifacts.payload, {
+    target: options.target,
+    file: options.file,
+    targetCommand: options.targetCommand,
+    targetHook: options.targetHook,
+    targetCwd: options.targetCwd,
+    payloadFile: options.payloadFile,
+    hookMarkdownFile: options.hookMarkdownFile,
+    hookJsonFile: options.hookJsonFile,
+    hookPrint: options.hookPrint,
+    dryRun: options.dryRun
+  });
+  const summary = renderAutomationAlertDeliverySummary({
+    generatedAt,
+    deliveries: delivery.deliveries
+  });
+
+  console.log(summary);
+  console.log(`- state_file: ${path.relative(rootDir, statePath)}`);
+  console.log(`- source_alerts_json: ${path.relative(rootDir, alertArtifacts.paths.jsonPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
+  console.log(`- source_alerts_markdown: ${path.relative(rootDir, alertArtifacts.paths.markdownPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
+
+  return {
+    generatedAt,
+    delivery,
+    alerts: alertArtifacts.alerts,
+    nextJob: alertArtifacts.nextJob
   };
 }
 
@@ -182,6 +221,27 @@ export async function runAutomationAlerts(rootDir, config, options) {
   console.log(`- state_file: ${path.relative(rootDir, statePath)}`);
   console.log(`- alerts_json: ${path.relative(rootDir, paths.jsonPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
   console.log(`- alerts_markdown: ${path.relative(rootDir, paths.markdownPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
+
+  if (options.target || (Array.isArray(config.automationAlertTargets) && config.automationAlertTargets.length > 0)) {
+    const delivery = await deliverAutomationAlertPayload(rootDir, config, alertArtifacts.payload, {
+      target: options.target,
+      file: options.file,
+      targetCommand: options.targetCommand,
+      targetHook: options.targetHook,
+      targetCwd: options.targetCwd,
+      payloadFile: options.payloadFile,
+      hookMarkdownFile: options.hookMarkdownFile,
+      hookJsonFile: options.hookJsonFile,
+      hookPrint: options.hookPrint,
+      dryRun: options.dryRun
+    });
+    const deliverySummary = renderAutomationAlertDeliverySummary({
+      generatedAt,
+      deliveries: delivery.deliveries
+    });
+    console.log(``);
+    console.log(deliverySummary);
+  }
 
   return { generatedAt, alerts, nextJob };
 }

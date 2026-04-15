@@ -1,0 +1,34 @@
+{
+  "action": "created",
+  "installation": {
+    "id": 10101,
+    "target_type": "Organization",
+    "account": {
+      "login": "Dom-303"
+    }
+  },
+  "repositories": [
+    {
+      "id": 1,
+      "name": "patternpilot",
+      "full_name": "Dom-303/patternpilot",
+      "private": false,
+      "default_branch": "main",
+      "visibility": "public",
+      "owner": {
+        "login": "Dom-303"
+      }
+    }
+  ],
+  "repository": {
+    "id": 1,
+    "name": "patternpilot",
+    "full_name": "Dom-303/patternpilot",
+    "private": false,
+    "default_branch": "main",
+    "visibility": "public",
+    "owner": {
+      "login": "Dom-303"
+    }
+  }
+}

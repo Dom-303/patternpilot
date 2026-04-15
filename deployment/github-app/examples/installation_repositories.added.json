@@ -1,0 +1,58 @@
+{
+  "action": "added",
+  "installation": {
+    "id": 10101,
+    "target_type": "Organization",
+    "account": {
+      "login": "Dom-303"
+    }
+  },
+  "repositories_added": [
+    {
+      "id": 1,
+      "name": "eventbear-worker",
+      "full_name": "Dom-303/eventbear-worker",
+      "private": false,
+      "default_branch": "main",
+      "visibility": "public",
+      "owner": {
+        "login": "Dom-303"
+      }
+    },
+    {
+      "id": 2,
+      "name": "patternpilot",
+      "full_name": "Dom-303/patternpilot",
+      "private": false,
+      "default_branch": "main",
+      "visibility": "public",
+      "owner": {
+        "login": "Dom-303"
+      }
+    }
+  ],
+  "repositories": [
+    {
+      "id": 1,
+      "name": "eventbear-worker",
+      "full_name": "Dom-303/eventbear-worker",
+      "private": false,
+      "default_branch": "main",
+      "visibility": "public",
+      "owner": {
+        "login": "Dom-303"
+      }
+    },
+    {
+      "id": 2,
+      "name": "patternpilot",
+      "full_name": "Dom-303/patternpilot",
+      "private": false,
+      "default_branch": "main",
+      "visibility": "public",
+      "owner": {
+        "login": "Dom-303"
+      }
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "contractKind": "recovery_contract",
+  "generatedAt": "2026-04-15T19:00:00.000Z",
+  "deliveryId": "delivery-repository-dispatch-001",
+  "eventKey": "repository_dispatch.patternpilot_on_demand",
+  "repository": "Dom-303/patternpilot",
+  "selectedProjectKey": "eventbear-worker",
+  "routeStatus": "dispatchable",
+  "dispatchStatus": "ready_to_execute",
+  "contractStatus": "recovery_backoff_pending",
+  "runnerMode": "manual_review",
+  "attemptNumber": 2,
+  "previousAttemptNumber": 1,
+  "maxAttempts": 3,
+  "applyRequested": true,
+  "forceRequested": true,
+  "dryRun": false,
+  "contractOnly": false,
+  "resumeFromCommand": "on-demand",
+  "previousExecutionStatus": "execution_failed",
+  "recoveryAssessment": {
+    "schemaVersion": 1,
+    "generatedAt": "2026-04-15T19:00:00.000Z",
+    "currentAttempt": 1,
+    "nextAttemptNumber": 2,
+    "maxAttempts": 3,
+    "remainingAttempts": 2,
+    "retryClass": "transient_runtime_failure",
+    "retryable": true,
+    "backoffSeconds": 300,
+    "nextEligibleAt": "2026-04-15T19:05:00.000Z",
+    "recoveryStatus": "recovery_backoff_pending",
+    "nextAction": "Wait for the recovery backoff window to pass, then continue via github-app-execution-recover."
+  },
+  "scheduledCommands": [
+    {
+      "order": 1,
+      "commandName": "on-demand",
+      "executionClass": "analysis_run",
+      "shellCommand": "\"npm\" \"run\" \"analyze\" \"--\" \"--project\" \"eventbear-worker\" \"https://github.com/oc/openevents\" \"https://github.com/citybureau/city-scrapers\"",
+      "forceRequired": true,
+      "cwd": "."
+    }
+  ],
+  "executionSummary": {
+    "finalStatus": "execution_failed",
+    "nextAction": "Review the interrupted runner before allowing another recovery attempt."
+  },
+  "nextAction": "Wait for the recovery backoff window to pass, then continue via github-app-execution-recover."
+}

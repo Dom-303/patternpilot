@@ -158,10 +158,31 @@ Heute schon da:
 - `run-drift` macht Mehrlauf-Drift, Queue-Staleness und Resume-Hinweise jetzt als eigenes Artefakt sichtbar
 - `run-governance` macht daraus jetzt explizit: manuell, begrenzt unattended oder unattended-ready
 - `run-stability` und `run-requalify` machen jetzt sichtbar, ob mehrfache Folge-Runs stabil genug sind und wann eine latched Requalify-Sperre wieder bewusst geloest werden darf
+- `automation-alert-deliver` liefert Alert-Summaries jetzt ueber erste echte Aussenkanaele wie Datei, `GITHUB_STEP_SUMMARY`, lokale Hook-Commands oder den eingebauten Hook `patternpilot-alert-hook` aus, ohne den Kern auf einen Kanal festzunageln
 
 Naechste Themen:
 
 - GitHub-App als spaeterer echter Integrationsmodus
+- `github-app-readiness` als fruehe Bruecke zwischen aktuellem CLI/PAT-Betrieb und spaeterer App-Integration weiter nutzen und schaerfen
+- `github-app-plan` beschreibt jetzt Rechte, Event-Bindings und Command-Pfade fuer den spaeteren App-Cutover explizit
+- `github-app-event-preview` kann jetzt einzelne Event-Payloads gegen den aktuellen Kernel spiegeln, bevor echte Webhooks oder Installationsfluesse live gehen
+- `github-app-webhook-preview` modelliert jetzt lokal Header, Delivery-ID, Signaturpruefung und das interne Envelope fuer spaetere echte Webhook-Zustellung
+- `github-app-webhook-route` baut jetzt aus einem verifizierten Envelope schon konkrete lokale Route-Plaene und Command-Vorschlaege
+- `github-app-webhook-dispatch` baut jetzt darueber eine kontrollierte lokale Dispatch-Schicht und unterscheidet sauber zwischen Preview, ausfuehrbar, force-gated und guarded
+- `github-app-execution-run` trennt jetzt den spaeteren Runner-Pfad explizit vom Dispatch und konsumiert `execution-contract.json` als eigene lokale Ausfuehrungsschicht
+- die Runner-Schicht schreibt jetzt auch `recovery-assessment.json` und `recovery-contract.json`, damit Retry-/Backoff- und Wiederaufnahme-Regeln fuer spaetere Service-Runtimes maschinenlesbar werden
+- `github-app-execution-recover` ergaenzt jetzt den schnellen Resume-Pfad um einen expliziten Recovery-Gate-Flow
+- `github-app-execution-enqueue` und `github-app-service-tick` fuegen jetzt die erste kleine lokale Queue-/Service-Schicht ueber den Runner-Contracts hinzu
+- diese Service-Schicht kann Contracts jetzt auch claimen und mit Lease-Zeiten voruebergehend exklusiv halten, statt nur blind aus `pending` zu lesen
+- Duplicate-Schutz und ein erster `dead-letter`-Pfad sind jetzt ebenfalls Teil dieser Service-Schicht
+- `github-app-service-review` und `github-app-service-requeue` bilden jetzt die erste explizite Manual-Release-Kante fuer festgefahrene Service-Contracts
+- `github-app-installation-review`, `github-app-installation-apply` und `github-app-installation-show` fuegen jetzt eine erste lokale Installations-/Repo-Scope-Registry hinzu
+- `github-app-installation-scope` und `github-app-installation-handoff` machen daraus jetzt den ersten echten Mehr-Repo-Handoff Richtung Projekt-Watchlists
+- `github-app-installation-governance-review` und `github-app-installation-governance-apply` geben dieser Installationslinie jetzt zusaetzlich eine explizite Policy-Schicht
+- `github-app-installation-runtime-review` und `github-app-installation-runtime-apply` koppeln diese Installationslinie jetzt an einen eigenen Betriebsmodus pro Installation
+- `github-app-installation-operations-review` und `github-app-installation-operations-apply` koppeln diese Linie jetzt zusaetzlich an Watchlist-/Service-Betriebslogik pro Installation
+- dieselbe Installations-Operationsschicht gate’t jetzt auch tatsaechlich den lokalen Queue-/Runner-Pfad ueber `github-app-service-review` und `github-app-service-tick`
+- dieselbe Installations-Operationsschicht gate’t jetzt auch manuelle Requeue-/Release-Pfade ueber `github-app-service-requeue`
 - klarer Erstlauf plus Folge-Run-Logik
 - definierte Defaults fuer wiederkehrende Laeufe
 - belastbare Folgezyklen fuer zweite, dritte, vierte und spaetere Runs

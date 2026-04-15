@@ -28,6 +28,7 @@ Fuer Alerts und manuelle Entsperrung:
 
 ```bash
 npm run automation:alerts
+npm run automation:alert-deliver -- --target command --target-hook patternpilot-alert-hook --hook-markdown-file state/automation_alert_digest.md
 npm run patternpilot -- automation-job-clear --automation-job eventbear-worker-apply --notes "manual resume after fix"
 ```
 
@@ -40,6 +41,7 @@ Wenn ein externer Scheduler wirklich den Gesamtfluss steuern soll, ist die Reihe
 ## Enthaltene Vorlagen
 
 - `patternpilot-jobs.json`
+- `hooks/patternpilot-alert-hook.mjs`
 - `github-actions/patternpilot-watchlist.yml.example`
 - `systemd/patternpilot-sync.service`
 - `systemd/patternpilot-sync.timer`
@@ -87,6 +89,21 @@ Jeder Automation-Lauf erzeugt jetzt eine eigene Zusammenfassung mit:
 - Alert-Artefakten unter `state/automation_alerts.json` und `state/automation_alerts.md`
 
 Damit ist der Kettenlauf nicht nur ausfuehrbar, sondern auch spaeter fuer Scheduler und Failure-Recovery auswertbar.
+
+## Alert Adapter
+
+Der Alert-Adapter kann Alerts jetzt ueber mehrere Oberflaechen ausliefern:
+
+- `stdout`
+- Datei
+- `GITHUB_STEP_SUMMARY`
+- frei konfigurierbares lokales Command
+- eingebauter Hook ueber `--target-hook patternpilot-alert-hook`
+
+Die Hook-Referenz liegt unter:
+
+- `automation/hooks/README.md`
+- `docs/reference/AUTOMATION_ALERT_DELIVERY.md`
 
 ## Manual Resume
 

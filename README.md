@@ -113,7 +113,88 @@ Es hat jetzt einen lokalen Motor plus Workspace-Modus:
 - `npm run automation:run -- --all-projects --promotion-mode prepared`
 - `npm run automation:jobs`
 - `npm run automation:alerts`
+- `npm run automation:alert-deliver -- --target file --file state/automation_alerts_published.md`
+- `npm run automation:alert-deliver -- --target command --target-hook patternpilot-alert-hook --payload-file state/automation_alert_hook_payload.json --hook-markdown-file state/automation_alert_digest.md --hook-json-file state/automation_alert_digest.json`
 - `npm run automation:dispatch`
+- `npm run patternpilot -- github-app-readiness`
+- `npm run patternpilot -- github-app-plan`
+- `npm run github:app-event-preview -- --event-key installation.created --file deployment/github-app/examples/installation.created.json --dry-run`
+- `npm run github:app-installation-review -- --file deployment/github-app/examples/installation.created.json --headers-file deployment/github-app/examples/installation.created.headers.json --github-event installation --webhook-secret patternpilot-dev-secret --dry-run`
+- `npm run github:app-installation-apply -- --file deployment/github-app/examples/installation_repositories.added.json --headers-file deployment/github-app/examples/installation_repositories.added.headers.json --github-event installation_repositories --webhook-secret patternpilot-dev-secret --dry-run`
+- `npm run github:app-installation-governance-review -- --installation-id 10101 --dry-run`
+- `npm run github:app-installation-governance-apply -- --installation-id 10101 --project eventbear-worker --notes "governed watchlist scope" --dry-run`
+- `npm run github:app-installation-runtime-review -- --installation-id 10101 --dry-run`
+- `npm run github:app-installation-runtime-apply -- --installation-id 10101 --notes "runtime for governed installation" --dry-run`
+- `npm run github:app-installation-operations-review -- --installation-id 10101 --dry-run`
+- `npm run github:app-installation-operations-apply -- --installation-id 10101 --notes "ops policy for governed installation" --dry-run`
+- `npm run github:app-installation-scope -- --installation-id 10101 --dry-run`
+- `npm run github:app-installation-handoff -- --installation-id 10101 --notes "watchlist sync after installation review" --apply --dry-run`
+- `npm run github:app-installation-show`
+- `npm run github:app-webhook-preview -- --headers-file deployment/github-app/examples/installation.created.headers.json --file deployment/github-app/examples/installation.created.json --webhook-secret patternpilot-dev-secret --dry-run`
+- `npm run github:app-webhook-route -- --headers-file deployment/github-app/examples/repository_dispatch.patternpilot_on_demand.headers.json --file deployment/github-app/examples/repository_dispatch.patternpilot_on_demand.json --github-event repository_dispatch --webhook-secret patternpilot-dev-secret --project eventbear-worker --dry-run`
+- `npm run github:app-webhook-dispatch -- --headers-file deployment/github-app/examples/repository_dispatch.patternpilot_on_demand.headers.json --file deployment/github-app/examples/repository_dispatch.patternpilot_on_demand.json --github-event repository_dispatch --webhook-secret patternpilot-dev-secret --project eventbear-worker --dry-run`
+- `npm run github:app-webhook-dispatch -- --headers-file deployment/github-app/examples/repository_dispatch.patternpilot_on_demand.headers.json --file deployment/github-app/examples/repository_dispatch.patternpilot_on_demand.json --github-event repository_dispatch --webhook-secret patternpilot-dev-secret --project eventbear-worker --apply --force`
+
+`github-app-webhook-dispatch` schreibt inzwischen neben Envelope, Route-Plan und Execution-Summary auch einen maschinenlesbaren `execution-contract` fuer spaetere Runner-/Service-Integrationen.
+
+Fuer die getrennte Zwei-Stufen-Ausfuehrung gibt es jetzt zusaetzlich:
+
+- `npm run patternpilot -- github-app-webhook-dispatch --headers-file deployment/github-app/examples/repository_dispatch.patternpilot_on_demand.headers.json --file deployment/github-app/examples/repository_dispatch.patternpilot_on_demand.json --github-event repository_dispatch --webhook-secret patternpilot-dev-secret --project eventbear-worker --apply --force --contract-only`
+- `npm run github:app-execution-enqueue -- --contract-file deployment/github-app/examples/repository_dispatch.patternpilot_on_demand.recovery-contract.json`
+- `npm run patternpilot -- github-app-service-tick --limit 3 --dry-run`
+- `npm run github:app-execution-run -- --contract-file runs/integration/github-app-dispatch/<run-id>/execution-contract.json --dry-run`
+
+Die Runner-Stufe schreibt inzwischen ausserdem `runner-state.json`, `resume-contract.json`, `recovery-assessment.json` und `recovery-contract.json`, damit ein spaeterer Dienst bei Fehlern oder Unterbrechungen gezielt wieder aufnehmen und Retry-/Backoff-Entscheidungen bewusst steuern kann.
+
+Dafuer gibt es jetzt auch einen expliziten Resume-Einstieg:
+
+- `npm run github:app-execution-resume -- --contract-file deployment/github-app/examples/repository_dispatch.patternpilot_on_demand.resume-contract.json --apply --dry-run`
+- `npm run github:app-execution-recover -- --contract-file deployment/github-app/examples/repository_dispatch.patternpilot_on_demand.recovery-contract.json --apply --dry-run`
+
+Darueber liegt jetzt zusaetzlich eine kleine lokale Service-Schicht mit `state/github-app-runner-queue/{pending,claimed,blocked,processed}`. Damit koennen Contracts nicht nur manuell, sondern auch ueber einen spaeteren kleinen Runtime-Loop abgearbeitet werden.
+
+Die Queue kennt jetzt ausserdem erste Worker-/Lease-Semantik:
+
+- `github-app-service-tick --worker-id <id>`
+- `--service-lease-minutes <n>`
+
+So koennen spaetere Service-Prozesse Contracts zuerst claimen, voruebergehend exklusiv halten und abgelaufene Claims wieder in `pending` zurueckgeben.
+
+Zusätzlich gibt es jetzt schon die ersten harten Betriebsgrenzen:
+
+- Duplicate-Schutz fuer aktive Contracts derselben Delivery/Contract-Identitaet
+- `dead-letter` fuer Contracts, die ihr Service-Versuchsbudget ausgeschöpft haben
+- `--max-service-attempts <n>` fuer die kleine lokale Service-Schicht
+
+Und darueber liegt jetzt zusaetzlich eine kleine manuelle Admin-Kante:
+
+- `github-app-service-review --from-status problematic`
+- `github-app-service-requeue --from-status dead_letter --apply`
+
+Damit koennen `blocked`, `dead-letter` und bei Bedarf auch `claimed`-Contracts bewusst gesichtet und gezielt wieder nach `pending` freigegeben werden, inklusive Receipts, Notes und Service-Historie.
+
+Hook- und Payload-Referenz:
+
+- `automation/hooks/README.md`
+- `docs/reference/AUTOMATION_ALERT_DELIVERY.md`
+- `docs/reference/GITHUB_APP_EVENT_MODEL.md`
+
+Fuer die GitHub-App-Installationsebene gibt es jetzt ausserdem eine erste lokale Registry unter `state/github-app-installations.json`. Darin landen Installation-ID, Account, gesehene Repositories und die bislang erkannten Projekt-Mappings. Dadurch kann `installation.created` oder `installation_repositories.added` schon heute in einen echten lokalen Zustandsfluss gehen, bevor spaeter einmal Live-Webhooks oder Multi-Repo-Serviceprozesse darueber laufen.
+
+Darueber liegt jetzt ausserdem ein erster Scope-/Handoff-Pfad:
+
+- `github-app-installation-governance-review` zeigt, welche Projekte pro Installation aktuell sinnvoll und erlaubt wirken
+- `github-app-installation-governance-apply` persistiert diese Installations-Policy lokal
+- `github-app-installation-runtime-review` leitet daraus den naechsten Betriebsmodus pro Installation ab
+- `github-app-installation-runtime-apply` persistiert diesen Runtime-Modus, bevor Scope, Handoff und spaetere Service-Pfade weiterlaufen
+- `github-app-installation-operations-review` uebersetzt Runtime und Governance jetzt in konkrete Watchlist-/Service-Betriebsbereitschaft pro Installation
+- `github-app-installation-operations-apply` persistiert diese App-Betriebslogik pro Installation, bevor spaetere Runtime-/Service-Prozesse darauf aufbauen
+- `github-app-service-tick` und `github-app-service-review` respektieren diese Installations-Operationsschicht jetzt auch wirklich im Queue-/Runner-Pfad
+- `github-app-service-requeue` respektiert jetzt zusaetzlich installation-spezifische Admin-Regeln fuer `blocked`, `dead-letter` und `claimed`
+- `github-app-installation-scope` zeigt, welche Installations-Repositories watchlist-faehig sind und welche noch manuelle Klaerung brauchen
+- `github-app-installation-handoff` gibt watchlist-faehige Repositories kontrolliert in die zugeordneten Projekt-Watchlists weiter
+
+So wird aus der Installations-Registry schon heute ein echter Mehr-Repo-Vorbau, ohne dass wir dafuer schon eine komplette Live-App-Runtime brauchen.
 
 Dieser Motor:
 
@@ -132,7 +213,9 @@ Dieser Motor:
 - schreibt fuer Kettenlaeufe eigene Automation-Audits mit Phasenstatus unter `runs/automation/`
 - haelt optionalen Scheduler-Job-State unter `state/automation_jobs_state.json`
 - schreibt Alert-Snapshots nach `state/automation_alerts.json` und `state/automation_alerts.md`
+- kann Alert-Summaries jetzt auch bewusst nach `stdout`, Datei, `GITHUB_STEP_SUMMARY`, an lokale Hook-Commands oder ueber den eingebauten Hook `patternpilot-alert-hook` ausliefern
 - kann jetzt manuelle Requalify-Latches fuer Folge-Runs halten und mit `run-requalify` bewusst wieder freigeben
+- kann den aktuellen PAT-/GitHub-App-Reifegrad mit `github-app-readiness` gegen den spaeteren Integrationspfad sichtbar machen
 - schreibt menschenfreundliche HTML-Reports fuer Discovery- und Review-Laeufe
 - haelt fuer jedes Projekt einen direkten Report-Pointer in `projects/<project>/reports/browser-link`
 - schreibt Metadaten zum letzten Projekt-Report nach `projects/<project>/reports/latest-report.json`
