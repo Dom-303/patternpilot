@@ -5,7 +5,7 @@ import {
   buildPolicyCurationBatchReview,
   renderPolicyCurationBatchReviewSummary,
   renderPolicyCurationBatchPlanSummary
-} from "../lib/policy-curation-batch.mjs";
+} from "../lib/policy/policy-curation-batch.mjs";
 
 test("selectPolicyCurationBatchCandidates filters by target refs", () => {
   const manifest = {

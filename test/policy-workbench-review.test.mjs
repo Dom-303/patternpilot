@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { buildPolicyWorkbenchReview, renderPolicyWorkbenchReviewSummary } from "../lib/policy-workbench-review.mjs";
+import { buildPolicyWorkbenchReview, renderPolicyWorkbenchReviewSummary } from "../lib/policy/policy-workbench-review.mjs";
 
 test("buildPolicyWorkbenchReview summarizes verdicts and recommendations", () => {
   const review = buildPolicyWorkbenchReview({

@@ -9,7 +9,7 @@ import {
   selectNextDispatchableAutomationJob,
   selectNextAutomationJob,
   updateAutomationJobState
-} from "../lib/automation-jobs.mjs";
+} from "../lib/automation/automation-jobs.mjs";
 
 describe("updateAutomationJobState", () => {
   test("stores retryable failure backoff and clears on success", () => {

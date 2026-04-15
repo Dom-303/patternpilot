@@ -12,7 +12,7 @@ import {
   buildDiscoveryRunFields,
   applyDiscoveryPolicyToCandidates
 } from "../lib/discovery.mjs";
-import { defaultDiscoveryPolicy } from "../lib/discovery-policy.mjs";
+import { defaultDiscoveryPolicy } from "../lib/policy/discovery-policy.mjs";
 
 describe("discovery run-level engine fields", () => {
   test("decorateDiscoveryCandidate attaches effort/value bands and disposition", () => {

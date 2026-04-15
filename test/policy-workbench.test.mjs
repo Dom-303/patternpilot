@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { buildPolicyWorkbench, renderPolicyWorkbenchSummary } from "../lib/policy-workbench.mjs";
-import { defaultDiscoveryPolicy } from "../lib/discovery-policy.mjs";
+import { buildPolicyWorkbench, renderPolicyWorkbenchSummary } from "../lib/policy/policy-workbench.mjs";
+import { defaultDiscoveryPolicy } from "../lib/policy/discovery-policy.mjs";
 
 test("buildPolicyWorkbench creates candidate rows with focus hints", () => {
   const discovery = {

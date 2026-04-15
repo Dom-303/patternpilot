@@ -8,7 +8,7 @@ import {
   buildProjectRunLifecycle,
   buildRunResumeRecommendation,
   renderProjectRunLifecycleSummary
-} from "../lib/run-lifecycle.mjs";
+} from "../lib/run/run-lifecycle.mjs";
 
 test("buildProjectRunLifecycle classifies first runs", () => {
   const lifecycle = buildProjectRunLifecycle({

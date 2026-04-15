@@ -4,7 +4,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { discoverImportedCandidates } from "../lib/discovery.mjs";
-import { defaultDiscoveryPolicy } from "../lib/discovery-policy.mjs";
+import { defaultDiscoveryPolicy } from "../lib/policy/discovery-policy.mjs";
 import { makeFakeAlignmentRules } from "./helpers/fixtures.mjs";
 
 test("discoverImportedCandidates builds a discovery run from imported candidates", async () => {

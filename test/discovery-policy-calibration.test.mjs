@@ -4,8 +4,8 @@ import assert from "node:assert/strict";
 import {
   buildDiscoveryPolicyCalibrationReport,
   renderDiscoveryPolicyCalibrationReport
-} from "../lib/discovery-policy-calibration.mjs";
-import { defaultDiscoveryPolicy } from "../lib/discovery-policy.mjs";
+} from "../lib/policy/discovery-policy-calibration.mjs";
+import { defaultDiscoveryPolicy } from "../lib/policy/discovery-policy.mjs";
 
 describe("buildDiscoveryPolicyCalibrationReport", () => {
   test("aggregates reviewed runs and blocker signals", () => {

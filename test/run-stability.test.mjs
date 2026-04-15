@@ -6,7 +6,7 @@ import path from "node:path";
 import {
   buildProjectRunStability,
   renderProjectRunStabilitySummary
-} from "../lib/run-stability.mjs";
+} from "../lib/run/run-stability.mjs";
 
 async function writeJson(filePath, value) {
   await fs.mkdir(path.dirname(filePath), { recursive: true });

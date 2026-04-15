@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import {
   buildProjectRunGovernance,
   renderProjectRunGovernanceSummary
-} from "../lib/run-governance.mjs";
+} from "../lib/run/run-governance.mjs";
 
 function sampleLifecycle(overrides = {}) {
   return {

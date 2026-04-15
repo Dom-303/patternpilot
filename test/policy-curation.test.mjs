@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { buildPolicyCuration, renderPolicyCurationSummary } from "../lib/policy-curation.mjs";
+import { buildPolicyCuration, renderPolicyCurationSummary } from "../lib/policy/policy-curation.mjs";
 
 test("buildPolicyCuration ranks selected queue rows by curation score", () => {
   const curation = buildPolicyCuration({

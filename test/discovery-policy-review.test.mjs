@@ -8,8 +8,8 @@ import {
   findLatestDiscoveryManifest,
   buildDiscoveryPolicyReview,
   renderDiscoveryPolicyReviewSummary
-} from "../lib/discovery-policy-review.mjs";
-import { defaultDiscoveryPolicy } from "../lib/discovery-policy.mjs";
+} from "../lib/policy/discovery-policy-review.mjs";
+import { defaultDiscoveryPolicy } from "../lib/policy/discovery-policy.mjs";
 
 describe("findLatestDiscoveryManifest", () => {
   test("selects the latest run that contains a discovery payload", async () => {

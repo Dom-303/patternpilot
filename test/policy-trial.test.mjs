@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { buildPolicyTrial, renderPolicyTrialSummary } from "../lib/policy-trial.mjs";
+import { buildPolicyTrial, renderPolicyTrialSummary } from "../lib/policy/policy-trial.mjs";
 
 test("buildPolicyTrial shows newly visible candidates under softer policy", () => {
   const discovery = {

@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import {
   buildDiscoveryPolicyComparisonReport,
   renderDiscoveryPolicyComparisonReport
-} from "../lib/discovery-policy-compare.mjs";
+} from "../lib/policy/discovery-policy-compare.mjs";
 
 test("buildDiscoveryPolicyComparisonReport captures changed policy impact", () => {
   const records = [

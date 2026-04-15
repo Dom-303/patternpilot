@@ -16,13 +16,13 @@ import {
   setAutomationPhase,
   summarizeAutomationProjects,
   sortAutomationCandidates
-} from "../lib/automation.mjs";
+} from "../lib/automation/automation.mjs";
 import {
   defaultDiscoveryPolicy,
   evaluateDiscoveryCandidatePolicy,
   summarizeDiscoveryPolicyResults,
   buildDiscoveryPolicyCalibration
-} from "../lib/discovery-policy.mjs";
+} from "../lib/policy/discovery-policy.mjs";
 
 function makeCandidate(overrides = {}) {
   return {

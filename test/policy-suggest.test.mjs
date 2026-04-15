@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { buildPolicySuggestion, renderPolicySuggestionSummary } from "../lib/policy-suggest.mjs";
+import { buildPolicySuggestion, renderPolicySuggestionSummary } from "../lib/policy/policy-suggest.mjs";
 
 test("buildPolicySuggestion can heuristically unblock observe_only false blocks", () => {
   const currentPolicy = {

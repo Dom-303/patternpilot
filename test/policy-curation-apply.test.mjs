@@ -4,7 +4,7 @@ import {
   selectPolicyCurationApplyCandidates,
   buildPolicyCurationApplyReview,
   renderPolicyCurationApplyReviewSummary
-} from "../lib/policy-curation-apply.mjs";
+} from "../lib/policy/policy-curation-apply.mjs";
 
 test("selectPolicyCurationApplyCandidates respects target and limit", () => {
   const curationManifest = {

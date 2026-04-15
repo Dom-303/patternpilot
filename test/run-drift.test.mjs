@@ -6,7 +6,7 @@ import path from "node:path";
 import {
   buildProjectRunDriftFromState,
   renderProjectRunDriftSummary
-} from "../lib/run-drift.mjs";
+} from "../lib/run/run-drift.mjs";
 
 async function writeJson(filePath, value) {
   await fs.mkdir(path.dirname(filePath), { recursive: true });

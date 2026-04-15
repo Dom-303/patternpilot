@@ -4,7 +4,7 @@ import assert from "node:assert/strict";
 import {
   buildProjectRunRequalification,
   renderProjectRunRequalificationSummary
-} from "../lib/run-requalify.mjs";
+} from "../lib/run/run-requalify.mjs";
 
 function sampleLifecycle(overrides = {}) {
   return {

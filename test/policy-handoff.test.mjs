@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { selectPolicyHandoffCandidates, renderPolicyHandoffSummary } from "../lib/policy-handoff.mjs";
+import { selectPolicyHandoffCandidates, renderPolicyHandoffSummary } from "../lib/policy/policy-handoff.mjs";
 
 test("selectPolicyHandoffCandidates prefers newly visible trial rows by default", () => {
   const selection = selectPolicyHandoffCandidates({

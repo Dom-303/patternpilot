@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { buildReplayImportPayloadFromDiscovery, renderPolicyCycleSummary } from "../lib/policy-cycle.mjs";
+import { buildReplayImportPayloadFromDiscovery, renderPolicyCycleSummary } from "../lib/policy/policy-cycle.mjs";
 
 test("buildReplayImportPayloadFromDiscovery uses evaluated candidates", () => {
   const payload = buildReplayImportPayloadFromDiscovery({
