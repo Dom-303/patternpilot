@@ -38,12 +38,41 @@ export {
 } from "./project-admin/github-app-installations.mjs";
 
 export {
+  runGithubAppInstallationServiceScheduleApply,
+  runGithubAppInstallationServiceScheduleReview
+} from "./project-admin/github-app-installation-scheduling.mjs";
+
+export {
+  runGithubAppServiceRuntimeReview,
+  runGithubAppServiceRuntimeRun
+} from "./project-admin/github-app-service-runtime.mjs";
+
+export {
+  runGithubAppServiceRuntimeCycleReview,
+  runGithubAppServiceRuntimeCycleRun
+} from "./project-admin/github-app-service-runtime-cycle.mjs";
+
+export {
+  runGithubAppServiceRuntimeSessionReview,
+  runGithubAppServiceRuntimeSessionRun,
+  runGithubAppServiceRuntimeSessionResume
+} from "./project-admin/github-app-service-runtime-session.mjs";
+
+export {
+  runGithubAppServiceRuntimeLoopReview,
+  runGithubAppServiceRuntimeLoopRun,
+  runGithubAppServiceRuntimeLoopResume
+} from "./project-admin/github-app-service-runtime-loop.mjs";
+
+export {
   runGithubAppExecutionEnqueue,
   runGithubAppExecutionRecover,
   runGithubAppExecutionResume,
   runGithubAppExecutionRun,
   runGithubAppServiceRequeue,
   runGithubAppServiceReview,
+  runGithubAppServiceSchedulerReview,
+  runGithubAppServiceSchedulerRun,
   runGithubAppServiceTick,
   runGithubAppWebhookDispatch
 } from "./project-admin/github-app-service.mjs";

@@ -11,6 +11,7 @@ import {
   applyGithubAppInstallationRuntimeToState,
   applyGithubAppInstallationServiceLaneToState,
   applyGithubAppInstallationServicePlanToState,
+  applyGithubAppInstallationServiceScheduleToState,
   applyGithubAppInstallationWorkerRoutingToState,
   applyGithubAppInstallationScopeHandoff,
   applyGithubAppInstallationPacketToState,
@@ -20,6 +21,7 @@ import {
   buildGithubAppInstallationRuntimePlan,
   buildGithubAppInstallationServiceLanePlan,
   buildGithubAppInstallationServicePlan,
+  buildGithubAppInstallationServiceSchedulePlan,
   buildGithubAppInstallationWorkerRoutingPlan,
   buildGithubAppInstallationScopePlan,
   buildGithubAppInstallationStateSummary,
@@ -30,11 +32,13 @@ import {
   renderGithubAppInstallationRuntimeSummary,
   renderGithubAppInstallationServiceLaneSummary,
   renderGithubAppInstallationServicePlanSummary,
+  renderGithubAppInstallationServiceScheduleSummary,
   renderGithubAppInstallationWorkerRoutingSummary,
   renderGithubAppInstallationScopeSummary,
   writeGithubAppInstallationArtifacts,
   writeGithubAppInstallationServiceLaneArtifacts,
   writeGithubAppInstallationServicePlanArtifacts,
+  writeGithubAppInstallationServiceScheduleArtifacts,
   writeGithubAppInstallationWorkerRoutingArtifacts,
   writeGithubAppInstallationScopeArtifacts,
   writeGithubAppInstallationState
@@ -656,6 +660,105 @@ test("applyGithubAppInstallationWorkerRoutingToState persists worker routing", (
   assert.equal(applied.nextState.installations[0].workerRouting.schedulerLane, "priority");
 });
 
+test("buildGithubAppInstallationServiceSchedulePlan suggests pinned recovery runtime schedule", () => {
+  const plan = buildGithubAppInstallationServiceSchedulePlan({
+    installations: [
+      {
+        installationId: 10101,
+        accountLogin: "Dom-303",
+        serviceLane: {
+          status: "lane_governed",
+          laneMode: "recovery_lane",
+          tickDisposition: "recovery_tick",
+          maxConcurrentClaims: 2
+        },
+        servicePlan: {
+          status: "schedule_governed",
+          priority: "urgent",
+          tickBudget: 2
+        },
+        workerRouting: {
+          status: "routing_governed",
+          schedulerLane: "recovery_priority",
+          workerMode: "pinned_worker",
+          assignedWorkerId: "worker-a",
+          allowedWorkerIds: ["worker-a"]
+        }
+      }
+    ]
+  }, [
+    {
+      fileName: "dead.json",
+      contractPath: "/tmp/dead.json",
+      queueState: "dead_letter",
+      contract: {
+        contractKind: "recovery_contract",
+        installationId: 10101
+      }
+    }
+  ], {
+    installationId: 10101,
+    workerId: "worker-a"
+  });
+
+  assert.equal(plan.entries[0].suggestedStatus, "schedule_runtime_governed");
+  assert.equal(plan.entries[0].suggestedLaneKey, "recovery_priority:worker:worker-a");
+  assert.equal(plan.entries[0].suggestedTickStrategy, "recovery_first");
+  assert.equal(plan.entries[0].suggestedMaxTicksPerCycle, 2);
+  assert.match(renderGithubAppInstallationServiceScheduleSummary(plan), /suggested=schedule_runtime_governed:recovery_priority:worker:worker-a\/recovery_first\/cap=2/);
+});
+
+test("applyGithubAppInstallationServiceScheduleToState persists scheduler-scoped runtime schedule", () => {
+  const currentState = {
+    installations: [
+      {
+        installationId: 10101,
+        accountLogin: "Dom-303",
+        serviceLane: {
+          status: "lane_governed",
+          laneMode: "auto_lane",
+          tickDisposition: "auto_tick",
+          maxConcurrentClaims: 2
+        },
+        servicePlan: {
+          status: "schedule_governed",
+          priority: "high",
+          tickBudget: 2
+        },
+        workerRouting: {
+          status: "routing_governed",
+          schedulerLane: "priority",
+          workerMode: "allowed_pool",
+          allowedWorkerIds: ["worker-a", "worker-b"]
+        }
+      }
+    ]
+  };
+  const plan = buildGithubAppInstallationServiceSchedulePlan(currentState, [
+    {
+      fileName: "pending.json",
+      contractPath: "/tmp/pending.json",
+      queueState: "pending",
+      contract: {
+        contractKind: "execution_contract",
+        installationId: 10101
+      }
+    }
+  ], {
+    installationId: 10101,
+    workerId: "worker-a"
+  });
+  const applied = applyGithubAppInstallationServiceScheduleToState(currentState, plan, {
+    notes: "runtime schedule for governed installation",
+    at: "2026-04-16T11:30:00.000Z"
+  });
+
+  assert.equal(applied.receipts.length, 1);
+  assert.equal(applied.nextState.installations[0].serviceSchedule.status, "schedule_runtime_governed");
+  assert.equal(applied.nextState.installations[0].serviceSchedule.schedulerLane, "priority");
+  assert.equal(applied.nextState.installations[0].serviceSchedule.workerScope, "allowed_pool");
+});
+
 test("assessGithubAppInstallationServiceAdmin blocks dead-letter requeue when installation policy disallows it", () => {
   const assessment = assessGithubAppInstallationServiceAdmin({
     installations: [
@@ -861,6 +964,37 @@ test("writeGithubAppInstallationServicePlanArtifacts writes service plan files",
   assert.ok(JSON.parse(await fs.readFile(artifacts.planPath, "utf8")));
   assert.ok(JSON.parse(await fs.readFile(artifacts.statePath, "utf8")));
   assert.match(await fs.readFile(artifacts.summaryPath, "utf8"), /Patternpilot GitHub App Installation Service Plan/);
+});
+
+test("writeGithubAppInstallationServiceScheduleArtifacts writes service schedule files", async () => {
+  const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-github-installation-schedule-artifacts-"));
+  const plan = {
+    generatedAt: "2026-04-16T11:30:00.000Z",
+    installationId: 10101,
+    project: "eventbear-worker",
+    workerId: "worker-a",
+    installationCount: 1,
+    entries: [],
+    nextAction: "Review it."
+  };
+  const state = {
+    schemaVersion: 1,
+    updatedAt: "2026-04-16T11:30:00.000Z",
+    installations: []
+  };
+  const summary = renderGithubAppInstallationServiceScheduleSummary(plan, []);
+  const artifacts = await writeGithubAppInstallationServiceScheduleArtifacts(rootDir, {
+    runId: "2026-04-16T11-30-00-000Z",
+    plan,
+    receipts: [],
+    state,
+    summary,
+    dryRun: false
+  });
+
+  assert.ok(JSON.parse(await fs.readFile(artifacts.planPath, "utf8")));
+  assert.ok(JSON.parse(await fs.readFile(artifacts.statePath, "utf8")));
+  assert.match(await fs.readFile(artifacts.summaryPath, "utf8"), /Patternpilot GitHub App Installation Service Schedule/);
 });
 
 test("writeGithubAppInstallationWorkerRoutingArtifacts writes worker routing files", async () => {

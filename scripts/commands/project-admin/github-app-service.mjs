@@ -8,6 +8,7 @@ import {
   buildGithubWebhookRunnerState,
   buildGithubWebhookServiceRequeuePlan,
   buildGithubWebhookServiceReviewPlan,
+  buildGithubWebhookServiceSchedulerPlan,
   buildGithubWebhookServiceTickPlan,
   claimGithubWebhookServiceQueueEntries,
   createRunId,
@@ -25,6 +26,7 @@ import {
   renderGithubWebhookRunnerSummary,
   renderGithubWebhookServiceRequeueSummary,
   renderGithubWebhookServiceReviewSummary,
+  renderGithubWebhookServiceSchedulerSummary,
   renderGithubWebhookServiceTickSummary,
   runShellCommand,
   summarizeGithubWebhookExecution,
@@ -33,6 +35,7 @@ import {
   writeGithubWebhookRunnerArtifacts,
   writeGithubWebhookServiceAdminArtifacts,
   writeGithubWebhookServiceArtifacts,
+  writeGithubWebhookServiceSchedulerArtifacts,
   buildGithubWebhookRoutePlan
 } from "../../../lib/index.mjs";
 import {
@@ -570,6 +573,7 @@ export async function runGithubAppServiceTick(rootDir, config, options) {
     limit: options.limit,
     generatedAt: new Date().toISOString(),
     workerId: options.workerId,
+    schedulerLane: options.schedulerLane,
     installationState
   });
   const receipts = [];
@@ -752,6 +756,139 @@ export async function runGithubAppServiceTick(rootDir, config, options) {
     };
   }
 
+  if (options.print !== false) {
+    console.log(summary);
+    console.log(`- artifact_root: ${path.relative(rootDir, artifacts.rootPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
+    console.log(`- artifact_plan: ${path.relative(rootDir, artifacts.planPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
+    console.log(`- artifact_receipts: ${path.relative(rootDir, artifacts.receiptsPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
+    console.log(`- artifact_summary: ${path.relative(rootDir, artifacts.summaryPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
+    console.log(`- reference_doc: docs/reference/GITHUB_APP_DEPLOYMENT.md`);
+  }
+
+  if (options.refreshContext !== false) {
+    await refreshContext(rootDir, config, {
+      command: "github-app-service-tick",
+      projectKey: config.defaultProject,
+      mode: options.dryRun ? "dry_run" : options.apply ? "write" : "manual",
+      reportPath: path.relative(rootDir, artifacts.summaryPath)
+    });
+  }
+
+  return {
+    runId,
+    plan,
+    receipts,
+    artifacts
+  };
+}
+
+export async function runGithubAppServiceSchedulerReview(rootDir, config, options) {
+  const runId = createRunId();
+  const queueState = await loadGithubWebhookServiceQueue(rootDir);
+  const installationState = await loadGithubAppInstallationState(rootDir);
+  const plan = buildGithubWebhookServiceSchedulerPlan(queueState.queue, {
+    limit: options.limit,
+    generatedAt: new Date().toISOString(),
+    workerId: options.workerId,
+    schedulerLane: options.schedulerLane,
+    installationState
+  });
+  const summary = renderGithubWebhookServiceSchedulerSummary(plan);
+  const artifacts = await writeGithubWebhookServiceSchedulerArtifacts(rootDir, {
+    runId,
+    plan,
+    receipts: [],
+    summary,
+    dryRun: options.dryRun
+  });
+
+  if (options.json) {
+    console.log(JSON.stringify({
+      runId,
+      artifacts: {
+        rootPath: path.relative(rootDir, artifacts.rootPath),
+        planPath: path.relative(rootDir, artifacts.planPath),
+        receiptsPath: path.relative(rootDir, artifacts.receiptsPath),
+        summaryPath: path.relative(rootDir, artifacts.summaryPath)
+      },
+      plan,
+      receipts: []
+    }, null, 2));
+    return { runId, plan, receipts: [], artifacts };
+  }
+
+  console.log(summary);
+  console.log(`- artifact_root: ${path.relative(rootDir, artifacts.rootPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
+  console.log(`- artifact_plan: ${path.relative(rootDir, artifacts.planPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
+  console.log(`- artifact_summary: ${path.relative(rootDir, artifacts.summaryPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
+  console.log(`- reference_doc: docs/reference/GITHUB_APP_DEPLOYMENT.md`);
+
+  await refreshContext(rootDir, config, {
+    command: "github-app-service-scheduler-review",
+    projectKey: config.defaultProject,
+    mode: options.dryRun ? "dry_run" : "manual",
+    reportPath: path.relative(rootDir, artifacts.summaryPath)
+  });
+
+  return { runId, plan, receipts: [], artifacts };
+}
+
+export async function runGithubAppServiceSchedulerRun(rootDir, config, options) {
+  const runId = createRunId();
+  const queueState = await loadGithubWebhookServiceQueue(rootDir);
+  const installationState = await loadGithubAppInstallationState(rootDir);
+  const plan = buildGithubWebhookServiceSchedulerPlan(queueState.queue, {
+    limit: options.limit,
+    generatedAt: new Date().toISOString(),
+    workerId: options.workerId,
+    schedulerLane: options.schedulerLane,
+    installationState
+  });
+  const receipts = [];
+
+  if (options.apply) {
+    for (const lane of plan.lanes.filter((item) => item.status === "dispatch_ready")) {
+      const tickResult = await runGithubAppServiceTick(rootDir, config, {
+        ...options,
+        schedulerLane: lane.laneKey,
+        limit: lane.selectedCount,
+        print: false,
+        refreshContext: false
+      });
+      receipts.push({
+        laneKey: lane.laneKey,
+        outcome: options.dryRun ? "lane_dry_run" : "lane_processed",
+        selectedCount: tickResult.plan.selectedEntries.length,
+        targetState: options.dryRun ? "planned" : "processed",
+        summaryPath: path.relative(rootDir, tickResult.artifacts.summaryPath)
+      });
+    }
+  }
+
+  const summary = renderGithubWebhookServiceSchedulerSummary(plan, receipts);
+  const artifacts = await writeGithubWebhookServiceSchedulerArtifacts(rootDir, {
+    runId,
+    plan,
+    receipts,
+    summary,
+    dryRun: options.dryRun
+  });
+
+  if (options.json) {
+    console.log(JSON.stringify({
+      runId,
+      artifacts: {
+        rootPath: path.relative(rootDir, artifacts.rootPath),
+        planPath: path.relative(rootDir, artifacts.planPath),
+        receiptsPath: path.relative(rootDir, artifacts.receiptsPath),
+        summaryPath: path.relative(rootDir, artifacts.summaryPath)
+      },
+      plan,
+      receipts
+    }, null, 2));
+    return { runId, plan, receipts, artifacts };
+  }
+
   console.log(summary);
   console.log(`- artifact_root: ${path.relative(rootDir, artifacts.rootPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
   console.log(`- artifact_plan: ${path.relative(rootDir, artifacts.planPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
@@ -760,16 +897,11 @@ export async function runGithubAppServiceTick(rootDir, config, options) {
   console.log(`- reference_doc: docs/reference/GITHUB_APP_DEPLOYMENT.md`);
 
   await refreshContext(rootDir, config, {
-    command: "github-app-service-tick",
+    command: "github-app-service-scheduler-run",
     projectKey: config.defaultProject,
     mode: options.dryRun ? "dry_run" : options.apply ? "write" : "manual",
     reportPath: path.relative(rootDir, artifacts.summaryPath)
   });
 
-  return {
-    runId,
-    plan,
-    receipts,
-    artifacts
-  };
+  return { runId, plan, receipts, artifacts };
 }

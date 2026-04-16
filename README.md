@@ -131,6 +131,8 @@ Es hat jetzt einen lokalen Motor plus Workspace-Modus:
 - `npm run github:app-installation-service-lane-apply -- --installation-id 10101 --notes "service lane for governed installation" --dry-run`
 - `npm run github:app-installation-service-plan-review -- --installation-id 10101 --dry-run`
 - `npm run github:app-installation-service-plan-apply -- --installation-id 10101 --notes "shared service plan for governed installation" --dry-run`
+- `npm run github:app-installation-service-schedule-review -- --installation-id 10101 --worker-id worker-a --dry-run`
+- `npm run github:app-installation-service-schedule-apply -- --installation-id 10101 --worker-id worker-a --notes "runtime schedule for governed installation" --dry-run`
 - `npm run github:app-installation-worker-routing-review -- --installation-id 10101 --worker-id worker-a --dry-run`
 - `npm run github:app-installation-worker-routing-apply -- --installation-id 10101 --worker-id worker-a --notes "worker routing for governed installation" --dry-run`
 - `npm run github:app-installation-scope -- --installation-id 10101 --dry-run`
@@ -156,6 +158,10 @@ Dafuer gibt es jetzt auch einen expliziten Resume-Einstieg:
 
 - `npm run github:app-execution-resume -- --contract-file deployment/github-app/examples/repository_dispatch.patternpilot_on_demand.resume-contract.json --apply --dry-run`
 - `npm run github:app-execution-recover -- --contract-file deployment/github-app/examples/repository_dispatch.patternpilot_on_demand.recovery-contract.json --apply --dry-run`
+- `npm run github:app-service-runtime-review -- --worker-ids worker-a,worker-b --dry-run`
+- `npm run github:app-service-runtime-run -- --worker-ids worker-a,worker-b --apply --dry-run`
+- `npm run github:app-service-scheduler-review -- --worker-id worker-a --dry-run`
+- `npm run github:app-service-scheduler-run -- --worker-id worker-a --apply --dry-run`
 
 Darueber liegt jetzt zusaetzlich eine kleine lokale Service-Schicht mit `state/github-app-runner-queue/{pending,claimed,blocked,processed}`. Damit koennen Contracts nicht nur manuell, sondern auch ueber einen spaeteren kleinen Runtime-Loop abgearbeitet werden.
 
@@ -199,13 +205,30 @@ Darueber liegt jetzt ausserdem ein erster Scope-/Handoff-Pfad:
 - `github-app-installation-service-lane-apply` persistiert diese Installation-Lanes, damit gemeinsame Service-Ticks spaeter nicht alle Installationen gleich behandeln muessen
 - `github-app-installation-service-plan-review` plant jetzt darueber hinaus die gemeinsame Tick-Priorisierung ueber mehrere Installationen hinweg
 - `github-app-installation-service-plan-apply` persistiert Prioritaet, Tick-Budget und bevorzugte Contract-Kinds pro Installation fuer den gemeinsamen Service-Tick
+- `github-app-installation-service-schedule-review` leitet daraus jetzt echte scheduler-scoped Runtime-Lanes und Tick-Strategien pro Installation ab
+- `github-app-installation-service-schedule-apply` persistiert diese Runtime-Schedule-Ebene, bevor spaetere Multi-Worker- oder lane-scoped Ticks laufen
 - `github-app-installation-worker-routing-review` leitet jetzt daraus worker- und scheduler-lane-spezifische Routing-Regeln pro Installation ab
 - `github-app-installation-worker-routing-apply` persistiert diese Worker-Zuordnung, erlaubte Worker-Pools und Scheduler-Lanes pro Installation
 - `github-app-service-tick` und `github-app-service-review` respektieren diese Installations-Operationsschicht jetzt auch wirklich im Queue-/Runner-Pfad
 - `github-app-service-tick` respektiert jetzt zusaetzlich installation-spezifische Service-Lanes, inklusive `manual`, `auto` und `recovery`-fokussierter Lane-Modi sowie Concurrency-Caps pro Installation
 - `github-app-service-tick` respektiert jetzt zusaetzlich installation-spezifische Shared-Service-Plaene fuer Priorisierung, Tick-Budgets und Contract-Kind-Praeferenzen zwischen mehreren Installationen
+- `github-app-service-tick` kann jetzt zusaetzlich mit `--scheduler-lane <lane-key>` bewusst nur eine scheduler-scoped Runtime-Lane verarbeiten
 - `github-app-service-tick` respektiert jetzt zusaetzlich installation-spezifisches Worker-Routing wie `pinned_worker`, `allowed_pool` oder `manual_worker_release` und blockt Worker-Mismatches explizit als eigene Runtime-Kante
-- damit kann ein gemeinsamer lokaler Service-Tick jetzt nicht mehr nur “das naechste passende Contract” nehmen, sondern bewusst mehrere Installationen gegeneinander priorisieren
+- `github-app-service-scheduler-review` zeigt jetzt die gesamte Queue als scheduler-scoped Lane-Orchestrierung ueber mehrere Runtime-Lanes
+- `github-app-service-scheduler-run` fuehrt dispatch-ready Runtime-Lanes jetzt kontrolliert ueber lane-scoped Service-Ticks aus
+- `github-app-service-runtime-review` verdichtet diese scheduler-scoped Runtime-Lanes jetzt zusaetzlich zu echten worker-scoped Laufpfaden fuer mehrere Worker
+- `github-app-service-runtime-run` fuehrt diese worker-scoped Runtime-Plaene jetzt kontrolliert ueber mehrere lane-scoped Service-Ticks pro Worker aus
+- worker-scoped Runtime-Lanes koennen jetzt zusaetzlich ueber eine eigene Runtime-Claim-/Lease-Schicht vor doppelter Mehrfachausfuehrung geschuetzt werden
+- `github-app-service-runtime-cycle-review` zeigt jetzt zusaetzlich, wie mehrere worker-scoped Runtime-Runden als zusammenhaengender Service-Zyklus aussehen wuerden
+- `github-app-service-runtime-cycle-run` fuehrt diese Runtime-Schicht jetzt kontrolliert ueber mehrere Runden bis zum Stoppgrund wie `dry_run_preview`, `manual_preview`, `no_dispatchable_runtime` oder `cycle_limit_reached`
+- `github-app-service-runtime-session-review` hebt diese Cycle-Schicht jetzt weiter auf eine langlebigere Runtime-Session mit mehreren Session-Runden, Gesamtzyklus-Sicht und explizitem Session-Budget
+- `github-app-service-runtime-session-run` fuehrt diese Runtime-Sessions jetzt kontrolliert ueber mehrere Runtime-Cycles hinweg aus und schreibt bei Bedarf eine Resume-Kante fuer spaetere Fortsetzung
+- `github-app-service-runtime-session-resume` setzt genau auf dieser Resume-Kante auf und kann eine pausierte Runtime-Session bewusst wiederaufnehmen
+- `github-app-service-runtime-loop-review` hebt diese Session-Schicht jetzt weiter auf einen langlebigeren Runtime-Loop ueber mehrere Session-Runden mit eigenem Loop-Budget
+- `github-app-service-runtime-loop-run` fuehrt diese Runtime-Loops jetzt kontrolliert ueber mehrere Sessions hinweg aus und schreibt bei Bedarf eine Loop-Resume-Kante fuer spaetere Fortsetzung
+- `github-app-service-runtime-loop-resume` setzt genau auf dieser Loop-Resume-Kante auf und kann einen pausierten Runtime-Loop bewusst wiederaufnehmen
+- `github-app-service-runtime-loop-review`, `run`, `resume` und ihre Unterpfade drucken jetzt ausserdem keine verschachtelten Zwischen-Summaries mehr, wenn sie intern auf Runtime-/Cycle-/Session-Kommandos aufsetzen
+- damit kann ein gemeinsamer lokaler Service-Tick jetzt nicht mehr nur “das naechste passende Contract” nehmen, sondern bewusst mehrere Installationen gegeneinander priorisieren und in getrennte scheduler-scoped Runtime-Lanes aufspalten
 - `github-app-service-requeue` respektiert jetzt zusaetzlich installation-spezifische Admin-Regeln fuer `blocked`, `dead-letter` und `claimed`
 - `github-app-installation-scope` zeigt, welche Installations-Repositories watchlist-faehig sind und welche noch manuelle Klaerung brauchen
 - `github-app-installation-handoff` gibt watchlist-faehige Repositories kontrolliert in die zugeordneten Projekt-Watchlists weiter

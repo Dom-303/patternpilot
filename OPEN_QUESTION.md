@@ -12,7 +12,7 @@ Sie ist bewusst kein Sammelbecken fuer beliebige Ideen.
 
 Diese Datei wird zusammen mit `STATUS.md` als operative Uebergabeflaeche mitgefuehrt.
 
-- last_updated: 2026-04-16T15:32:32.688Z
+- last_updated: 2026-04-16T21:06:07.235Z
 - latest_run_reference: integration/github-app-dispatch
 
 ## Handoff Note

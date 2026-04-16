@@ -53,8 +53,8 @@ sondern:
 
 ### Gesamtprodukt
 
-- schaetzung: `77-81%`
-- begruendung: Der Kernel ist stark, Discovery/Kuration laufen kontrolliert bis in die kanonische Wissensschicht, und Folge-Run-/Drift-/Governance-Logik ist jetzt inklusive Stabilitaets-, Requalify- und installation-scoped Worker-Routing-Schicht operativ belastbarer. Produktisierung, Onboarding, GitHub-App-Cutover, Release-Haertung und echte Vollautomatik fehlen aber weiter.
+- schaetzung: `86-90%`
+- begruendung: Der Kernel ist stark, Discovery/Kuration laufen kontrolliert bis in die kanonische Wissensschicht, und Folge-Run-/Drift-/Governance-Logik ist jetzt inklusive Stabilitaets-, Requalify-, installation-scoped Worker-Routing-, Runtime-Schedule-, lane-scoped Service-Scheduler-, worker-scoped Runtime-, Runtime-Claim-/Lease-, Runtime-Cycle-, Runtime-Session- und Runtime-Loop-Schicht samt sauberer interner CLI-Komposition operativ belastbarer. Produktisierung, Onboarding, GitHub-App-Cutover, Release-Haertung und echte Vollautomatik fehlen aber weiter.
 
 ### Kernsystem
 
@@ -70,14 +70,14 @@ sondern:
 
 ### Wiederkehrende Automation
 
-- schaetzung: `70-74%`
-- drin: Chain-Run, Job-State, Alerting, Dispatch, Locking, Retry-Klassifikation, Manual-Clear, Run-Lifecycle-Defaults, sichtbare Run-Drift- und Stability-Signale, explizite Governance fuer unattended versus manuell, Requalify-Latches fuer instabile Folge-Run-Schleifen und jetzt installation-scoped Worker-/Scheduler-Routing fuer die lokale GitHub-App-Servicekante
+- schaetzung: `80-84%`
+- drin: Chain-Run, Job-State, Alerting, Dispatch, Locking, Retry-Klassifikation, Manual-Clear, Run-Lifecycle-Defaults, sichtbare Run-Drift- und Stability-Signale, explizite Governance fuer unattended versus manuell, Requalify-Latches fuer instabile Folge-Run-Schleifen und jetzt installation-scoped Worker-/Scheduler-Routing plus scheduler-scoped Runtime-Schedules, lane-scoped Service-Scheduler-Orchestrierung, worker-scoped Runtime-Pfade, Runtime-Claim-/Lease-Governance, mehrschleifige Runtime-Cycles, langlebigere Runtime-Sessions, erste Runtime-Loops und saubere interne Komposition fuer die lokale GitHub-App-Servicekante
 - offen: echte produktive Scheduler-Einbettung, noch schaerfere Auto-Resume-Regeln gegen reale Betriebsfaelle, erste reale Benachrichtigungskanaele, mehr Kalibrierung im echten Betrieb
 
 ### Vollautomatisches Zielbild
 
-- schaetzung: `53-58%`
-- drin: wichtige technische Grundbausteine fuer Vollautomatik sind angelegt, inklusive Lifecycle-, Drift-, Stability- und Governance-Sicht fuer Folge-Runs plus kontrollierter Requalify-Freigabe und jetzt installation-scoped Worker-/Scheduler-Routing fuer spaetere Multi-Worker-Runtimes
+- schaetzung: `63-68%`
+- drin: wichtige technische Grundbausteine fuer Vollautomatik sind angelegt, inklusive Lifecycle-, Drift-, Stability- und Governance-Sicht fuer Folge-Runs plus kontrollierter Requalify-Freigabe, installation-scoped Worker-/Scheduler-Routing, scheduler-scoped Runtime-Schedules, lane-scoped Service-Scheduler-Orchestrierung, worker-scoped Runtime-Pfade, Runtime-Claim-/Lease-Governance, mehrschleifige Runtime-Cycles, langlebigere Runtime-Sessions, erste Runtime-Loops und jetzt saubere interne Runtime-Komposition fuer spaetere Multi-Worker-Runtimes
 - offen: GitHub-App-nahe Integration, fertiger Setup-/Onboarding-Flow, belastbare Default-Pipeline fuer Erst- und Folge-Runs, wirklich ausgereifte Unattended-Betriebslogik
 
 ### Freigabe-/Release-Reife
@@ -189,6 +189,15 @@ Naechste Themen:
 - `github-app-service-tick` respektiert diese Shared-Service-Plaene jetzt ebenfalls und waehlt dadurch nicht mehr nur lane-aware, sondern auch plan-aware ueber mehrere Installationen hinweg
 - `github-app-installation-worker-routing-review` und `github-app-installation-worker-routing-apply` legen jetzt zusaetzlich Worker-Zuordnung, erlaubte Worker-Pools und Scheduler-Lanes pro Installation fest
 - `github-app-service-tick` respektiert diese Worker-Routing-Regeln jetzt ebenfalls und blockt Worker-Mismatches oder manuelle Worker-Freigaben explizit
+- `github-app-installation-service-schedule-review` und `github-app-installation-service-schedule-apply` verdichten diese Ebenen jetzt zusaetzlich zu einer echten scheduler-scoped Runtime-Schedule pro Installation
+- `github-app-service-tick` kann jetzt per `--scheduler-lane` gezielt einzelne Runtime-Lanes verarbeiten und blockt Schedule-Mismatches explizit
+- `github-app-service-scheduler-review` und `github-app-service-scheduler-run` heben diese Runtime-Lanes jetzt zusaetzlich auf eine echte Scheduler-Orchestrierung ueber mehrere lane-scoped Service-Ticks
+- `github-app-service-runtime-review` und `github-app-service-runtime-run` verdichten diese Scheduler-Orchestrierung jetzt weiter zu worker-scoped Runtime-Pfaden ueber mehrere Worker
+- diese worker-scoped Runtime-Pfade haben jetzt zusaetzlich eine eigene Claim-/Lease-Governance gegen doppelte parallele Ausfuehrung
+- `github-app-service-runtime-cycle-review` und `github-app-service-runtime-cycle-run` heben diese worker-scoped Runtime-Schicht jetzt weiter auf mehrschleifige Runtime-Zyklen mit expliziten Stoppgruenden und eigenen Zyklus-Artefakten
+- `github-app-service-runtime-session-review`, `github-app-service-runtime-session-run` und `github-app-service-runtime-session-resume` heben diese Runtime-Zyklen jetzt weiter auf langlebigere Runtime-Sessions mit Session-State, Resume-Contract und mehrrundiger Fortsetzung
+- `github-app-service-runtime-loop-review`, `github-app-service-runtime-loop-run` und `github-app-service-runtime-loop-resume` heben diese Runtime-Sessions jetzt weiter auf langlebigere Runtime-Loops mit Loop-State, Resume-Contract und Fortsetzung ueber mehrere Sessions
+- die Runtime-/Cycle-/Session-/Loop-Kommandos koennen jetzt zudem intern ohne doppelte Zwischen-Ausgabe komponiert werden, was den spaeteren Service-Runtime-Pfad sauberer macht
 - damit ist die GitHub-App-Service-Schicht jetzt zum ersten Mal wirklich multi-installation-faehig gedacht und nicht nur eine Sammlung isolierter Contract-Pfade
 - klarer Erstlauf plus Folge-Run-Logik
 - definierte Defaults fuer wiederkehrende Laeufe
