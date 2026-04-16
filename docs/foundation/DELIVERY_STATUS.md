@@ -53,8 +53,8 @@ sondern:
 
 ### Gesamtprodukt
 
-- schaetzung: `75-79%`
-- begruendung: Der Kernel ist stark, Discovery/Kuration laufen kontrolliert bis in die kanonische Wissensschicht, und Folge-Run-/Drift-/Governance-Logik ist jetzt inklusive Stabilitaets- und Requalify-Schicht operativ belastbarer. Produktisierung, Onboarding, GitHub-App-Cutover, Release-Haertung und echte Vollautomatik fehlen aber weiter.
+- schaetzung: `77-81%`
+- begruendung: Der Kernel ist stark, Discovery/Kuration laufen kontrolliert bis in die kanonische Wissensschicht, und Folge-Run-/Drift-/Governance-Logik ist jetzt inklusive Stabilitaets-, Requalify- und installation-scoped Worker-Routing-Schicht operativ belastbarer. Produktisierung, Onboarding, GitHub-App-Cutover, Release-Haertung und echte Vollautomatik fehlen aber weiter.
 
 ### Kernsystem
 
@@ -70,14 +70,14 @@ sondern:
 
 ### Wiederkehrende Automation
 
-- schaetzung: `68-72%`
-- drin: Chain-Run, Job-State, Alerting, Dispatch, Locking, Retry-Klassifikation, Manual-Clear, Run-Lifecycle-Defaults, sichtbare Run-Drift- und Stability-Signale, explizite Governance fuer unattended versus manuell und jetzt auch Requalify-Latches fuer instabile Folge-Run-Schleifen
+- schaetzung: `70-74%`
+- drin: Chain-Run, Job-State, Alerting, Dispatch, Locking, Retry-Klassifikation, Manual-Clear, Run-Lifecycle-Defaults, sichtbare Run-Drift- und Stability-Signale, explizite Governance fuer unattended versus manuell, Requalify-Latches fuer instabile Folge-Run-Schleifen und jetzt installation-scoped Worker-/Scheduler-Routing fuer die lokale GitHub-App-Servicekante
 - offen: echte produktive Scheduler-Einbettung, noch schaerfere Auto-Resume-Regeln gegen reale Betriebsfaelle, erste reale Benachrichtigungskanaele, mehr Kalibrierung im echten Betrieb
 
 ### Vollautomatisches Zielbild
 
-- schaetzung: `50-55%`
-- drin: wichtige technische Grundbausteine fuer Vollautomatik sind angelegt, inklusive Lifecycle-, Drift-, Stability- und Governance-Sicht fuer Folge-Runs plus kontrollierter Requalify-Freigabe
+- schaetzung: `53-58%`
+- drin: wichtige technische Grundbausteine fuer Vollautomatik sind angelegt, inklusive Lifecycle-, Drift-, Stability- und Governance-Sicht fuer Folge-Runs plus kontrollierter Requalify-Freigabe und jetzt installation-scoped Worker-/Scheduler-Routing fuer spaetere Multi-Worker-Runtimes
 - offen: GitHub-App-nahe Integration, fertiger Setup-/Onboarding-Flow, belastbare Default-Pipeline fuer Erst- und Folge-Runs, wirklich ausgereifte Unattended-Betriebslogik
 
 ### Freigabe-/Release-Reife
@@ -183,6 +183,13 @@ Naechste Themen:
 - `github-app-installation-operations-review` und `github-app-installation-operations-apply` koppeln diese Linie jetzt zusaetzlich an Watchlist-/Service-Betriebslogik pro Installation
 - dieselbe Installations-Operationsschicht gate’t jetzt auch tatsaechlich den lokalen Queue-/Runner-Pfad ueber `github-app-service-review` und `github-app-service-tick`
 - dieselbe Installations-Operationsschicht gate’t jetzt auch manuelle Requeue-/Release-Pfade ueber `github-app-service-requeue`
+- `github-app-installation-service-lane-review` und `github-app-installation-service-lane-apply` legen jetzt zusaetzlich installierte Service-Lanes mit Tick-Disposition und Concurrency-Cap pro Installation fest
+- `github-app-service-tick` respektiert diese Installations-Lanes jetzt ebenfalls und waehlt dadurch nicht mehr nur global, sondern lane-aware pro Installation
+- `github-app-installation-service-plan-review` und `github-app-installation-service-plan-apply` legen jetzt zusaetzlich eine gemeinsame Service-Planung pro Installation mit Prioritaet, Tick-Budget und Contract-Fokus fest
+- `github-app-service-tick` respektiert diese Shared-Service-Plaene jetzt ebenfalls und waehlt dadurch nicht mehr nur lane-aware, sondern auch plan-aware ueber mehrere Installationen hinweg
+- `github-app-installation-worker-routing-review` und `github-app-installation-worker-routing-apply` legen jetzt zusaetzlich Worker-Zuordnung, erlaubte Worker-Pools und Scheduler-Lanes pro Installation fest
+- `github-app-service-tick` respektiert diese Worker-Routing-Regeln jetzt ebenfalls und blockt Worker-Mismatches oder manuelle Worker-Freigaben explizit
+- damit ist die GitHub-App-Service-Schicht jetzt zum ersten Mal wirklich multi-installation-faehig gedacht und nicht nur eine Sammlung isolierter Contract-Pfade
 - klarer Erstlauf plus Folge-Run-Logik
 - definierte Defaults fuer wiederkehrende Laeufe
 - belastbare Folgezyklen fuer zweite, dritte, vierte und spaetere Runs

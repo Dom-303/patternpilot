@@ -47,6 +47,16 @@ Diese Dateien in dieser Reihenfolge zuerst lesen:
 - `knowledge/repo_decisions.md` gehoert zur kuratierten Wissensschicht und nicht neben `STATUS.md` / `OPEN_QUESTION.md`.
 - menschenfreundliche HTML-Reports sind verbindlicher Teil der Output-Schicht, nicht nur nettes Beiwerk.
 
+## Modul- und Monolith-Regel
+
+Monolithisches Wachstum ist normal, aber nicht unbegrenzt fortzufuehren.
+
+- Zeilenzahl ist nur ein Warnsignal, kein Selbstzweck. Richtwert: ab ca. 800 Zeilen bei einem substanziellen Touch Modul-Schnitt pruefen.
+- Massgeblich ist fachliche Verantwortung: Splitten, wenn eine Datei mehrere getrennte Aufgaben, Familien, Flows oder wiederholt getrennte Aenderungszonen vereint.
+- Mini-Fixes erzwingen keinen begleitenden Split. Strukturarbeit folgt dem naechsten substanziellen Touch, nicht jedem Einzeiler.
+- Neue fachliche Familien oder eigenstaendige Flows von Anfang an als eigenes Modul anlegen und nur zentral verdrahten.
+- Splits folgen bestehenden Repo-Patterns, keine ad-hoc Sonderstruktur pro Datei.
+
 ---
 
 ## Standardfluss fuer neue GitHub-Links

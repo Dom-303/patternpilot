@@ -29,3 +29,4 @@ Wenn projektbezogen gearbeitet wird, zusaetzlich:
 - jedes Ergebnis auf Projektwirkung herunterbrechen
 - lieber wenige klare Entscheidungen als viel lose Sammlung
 - `STATUS.md` und `OPEN_QUESTION.md` als Einstieg und Uebergabe immer mitlesen
+- Monolithen nicht rein ueber LOC beurteilen: ab ca. 800 Zeilen bei substanziellen Touches auf Modul-Schnitt pruefen, nach Verantwortung splitten, neue Familien direkt als eigenes Modul anlegen — Details in `AGENT_CONTEXT.md`

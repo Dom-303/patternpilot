@@ -151,6 +151,41 @@ test("classifyGithubWebhookServiceQueueEntry allows installation-scoped executio
   assert.equal(entry.installationStatus, "service_ready");
 });
 
+test("classifyGithubWebhookServiceQueueEntry respects installation service lane guards", () => {
+  const entry = classifyGithubWebhookServiceQueueEntry({
+    fileName: "execution.json",
+    contractPath: "/tmp/execution.json",
+    contract: {
+      contractKind: "execution_contract",
+      contractStatus: "dispatch_ready_contract_only",
+      installationId: 10101,
+      selectedProjectKey: "eventbear-worker"
+    }
+  }, {
+    installationState: {
+      installations: [
+        {
+          installationId: 10101,
+          operations: {
+            status: "operations_governed",
+            serviceStatus: "service_ready"
+          },
+          serviceLane: {
+            status: "lane_governed",
+            laneMode: "manual_lane",
+            tickDisposition: "manual_only",
+            maxConcurrentClaims: 1
+          }
+        }
+      ]
+    }
+  });
+
+  assert.equal(entry.action, "installation_lane_blocked");
+  assert.equal(entry.actionable, false);
+  assert.equal(entry.installationLaneStatus, "lane_manual_guard");
+});
+
 test("buildGithubWebhookServiceTickPlan selects only actionable entries up to limit", () => {
   const plan = buildGithubWebhookServiceTickPlan([
     {
@@ -212,6 +247,293 @@ test("buildGithubWebhookServiceTickPlan counts installation-blocked entries", ()
   assert.equal(plan.actionableCount, 0);
   assert.equal(plan.installationBlockedCount, 1);
   assert.match(renderGithubWebhookServiceTickSummary(plan), /installation_blocked_count: 1/);
+});
+
+test("buildGithubWebhookServiceTickPlan respects per-installation lane concurrency", () => {
+  const plan = buildGithubWebhookServiceTickPlan([
+    {
+      fileName: "a.json",
+      contractPath: "/tmp/a.json",
+      contract: {
+        contractKind: "execution_contract",
+        contractStatus: "dispatch_ready_contract_only",
+        installationId: 10101
+      }
+    },
+    {
+      fileName: "b.json",
+      contractPath: "/tmp/b.json",
+      contract: {
+        contractKind: "resume_contract",
+        contractStatus: "dispatch_ready_resume_contract",
+        installationId: 10101
+      }
+    }
+  ], {
+    installationState: {
+      installations: [
+        {
+          installationId: 10101,
+          operations: {
+            status: "operations_governed",
+            serviceStatus: "service_ready"
+          },
+          serviceLane: {
+            status: "lane_governed",
+            laneMode: "auto_lane",
+            tickDisposition: "auto_tick",
+            maxConcurrentClaims: 1
+          }
+        }
+      ]
+    }
+  });
+
+  assert.equal(plan.actionableCount, 2);
+  assert.equal(plan.selectedEntries.length, 1);
+  assert.equal(plan.selectedEntries[0].fileName, "a.json");
+});
+
+test("buildGithubWebhookServiceTickPlan prioritizes installations by shared service plan", () => {
+  const plan = buildGithubWebhookServiceTickPlan([
+    {
+      fileName: "normal.json",
+      contractPath: "/tmp/normal.json",
+      contract: {
+        contractKind: "execution_contract",
+        contractStatus: "dispatch_ready_contract_only",
+        installationId: 10101
+      }
+    },
+    {
+      fileName: "urgent.json",
+      contractPath: "/tmp/urgent.json",
+      contract: {
+        contractKind: "recovery_contract",
+        contractStatus: "dispatch_ready_recovery_contract",
+        installationId: 20202
+      }
+    }
+  ], {
+    limit: 1,
+    installationState: {
+      installations: [
+        {
+          installationId: 10101,
+          operations: {
+            status: "operations_governed",
+            serviceStatus: "service_ready"
+          },
+          serviceLane: {
+            status: "lane_governed",
+            laneMode: "auto_lane",
+            tickDisposition: "auto_tick",
+            maxConcurrentClaims: 1
+          },
+          servicePlan: {
+            status: "schedule_governed",
+            priority: "normal",
+            tickBudget: 1,
+            preferredContractKinds: ["execution_contract", "resume_contract", "recovery_contract"]
+          }
+        },
+        {
+          installationId: 20202,
+          operations: {
+            status: "operations_governed",
+            serviceStatus: "service_ready"
+          },
+          serviceLane: {
+            status: "lane_governed",
+            laneMode: "recovery_lane",
+            tickDisposition: "recovery_tick",
+            maxConcurrentClaims: 1
+          },
+          servicePlan: {
+            status: "schedule_governed",
+            priority: "urgent",
+            tickBudget: 1,
+            preferredContractKinds: ["recovery_contract", "resume_contract", "execution_contract"]
+          }
+        }
+      ]
+    }
+  });
+
+  assert.equal(plan.selectedEntries.length, 1);
+  assert.equal(plan.selectedEntries[0].fileName, "urgent.json");
+});
+
+test("buildGithubWebhookServiceTickPlan counts installation-plan blocked entries", () => {
+  const plan = buildGithubWebhookServiceTickPlan([
+    {
+      fileName: "a.json",
+      contractPath: "/tmp/a.json",
+      contract: {
+        contractKind: "execution_contract",
+        contractStatus: "dispatch_ready_contract_only",
+        installationId: 10101
+      }
+    }
+  ], {
+    installationState: {
+      installations: [
+        {
+          installationId: 10101,
+          operations: {
+            status: "operations_governed",
+            serviceStatus: "service_ready"
+          },
+          serviceLane: {
+            status: "lane_governed",
+            laneMode: "auto_lane",
+            tickDisposition: "auto_tick",
+            maxConcurrentClaims: 1
+          },
+          servicePlan: {
+            status: "schedule_governed",
+            priority: "low",
+            tickBudget: 0,
+            preferredContractKinds: []
+          }
+        }
+      ]
+    }
+  });
+
+  assert.equal(plan.actionableCount, 0);
+  assert.equal(plan.installationPlanBlockedCount, 1);
+  assert.match(renderGithubWebhookServiceTickSummary(plan), /installation_plan_blocked_count: 1/);
+});
+
+test("classifyGithubWebhookServiceQueueEntry respects worker routing mismatches", () => {
+  const entry = classifyGithubWebhookServiceQueueEntry({
+    fileName: "execution.json",
+    contractPath: "/tmp/execution.json",
+    contract: {
+      contractKind: "execution_contract",
+      contractStatus: "dispatch_ready_contract_only",
+      installationId: 10101
+    }
+  }, {
+    workerId: "worker-b",
+    installationState: {
+      installations: [
+        {
+          installationId: 10101,
+          operations: {
+            status: "operations_governed",
+            serviceStatus: "service_ready"
+          },
+          serviceLane: {
+            status: "lane_governed",
+            laneMode: "auto_lane",
+            tickDisposition: "auto_tick",
+            maxConcurrentClaims: 1
+          },
+          servicePlan: {
+            status: "schedule_governed",
+            priority: "high",
+            tickBudget: 1,
+            preferredContractKinds: ["execution_contract", "resume_contract", "recovery_contract"]
+          },
+          workerRouting: {
+            status: "routing_governed",
+            schedulerLane: "priority",
+            workerMode: "pinned_worker",
+            assignedWorkerId: "worker-a"
+          }
+        }
+      ]
+    }
+  });
+
+  assert.equal(entry.action, "installation_worker_blocked");
+  assert.equal(entry.actionable, false);
+  assert.equal(entry.installationRoutingStatus, "routing_worker_mismatch");
+});
+
+test("buildGithubWebhookServiceTickPlan respects worker routing and scheduler lanes", () => {
+  const plan = buildGithubWebhookServiceTickPlan([
+    {
+      fileName: "shared.json",
+      contractPath: "/tmp/shared.json",
+      contract: {
+        contractKind: "execution_contract",
+        contractStatus: "dispatch_ready_contract_only",
+        installationId: 10101
+      }
+    },
+    {
+      fileName: "pinned.json",
+      contractPath: "/tmp/pinned.json",
+      contract: {
+        contractKind: "execution_contract",
+        contractStatus: "dispatch_ready_contract_only",
+        installationId: 20202
+      }
+    }
+  ], {
+    workerId: "worker-a",
+    limit: 2,
+    installationState: {
+      installations: [
+        {
+          installationId: 10101,
+          operations: {
+            status: "operations_governed",
+            serviceStatus: "service_ready"
+          },
+          serviceLane: {
+            status: "lane_governed",
+            laneMode: "auto_lane",
+            tickDisposition: "auto_tick",
+            maxConcurrentClaims: 1
+          },
+          servicePlan: {
+            status: "schedule_governed",
+            priority: "normal",
+            tickBudget: 1,
+            preferredContractKinds: ["execution_contract", "resume_contract", "recovery_contract"]
+          },
+          workerRouting: {
+            status: "routing_governed",
+            schedulerLane: "shared_default",
+            workerMode: "any_worker"
+          }
+        },
+        {
+          installationId: 20202,
+          operations: {
+            status: "operations_governed",
+            serviceStatus: "service_ready"
+          },
+          serviceLane: {
+            status: "lane_governed",
+            laneMode: "auto_lane",
+            tickDisposition: "auto_tick",
+            maxConcurrentClaims: 1
+          },
+          servicePlan: {
+            status: "schedule_governed",
+            priority: "high",
+            tickBudget: 1,
+            preferredContractKinds: ["execution_contract", "resume_contract", "recovery_contract"]
+          },
+          workerRouting: {
+            status: "routing_governed",
+            schedulerLane: "priority",
+            workerMode: "pinned_worker",
+            assignedWorkerId: "worker-a"
+          }
+        }
+      ]
+    }
+  });
+
+  assert.equal(plan.selectedEntries.length, 2);
+  assert.equal(plan.selectedEntries[0].fileName, "pinned.json");
+  assert.equal(plan.selectedEntries[0].schedulerLane, "priority");
 });
 
 test("loadGithubWebhookServiceQueue reads pending queue entries", async () => {

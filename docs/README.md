@@ -8,6 +8,8 @@ Diese Dokumentation enthaelt die dauerhaft wichtigen Patternpilot-Grundlagen.
 - `system/` fuer das kanonische Repo-Intelligence-System
 - `taxonomy/` fuer kontrollierte Bewertungslogik
 - `reference/` fuer ergaenzende Referenzdokumente
+- `superpowers/plans/` fuer konkrete Umsetzungsplaene und Migrationspfade
+- `superpowers/specs/` fuer dazugehoerige Zielbilder und Detail-Designs
 
 Wichtige Referenz fuer Stage 3:
 
@@ -20,5 +22,10 @@ Wichtige Referenz fuer Stage 3:
 - `reference/GITHUB_APP_DEPLOYMENT.md`
 - `reference/SETUP_CHECKLIST.md`
 - `reference/WORKSPACE_PLUGIN_MODE.md`
+
+Aktuelle Umsetzungsplaene:
+
+- `superpowers/plans/2026-04-15-patternpilot-script-structure.md`
+- `superpowers/plans/2026-04-16-modularization-implementation-plan.md`
 
 Die Root von `patternpilot` bleibt damit staerker auf Einstieg, Konfiguration, Motor und operative Artefakte fokussiert.

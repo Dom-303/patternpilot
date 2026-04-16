@@ -127,6 +127,12 @@ Es hat jetzt einen lokalen Motor plus Workspace-Modus:
 - `npm run github:app-installation-runtime-apply -- --installation-id 10101 --notes "runtime for governed installation" --dry-run`
 - `npm run github:app-installation-operations-review -- --installation-id 10101 --dry-run`
 - `npm run github:app-installation-operations-apply -- --installation-id 10101 --notes "ops policy for governed installation" --dry-run`
+- `npm run github:app-installation-service-lane-review -- --installation-id 10101 --dry-run`
+- `npm run github:app-installation-service-lane-apply -- --installation-id 10101 --notes "service lane for governed installation" --dry-run`
+- `npm run github:app-installation-service-plan-review -- --installation-id 10101 --dry-run`
+- `npm run github:app-installation-service-plan-apply -- --installation-id 10101 --notes "shared service plan for governed installation" --dry-run`
+- `npm run github:app-installation-worker-routing-review -- --installation-id 10101 --worker-id worker-a --dry-run`
+- `npm run github:app-installation-worker-routing-apply -- --installation-id 10101 --worker-id worker-a --notes "worker routing for governed installation" --dry-run`
 - `npm run github:app-installation-scope -- --installation-id 10101 --dry-run`
 - `npm run github:app-installation-handoff -- --installation-id 10101 --notes "watchlist sync after installation review" --apply --dry-run`
 - `npm run github:app-installation-show`
@@ -189,7 +195,17 @@ Darueber liegt jetzt ausserdem ein erster Scope-/Handoff-Pfad:
 - `github-app-installation-runtime-apply` persistiert diesen Runtime-Modus, bevor Scope, Handoff und spaetere Service-Pfade weiterlaufen
 - `github-app-installation-operations-review` uebersetzt Runtime und Governance jetzt in konkrete Watchlist-/Service-Betriebsbereitschaft pro Installation
 - `github-app-installation-operations-apply` persistiert diese App-Betriebslogik pro Installation, bevor spaetere Runtime-/Service-Prozesse darauf aufbauen
+- `github-app-installation-service-lane-review` schaut auf die aktuelle Queue pro Installation und schlaegt daraus lane-Modi, Tick-Dispositions und Concurrency-Caps vor
+- `github-app-installation-service-lane-apply` persistiert diese Installation-Lanes, damit gemeinsame Service-Ticks spaeter nicht alle Installationen gleich behandeln muessen
+- `github-app-installation-service-plan-review` plant jetzt darueber hinaus die gemeinsame Tick-Priorisierung ueber mehrere Installationen hinweg
+- `github-app-installation-service-plan-apply` persistiert Prioritaet, Tick-Budget und bevorzugte Contract-Kinds pro Installation fuer den gemeinsamen Service-Tick
+- `github-app-installation-worker-routing-review` leitet jetzt daraus worker- und scheduler-lane-spezifische Routing-Regeln pro Installation ab
+- `github-app-installation-worker-routing-apply` persistiert diese Worker-Zuordnung, erlaubte Worker-Pools und Scheduler-Lanes pro Installation
 - `github-app-service-tick` und `github-app-service-review` respektieren diese Installations-Operationsschicht jetzt auch wirklich im Queue-/Runner-Pfad
+- `github-app-service-tick` respektiert jetzt zusaetzlich installation-spezifische Service-Lanes, inklusive `manual`, `auto` und `recovery`-fokussierter Lane-Modi sowie Concurrency-Caps pro Installation
+- `github-app-service-tick` respektiert jetzt zusaetzlich installation-spezifische Shared-Service-Plaene fuer Priorisierung, Tick-Budgets und Contract-Kind-Praeferenzen zwischen mehreren Installationen
+- `github-app-service-tick` respektiert jetzt zusaetzlich installation-spezifisches Worker-Routing wie `pinned_worker`, `allowed_pool` oder `manual_worker_release` und blockt Worker-Mismatches explizit als eigene Runtime-Kante
+- damit kann ein gemeinsamer lokaler Service-Tick jetzt nicht mehr nur “das naechste passende Contract” nehmen, sondern bewusst mehrere Installationen gegeneinander priorisieren
 - `github-app-service-requeue` respektiert jetzt zusaetzlich installation-spezifische Admin-Regeln fuer `blocked`, `dead-letter` und `claimed`
 - `github-app-installation-scope` zeigt, welche Installations-Repositories watchlist-faehig sind und welche noch manuelle Klaerung brauchen
 - `github-app-installation-handoff` gibt watchlist-faehige Repositories kontrolliert in die zugeordneten Projekt-Watchlists weiter

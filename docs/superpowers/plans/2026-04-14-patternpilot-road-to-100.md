@@ -4,7 +4,7 @@
 
 **Goal:** Fuehre `patternpilot` vom heutigen starken Kernzustand zu einem wirklich freigabefaehigen Produkt mit belastbarer Discovery-Qualitaet, starker Entscheidungsqualitaet, produktneutraler Vollautomatik-Basis, spaeterem GitHub-App-Cutover, sauberem Onboarding und klarer Release-Reife.
 
-**Current baseline:** Laut `docs/foundation/DELIVERY_STATUS.md` steht `patternpilot` heute grob bei `75-79%` Gesamtprodukt, `80-85%` Kernsystem, `75-80%` On-Demand-Pfad, `68-72%` wiederkehrender Automation und `50-55%` Vollautomatik-Zielbild.
+**Current baseline:** Laut `docs/foundation/DELIVERY_STATUS.md` steht `patternpilot` heute grob bei `77-81%` Gesamtprodukt, `80-85%` Kernsystem, `75-80%` On-Demand-Pfad, `70-74%` wiederkehrender Automation und `53-58%` Vollautomatik-Zielbild.
 
 **Architecture principle:** Weiterhin zuerst den produktneutralen Kernel haerten und kalibrieren. Erst wenn Discovery, Decision-Layer und Folge-Run-Betrieb belastbar sind, werden Produktschale, GitHub-App und First-Run-Onboarding als echte Produktflaechen ausgebaut.
 
@@ -218,6 +218,13 @@ Das Produkt soll nicht nur den ersten Lauf gut koennen, sondern auch den zweiten
   - `github-app-installation-operations-review` und `github-app-installation-operations-apply` koppeln diese Linie jetzt an Watchlist-/Service-Betriebslogik pro Installation
   - `github-app-service-review` und `github-app-service-tick` respektieren diese Installations-Operationslogik jetzt auch als echte Runtime-Gates
   - `github-app-service-requeue` respektiert diese Installations-Operationslogik jetzt auch als Admin-/Manual-Release-Gate
+  - `github-app-installation-service-lane-review` und `github-app-installation-service-lane-apply` legen jetzt zusaetzlich lane-aware Runtime-Regeln pro Installation fest
+  - `github-app-service-tick` respektiert diese Installations-Lanes jetzt auch wirklich bei Auswahl und Concurrency pro Installation
+  - `github-app-installation-service-plan-review` und `github-app-installation-service-plan-apply` planen jetzt zusaetzlich Prioritaet, Budget und Contract-Fokus ueber mehrere Installationen hinweg
+  - `github-app-service-tick` respektiert diese Shared-Service-Plaene jetzt ebenfalls und waehlt damit nicht mehr nur lane-aware, sondern auch installation-uebergreifend plan-aware
+  - `github-app-installation-worker-routing-review` und `github-app-installation-worker-routing-apply` legen jetzt zusaetzlich Worker-Zuordnung, erlaubte Worker-Pools und Scheduler-Lanes pro Installation fest
+  - `github-app-service-tick` respektiert diese Worker-Routing-Regeln jetzt ebenfalls und blockt Worker-Mismatches oder manuelle Worker-Freigaben explizit
+  - damit ist die Phase-4-Runtime jetzt erstmals nicht nur installation-aware, sondern auch als gemeinsamer Multi-Installation-Service gedacht
   - der bestehende Kernel bleibt weiter produktneutral, waehrend GitHub-spezifische Reife separat sichtbar gemacht wird
 - current_limit: Es gibt jetzt eine klare Reifeanzeige plus lokale Event-/Runner-/Recovery-/Service-/Installations-Vorstufen inklusive Installations-Policy und erstem Mehr-Repo-Handoff, aber noch keine ausgearbeitete Webhook-, Installations- oder Multi-Repo-Liveintegration.
 
@@ -227,10 +234,11 @@ Das Produkt soll nicht nur den ersten Lauf gut koennen, sondern auch den zweiten
 - [ ] festhalten, welche Commands/Flows spaeter App-getrieben werden koennen
 - [ ] Webhook- und Event-Modell skizzieren
 - [~] lokale Runner-/Service-Governance inklusive Resume/Recovery/Requeue stabilisieren
-- [ ] Secrets-, Installations- und Multi-Repo-Modell klaeren
+- [~] Secrets-, Installations- und Multi-Repo-Modell klaeren
 - [~] lokale Installations-Registry und Repo-Scope-Governance als Vorstufe stabilisieren
 - [~] Installations-Registry in einen echten Multi-Repo-Handoff fuer Watchlist und spaetere Governance ueberfuehren
 - [~] explizite Installations-Policy vor Scope und Handoff scharfziehen
+- [~] installation-scoped Worker-/Scheduler-Routing fuer spaetere Multi-Worker-Runtimes stabilisieren
 - [ ] entscheiden, welche Outputs die App direkt erzeugt und welche weiter CLI-/Engine-Artefakte bleiben
 
 ### Exit Criteria

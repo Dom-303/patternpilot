@@ -9,12 +9,18 @@ import {
   applyGithubAppInstallationGovernanceToState,
   applyGithubAppInstallationOperationsToState,
   applyGithubAppInstallationRuntimeToState,
+  applyGithubAppInstallationServiceLaneToState,
+  applyGithubAppInstallationServicePlanToState,
+  applyGithubAppInstallationWorkerRoutingToState,
   applyGithubAppInstallationScopeHandoff,
   applyGithubAppInstallationPacketToState,
   buildGithubAppInstallationGovernancePlan,
   buildGithubAppInstallationOperationsPlan,
   buildGithubAppInstallationPacket,
   buildGithubAppInstallationRuntimePlan,
+  buildGithubAppInstallationServiceLanePlan,
+  buildGithubAppInstallationServicePlan,
+  buildGithubAppInstallationWorkerRoutingPlan,
   buildGithubAppInstallationScopePlan,
   buildGithubAppInstallationStateSummary,
   loadGithubAppInstallationState,
@@ -22,8 +28,14 @@ import {
   renderGithubAppInstallationOperationsSummary,
   renderGithubAppInstallationPacketSummary,
   renderGithubAppInstallationRuntimeSummary,
+  renderGithubAppInstallationServiceLaneSummary,
+  renderGithubAppInstallationServicePlanSummary,
+  renderGithubAppInstallationWorkerRoutingSummary,
   renderGithubAppInstallationScopeSummary,
   writeGithubAppInstallationArtifacts,
+  writeGithubAppInstallationServiceLaneArtifacts,
+  writeGithubAppInstallationServicePlanArtifacts,
+  writeGithubAppInstallationWorkerRoutingArtifacts,
   writeGithubAppInstallationScopeArtifacts,
   writeGithubAppInstallationState
 } from "../lib/github-installations.mjs";
@@ -422,6 +434,228 @@ test("applyGithubAppInstallationOperationsToState persists operations policy", (
   assert.equal(applied.nextState.installations[0].operations.serviceStatus, "service_ready");
 });
 
+test("buildGithubAppInstallationServiceLanePlan suggests recovery lane for service-ready installations with blocked queue pressure", () => {
+  const plan = buildGithubAppInstallationServiceLanePlan({
+    installations: [
+      {
+        installationId: 10101,
+        accountLogin: "Dom-303",
+        repositories: [
+          { fullName: "Dom-303/eventbear-worker", mappedProjectKey: "eventbear-worker" }
+        ],
+        operations: {
+          status: "operations_governed",
+          serviceStatus: "service_ready"
+        }
+      }
+    ]
+  }, [
+    {
+      fileName: "blocked.json",
+      contractPath: "/tmp/blocked.json",
+      queueState: "blocked",
+      contract: {
+        contractKind: "recovery_contract",
+        contractStatus: "recovery_manual_review",
+        installationId: 10101
+      }
+    }
+  ], {
+    installationId: 10101
+  });
+
+  assert.equal(plan.installationCount, 1);
+  assert.equal(plan.entries[0].suggestedLaneMode, "recovery_lane");
+  assert.equal(plan.entries[0].suggestedTickDisposition, "recovery_tick");
+  assert.match(renderGithubAppInstallationServiceLaneSummary(plan), /suggested_lane=lane_governed:recovery_lane\/recovery_tick/);
+});
+
+test("applyGithubAppInstallationServiceLaneToState persists lane policy", () => {
+  const currentState = {
+    installations: [
+      {
+        installationId: 10101,
+        accountLogin: "Dom-303",
+        repositories: [
+          { fullName: "Dom-303/eventbear-worker", mappedProjectKey: "eventbear-worker" }
+        ],
+        operations: {
+          status: "operations_governed",
+          serviceStatus: "service_ready"
+        }
+      }
+    ]
+  };
+  const plan = buildGithubAppInstallationServiceLanePlan(currentState, [], {
+    installationId: 10101
+  });
+  const applied = applyGithubAppInstallationServiceLaneToState(currentState, plan, {
+    notes: "service lane for governed installation",
+    at: "2026-04-16T10:00:00.000Z"
+  });
+
+  assert.equal(applied.receipts.length, 1);
+  assert.equal(applied.nextState.installations[0].serviceLane.status, "lane_governed");
+  assert.equal(applied.nextState.installations[0].serviceLane.tickDisposition, "auto_tick");
+  assert.equal(applied.nextState.installations[0].serviceLane.maxConcurrentClaims, 1);
+});
+
+test("buildGithubAppInstallationServicePlan suggests urgent recovery-first scheduling for blocked installations", () => {
+  const plan = buildGithubAppInstallationServicePlan({
+    installations: [
+      {
+        installationId: 10101,
+        accountLogin: "Dom-303",
+        operations: {
+          status: "operations_governed",
+          serviceStatus: "service_ready"
+        },
+        serviceLane: {
+          status: "lane_governed",
+          laneMode: "recovery_lane",
+          tickDisposition: "recovery_tick",
+          maxConcurrentClaims: 2
+        }
+      }
+    ]
+  }, [
+    {
+      fileName: "dead.json",
+      contractPath: "/tmp/dead.json",
+      queueState: "dead_letter",
+      contract: {
+        contractKind: "recovery_contract",
+        installationId: 10101
+      }
+    }
+  ], {
+    installationId: 10101
+  });
+
+  assert.equal(plan.installationCount, 1);
+  assert.equal(plan.entries[0].suggestedPriority, "urgent");
+  assert.equal(plan.entries[0].suggestedTickBudget, 1);
+  assert.deepEqual(plan.entries[0].suggestedPreferredContractKinds, ["recovery_contract", "resume_contract", "execution_contract"]);
+  assert.match(renderGithubAppInstallationServicePlanSummary(plan), /suggested=schedule_governed:urgent\/budget=1/);
+});
+
+test("applyGithubAppInstallationServicePlanToState persists shared service plan", () => {
+  const currentState = {
+    installations: [
+      {
+        installationId: 10101,
+        accountLogin: "Dom-303",
+        operations: {
+          status: "operations_governed",
+          serviceStatus: "service_ready"
+        },
+        serviceLane: {
+          status: "lane_governed",
+          laneMode: "auto_lane",
+          tickDisposition: "auto_tick",
+          maxConcurrentClaims: 2
+        }
+      }
+    ]
+  };
+  const plan = buildGithubAppInstallationServicePlan(currentState, [], {
+    installationId: 10101
+  });
+  const applied = applyGithubAppInstallationServicePlanToState(currentState, plan, {
+    notes: "shared service plan for governed installation",
+    at: "2026-04-16T10:05:00.000Z"
+  });
+
+  assert.equal(applied.receipts.length, 1);
+  assert.equal(applied.nextState.installations[0].servicePlan.status, "schedule_governed");
+  assert.equal(applied.nextState.installations[0].servicePlan.priority, "idle");
+  assert.equal(applied.nextState.installations[0].servicePlan.tickBudget, 1);
+});
+
+test("buildGithubAppInstallationWorkerRoutingPlan suggests pinned recovery worker when worker id is provided", () => {
+  const plan = buildGithubAppInstallationWorkerRoutingPlan({
+    installations: [
+      {
+        installationId: 10101,
+        accountLogin: "Dom-303",
+        serviceLane: {
+          status: "lane_governed",
+          laneMode: "recovery_lane",
+          tickDisposition: "recovery_tick",
+          maxConcurrentClaims: 1
+        },
+        servicePlan: {
+          status: "schedule_governed",
+          priority: "urgent",
+          tickBudget: 1
+        }
+      }
+    ]
+  }, [
+    {
+      fileName: "dead.json",
+      contractPath: "/tmp/dead.json",
+      queueState: "dead_letter",
+      contract: {
+        contractKind: "recovery_contract",
+        installationId: 10101
+      }
+    }
+  ], {
+    installationId: 10101,
+    workerId: "worker-a"
+  });
+
+  assert.equal(plan.entries[0].suggestedSchedulerLane, "recovery_priority");
+  assert.equal(plan.entries[0].suggestedWorkerMode, "pinned_worker");
+  assert.equal(plan.entries[0].suggestedAssignedWorkerId, "worker-a");
+  assert.match(renderGithubAppInstallationWorkerRoutingSummary(plan), /suggested=routing_governed:recovery_priority\/pinned_worker:worker-a/);
+});
+
+test("applyGithubAppInstallationWorkerRoutingToState persists worker routing", () => {
+  const currentState = {
+    installations: [
+      {
+        installationId: 10101,
+        accountLogin: "Dom-303",
+        serviceLane: {
+          status: "lane_governed",
+          laneMode: "auto_lane",
+          tickDisposition: "auto_tick",
+          maxConcurrentClaims: 1
+        },
+        servicePlan: {
+          status: "schedule_governed",
+          priority: "high",
+          tickBudget: 1
+        }
+      }
+    ]
+  };
+  const plan = buildGithubAppInstallationWorkerRoutingPlan(currentState, [
+    {
+      fileName: "pending.json",
+      contractPath: "/tmp/pending.json",
+      queueState: "pending",
+      contract: {
+        contractKind: "execution_contract",
+        installationId: 10101
+      }
+    }
+  ], {
+    installationId: 10101,
+    workerId: "worker-a"
+  });
+  const applied = applyGithubAppInstallationWorkerRoutingToState(currentState, plan, {
+    notes: "worker routing for governed installation",
+    at: "2026-04-16T11:00:00.000Z"
+  });
+
+  assert.equal(applied.receipts.length, 1);
+  assert.equal(applied.nextState.installations[0].workerRouting.status, "routing_governed");
+  assert.equal(applied.nextState.installations[0].workerRouting.schedulerLane, "priority");
+});
+
 test("assessGithubAppInstallationServiceAdmin blocks dead-letter requeue when installation policy disallows it", () => {
   const assessment = assessGithubAppInstallationServiceAdmin({
     installations: [
@@ -567,4 +801,95 @@ test("writeGithubAppInstallationScopeArtifacts writes scope files", async () => 
   assert.ok(JSON.parse(await fs.readFile(artifacts.planPath, "utf8")));
   assert.ok(JSON.parse(await fs.readFile(artifacts.statePath, "utf8")));
   assert.match(await fs.readFile(artifacts.summaryPath, "utf8"), /Patternpilot GitHub App Installation Scope/);
+});
+
+test("writeGithubAppInstallationServiceLaneArtifacts writes service lane files", async () => {
+  const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-github-installation-lane-artifacts-"));
+  const plan = {
+    generatedAt: "2026-04-16T10:00:00.000Z",
+    installationId: 10101,
+    project: "eventbear-worker",
+    installationCount: 1,
+    entries: [],
+    nextAction: "Review it."
+  };
+  const state = {
+    schemaVersion: 1,
+    updatedAt: "2026-04-16T10:00:00.000Z",
+    installations: []
+  };
+  const summary = renderGithubAppInstallationServiceLaneSummary(plan, []);
+  const artifacts = await writeGithubAppInstallationServiceLaneArtifacts(rootDir, {
+    runId: "2026-04-16T10-00-00-000Z",
+    plan,
+    receipts: [],
+    state,
+    summary,
+    dryRun: false
+  });
+
+  assert.ok(JSON.parse(await fs.readFile(artifacts.planPath, "utf8")));
+  assert.ok(JSON.parse(await fs.readFile(artifacts.statePath, "utf8")));
+  assert.match(await fs.readFile(artifacts.summaryPath, "utf8"), /Patternpilot GitHub App Installation Service Lanes/);
+});
+
+test("writeGithubAppInstallationServicePlanArtifacts writes service plan files", async () => {
+  const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-github-installation-plan-artifacts-"));
+  const plan = {
+    generatedAt: "2026-04-16T10:00:00.000Z",
+    installationId: 10101,
+    project: "eventbear-worker",
+    installationCount: 1,
+    entries: [],
+    nextAction: "Review it."
+  };
+  const state = {
+    schemaVersion: 1,
+    updatedAt: "2026-04-16T10:00:00.000Z",
+    installations: []
+  };
+  const summary = renderGithubAppInstallationServicePlanSummary(plan, []);
+  const artifacts = await writeGithubAppInstallationServicePlanArtifacts(rootDir, {
+    runId: "2026-04-16T10-00-00-000Z",
+    plan,
+    receipts: [],
+    state,
+    summary,
+    dryRun: false
+  });
+
+  assert.ok(JSON.parse(await fs.readFile(artifacts.planPath, "utf8")));
+  assert.ok(JSON.parse(await fs.readFile(artifacts.statePath, "utf8")));
+  assert.match(await fs.readFile(artifacts.summaryPath, "utf8"), /Patternpilot GitHub App Installation Service Plan/);
+});
+
+test("writeGithubAppInstallationWorkerRoutingArtifacts writes worker routing files", async () => {
+  const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-github-installation-routing-artifacts-"));
+  const plan = {
+    generatedAt: "2026-04-16T11:00:00.000Z",
+    installationId: 10101,
+    project: "eventbear-worker",
+    workerId: "worker-a",
+    installationCount: 1,
+    entries: [],
+    nextAction: "Review it."
+  };
+  const state = {
+    schemaVersion: 1,
+    updatedAt: "2026-04-16T11:00:00.000Z",
+    installations: []
+  };
+  const summary = renderGithubAppInstallationWorkerRoutingSummary(plan, []);
+  const artifacts = await writeGithubAppInstallationWorkerRoutingArtifacts(rootDir, {
+    runId: "2026-04-16T11-00-00-000Z",
+    plan,
+    receipts: [],
+    state,
+    summary,
+    dryRun: false
+  });
+
+  assert.ok(JSON.parse(await fs.readFile(artifacts.planPath, "utf8")));
+  assert.ok(JSON.parse(await fs.readFile(artifacts.statePath, "utf8")));
+  assert.match(await fs.readFile(artifacts.summaryPath, "utf8"), /Patternpilot GitHub App Installation Worker Routing/);
 });

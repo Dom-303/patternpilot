@@ -48,6 +48,14 @@ Diese Datei beschreibt den naechsten Produktisierungsschritt von Patternpilot we
 - `github-app-installation-operations-review` und `github-app-installation-operations-apply` koppeln das jetzt an Watchlist-/Service-Betriebsbereitschaft pro Installation
 - `github-app-service-review` und `github-app-service-tick` respektieren diese Installations-Operationsschicht jetzt auch beim lokalen Queue-/Runner-Betrieb
 - `github-app-service-requeue` respektiert jetzt ebenfalls installation-spezifische Freigabe-Regeln fuer `blocked`, `dead-letter` und `claimed`
+- `github-app-installation-service-lane-review` und `github-app-installation-service-lane-apply` legen jetzt darueber eine echte Runtime-Lane pro Installation, inklusive Tick-Disposition und Concurrency-Cap
+- `github-app-installation-service-plan-review` und `github-app-installation-service-plan-apply` planen jetzt darueber hinaus Prioritaet, Tick-Budget und Contract-Fokus fuer gemeinsame Service-Ticks ueber mehrere Installationen hinweg
+- `github-app-installation-worker-routing-review` und `github-app-installation-worker-routing-apply` legen jetzt darueber hinaus worker-spezifische Zuordnung, erlaubte Worker-Pools und Scheduler-Lanes pro Installation fest
+- `github-app-service-tick` respektiert diese Installations-Lanes jetzt ebenfalls, statt alle service-bereiten Installationen gleich zu behandeln
+- `github-app-service-tick` respektiert jetzt auch diese installation-spezifischen Shared-Service-Plaene bei Auswahl und Reihenfolge
+- `github-app-service-tick` respektiert jetzt zusaetzlich installation-spezifisches Worker-Routing und blockt Worker-Mismatches oder manuelle Worker-Freigaben als eigene Runtime-Entscheidung
+- damit ist die lokale Runtime-Schicht nicht mehr nur installation-aware, sondern kann mehrere Installationen bewusst gegeneinander priorisieren
+- damit ist die lokale Runtime-Schicht jetzt zusaetzlich worker-aware und kann spaetere Scheduler-/Service-Prozesse pro Installation gezielter voneinander trennen
 - `github-app-installation-scope` bewertet jetzt die Registry als Mehr-Repo-Scope pro Installation
 - `github-app-installation-handoff` kann watchlist-faehige Repositories daraus kontrolliert in Projekt-Watchlists uebergeben
 
