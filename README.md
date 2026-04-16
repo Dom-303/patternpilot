@@ -227,6 +227,13 @@ Darueber liegt jetzt ausserdem ein erster Scope-/Handoff-Pfad:
 - `github-app-service-runtime-loop-review` hebt diese Session-Schicht jetzt weiter auf einen langlebigeren Runtime-Loop ueber mehrere Session-Runden mit eigenem Loop-Budget
 - `github-app-service-runtime-loop-run` fuehrt diese Runtime-Loops jetzt kontrolliert ueber mehrere Sessions hinweg aus und schreibt bei Bedarf eine Loop-Resume-Kante fuer spaetere Fortsetzung
 - `github-app-service-runtime-loop-resume` setzt genau auf dieser Loop-Resume-Kante auf und kann einen pausierten Runtime-Loop bewusst wiederaufnehmen
+- `github-app-service-runtime-loop-recover` setzt jetzt zusaetzlich auf einem expliziten `service-runtime-loop-recovery-contract.json` auf und fuehrt Loop-Recovery bewusst ueber die Resume-Kante weiter
+- `github-app-service-runtime-loop-recovery-review` zeigt diese Recovery-Kandidaten jetzt separat als dispatch-ready, manual-review oder preview-only
+- `github-app-service-runtime-loop-recovery-receipts-review` zeigt diese Recovery-Kandidaten jetzt zusaetzlich als dauerhafte offene, recovered, backoff-pending oder exhausted Receipt-Schicht
+- `github-app-service-runtime-loop-recovery-auto` kann den aktuell besten wirklich faelligen Loop-Recovery-Fall jetzt direkt automatisch auswaehlen und weiterfuehren
+- `github-app-service-runtime-loop-recovery-receipts-release-review` und `github-app-service-runtime-loop-recovery-receipts-release` geben jetzt zusaetzlich eine bewusste Manual-Release-Kante fuer `backoff_pending`, `manual_review` oder `exhausted`
+- `github-app-service-runtime-loop-recovery-runtime-review` und `github-app-service-runtime-loop-recovery-runtime-run` staffeln jetzt mehrere offene Loop-Recoveries worker- und lane-bewusst statt nur einen Einzelfall auszuwahlen
+- `github-app-service-runtime-loop-history-review` macht diese langlebigeren Loop-Laeufe jetzt zudem als eigene History-/Recovery-Sicht ueber mehrere Runtime-Loops hinweg sichtbar
 - `github-app-service-runtime-loop-review`, `run`, `resume` und ihre Unterpfade drucken jetzt ausserdem keine verschachtelten Zwischen-Summaries mehr, wenn sie intern auf Runtime-/Cycle-/Session-Kommandos aufsetzen
 - damit kann ein gemeinsamer lokaler Service-Tick jetzt nicht mehr nur “das naechste passende Contract” nehmen, sondern bewusst mehrere Installationen gegeneinander priorisieren und in getrennte scheduler-scoped Runtime-Lanes aufspalten
 - `github-app-service-requeue` respektiert jetzt zusaetzlich installation-spezifische Admin-Regeln fuer `blocked`, `dead-letter` und `claimed`

@@ -8,6 +8,15 @@ import {
   buildGithubWebhookServiceRequeuePlan,
   buildGithubWebhookServiceRuntimeClaim,
   buildGithubWebhookServiceRuntimeCyclePlan,
+  buildGithubWebhookServiceRuntimeLoopHistoryEntry,
+  buildGithubWebhookServiceRuntimeLoopHistoryReview,
+  buildGithubWebhookServiceRuntimeLoopRecoveryAssessment,
+  buildGithubWebhookServiceRuntimeLoopRecoveryContract,
+  buildGithubWebhookServiceRuntimeLoopRecoveryReceipt,
+  buildGithubWebhookServiceRuntimeLoopRecoveryReceiptReleasePlan,
+  buildGithubWebhookServiceRuntimeLoopRecoveryReceiptsReview,
+  buildGithubWebhookServiceRuntimeLoopRecoveryRuntimePlan,
+  buildGithubWebhookServiceRuntimeLoopRecoveryReview,
   buildGithubWebhookServiceRuntimeLoopResumeContract,
   buildGithubWebhookServiceRuntimeLoopState,
   buildGithubWebhookServiceRuntimeSessionResumeContract,
@@ -19,16 +28,28 @@ import {
   claimGithubWebhookServiceRuntimeLanes,
   claimGithubWebhookServiceQueueEntries,
   classifyGithubWebhookServiceQueueEntry,
+  evaluateGithubWebhookServiceRuntimeLoopRecoveryReceipt,
   enqueueGithubWebhookServiceContractFromFile,
+  loadGithubWebhookServiceRuntimeLoopHistory,
+  loadGithubWebhookServiceRuntimeLoopRecoveryReceipts,
   loadGithubWebhookServiceRuntimeClaims,
   loadGithubWebhookServiceQueue,
   queueGithubWebhookServiceContract,
+  appendGithubWebhookServiceRuntimeLoopHistory,
+  appendGithubWebhookServiceRuntimeLoopRecoveryReceipt,
+  markGithubWebhookServiceRuntimeLoopRecoveryReceiptAttempted,
   reclaimExpiredGithubWebhookServiceRuntimeClaims,
+  releaseGithubWebhookServiceRuntimeLoopRecoveryReceipts,
   releaseGithubWebhookServiceRuntimeLanes,
   reclaimExpiredGithubWebhookServiceClaims,
   requeueGithubWebhookServiceQueueEntries,
   renderGithubWebhookServiceRequeueSummary,
   renderGithubWebhookServiceRuntimeCycleSummary,
+  renderGithubWebhookServiceRuntimeLoopHistoryReviewSummary,
+  renderGithubWebhookServiceRuntimeLoopRecoveryReceiptReleaseSummary,
+  renderGithubWebhookServiceRuntimeLoopRecoveryReceiptsReviewSummary,
+  renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeSummary,
+  renderGithubWebhookServiceRuntimeLoopRecoveryReviewSummary,
   renderGithubWebhookServiceRuntimeLoopSummary,
   renderGithubWebhookServiceRuntimeSessionSummary,
   renderGithubWebhookServiceReviewSummary,
@@ -932,6 +953,36 @@ test("buildGithubWebhookServiceRuntimeLoopResumeContract exposes remaining loop 
   assert.equal(contract.resumeFromLoopIndex, 2);
 });
 
+test("runtime loop history can append and review recent loop entries", async () => {
+  const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-gh-service-runtime-history-"));
+  const entry = buildGithubWebhookServiceRuntimeLoopHistoryEntry({
+    completedLoops: 2,
+    totalSessions: 3,
+    totalCycles: 4,
+    remainingLoopBudget: 1,
+    stopReason: "loop_limit_reached",
+    resumeReady: true,
+    workerIds: ["worker-a", "worker-b"]
+  }, [
+    { selectedCount: 2 },
+    { selectedCount: 1 }
+  ], {
+    runId: "runtime-loop-1",
+    commandName: "github-app-service-runtime-loop-run",
+    summaryPath: "runs/integration/github-app-service-runtime-loop/runtime-loop-1/summary.md"
+  });
+
+  await appendGithubWebhookServiceRuntimeLoopHistory(rootDir, entry);
+  const history = await loadGithubWebhookServiceRuntimeLoopHistory(rootDir);
+  const review = buildGithubWebhookServiceRuntimeLoopHistoryReview(history, { limit: 5 });
+  const summary = renderGithubWebhookServiceRuntimeLoopHistoryReviewSummary(review);
+
+  assert.equal(history.entries.length, 1);
+  assert.equal(review.resumableCount, 1);
+  assert.equal(review.recentEntries[0].selectedCount, 3);
+  assert.match(summary, /resumable_count: 1/);
+});
+
 test("buildGithubWebhookServiceTickPlan respects per-installation lane concurrency", () => {
   const plan = buildGithubWebhookServiceTickPlan([
     {
@@ -1485,6 +1536,396 @@ test("requeueGithubWebhookServiceQueueEntries respects installation admin policy
   });
 
   assert.equal(receipts[0].outcome, "blocked_installation_policy");
+});
+
+test("runtime loop recovery contract is dispatch-ready when resume contract exists", () => {
+  const loopState = buildGithubWebhookServiceRuntimeLoopState([
+    {
+      loopIndex: 1,
+      completedSessions: 2,
+      totalCycles: 4,
+      runtimeCount: 2,
+      dispatchableRuntimeCount: 1,
+      blockedLaneCount: 0,
+      queueCount: 1,
+      sessionStopReason: "session_limit_reached",
+      stopReason: "loop_limit_reached"
+    }
+  ], {
+    loopLimit: 3,
+    stopReason: "loop_limit_reached"
+  });
+  const receipts = [{ selectedCount: 2 }];
+  const resumeContract = buildGithubWebhookServiceRuntimeLoopResumeContract(loopState, {
+    loopStatePath: "runs/integration/github-app-service-runtime-loop/demo/service-runtime-loop-state.json"
+  });
+  const recoveryAssessment = buildGithubWebhookServiceRuntimeLoopRecoveryAssessment(loopState, receipts, {
+    resumeContractPath: "runs/integration/github-app-service-runtime-loop/demo/service-runtime-loop-resume-contract.json",
+    resumeContract
+  });
+  const recoveryContract = buildGithubWebhookServiceRuntimeLoopRecoveryContract({
+    loopState,
+    receipts,
+    recoveryAssessment,
+    resumeContract
+  }, {
+    runId: "demo-run",
+    loopStatePath: "runs/integration/github-app-service-runtime-loop/demo/service-runtime-loop-state.json",
+    receiptsPath: "runs/integration/github-app-service-runtime-loop/demo/service-runtime-loop-receipts.json",
+    resumeContractPath: "runs/integration/github-app-service-runtime-loop/demo/service-runtime-loop-resume-contract.json",
+    recoveryContractPath: "runs/integration/github-app-service-runtime-loop/demo/service-runtime-loop-recovery-contract.json"
+  });
+
+  assert.equal(recoveryAssessment.effectiveStatus, "dispatch_ready_runtime_loop_recovery_contract");
+  assert.equal(recoveryContract.contractStatus, "dispatch_ready_runtime_loop_recovery_contract");
+  assert.equal(recoveryContract.resumeContractPath, "runs/integration/github-app-service-runtime-loop/demo/service-runtime-loop-resume-contract.json");
+});
+
+test("runtime loop recovery review surfaces dispatch-ready loop candidates from history", async () => {
+  const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-gh-service-loop-recovery-"));
+  const loopState = buildGithubWebhookServiceRuntimeLoopState([
+    {
+      loopIndex: 1,
+      completedSessions: 1,
+      totalCycles: 2,
+      runtimeCount: 1,
+      dispatchableRuntimeCount: 1,
+      blockedLaneCount: 0,
+      queueCount: 1,
+      sessionStopReason: "session_limit_reached",
+      stopReason: "loop_limit_reached"
+    }
+  ], {
+    loopLimit: 2,
+    stopReason: "loop_limit_reached"
+  });
+  await appendGithubWebhookServiceRuntimeLoopHistory(rootDir, buildGithubWebhookServiceRuntimeLoopHistoryEntry(
+    loopState,
+    [{ selectedCount: 3 }],
+    {
+      runId: "recovery-demo",
+      commandName: "github-app-service-runtime-loop-run",
+      recoveryStatus: "dispatch_ready_runtime_loop_recovery_contract",
+      statePath: "runs/integration/github-app-service-runtime-loop/recovery-demo/service-runtime-loop-state.json",
+      receiptsPath: "runs/integration/github-app-service-runtime-loop/recovery-demo/service-runtime-loop-receipts.json",
+      resumeContractPath: "runs/integration/github-app-service-runtime-loop/recovery-demo/service-runtime-loop-resume-contract.json",
+      recoveryContractPath: "runs/integration/github-app-service-runtime-loop/recovery-demo/service-runtime-loop-recovery-contract.json",
+      summaryPath: "runs/integration/github-app-service-runtime-loop/recovery-demo/summary.md"
+    }
+  ));
+
+  const historyState = await loadGithubWebhookServiceRuntimeLoopHistory(rootDir);
+  const review = buildGithubWebhookServiceRuntimeLoopRecoveryReview(historyState, { limit: 5 });
+  const summary = renderGithubWebhookServiceRuntimeLoopRecoveryReviewSummary(review);
+
+  assert.equal(review.dispatchReadyCount, 1);
+  assert.equal(review.bestCandidate?.runId, "recovery-demo");
+  assert.match(summary, /dispatch_ready_count: 1/);
+  assert.match(summary, /service-runtime-loop-recovery-contract.json/);
+});
+
+test("runtime loop recovery receipts can append and review open recovery work", async () => {
+  const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-gh-service-loop-recovery-receipts-"));
+  const loopState = buildGithubWebhookServiceRuntimeLoopState([
+    {
+      loopIndex: 1,
+      completedSessions: 2,
+      totalCycles: 4,
+      runtimeCount: 2,
+      dispatchableRuntimeCount: 1,
+      blockedLaneCount: 0,
+      queueCount: 1,
+      sessionStopReason: "session_limit_reached",
+      stopReason: "loop_limit_reached"
+    }
+  ], {
+    loopLimit: 3,
+    stopReason: "loop_limit_reached"
+  });
+  const recoveryContract = buildGithubWebhookServiceRuntimeLoopRecoveryContract({
+    loopState,
+    receipts: [{ selectedCount: 2 }]
+  }, {
+    runId: "loop-recovery-run",
+    resumeContractPath: "runs/integration/github-app-service-runtime-loop/loop-recovery-run/service-runtime-loop-resume-contract.json",
+    recoveryContractPath: "runs/integration/github-app-service-runtime-loop/loop-recovery-run/service-runtime-loop-recovery-contract.json"
+  });
+  const receipt = buildGithubWebhookServiceRuntimeLoopRecoveryReceipt(loopState, recoveryContract, {
+    runId: "loop-recovery-run",
+    sourceCommand: "github-app-service-runtime-loop-run",
+    recoveryContractPath: "runs/integration/github-app-service-runtime-loop/loop-recovery-run/service-runtime-loop-recovery-contract.json",
+    summaryPath: "runs/integration/github-app-service-runtime-loop/loop-recovery-run/summary.md"
+  });
+
+  await appendGithubWebhookServiceRuntimeLoopRecoveryReceipt(rootDir, receipt);
+
+  const receiptState = await loadGithubWebhookServiceRuntimeLoopRecoveryReceipts(rootDir);
+  const review = buildGithubWebhookServiceRuntimeLoopRecoveryReceiptsReview(receiptState, { limit: 5 });
+  const summary = renderGithubWebhookServiceRuntimeLoopRecoveryReceiptsReviewSummary(review);
+
+  assert.equal(receiptState.receipts.length, 1);
+  assert.equal(review.openCount, 1);
+  assert.equal(review.bestReceipt?.runId, "loop-recovery-run");
+  assert.match(summary, /open_count: 1/);
+  assert.match(summary, /service-runtime-loop-recovery-contract.json/);
+});
+
+test("runtime loop recovery receipts become backoff-pending after an attempt", async () => {
+  const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-gh-service-loop-recovery-attempt-"));
+  const loopState = buildGithubWebhookServiceRuntimeLoopState([
+    {
+      loopIndex: 1,
+      completedSessions: 1,
+      totalCycles: 2,
+      runtimeCount: 1,
+      dispatchableRuntimeCount: 1,
+      blockedLaneCount: 0,
+      queueCount: 1,
+      sessionStopReason: "session_limit_reached",
+      stopReason: "loop_limit_reached"
+    }
+  ], {
+    loopLimit: 2,
+    stopReason: "loop_limit_reached"
+  });
+  const recoveryContract = buildGithubWebhookServiceRuntimeLoopRecoveryContract({
+    loopState,
+    receipts: [{ selectedCount: 1 }]
+  }, {
+    runId: "loop-attempt-run",
+    resumeContractPath: "runs/integration/github-app-service-runtime-loop/loop-attempt-run/service-runtime-loop-resume-contract.json",
+    recoveryContractPath: "runs/integration/github-app-service-runtime-loop/loop-attempt-run/service-runtime-loop-recovery-contract.json"
+  });
+  await appendGithubWebhookServiceRuntimeLoopRecoveryReceipt(rootDir, buildGithubWebhookServiceRuntimeLoopRecoveryReceipt(loopState, recoveryContract, {
+    runId: "loop-attempt-run",
+    recoveryContractPath: "runs/integration/github-app-service-runtime-loop/loop-attempt-run/service-runtime-loop-recovery-contract.json"
+  }));
+
+  await markGithubWebhookServiceRuntimeLoopRecoveryReceiptAttempted(rootDir, {
+    recoveryContractPath: "runs/integration/github-app-service-runtime-loop/loop-attempt-run/service-runtime-loop-recovery-contract.json",
+    attemptedAt: "2026-04-16T12:00:00.000Z",
+    backoffSeconds: 300,
+    maxAttempts: 3
+  });
+
+  const receiptState = await loadGithubWebhookServiceRuntimeLoopRecoveryReceipts(rootDir);
+  const evaluated = evaluateGithubWebhookServiceRuntimeLoopRecoveryReceipt(receiptState.receipts[0], {
+    now: "2026-04-16T12:01:00.000Z"
+  });
+  const review = buildGithubWebhookServiceRuntimeLoopRecoveryReceiptsReview(receiptState, {
+    limit: 5,
+    now: "2026-04-16T12:01:00.000Z"
+  });
+  const summary = renderGithubWebhookServiceRuntimeLoopRecoveryReceiptsReviewSummary(review);
+
+  assert.equal(receiptState.receipts[0].attemptCount, 1);
+  assert.equal(evaluated.effectiveReceiptState, "backoff_pending");
+  assert.equal(review.backoffPendingCount, 1);
+  assert.equal(review.openCount, 0);
+  assert.match(summary, /backoff_pending_count: 1/);
+});
+
+test("runtime loop recovery receipt release plan selects problematic receipts and can release exhausted ones", async () => {
+  const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-gh-service-loop-recovery-release-"));
+  const loopState = buildGithubWebhookServiceRuntimeLoopState([
+    {
+      loopIndex: 1,
+      completedSessions: 1,
+      totalCycles: 2,
+      runtimeCount: 1,
+      dispatchableRuntimeCount: 1,
+      blockedLaneCount: 0,
+      queueCount: 1,
+      sessionStopReason: "session_limit_reached",
+      stopReason: "loop_limit_reached"
+    }
+  ], {
+    loopLimit: 2,
+    stopReason: "loop_limit_reached"
+  });
+  const recoveryContract = buildGithubWebhookServiceRuntimeLoopRecoveryContract({
+    loopState,
+    receipts: [{ selectedCount: 1 }]
+  }, {
+    runId: "loop-release-run",
+    resumeContractPath: "runs/integration/github-app-service-runtime-loop/loop-release-run/service-runtime-loop-resume-contract.json",
+    recoveryContractPath: "runs/integration/github-app-service-runtime-loop/loop-release-run/service-runtime-loop-recovery-contract.json"
+  });
+  await appendGithubWebhookServiceRuntimeLoopRecoveryReceipt(rootDir, buildGithubWebhookServiceRuntimeLoopRecoveryReceipt(loopState, recoveryContract, {
+    runId: "loop-release-run",
+    recoveryContractPath: "runs/integration/github-app-service-runtime-loop/loop-release-run/service-runtime-loop-recovery-contract.json",
+    attemptCount: 3,
+    maxAttempts: 3
+  }));
+
+  const receiptState = await loadGithubWebhookServiceRuntimeLoopRecoveryReceipts(rootDir);
+  const plan = buildGithubWebhookServiceRuntimeLoopRecoveryReceiptReleasePlan(receiptState, {
+    fromStatus: "problematic",
+    limit: 5,
+    now: "2026-04-16T12:10:00.000Z",
+    resetAttempts: true
+  });
+  const summary = renderGithubWebhookServiceRuntimeLoopRecoveryReceiptReleaseSummary(plan);
+  const result = await releaseGithubWebhookServiceRuntimeLoopRecoveryReceipts(rootDir, {
+    receiptIds: plan.selectedReceipts.map((entry) => entry.receipt.receiptId),
+    recoveryContractPaths: plan.selectedReceipts.map((entry) => entry.receipt.recoveryContractPath).filter(Boolean),
+    resetAttempts: true,
+    notes: "manual override after review"
+  });
+  const refreshed = await loadGithubWebhookServiceRuntimeLoopRecoveryReceipts(rootDir);
+  const evaluated = evaluateGithubWebhookServiceRuntimeLoopRecoveryReceipt(refreshed.receipts[0], {
+    now: "2026-04-16T12:10:00.000Z"
+  });
+
+  assert.equal(plan.selectedCount, 1);
+  assert.match(summary, /selected_count: 1/);
+  assert.equal(result.releaseCount, 1);
+  assert.equal(refreshed.receipts[0].attemptCount, 0);
+  assert.equal(refreshed.receipts[0].receiptState, "open");
+  assert.equal(evaluated.effectiveReceiptState, "open_ready");
+});
+
+test("runtime loop recovery runtime plan assigns open receipts across workers and lanes", async () => {
+  const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-gh-service-loop-recovery-runtime-"));
+  const workerALoopState = buildGithubWebhookServiceRuntimeLoopState([
+    {
+      loopIndex: 1,
+      completedSessions: 2,
+      totalCycles: 4,
+      runtimeCount: 2,
+      dispatchableRuntimeCount: 1,
+      blockedLaneCount: 0,
+      queueCount: 1,
+      sessionStopReason: "session_limit_reached",
+      stopReason: "loop_limit_reached"
+    }
+  ], {
+    loopLimit: 3,
+    stopReason: "loop_limit_reached",
+    schedulerLane: "priority:worker-a",
+    workerIds: ["worker-a"]
+  });
+  const workerBLoopState = buildGithubWebhookServiceRuntimeLoopState([
+    {
+      loopIndex: 1,
+      completedSessions: 2,
+      totalCycles: 4,
+      runtimeCount: 2,
+      dispatchableRuntimeCount: 1,
+      blockedLaneCount: 0,
+      queueCount: 1,
+      sessionStopReason: "session_limit_reached",
+      stopReason: "loop_limit_reached"
+    }
+  ], {
+    loopLimit: 3,
+    stopReason: "loop_limit_reached",
+    schedulerLane: "priority:worker-b",
+    workerIds: ["worker-b"]
+  });
+  const workerAContract = buildGithubWebhookServiceRuntimeLoopRecoveryContract({
+    loopState: workerALoopState,
+    receipts: [{ selectedCount: 3 }]
+  }, {
+    runId: "lane-a-run",
+    resumeContractPath: "runs/integration/github-app-service-runtime-loop/lane-a-run/service-runtime-loop-resume-contract.json",
+    recoveryContractPath: "runs/integration/github-app-service-runtime-loop/lane-a-run/service-runtime-loop-recovery-contract.json"
+  });
+  const workerBContract = buildGithubWebhookServiceRuntimeLoopRecoveryContract({
+    loopState: workerBLoopState,
+    receipts: [{ selectedCount: 2 }]
+  }, {
+    runId: "lane-b-run",
+    resumeContractPath: "runs/integration/github-app-service-runtime-loop/lane-b-run/service-runtime-loop-resume-contract.json",
+    recoveryContractPath: "runs/integration/github-app-service-runtime-loop/lane-b-run/service-runtime-loop-recovery-contract.json"
+  });
+
+  await appendGithubWebhookServiceRuntimeLoopRecoveryReceipt(rootDir, buildGithubWebhookServiceRuntimeLoopRecoveryReceipt(workerALoopState, workerAContract, {
+    runId: "lane-a-run",
+    recoveryContractPath: "runs/integration/github-app-service-runtime-loop/lane-a-run/service-runtime-loop-recovery-contract.json"
+  }));
+  await appendGithubWebhookServiceRuntimeLoopRecoveryReceipt(rootDir, buildGithubWebhookServiceRuntimeLoopRecoveryReceipt(workerBLoopState, workerBContract, {
+    runId: "lane-b-run",
+    recoveryContractPath: "runs/integration/github-app-service-runtime-loop/lane-b-run/service-runtime-loop-recovery-contract.json"
+  }));
+
+  const receiptState = await loadGithubWebhookServiceRuntimeLoopRecoveryReceipts(rootDir);
+  const plan = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimePlan(receiptState, {
+    workerIds: ["worker-a", "worker-b"],
+    limit: 5
+  });
+  const summary = renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeSummary(plan);
+
+  assert.equal(plan.selectedCount, 2);
+  assert.equal(plan.blockedCount, 0);
+  assert.equal(plan.runtimes.find((runtime) => runtime.workerId === "worker-a")?.receiptCount, 1);
+  assert.equal(plan.runtimes.find((runtime) => runtime.workerId === "worker-b")?.receiptCount, 1);
+  assert.match(summary, /worker=worker-a: receipts=1/);
+  assert.match(summary, /worker=worker-b: receipts=1/);
+});
+
+test("runtime loop recovery runtime plan blocks open receipts on lanes with backoff conflicts", async () => {
+  const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-gh-service-loop-recovery-runtime-backoff-"));
+  const loopState = buildGithubWebhookServiceRuntimeLoopState([
+    {
+      loopIndex: 1,
+      completedSessions: 1,
+      totalCycles: 2,
+      runtimeCount: 1,
+      dispatchableRuntimeCount: 1,
+      blockedLaneCount: 0,
+      queueCount: 1,
+      sessionStopReason: "session_limit_reached",
+      stopReason: "loop_limit_reached"
+    }
+  ], {
+    loopLimit: 2,
+    stopReason: "loop_limit_reached"
+  });
+  const openContract = buildGithubWebhookServiceRuntimeLoopRecoveryContract({
+    loopState,
+    receipts: [{ selectedCount: 5 }]
+  }, {
+    runId: "lane-conflict-open",
+    resumeContractPath: "runs/integration/github-app-service-runtime-loop/lane-conflict-open/service-runtime-loop-resume-contract.json",
+    recoveryContractPath: "runs/integration/github-app-service-runtime-loop/lane-conflict-open/service-runtime-loop-recovery-contract.json"
+  });
+  const blockedContract = buildGithubWebhookServiceRuntimeLoopRecoveryContract({
+    loopState,
+    receipts: [{ selectedCount: 1 }]
+  }, {
+    runId: "lane-conflict-blocked",
+    resumeContractPath: "runs/integration/github-app-service-runtime-loop/lane-conflict-blocked/service-runtime-loop-resume-contract.json",
+    recoveryContractPath: "runs/integration/github-app-service-runtime-loop/lane-conflict-blocked/service-runtime-loop-recovery-contract.json"
+  });
+
+  await appendGithubWebhookServiceRuntimeLoopRecoveryReceipt(rootDir, buildGithubWebhookServiceRuntimeLoopRecoveryReceipt(loopState, openContract, {
+    runId: "lane-conflict-open",
+    schedulerLane: "recovery-priority",
+    workerIds: ["worker-a"],
+    recoveryContractPath: "runs/integration/github-app-service-runtime-loop/lane-conflict-open/service-runtime-loop-recovery-contract.json"
+  }));
+  await appendGithubWebhookServiceRuntimeLoopRecoveryReceipt(rootDir, buildGithubWebhookServiceRuntimeLoopRecoveryReceipt(loopState, blockedContract, {
+    runId: "lane-conflict-blocked",
+    schedulerLane: "recovery-priority",
+    workerIds: ["worker-a"],
+    recoveryContractPath: "runs/integration/github-app-service-runtime-loop/lane-conflict-blocked/service-runtime-loop-recovery-contract.json",
+    attemptCount: 1,
+    maxAttempts: 3,
+    lastAttemptAt: "2026-04-16T12:00:00.000Z",
+    blockedUntil: "2026-04-16T12:05:00.000Z"
+  }));
+
+  const receiptState = await loadGithubWebhookServiceRuntimeLoopRecoveryReceipts(rootDir);
+  const plan = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimePlan(receiptState, {
+    workerIds: ["worker-a"],
+    limit: 5,
+    now: "2026-04-16T12:01:00.000Z"
+  });
+
+  assert.equal(plan.selectedCount, 0);
+  assert.ok(plan.blockedReceipts.some((entry) => entry.runtimeStatus === "lane_backoff_pending"));
+  assert.ok(plan.blockedReceipts.some((entry) => entry.runtimeStatus === "backoff_pending"));
 });
 
 test("writeGithubWebhookServiceArtifacts writes service files", async () => {

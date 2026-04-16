@@ -4,7 +4,7 @@
 
 **Goal:** Fuehre `patternpilot` vom heutigen starken Kernzustand zu einem wirklich freigabefaehigen Produkt mit belastbarer Discovery-Qualitaet, starker Entscheidungsqualitaet, produktneutraler Vollautomatik-Basis, spaeterem GitHub-App-Cutover, sauberem Onboarding und klarer Release-Reife.
 
-**Current baseline:** Laut `docs/foundation/DELIVERY_STATUS.md` steht `patternpilot` heute grob bei `86-90%` Gesamtprodukt, `80-85%` Kernsystem, `75-80%` On-Demand-Pfad, `80-84%` wiederkehrender Automation und `63-68%` Vollautomatik-Zielbild.
+**Current baseline:** Laut `docs/foundation/DELIVERY_STATUS.md` steht `patternpilot` heute grob bei `86-91%` Gesamtprodukt, `80-85%` Kernsystem, `75-80%` On-Demand-Pfad, `81-85%` wiederkehrender Automation und `64-69%` Vollautomatik-Zielbild.
 
 **Architecture principle:** Weiterhin zuerst den produktneutralen Kernel haerten und kalibrieren. Erst wenn Discovery, Decision-Layer und Folge-Run-Betrieb belastbar sind, werden Produktschale, GitHub-App und First-Run-Onboarding als echte Produktflaechen ausgebaut.
 
@@ -231,6 +231,11 @@ Das Produkt soll nicht nur den ersten Lauf gut koennen, sondern auch den zweiten
   - `github-app-service-runtime-cycle-review` und `github-app-service-runtime-cycle-run` heben diese worker-scoped Runtime-Pfade jetzt weiter auf mehrschleifige Runtime-Zyklen mit expliziten Stoppgruenden und eigenen Cycle-Artefakten
   - `github-app-service-runtime-session-review`, `github-app-service-runtime-session-run` und `github-app-service-runtime-session-resume` heben diese Runtime-Zyklen jetzt weiter auf langlebigere Runtime-Sessions mit Session-State, Resume-Contract und mehrrundiger Fortsetzung
   - `github-app-service-runtime-loop-review`, `github-app-service-runtime-loop-run` und `github-app-service-runtime-loop-resume` heben diese Runtime-Sessions jetzt weiter auf langlebigere Runtime-Loops mit Loop-State, Resume-Contract und Fortsetzung ueber mehrere Sessions
+  - `github-app-service-runtime-loop-recover` und `github-app-service-runtime-loop-recovery-review` geben diesen Runtime-Loops jetzt zusaetzlich eine explizite Recovery-Kante ueber `service-runtime-loop-recovery-contract.json`
+  - `github-app-service-runtime-loop-recovery-receipts-review` und `github-app-service-runtime-loop-recovery-auto` geben diesen Runtime-Loops jetzt zusaetzlich eine dauerhafte Receipt-Schicht mit Attempt-/Backoff-Governance und einen Auto-Recovery-Pfad fuer wirklich faellige Faelle
+  - `github-app-service-runtime-loop-recovery-receipts-release-review` und `github-app-service-runtime-loop-recovery-receipts-release` geben diesen Runtime-Loops jetzt zusaetzlich eine bewusste Manual-Release-Kante fuer geblockte oder erschoepfte Receipts
+  - `github-app-service-runtime-loop-recovery-runtime-review` und `github-app-service-runtime-loop-recovery-runtime-run` geben diesen Runtime-Loops jetzt zusaetzlich eine worker- und lane-bewusste Recovery-Runtime fuer mehrere offene Receipts pro Durchlauf
+  - `github-app-service-runtime-loop-history-review` macht diese Runtime-Loops jetzt zusaetzlich als dauerhafte History-/Recovery-Sicht mit resumable, drained und previewed Loop-Faellen sichtbar
   - die Runtime-/Cycle-/Session-/Loop-Kommandos koennen jetzt zudem intern ohne doppelte Zwischen-Ausgabe komponiert werden, was den spaeteren Service-Runtime-Pfad sauberer macht
   - damit ist die Phase-4-Runtime jetzt erstmals nicht nur installation-aware, sondern auch als gemeinsamer Multi-Installation-Service gedacht
   - der bestehende Kernel bleibt weiter produktneutral, waehrend GitHub-spezifische Reife separat sichtbar gemacht wird

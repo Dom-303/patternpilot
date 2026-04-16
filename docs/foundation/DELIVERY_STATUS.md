@@ -53,8 +53,8 @@ sondern:
 
 ### Gesamtprodukt
 
-- schaetzung: `86-90%`
-- begruendung: Der Kernel ist stark, Discovery/Kuration laufen kontrolliert bis in die kanonische Wissensschicht, und Folge-Run-/Drift-/Governance-Logik ist jetzt inklusive Stabilitaets-, Requalify-, installation-scoped Worker-Routing-, Runtime-Schedule-, lane-scoped Service-Scheduler-, worker-scoped Runtime-, Runtime-Claim-/Lease-, Runtime-Cycle-, Runtime-Session- und Runtime-Loop-Schicht samt sauberer interner CLI-Komposition operativ belastbarer. Produktisierung, Onboarding, GitHub-App-Cutover, Release-Haertung und echte Vollautomatik fehlen aber weiter.
+- schaetzung: `86-91%`
+- begruendung: Der Kernel ist stark, Discovery/Kuration laufen kontrolliert bis in die kanonische Wissensschicht, und Folge-Run-/Drift-/Governance-Logik ist jetzt inklusive Stabilitaets-, Requalify-, installation-scoped Worker-Routing-, Runtime-Schedule-, lane-scoped Service-Scheduler-, worker-scoped Runtime-, Runtime-Claim-/Lease-, Runtime-Cycle-, Runtime-Session- und Runtime-Loop-Schicht samt Loop-History und sauberer interner CLI-Komposition operativ belastbarer. Produktisierung, Onboarding, GitHub-App-Cutover, Release-Haertung und echte Vollautomatik fehlen aber weiter.
 
 ### Kernsystem
 
@@ -70,14 +70,14 @@ sondern:
 
 ### Wiederkehrende Automation
 
-- schaetzung: `80-84%`
-- drin: Chain-Run, Job-State, Alerting, Dispatch, Locking, Retry-Klassifikation, Manual-Clear, Run-Lifecycle-Defaults, sichtbare Run-Drift- und Stability-Signale, explizite Governance fuer unattended versus manuell, Requalify-Latches fuer instabile Folge-Run-Schleifen und jetzt installation-scoped Worker-/Scheduler-Routing plus scheduler-scoped Runtime-Schedules, lane-scoped Service-Scheduler-Orchestrierung, worker-scoped Runtime-Pfade, Runtime-Claim-/Lease-Governance, mehrschleifige Runtime-Cycles, langlebigere Runtime-Sessions, erste Runtime-Loops und saubere interne Komposition fuer die lokale GitHub-App-Servicekante
+- schaetzung: `81-85%`
+- drin: Chain-Run, Job-State, Alerting, Dispatch, Locking, Retry-Klassifikation, Manual-Clear, Run-Lifecycle-Defaults, sichtbare Run-Drift- und Stability-Signale, explizite Governance fuer unattended versus manuell, Requalify-Latches fuer instabile Folge-Run-Schleifen und jetzt installation-scoped Worker-/Scheduler-Routing plus scheduler-scoped Runtime-Schedules, lane-scoped Service-Scheduler-Orchestrierung, worker-scoped Runtime-Pfade, Runtime-Claim-/Lease-Governance, mehrschleifige Runtime-Cycles, langlebigere Runtime-Sessions, erste Runtime-Loops, Loop-History und saubere interne Komposition fuer die lokale GitHub-App-Servicekante
 - offen: echte produktive Scheduler-Einbettung, noch schaerfere Auto-Resume-Regeln gegen reale Betriebsfaelle, erste reale Benachrichtigungskanaele, mehr Kalibrierung im echten Betrieb
 
 ### Vollautomatisches Zielbild
 
-- schaetzung: `63-68%`
-- drin: wichtige technische Grundbausteine fuer Vollautomatik sind angelegt, inklusive Lifecycle-, Drift-, Stability- und Governance-Sicht fuer Folge-Runs plus kontrollierter Requalify-Freigabe, installation-scoped Worker-/Scheduler-Routing, scheduler-scoped Runtime-Schedules, lane-scoped Service-Scheduler-Orchestrierung, worker-scoped Runtime-Pfade, Runtime-Claim-/Lease-Governance, mehrschleifige Runtime-Cycles, langlebigere Runtime-Sessions, erste Runtime-Loops und jetzt saubere interne Runtime-Komposition fuer spaetere Multi-Worker-Runtimes
+- schaetzung: `64-69%`
+- drin: wichtige technische Grundbausteine fuer Vollautomatik sind angelegt, inklusive Lifecycle-, Drift-, Stability- und Governance-Sicht fuer Folge-Runs plus kontrollierter Requalify-Freigabe, installation-scoped Worker-/Scheduler-Routing, scheduler-scoped Runtime-Schedules, lane-scoped Service-Scheduler-Orchestrierung, worker-scoped Runtime-Pfade, Runtime-Claim-/Lease-Governance, mehrschleifige Runtime-Cycles, langlebigere Runtime-Sessions, erste Runtime-Loops, Loop-History und jetzt saubere interne Runtime-Komposition fuer spaetere Multi-Worker-Runtimes
 - offen: GitHub-App-nahe Integration, fertiger Setup-/Onboarding-Flow, belastbare Default-Pipeline fuer Erst- und Folge-Runs, wirklich ausgereifte Unattended-Betriebslogik
 
 ### Freigabe-/Release-Reife
@@ -197,6 +197,11 @@ Naechste Themen:
 - `github-app-service-runtime-cycle-review` und `github-app-service-runtime-cycle-run` heben diese worker-scoped Runtime-Schicht jetzt weiter auf mehrschleifige Runtime-Zyklen mit expliziten Stoppgruenden und eigenen Zyklus-Artefakten
 - `github-app-service-runtime-session-review`, `github-app-service-runtime-session-run` und `github-app-service-runtime-session-resume` heben diese Runtime-Zyklen jetzt weiter auf langlebigere Runtime-Sessions mit Session-State, Resume-Contract und mehrrundiger Fortsetzung
 - `github-app-service-runtime-loop-review`, `github-app-service-runtime-loop-run` und `github-app-service-runtime-loop-resume` heben diese Runtime-Sessions jetzt weiter auf langlebigere Runtime-Loops mit Loop-State, Resume-Contract und Fortsetzung ueber mehrere Sessions
+- `github-app-service-runtime-loop-recover` und `github-app-service-runtime-loop-recovery-review` geben diesen Runtime-Loops jetzt zusaetzlich eine explizite Recovery-Kante ueber `service-runtime-loop-recovery-contract.json`
+- `github-app-service-runtime-loop-recovery-receipts-review` und `github-app-service-runtime-loop-recovery-auto` geben diesen Runtime-Loops jetzt zusaetzlich eine dauerhafte Receipt-Schicht mit Attempt-/Backoff-Governance und einen Auto-Recovery-Pfad fuer wirklich faellige Faelle
+- `github-app-service-runtime-loop-recovery-receipts-release-review` und `github-app-service-runtime-loop-recovery-receipts-release` geben diesen Runtime-Loops jetzt zusaetzlich eine bewusste Manual-Release-Kante fuer geblockte oder erschoepfte Receipts
+- `github-app-service-runtime-loop-recovery-runtime-review` und `github-app-service-runtime-loop-recovery-runtime-run` geben diesen Runtime-Loops jetzt zusaetzlich eine worker- und lane-bewusste Recovery-Runtime fuer mehrere offene Receipts pro Durchlauf
+- `github-app-service-runtime-loop-history-review` macht diese Runtime-Loops jetzt zusaetzlich als dauerhafte History-/Recovery-Sicht mit resumable, drained und previewed Loop-Faellen sichtbar
 - die Runtime-/Cycle-/Session-/Loop-Kommandos koennen jetzt zudem intern ohne doppelte Zwischen-Ausgabe komponiert werden, was den spaeteren Service-Runtime-Pfad sauberer macht
 - damit ist die GitHub-App-Service-Schicht jetzt zum ersten Mal wirklich multi-installation-faehig gedacht und nicht nur eine Sammlung isolierter Contract-Pfade
 - klarer Erstlauf plus Folge-Run-Logik

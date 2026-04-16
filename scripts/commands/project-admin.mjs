@@ -59,6 +59,18 @@ export {
 } from "./project-admin/github-app-service-runtime-session.mjs";
 
 export {
+  runGithubAppServiceRuntimeLoopRecoveryRuntimeReview,
+  runGithubAppServiceRuntimeLoopRecoveryRuntimeRun
+} from "./project-admin/github-app-service-runtime-loop-recovery-runtime.mjs";
+
+export {
+  runGithubAppServiceRuntimeLoopRecoveryAuto,
+  runGithubAppServiceRuntimeLoopRecoveryReceiptsRelease,
+  runGithubAppServiceRuntimeLoopRecoveryReceiptsReleaseReview,
+  runGithubAppServiceRuntimeLoopRecoveryReceiptsReview,
+  runGithubAppServiceRuntimeLoopRecover,
+  runGithubAppServiceRuntimeLoopRecoveryReview,
+  runGithubAppServiceRuntimeLoopHistoryReview,
   runGithubAppServiceRuntimeLoopReview,
   runGithubAppServiceRuntimeLoopRun,
   runGithubAppServiceRuntimeLoopResume
