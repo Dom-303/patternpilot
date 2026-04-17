@@ -8,6 +8,11 @@ import {
   buildGithubWebhookServiceRequeuePlan,
   buildGithubWebhookServiceRuntimeClaim,
   buildGithubWebhookServiceRuntimeCyclePlan,
+  buildGithubWebhookServiceRuntimeCloseoutReview,
+  buildGithubWebhookServiceRuntimeControlReview,
+  buildGithubWebhookServiceRuntimeMaintenancePlan,
+  buildGithubWebhookServiceRuntimeIntegrityReview,
+  buildGithubWebhookServiceRuntimeOpsReview,
   buildGithubWebhookServiceRuntimeLoopHistoryEntry,
   buildGithubWebhookServiceRuntimeLoopHistoryReview,
   buildGithubWebhookServiceRuntimeLoopRecoveryAssessment,
@@ -15,6 +20,31 @@ import {
   buildGithubWebhookServiceRuntimeLoopRecoveryReceipt,
   buildGithubWebhookServiceRuntimeLoopRecoveryReceiptReleasePlan,
   buildGithubWebhookServiceRuntimeLoopRecoveryReceiptsReview,
+  buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleHistoryEntry,
+  buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleHistoryReview,
+  buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt,
+  buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceiptsReview,
+  buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleResumeContract,
+  buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleState,
+  buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationFollowupReview,
+  buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureReview,
+  buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureFollowupReview,
+  buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureHistoryEntry,
+  buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureHistoryReview,
+  buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureCycleResumeContract,
+  buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureCycleState,
+  buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopHistoryEntry,
+  buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopHistoryReview,
+  buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopRecoveryAssessment,
+  buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopRecoveryContract,
+  buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopRecoveryReview,
+  buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopResumeContract,
+  buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopState,
+  buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureSessionResumeContract,
+  buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureSessionState,
+  buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationReview,
+  buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeGovernanceReview,
+  buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimePlan,
   buildGithubWebhookServiceRuntimeLoopRecoveryRuntimePlan,
   buildGithubWebhookServiceRuntimeLoopRecoveryReview,
   buildGithubWebhookServiceRuntimeLoopResumeContract,
@@ -29,14 +59,31 @@ import {
   claimGithubWebhookServiceQueueEntries,
   classifyGithubWebhookServiceQueueEntry,
   evaluateGithubWebhookServiceRuntimeLoopRecoveryReceipt,
+  evaluateGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt,
   enqueueGithubWebhookServiceContractFromFile,
   loadGithubWebhookServiceRuntimeLoopHistory,
   loadGithubWebhookServiceRuntimeLoopRecoveryReceipts,
+  loadGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleHistory,
+  loadGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureHistory,
+  loadGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopHistory,
+  loadGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipts,
   loadGithubWebhookServiceRuntimeClaims,
   loadGithubWebhookServiceQueue,
   queueGithubWebhookServiceContract,
   appendGithubWebhookServiceRuntimeLoopHistory,
   appendGithubWebhookServiceRuntimeLoopRecoveryReceipt,
+  appendGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleHistory,
+  appendGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureHistory,
+  appendGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopHistory,
+  appendGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt,
+  applyGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationFollowupReview,
+  applyGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureReview,
+  applyGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureFollowupReview,
+  applyGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationReview,
+  applyGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeGovernanceReview,
+  applyGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeGovernanceReleasePlan,
+  buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeGovernanceReleasePlan,
+  markGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceiptResumed,
   markGithubWebhookServiceRuntimeLoopRecoveryReceiptAttempted,
   reclaimExpiredGithubWebhookServiceRuntimeClaims,
   releaseGithubWebhookServiceRuntimeLoopRecoveryReceipts,
@@ -45,9 +92,30 @@ import {
   requeueGithubWebhookServiceQueueEntries,
   renderGithubWebhookServiceRequeueSummary,
   renderGithubWebhookServiceRuntimeCycleSummary,
+  renderGithubWebhookServiceRuntimeCloseoutSummary,
+  renderGithubWebhookServiceRuntimeControlSummary,
+  renderGithubWebhookServiceRuntimeMaintenanceSummary,
+  renderGithubWebhookServiceRuntimeIntegritySummary,
+  renderGithubWebhookServiceRuntimeOpsSummary,
   renderGithubWebhookServiceRuntimeLoopHistoryReviewSummary,
   renderGithubWebhookServiceRuntimeLoopRecoveryReceiptReleaseSummary,
   renderGithubWebhookServiceRuntimeLoopRecoveryReceiptsReviewSummary,
+  renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleHistoryReviewSummary,
+  renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceiptsReviewSummary,
+  renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationFollowupSummary,
+  renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureSummary,
+  renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureFollowupSummary,
+  renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureHistoryReviewSummary,
+  renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureCycleSummary,
+  renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopHistoryReviewSummary,
+  renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopRecoveryReviewSummary,
+  renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopSummary,
+  renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureSessionSummary,
+  renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationSummary,
+  renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeGovernanceSummary,
+  renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeGovernanceReleaseSummary,
+  renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleSummary,
+  renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeSummary,
   renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeSummary,
   renderGithubWebhookServiceRuntimeLoopRecoveryReviewSummary,
   renderGithubWebhookServiceRuntimeLoopSummary,
@@ -1928,6 +1996,1487 @@ test("runtime loop recovery runtime plan blocks open receipts on lanes with back
   assert.ok(plan.blockedReceipts.some((entry) => entry.runtimeStatus === "backoff_pending"));
 });
 
+test("runtime loop recovery runtime cycle state exposes remaining budget and resume readiness", () => {
+  const cycleState = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleState([
+    {
+      roundIndex: 1,
+      workerCount: 2,
+      selectedCount: 3,
+      executedCount: 3,
+      blockedCount: 1,
+      laneCount: 2,
+      stopReason: "dry_run_preview",
+      summaryPath: "runs/integration/github-app-service-runtime-loop-recovery-runtime/round-1/summary.md"
+    }
+  ], {
+    workerIds: ["worker-a", "worker-b"],
+    cycleLimit: 3,
+    stopReason: "dry_run_preview"
+  });
+  const summary = renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleSummary(cycleState, []);
+
+  assert.equal(cycleState.completedRounds, 1);
+  assert.equal(cycleState.remainingCycleBudget, 2);
+  assert.equal(cycleState.resumeReady, true);
+  assert.match(summary, /remaining_cycle_budget: 2/);
+});
+
+test("runtime loop recovery runtime cycle resume contract becomes dispatch-ready when budget remains", () => {
+  const cycleState = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleState([
+    {
+      roundIndex: 1,
+      workerCount: 1,
+      selectedCount: 2,
+      executedCount: 0,
+      blockedCount: 0,
+      laneCount: 1,
+      stopReason: "manual_preview"
+    }
+  ], {
+    workerIds: ["worker-a"],
+    cycleLimit: 2,
+    stopReason: "manual_preview"
+  });
+  const contract = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleResumeContract(cycleState, {
+    cycleStatePath: "runs/integration/github-app-service-runtime-loop-recovery-runtime-cycle/demo/service-runtime-loop-recovery-runtime-cycle-state.json"
+  });
+
+  assert.equal(contract.contractStatus, "dispatch_ready_runtime_loop_recovery_runtime_cycle_resume_contract");
+  assert.equal(contract.remainingCycleBudget, 1);
+  assert.match(contract.nextAction, /Resume the runtime-loop recovery runtime cycle/);
+});
+
+test("runtime loop recovery runtime cycle history can append and review resumable cycles", async () => {
+  const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-gh-service-loop-recovery-runtime-cycle-history-"));
+  const cycleState = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleState([
+    {
+      roundIndex: 1,
+      workerCount: 2,
+      selectedCount: 3,
+      executedCount: 0,
+      blockedCount: 1,
+      laneCount: 2,
+      stopReason: "dry_run_preview"
+    }
+  ], {
+    workerIds: ["worker-a", "worker-b"],
+    cycleLimit: 3,
+    stopReason: "dry_run_preview"
+  });
+  await appendGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleHistory(rootDir, buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleHistoryEntry(
+    cycleState,
+    [{ selectedCount: 3, executedCount: 0 }],
+    {
+      runId: "cycle-demo",
+      commandName: "github-app-service-runtime-loop-recovery-runtime-cycle-run",
+      statePath: "runs/integration/github-app-service-runtime-loop-recovery-runtime-cycle/cycle-demo/service-runtime-loop-recovery-runtime-cycle-state.json",
+      receiptsPath: "runs/integration/github-app-service-runtime-loop-recovery-runtime-cycle/cycle-demo/service-runtime-loop-recovery-runtime-cycle-receipts.json",
+      resumeContractPath: "runs/integration/github-app-service-runtime-loop-recovery-runtime-cycle/cycle-demo/service-runtime-loop-recovery-runtime-cycle-resume-contract.json",
+      summaryPath: "runs/integration/github-app-service-runtime-loop-recovery-runtime-cycle/cycle-demo/summary.md"
+    }
+  ));
+
+  const historyState = await loadGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleHistory(rootDir);
+  const review = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleHistoryReview(historyState, { limit: 5 });
+  const summary = renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleHistoryReviewSummary(review);
+
+  assert.equal(review.resumableCount, 1);
+  assert.equal(review.recentEntries[0]?.runId, "cycle-demo");
+  assert.match(summary, /resumable_count: 1/);
+  assert.match(summary, /service-runtime-loop-recovery-runtime-cycle-resume-contract.json/);
+});
+
+test("runtime loop recovery runtime cycle receipts can append, review and mark resumed cycles", async () => {
+  const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-gh-service-loop-recovery-runtime-cycle-receipts-"));
+  const cycleState = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleState([
+    {
+      roundIndex: 1,
+      workerCount: 1,
+      selectedCount: 2,
+      executedCount: 0,
+      blockedCount: 0,
+      laneCount: 1,
+      stopReason: "manual_preview"
+    }
+  ], {
+    workerIds: ["worker-a"],
+    cycleLimit: 2,
+    stopReason: "manual_preview"
+  });
+  const receipt = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(cycleState, {
+    runId: "cycle-receipt-demo",
+    sourceCommand: "github-app-service-runtime-loop-recovery-runtime-cycle-run",
+    resumeContractPath: "runs/integration/github-app-service-runtime-loop-recovery-runtime-cycle/cycle-receipt-demo/service-runtime-loop-recovery-runtime-cycle-resume-contract.json",
+    summaryPath: "runs/integration/github-app-service-runtime-loop-recovery-runtime-cycle/cycle-receipt-demo/summary.md"
+  });
+
+  await appendGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(rootDir, receipt);
+
+  const receiptState = await loadGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipts(rootDir);
+  const review = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceiptsReview(receiptState, { limit: 5 });
+  const summary = renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceiptsReviewSummary(review);
+  const evaluated = evaluateGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(receiptState.receipts[0]);
+
+  assert.equal(review.openCount, 1);
+  assert.equal(review.bestReceipt?.runId, "cycle-receipt-demo");
+  assert.equal(evaluated.effectiveReceiptState, "open_ready");
+  assert.match(summary, /open_count: 1/);
+
+  await markGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceiptResumed(rootDir, {
+    resumeContractPath: "runs/integration/github-app-service-runtime-loop-recovery-runtime-cycle/cycle-receipt-demo/service-runtime-loop-recovery-runtime-cycle-resume-contract.json",
+    resumedAt: "2026-04-17T12:30:00.000Z",
+    resumedByRunId: "resume-run-id"
+  });
+
+  const refreshed = await loadGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipts(rootDir);
+  const refreshedEvaluated = evaluateGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(refreshed.receipts[0]);
+  assert.equal(refreshedEvaluated.effectiveReceiptState, "resumed");
+  assert.equal(refreshed.receipts[0].resumedByRunId, "resume-run-id");
+});
+
+test("runtime loop recovery runtime cycle runtime plan assigns resumable cycle receipts across worker families", async () => {
+  const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-gh-service-loop-recovery-runtime-cycle-runtime-"));
+  const workerACycleState = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleState([
+    {
+      roundIndex: 1,
+      workerCount: 1,
+      selectedCount: 4,
+      executedCount: 2,
+      blockedCount: 0,
+      laneCount: 1,
+      stopReason: "manual_preview"
+    }
+  ], {
+    workerIds: ["worker-a"],
+    cycleLimit: 2,
+    stopReason: "manual_preview"
+  });
+  const workerBCycleState = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleState([
+    {
+      roundIndex: 1,
+      workerCount: 1,
+      selectedCount: 3,
+      executedCount: 1,
+      blockedCount: 0,
+      laneCount: 1,
+      stopReason: "manual_preview"
+    }
+  ], {
+    workerIds: ["worker-b"],
+    cycleLimit: 2,
+    stopReason: "manual_preview"
+  });
+
+  await appendGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(rootDir, buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(workerACycleState, {
+    runId: "cycle-family-a",
+    resumeContractPath: "runs/integration/github-app-service-runtime-loop-recovery-runtime-cycle/cycle-family-a/service-runtime-loop-recovery-runtime-cycle-resume-contract.json"
+  }));
+  await appendGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(rootDir, buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(workerBCycleState, {
+    runId: "cycle-family-b",
+    resumeContractPath: "runs/integration/github-app-service-runtime-loop-recovery-runtime-cycle/cycle-family-b/service-runtime-loop-recovery-runtime-cycle-resume-contract.json"
+  }));
+
+  const receiptState = await loadGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipts(rootDir);
+  const plan = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimePlan(receiptState, {
+    workerIds: ["worker-a", "worker-b"],
+    limit: 5
+  });
+  const summary = renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeSummary(plan);
+
+  assert.equal(plan.selectedCount, 2);
+  assert.equal(plan.blockedCount, 0);
+  assert.equal(plan.runtimes.find((runtime) => runtime.workerId === "worker-a")?.receiptCount, 1);
+  assert.equal(plan.runtimes.find((runtime) => runtime.workerId === "worker-b")?.receiptCount, 1);
+  assert.match(summary, /worker=worker-a: receipts=1/);
+  assert.match(summary, /worker=worker-b: receipts=1/);
+});
+
+test("runtime loop recovery runtime cycle runtime plan blocks lower-priority receipts in the same worker family", async () => {
+  const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-gh-service-loop-recovery-runtime-cycle-runtime-conflict-"));
+  const primaryCycleState = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleState([
+    {
+      roundIndex: 1,
+      workerCount: 1,
+      selectedCount: 5,
+      executedCount: 0,
+      blockedCount: 0,
+      laneCount: 1,
+      stopReason: "manual_preview"
+    }
+  ], {
+    workerIds: ["worker-a", "worker-b"],
+    cycleLimit: 2,
+    stopReason: "manual_preview"
+  });
+  const secondaryCycleState = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleState([
+    {
+      roundIndex: 1,
+      workerCount: 1,
+      selectedCount: 1,
+      executedCount: 0,
+      blockedCount: 0,
+      laneCount: 1,
+      stopReason: "manual_preview"
+    }
+  ], {
+    workerIds: ["worker-a", "worker-b"],
+    cycleLimit: 2,
+    stopReason: "manual_preview"
+  });
+
+  await appendGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(rootDir, buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(primaryCycleState, {
+    runId: "cycle-family-primary",
+    resumeContractPath: "runs/integration/github-app-service-runtime-loop-recovery-runtime-cycle/cycle-family-primary/service-runtime-loop-recovery-runtime-cycle-resume-contract.json"
+  }));
+  await appendGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(rootDir, buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(secondaryCycleState, {
+    runId: "cycle-family-secondary",
+    resumeContractPath: "runs/integration/github-app-service-runtime-loop-recovery-runtime-cycle/cycle-family-secondary/service-runtime-loop-recovery-runtime-cycle-resume-contract.json"
+  }));
+
+  const receiptState = await loadGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipts(rootDir);
+  const plan = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimePlan(receiptState, {
+    workerIds: ["worker-a", "worker-b"],
+    limit: 5
+  });
+
+  assert.equal(plan.selectedCount, 1);
+  assert.ok(plan.blockedReceipts.some((entry) => entry.runtimeStatus === "family_conflict"));
+});
+
+test("runtime loop recovery runtime cycle runtime governance review suggests backpressure for conflicting families", async () => {
+  const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-gh-service-loop-recovery-runtime-cycle-runtime-governance-"));
+  const primaryCycleState = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleState([
+    {
+      roundIndex: 1,
+      workerCount: 1,
+      selectedCount: 6,
+      executedCount: 0,
+      blockedCount: 0,
+      laneCount: 1,
+      stopReason: "manual_preview"
+    }
+  ], {
+    workerIds: ["worker-a", "worker-b"],
+    cycleLimit: 2,
+    stopReason: "manual_preview"
+  });
+  const secondaryCycleState = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleState([
+    {
+      roundIndex: 1,
+      workerCount: 1,
+      selectedCount: 2,
+      executedCount: 0,
+      blockedCount: 0,
+      laneCount: 1,
+      stopReason: "manual_preview"
+    }
+  ], {
+    workerIds: ["worker-a", "worker-b"],
+    cycleLimit: 2,
+    stopReason: "manual_preview"
+  });
+
+  await appendGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(rootDir, buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(primaryCycleState, {
+    runId: "cycle-family-conflict-primary",
+    resumeContractPath: "runs/integration/github-app-service-runtime-loop-recovery-runtime-cycle/cycle-family-conflict-primary/service-runtime-loop-recovery-runtime-cycle-resume-contract.json"
+  }));
+  await appendGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(rootDir, buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(secondaryCycleState, {
+    runId: "cycle-family-conflict-secondary",
+    resumeContractPath: "runs/integration/github-app-service-runtime-loop-recovery-runtime-cycle/cycle-family-conflict-secondary/service-runtime-loop-recovery-runtime-cycle-resume-contract.json"
+  }));
+
+  const receiptState = await loadGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipts(rootDir);
+  const review = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeGovernanceReview(receiptState, {
+    families: []
+  }, {
+    now: "2026-04-17T12:00:00.000Z"
+  });
+  const summary = renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeGovernanceSummary(review);
+
+  assert.equal(review.persistedSuggestionCount, 1);
+  assert.equal(review.statusCounts.family_backpressure, 1);
+  assert.equal(review.familyReviews[0].suggestedStatus, "family_backpressure");
+  assert.match(summary, /backpressure_count: 1/);
+});
+
+test("apply runtime loop recovery runtime cycle runtime governance review persists family entries", () => {
+  const review = {
+    familyReviews: [
+      {
+        workerFamilyKey: "worker-a|worker-b",
+        shouldPersist: true,
+        suggestedEntry: {
+          workerFamilyKey: "worker-a|worker-b",
+          status: "family_manual_hold",
+          holdReason: "manual gate",
+          blockedUntil: null,
+          maxSelectedCount: 5,
+          preferredWorkerId: "worker-a",
+          allowedWorkerIds: ["worker-a", "worker-b"],
+          notes: null
+        }
+      }
+    ]
+  };
+
+  const applied = applyGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeGovernanceReview({
+    families: []
+  }, review, {
+    appliedAt: "2026-04-17T12:10:00.000Z",
+    notes: "family governance after review"
+  });
+
+  assert.equal(applied.receipts.length, 1);
+  assert.equal(applied.nextState.families.length, 1);
+  assert.equal(applied.nextState.families[0].status, "family_manual_hold");
+  assert.equal(applied.nextState.families[0].preferredWorkerId, "worker-a");
+  assert.equal(applied.nextState.families[0].notes, "family governance after review");
+});
+
+test("runtime loop recovery runtime cycle runtime plan respects family governance holds and worker preferences", async () => {
+  const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-gh-service-loop-recovery-runtime-cycle-runtime-governed-"));
+  const heldCycleState = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleState([
+    {
+      roundIndex: 1,
+      workerCount: 1,
+      selectedCount: 4,
+      executedCount: 0,
+      blockedCount: 0,
+      laneCount: 1,
+      stopReason: "manual_preview"
+    }
+  ], {
+    workerIds: ["worker-a", "worker-b"],
+    cycleLimit: 2,
+    stopReason: "manual_preview"
+  });
+  const preferredCycleState = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleState([
+    {
+      roundIndex: 1,
+      workerCount: 1,
+      selectedCount: 3,
+      executedCount: 0,
+      blockedCount: 0,
+      laneCount: 1,
+      stopReason: "manual_preview"
+    }
+  ], {
+    workerIds: ["worker-a"],
+    cycleLimit: 2,
+    stopReason: "manual_preview"
+  });
+
+  await appendGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(rootDir, buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(heldCycleState, {
+    runId: "cycle-held-family",
+    resumeContractPath: "runs/integration/github-app-service-runtime-loop-recovery-runtime-cycle/cycle-held-family/service-runtime-loop-recovery-runtime-cycle-resume-contract.json"
+  }));
+  await appendGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(rootDir, buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(preferredCycleState, {
+    runId: "cycle-preferred-family",
+    resumeContractPath: "runs/integration/github-app-service-runtime-loop-recovery-runtime-cycle/cycle-preferred-family/service-runtime-loop-recovery-runtime-cycle-resume-contract.json"
+  }));
+
+  const receiptState = await loadGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipts(rootDir);
+  const plan = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimePlan(receiptState, {
+    workerIds: ["worker-a", "worker-b"],
+    governanceState: {
+      families: [
+        {
+          workerFamilyKey: "worker-a|worker-b",
+          status: "family_manual_hold",
+          holdReason: "manual hold for the shared family"
+        },
+        {
+          workerFamilyKey: "worker-a",
+          status: "family_ready",
+          preferredWorkerId: "worker-a",
+          allowedWorkerIds: ["worker-a"]
+        }
+      ]
+    }
+  });
+
+  assert.equal(plan.selectedCount, 1);
+  assert.equal(plan.selectedReceipts[0].runtimeWorkerId, "worker-a");
+  assert.ok(plan.blockedReceipts.some((entry) => entry.runtimeStatus === "family_hold_manual"));
+});
+
+test("runtime loop recovery runtime cycle runtime coordination review suggests holds for oversubscribed worker pools", async () => {
+  const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-gh-service-loop-recovery-runtime-cycle-runtime-coordination-"));
+  const familyAState = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleState([
+    { roundIndex: 1, workerCount: 1, selectedCount: 6, executedCount: 0, blockedCount: 0, laneCount: 1, stopReason: "manual_preview" }
+  ], {
+    workerIds: ["worker-a"],
+    cycleLimit: 2,
+    stopReason: "manual_preview"
+  });
+  const familyBState = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleState([
+    { roundIndex: 1, workerCount: 1, selectedCount: 5, executedCount: 0, blockedCount: 0, laneCount: 1, stopReason: "manual_preview" }
+  ], {
+    workerIds: ["worker-a", "worker-b"],
+    cycleLimit: 2,
+    stopReason: "manual_preview"
+  });
+  const familyCState = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleState([
+    { roundIndex: 1, workerCount: 1, selectedCount: 4, executedCount: 0, blockedCount: 0, laneCount: 1, stopReason: "manual_preview" }
+  ], {
+    workerIds: ["worker-b"],
+    cycleLimit: 2,
+    stopReason: "manual_preview"
+  });
+
+  await appendGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(rootDir, buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(familyAState, {
+    runId: "coord-family-a",
+    resumeContractPath: "runs/integration/github-app-service-runtime-loop-recovery-runtime-cycle/coord-family-a/service-runtime-loop-recovery-runtime-cycle-resume-contract.json"
+  }));
+  await appendGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(rootDir, buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(familyBState, {
+    runId: "coord-family-b",
+    resumeContractPath: "runs/integration/github-app-service-runtime-loop-recovery-runtime-cycle/coord-family-b/service-runtime-loop-recovery-runtime-cycle-resume-contract.json"
+  }));
+  await appendGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(rootDir, buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(familyCState, {
+    runId: "coord-family-c",
+    resumeContractPath: "runs/integration/github-app-service-runtime-loop-recovery-runtime-cycle/coord-family-c/service-runtime-loop-recovery-runtime-cycle-resume-contract.json"
+  }));
+
+  const receiptState = await loadGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipts(rootDir);
+  const review = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationReview(receiptState, {
+    families: []
+  }, {
+    families: []
+  }, {
+    workerIds: ["worker-a", "worker-b"]
+  });
+  const summary = renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationSummary(review);
+
+  assert.equal(review.familyCount, 3);
+  assert.equal(review.persistedSuggestionCount, 1);
+  assert.equal(review.statusCounts.coordination_hold, 1);
+  assert.match(summary, /hold_count: 1/);
+});
+
+test("apply runtime loop recovery runtime cycle runtime coordination review persists only held families", () => {
+  const applied = applyGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationReview({
+    families: []
+  }, {
+    familyReviews: [
+      {
+        suggestedEntry: {
+          workerFamilyKey: "worker-a|worker-b",
+          coordinationGroupKey: "pool:worker-a|worker-b",
+          status: "coordination_hold",
+          blockedByFamilyKey: "worker-a",
+          effectiveWorkerIds: ["worker-a", "worker-b"],
+          preferredWorkerId: null
+        }
+      },
+      {
+        suggestedEntry: {
+          workerFamilyKey: "worker-c",
+          coordinationGroupKey: "pool:worker-c",
+          status: "coordination_ready",
+          blockedByFamilyKey: null,
+          effectiveWorkerIds: ["worker-c"],
+          preferredWorkerId: null
+        }
+      }
+    ]
+  }, {
+    appliedAt: "2026-04-17T12:40:00.000Z",
+    notes: "coordination after review"
+  });
+
+  assert.equal(applied.receipts.length, 1);
+  assert.equal(applied.nextState.families.length, 1);
+  assert.equal(applied.nextState.families[0].status, "coordination_hold");
+  assert.equal(applied.nextState.families[0].blockedByFamilyKey, "worker-a");
+});
+
+test("runtime loop recovery runtime cycle runtime coordination followup review suggests auto release and escalation", () => {
+  const review = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationFollowupReview({
+    receipts: []
+  }, {
+    families: []
+  }, {
+    families: [
+      {
+        workerFamilyKey: "worker-a",
+        coordinationGroupKey: "overlap:worker-a|worker-b",
+        status: "coordination_hold",
+        blockedByFamilyKey: "worker-b",
+        updatedAt: "2026-04-17T12:00:00.000Z"
+      },
+      {
+        workerFamilyKey: "worker-b",
+        coordinationGroupKey: "overlap:worker-a|worker-b",
+        status: "coordination_hold",
+        blockedByFamilyKey: "worker-a",
+        updatedAt: "2026-04-17T10:00:00.000Z"
+      }
+    ]
+  }, {
+    generatedAt: "2026-04-17T13:30:00.000Z",
+    coordinationEscalationSeconds: 3600
+  });
+  const summary = renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationFollowupSummary(review);
+
+  assert.equal(review.applyCount, 2);
+  assert.equal(review.statusCounts.auto_release, 2);
+  assert.match(summary, /auto_release_count: 2/);
+});
+
+test("runtime loop recovery runtime cycle runtime coordination followup escalates stale active conflicts", async () => {
+  const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-gh-service-loop-recovery-runtime-cycle-runtime-coordination-followup-"));
+  const familyAState = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleState([
+    { roundIndex: 1, workerCount: 1, selectedCount: 6, executedCount: 0, blockedCount: 0, laneCount: 1, stopReason: "manual_preview" }
+  ], {
+    workerIds: ["worker-a"],
+    cycleLimit: 2,
+    stopReason: "manual_preview"
+  });
+  const familyBState = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleState([
+    { roundIndex: 1, workerCount: 1, selectedCount: 5, executedCount: 0, blockedCount: 0, laneCount: 1, stopReason: "manual_preview" }
+  ], {
+    workerIds: ["worker-a", "worker-b"],
+    cycleLimit: 2,
+    stopReason: "manual_preview"
+  });
+  const familyCState = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleState([
+    { roundIndex: 1, workerCount: 1, selectedCount: 4, executedCount: 0, blockedCount: 0, laneCount: 1, stopReason: "manual_preview" }
+  ], {
+    workerIds: ["worker-b"],
+    cycleLimit: 2,
+    stopReason: "manual_preview"
+  });
+
+  await appendGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(rootDir, buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(familyAState, {
+    runId: "followup-family-a",
+    resumeContractPath: "runs/integration/github-app-service-runtime-loop-recovery-runtime-cycle/followup-family-a/service-runtime-loop-recovery-runtime-cycle-resume-contract.json"
+  }));
+  await appendGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(rootDir, buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(familyBState, {
+    runId: "followup-family-b",
+    resumeContractPath: "runs/integration/github-app-service-runtime-loop-recovery-runtime-cycle/followup-family-b/service-runtime-loop-recovery-runtime-cycle-resume-contract.json"
+  }));
+  await appendGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(rootDir, buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(familyCState, {
+    runId: "followup-family-c",
+    resumeContractPath: "runs/integration/github-app-service-runtime-loop-recovery-runtime-cycle/followup-family-c/service-runtime-loop-recovery-runtime-cycle-resume-contract.json"
+  }));
+
+  const receiptState = await loadGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipts(rootDir);
+  const review = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationFollowupReview(
+    receiptState,
+    { families: [] },
+    {
+      families: [
+        {
+          workerFamilyKey: "worker-b",
+          coordinationGroupKey: "overlap:worker-a|worker-b",
+          status: "coordination_hold",
+          blockedByFamilyKey: "worker-a",
+          updatedAt: "2026-04-17T10:00:00.000Z"
+        }
+      ]
+    },
+    {
+      generatedAt: "2026-04-17T13:30:00.000Z",
+      workerIds: ["worker-a", "worker-b"],
+      coordinationEscalationSeconds: 3600
+    }
+  );
+
+  assert.equal(review.applyCount, 1);
+  assert.equal(review.followups[0].followupAction, "escalate");
+  assert.equal(review.followups[0].nextStatus, "coordination_escalated");
+});
+
+test("apply runtime loop recovery runtime cycle runtime coordination followup review releases and escalates families", () => {
+  const applied = applyGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationFollowupReview({
+    families: [
+      {
+        workerFamilyKey: "worker-a",
+        coordinationGroupKey: "overlap:worker-a|worker-b",
+        status: "coordination_hold"
+      },
+      {
+        workerFamilyKey: "worker-b",
+        coordinationGroupKey: "overlap:worker-a|worker-b",
+        status: "coordination_hold"
+      }
+    ]
+  }, {
+    followups: [
+      {
+        workerFamilyKey: "worker-a",
+        currentStatus: "coordination_hold",
+        followupAction: "auto_release",
+        shouldApply: true
+      },
+      {
+        workerFamilyKey: "worker-b",
+        currentStatus: "coordination_hold",
+        followupAction: "escalate",
+        shouldApply: true,
+        ageSeconds: 5400
+      }
+    ]
+  }, {
+    appliedAt: "2026-04-17T13:35:00.000Z",
+    notes: "coordination follow-up"
+  });
+
+  assert.equal(applied.receipts.length, 2);
+  assert.equal(applied.nextState.families.length, 1);
+  assert.equal(applied.nextState.families[0].workerFamilyKey, "worker-b");
+  assert.equal(applied.nextState.families[0].status, "coordination_escalated");
+});
+
+test("runtime loop recovery runtime cycle runtime coordination backpressure review suggests lower-priority group backpressure", async () => {
+  const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-gh-service-loop-recovery-runtime-cycle-runtime-coordination-backpressure-"));
+  const groupA1 = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleState([
+    { roundIndex: 1, workerCount: 1, selectedCount: 9, executedCount: 0, blockedCount: 0, laneCount: 1, stopReason: "manual_preview" }
+  ], {
+    workerIds: ["worker-a"],
+    cycleLimit: 2,
+    stopReason: "manual_preview"
+  });
+  const groupA2 = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleState([
+    { roundIndex: 1, workerCount: 1, selectedCount: 8, executedCount: 0, blockedCount: 0, laneCount: 1, stopReason: "manual_preview" }
+  ], {
+    workerIds: ["worker-b"],
+    cycleLimit: 2,
+    stopReason: "manual_preview"
+  });
+  const groupA3 = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleState([
+    { roundIndex: 1, workerCount: 1, selectedCount: 7, executedCount: 0, blockedCount: 0, laneCount: 1, stopReason: "manual_preview" }
+  ], {
+    workerIds: ["worker-a", "worker-b"],
+    cycleLimit: 2,
+    stopReason: "manual_preview"
+  });
+  const groupB1 = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleState([
+    { roundIndex: 1, workerCount: 1, selectedCount: 6, executedCount: 0, blockedCount: 0, laneCount: 1, stopReason: "manual_preview" }
+  ], {
+    workerIds: ["worker-c"],
+    cycleLimit: 2,
+    stopReason: "manual_preview"
+  });
+  const groupB2 = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleState([
+    { roundIndex: 1, workerCount: 1, selectedCount: 5, executedCount: 0, blockedCount: 0, laneCount: 1, stopReason: "manual_preview" }
+  ], {
+    workerIds: ["worker-d"],
+    cycleLimit: 2,
+    stopReason: "manual_preview"
+  });
+  const groupB3 = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleState([
+    { roundIndex: 1, workerCount: 1, selectedCount: 4, executedCount: 0, blockedCount: 0, laneCount: 1, stopReason: "manual_preview" }
+  ], {
+    workerIds: ["worker-c", "worker-d"],
+    cycleLimit: 2,
+    stopReason: "manual_preview"
+  });
+  const groupC1 = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleState([
+    { roundIndex: 1, workerCount: 1, selectedCount: 3, executedCount: 0, blockedCount: 0, laneCount: 1, stopReason: "manual_preview" }
+  ], {
+    workerIds: ["worker-e"],
+    cycleLimit: 2,
+    stopReason: "manual_preview"
+  });
+  const groupC2 = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleState([
+    { roundIndex: 1, workerCount: 1, selectedCount: 2, executedCount: 0, blockedCount: 0, laneCount: 1, stopReason: "manual_preview" }
+  ], {
+    workerIds: ["worker-f"],
+    cycleLimit: 2,
+    stopReason: "manual_preview"
+  });
+  const groupC3 = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleState([
+    { roundIndex: 1, workerCount: 1, selectedCount: 1, executedCount: 0, blockedCount: 0, laneCount: 1, stopReason: "manual_preview" }
+  ], {
+    workerIds: ["worker-e", "worker-f"],
+    cycleLimit: 2,
+    stopReason: "manual_preview"
+  });
+
+  const receipts = [
+    ["backpressure-group-a1", groupA1],
+    ["backpressure-group-a2", groupA2],
+    ["backpressure-group-a3", groupA3],
+    ["backpressure-group-b1", groupB1],
+    ["backpressure-group-b2", groupB2],
+    ["backpressure-group-b3", groupB3],
+    ["backpressure-group-c1", groupC1],
+    ["backpressure-group-c2", groupC2],
+    ["backpressure-group-c3", groupC3]
+  ];
+  for (const [runId, state] of receipts) {
+    await appendGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(rootDir, buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(state, {
+      runId,
+      resumeContractPath: `runs/integration/github-app-service-runtime-loop-recovery-runtime-cycle/${runId}/service-runtime-loop-recovery-runtime-cycle-resume-contract.json`
+    }));
+  }
+
+  const receiptState = await loadGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipts(rootDir);
+  const review = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureReview(
+    receiptState,
+    { families: [] },
+    { families: [] },
+    { groups: [] },
+    {
+      workerIds: ["worker-a", "worker-b", "worker-c", "worker-d", "worker-e", "worker-f"],
+      coordinationGroupBudget: 2,
+      coordinationBackpressureSeconds: 1800,
+      generatedAt: "2026-04-17T14:00:00.000Z"
+    }
+  );
+  const summary = renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureSummary(review);
+
+  assert.equal(review.groupCount, 3);
+  assert.equal(review.persistedSuggestionCount, 1);
+  assert.equal(review.statusCounts.group_backpressure, 1);
+  assert.equal(review.groupReviews.find((item) => item.coordinationGroupKey === "overlap:worker-e|worker-f")?.suggestedStatus, "group_backpressure");
+  assert.match(summary, /backpressure_count: 1/);
+});
+
+test("apply runtime loop recovery runtime cycle runtime coordination backpressure review persists only blocked groups", () => {
+  const applied = applyGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureReview({
+    groups: []
+  }, {
+    groupReviews: [
+      {
+        suggestedEntry: {
+          coordinationGroupKey: "overlap:worker-a|worker-b",
+          status: "group_backpressure",
+          blockedUntil: "2026-04-17T15:00:00.000Z",
+          primaryWorkerFamilyKey: "worker-a",
+          workerFamilyKeys: ["worker-a", "worker-b", "worker-a|worker-b"],
+          effectiveWorkerIds: ["worker-a", "worker-b"]
+        }
+      },
+      {
+        suggestedEntry: {
+          coordinationGroupKey: "overlap:worker-c|worker-d",
+          status: "group_ready",
+          blockedUntil: null,
+          primaryWorkerFamilyKey: "worker-c",
+          workerFamilyKeys: ["worker-c", "worker-d", "worker-c|worker-d"],
+          effectiveWorkerIds: ["worker-c", "worker-d"]
+        }
+      }
+    ]
+  }, {
+    appliedAt: "2026-04-17T14:05:00.000Z",
+    notes: "group backpressure after review"
+  });
+
+  assert.equal(applied.receipts.length, 1);
+  assert.equal(applied.nextState.groups.length, 1);
+  assert.equal(applied.nextState.groups[0].coordinationGroupKey, "overlap:worker-a|worker-b");
+  assert.equal(applied.nextState.groups[0].status, "group_backpressure");
+});
+
+test("runtime loop recovery runtime cycle runtime coordination backpressure followup review suggests release, refresh and escalation", () => {
+  const review = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureFollowupReview({
+    receipts: []
+  }, {
+    families: []
+  }, {
+    families: []
+  }, {
+    groups: [
+      {
+        coordinationGroupKey: "overlap:worker-a|worker-b",
+        status: "group_backpressure",
+        blockedUntil: "2026-04-17T12:15:00.000Z",
+        updatedAt: "2026-04-17T12:00:00.000Z"
+      },
+      {
+        coordinationGroupKey: "overlap:worker-c|worker-d",
+        status: "group_backpressure",
+        blockedUntil: "2026-04-17T12:15:00.000Z",
+        updatedAt: "2026-04-17T13:00:00.000Z"
+      },
+      {
+        coordinationGroupKey: "overlap:worker-e|worker-f",
+        status: "group_backpressure",
+        blockedUntil: "2026-04-17T12:15:00.000Z",
+        updatedAt: "2026-04-17T14:00:00.000Z"
+      }
+    ]
+  }, {
+    baseReview: {
+      groupReviews: [
+        {
+          coordinationGroupKey: "overlap:worker-c|worker-d",
+          suggestedStatus: "group_backpressure"
+        },
+        {
+          coordinationGroupKey: "overlap:worker-e|worker-f",
+          suggestedStatus: "group_backpressure"
+        }
+      ]
+    },
+    generatedAt: "2026-04-17T14:30:00.000Z",
+    coordinationBackpressureSeconds: 1800,
+    coordinationGroupEscalationSeconds: 3600
+  });
+  const summary = renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureFollowupSummary(review);
+
+  assert.equal(review.applyCount, 3);
+  assert.equal(review.statusCounts.auto_release, 1);
+  assert.equal(review.statusCounts.refresh_backpressure, 1);
+  assert.equal(review.statusCounts.escalate, 1);
+  assert.match(summary, /refresh_backpressure_count: 1/);
+  assert.match(summary, /escalate_count: 1/);
+});
+
+test("apply runtime loop recovery runtime cycle runtime coordination backpressure followup review releases, refreshes and escalates groups", () => {
+  const applied = applyGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureFollowupReview({
+    groups: [
+      {
+        coordinationGroupKey: "overlap:worker-a|worker-b",
+        status: "group_backpressure"
+      },
+      {
+        coordinationGroupKey: "overlap:worker-c|worker-d",
+        status: "group_backpressure",
+        blockedUntil: "2026-04-17T12:15:00.000Z",
+        workerFamilyKeys: ["worker-c", "worker-d"]
+      },
+      {
+        coordinationGroupKey: "overlap:worker-e|worker-f",
+        status: "group_backpressure",
+        blockedUntil: "2026-04-17T15:00:00.000Z",
+        workerFamilyKeys: ["worker-e", "worker-f"]
+      }
+    ]
+  }, {
+    followups: [
+      {
+        coordinationGroupKey: "overlap:worker-a|worker-b",
+        currentStatus: "group_backpressure",
+        followupAction: "auto_release",
+        shouldApply: true
+      },
+      {
+        coordinationGroupKey: "overlap:worker-c|worker-d",
+        currentStatus: "group_backpressure",
+        followupAction: "refresh_backpressure",
+        shouldApply: true,
+        nextStatus: "group_backpressure",
+        nextBlockedUntil: "2026-04-17T15:00:00.000Z"
+      },
+      {
+        coordinationGroupKey: "overlap:worker-e|worker-f",
+        currentStatus: "group_backpressure",
+        followupAction: "escalate",
+        shouldApply: true,
+        nextStatus: "group_escalated",
+        nextBlockedUntil: "2026-04-17T15:00:00.000Z",
+        ageSeconds: 7200
+      }
+    ]
+  }, {
+    appliedAt: "2026-04-17T14:35:00.000Z",
+    notes: "group backpressure follow-up"
+  });
+
+  assert.equal(applied.receipts.length, 3);
+  assert.equal(applied.nextState.groups.length, 2);
+  assert.equal(applied.nextState.groups.find((item) => item.coordinationGroupKey === "overlap:worker-c|worker-d")?.blockedUntil, "2026-04-17T15:00:00.000Z");
+  assert.equal(applied.nextState.groups.find((item) => item.coordinationGroupKey === "overlap:worker-e|worker-f")?.status, "group_escalated");
+});
+
+test("runtime loop recovery runtime cycle runtime coordination backpressure history review summarizes apply and followup runs", async () => {
+  const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-gh-service-loop-recovery-runtime-cycle-runtime-coordination-backpressure-history-"));
+  await appendGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureHistory(
+    rootDir,
+    buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureHistoryEntry(
+      {
+        generatedAt: "2026-04-17T15:00:00.000Z",
+        groupCount: 3,
+        coordinationGroupBudget: 2,
+        backpressureSeconds: 1800
+      },
+      [
+        { followupAction: "auto_release" },
+        { followupAction: "refresh_backpressure" }
+      ],
+      {
+        runId: "coord-backpressure-history-1",
+        commandName: "github-app-service-runtime-loop-recovery-runtime-cycle-runtime-coordination-backpressure-followup-apply",
+        summaryPath: "runs/integration/backpressure/one/summary.md"
+      }
+    )
+  );
+  await appendGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureHistory(
+    rootDir,
+    buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureHistoryEntry(
+      {
+        generatedAt: "2026-04-17T16:00:00.000Z",
+        groupCount: 2,
+        coordinationGroupBudget: 2,
+        backpressureSeconds: 1800,
+        escalationSeconds: 3600
+      },
+      [
+        { followupAction: "escalate" }
+      ],
+      {
+        runId: "coord-backpressure-history-2",
+        commandName: "github-app-service-runtime-loop-recovery-runtime-cycle-runtime-coordination-backpressure-auto-followup",
+        summaryPath: "runs/integration/backpressure/two/summary.md"
+      }
+    )
+  );
+
+  const historyState = await loadGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureHistory(rootDir);
+  const review = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureHistoryReview(historyState, {
+    generatedAt: "2026-04-17T16:30:00.000Z",
+    limit: 5
+  });
+  const summary = renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureHistoryReviewSummary(review);
+
+  assert.equal(review.historyCount, 2);
+  assert.equal(review.applyCount, 3);
+  assert.equal(review.autoReleaseCount, 1);
+  assert.equal(review.refreshCount, 1);
+  assert.equal(review.escalatedCount, 1);
+  assert.match(summary, /escalated_count: 1/);
+  assert.match(summary, /coord-backpressure-history-2/);
+});
+
+test("runtime loop recovery runtime cycle runtime coordination backpressure cycle state exposes resume contract", () => {
+  const cycleState = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureCycleState([
+    {
+      passIndex: 1,
+      groupCount: 3,
+      selectedCount: 2,
+      appliedCount: 0,
+      autoReleaseCount: 1,
+      refreshCount: 1,
+      escalatedCount: 0,
+      stopReason: "manual_preview",
+      summaryPath: "runs/integration/backpressure-cycle/one/summary.md"
+    }
+  ], {
+    generatedAt: "2026-04-17T17:00:00.000Z",
+    cycleLimit: 3,
+    stopReason: "manual_preview"
+  });
+  const resumeContract = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureCycleResumeContract(cycleState, {
+    generatedAt: "2026-04-17T17:01:00.000Z",
+    cycleStatePath: "runs/integration/backpressure-cycle/service-runtime-loop-recovery-runtime-cycle-runtime-coordination-backpressure-cycle-state.json"
+  });
+  const summary = renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureCycleSummary(cycleState, []);
+
+  assert.equal(cycleState.resumeReady, true);
+  assert.equal(cycleState.remainingCycleBudget, 2);
+  assert.equal(cycleState.totalSelectedCount, 2);
+  assert.equal(resumeContract.contractStatus, "dispatch_ready_runtime_loop_recovery_runtime_cycle_runtime_coordination_backpressure_cycle_resume_contract");
+  assert.match(summary, /completed_passes: 1/);
+  assert.match(summary, /total_auto_release_count: 1/);
+});
+
+test("runtime loop recovery runtime cycle runtime coordination backpressure session state exposes resume contract", () => {
+  const sessionState = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureSessionState([
+    {
+      sessionIndex: 1,
+      completedPasses: 2,
+      totalGroupCount: 4,
+      totalSelectedCount: 3,
+      totalAppliedCount: 2,
+      totalAutoReleaseCount: 1,
+      totalRefreshCount: 1,
+      totalEscalatedCount: 0,
+      cycleStopReason: "cycle_limit_reached",
+      stopReason: "session_limit_reached",
+      summaryPath: "runs/integration/backpressure-session/one/summary.md"
+    }
+  ], {
+    generatedAt: "2026-04-17T18:00:00.000Z",
+    runtimeCycleLimit: 3,
+    sessionLimit: 3,
+    stopReason: "session_limit_reached"
+  });
+  const resumeContract = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureSessionResumeContract(sessionState, {
+    generatedAt: "2026-04-17T18:01:00.000Z",
+    sessionStatePath: "runs/integration/backpressure-session/service-runtime-loop-recovery-runtime-cycle-runtime-coordination-backpressure-session-state.json"
+  });
+  const summary = renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureSessionSummary(sessionState, []);
+
+  assert.equal(sessionState.resumeReady, true);
+  assert.equal(sessionState.remainingSessionBudget, 2);
+  assert.equal(sessionState.totalPasses, 2);
+  assert.equal(resumeContract.contractStatus, "dispatch_ready_runtime_loop_recovery_runtime_cycle_runtime_coordination_backpressure_session_resume_contract");
+  assert.match(summary, /completed_sessions: 1/);
+  assert.match(summary, /total_passes: 2/);
+});
+
+test("runtime loop recovery runtime cycle runtime coordination backpressure loop state exposes resume contract", () => {
+  const loopState = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopState([
+    {
+      loopIndex: 1,
+      completedSessions: 2,
+      totalPasses: 3,
+      totalAppliedCount: 1,
+      totalAutoReleaseCount: 1,
+      totalRefreshCount: 0,
+      totalEscalatedCount: 0,
+      sessionStopReason: "dry_run_preview",
+      stopReason: "loop_limit_reached",
+      summaryPath: "runs/integration/backpressure-loop/one/summary.md"
+    }
+  ], {
+    generatedAt: "2026-04-17T20:00:00.000Z",
+    runtimeCycleLimit: 3,
+    runtimeSessionLimit: 2,
+    loopLimit: 3,
+    stopReason: "loop_limit_reached"
+  });
+  const resumeContract = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopResumeContract(loopState, {
+    generatedAt: "2026-04-17T20:01:00.000Z",
+    loopStatePath: "runs/integration/backpressure-loop/service-runtime-loop-recovery-runtime-cycle-runtime-coordination-backpressure-loop-state.json"
+  });
+  const summary = renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopSummary(loopState, []);
+
+  assert.equal(loopState.resumeReady, true);
+  assert.equal(loopState.remainingLoopBudget, 2);
+  assert.equal(loopState.totalSessions, 2);
+  assert.equal(loopState.totalPasses, 3);
+  assert.equal(resumeContract.contractStatus, "dispatch_ready_runtime_loop_recovery_runtime_cycle_runtime_coordination_backpressure_loop_resume_contract");
+  assert.match(summary, /completed_loops: 1/);
+  assert.match(summary, /total_sessions: 2/);
+});
+
+test("runtime loop recovery runtime cycle runtime coordination backpressure loop history review summarizes recent loop entries", async () => {
+  const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-gh-service-backpressure-loop-history-"));
+  const firstLoopState = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopState([
+    {
+      loopIndex: 1,
+      completedSessions: 1,
+      totalPasses: 2,
+      totalAppliedCount: 1,
+      totalAutoReleaseCount: 1,
+      totalRefreshCount: 0,
+      totalEscalatedCount: 0,
+      sessionStopReason: "no_due_group_backpressure_followup",
+      stopReason: "no_due_group_backpressure_followup",
+      summaryPath: "runs/integration/backpressure-loop/one/summary.md"
+    }
+  ], {
+    generatedAt: "2026-04-17T20:00:00.000Z",
+    runtimeCycleLimit: 3,
+    runtimeSessionLimit: 2,
+    loopLimit: 3,
+    stopReason: "no_due_group_backpressure_followup"
+  });
+  const secondLoopState = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopState([
+    {
+      loopIndex: 1,
+      completedSessions: 2,
+      totalPasses: 3,
+      totalAppliedCount: 2,
+      totalAutoReleaseCount: 1,
+      totalRefreshCount: 1,
+      totalEscalatedCount: 0,
+      sessionStopReason: "loop_limit_reached",
+      stopReason: "loop_limit_reached",
+      summaryPath: "runs/integration/backpressure-loop/two/summary.md"
+    }
+  ], {
+    generatedAt: "2026-04-17T20:10:00.000Z",
+    runtimeCycleLimit: 3,
+    runtimeSessionLimit: 2,
+    loopLimit: 3,
+    stopReason: "loop_limit_reached"
+  });
+
+  await appendGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopHistory(
+    rootDir,
+    buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopHistoryEntry(firstLoopState, [
+      { totalAppliedCount: 1 }
+    ], {
+      runId: "backpressure-loop-one",
+      recoveryStatus: "runtime_loop_recovery_runtime_cycle_runtime_coordination_backpressure_not_required",
+      summaryPath: "runs/integration/backpressure-loop/one/summary.md"
+    })
+  );
+  await appendGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopHistory(
+    rootDir,
+    buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopHistoryEntry(secondLoopState, [
+      { totalAppliedCount: 2 }
+    ], {
+      runId: "backpressure-loop-two",
+      recoveryStatus: "dispatch_ready_runtime_loop_recovery_runtime_cycle_runtime_coordination_backpressure_loop_recovery_contract",
+      recoveryContractPath: "runs/integration/backpressure-loop/two/recovery-contract.json",
+      summaryPath: "runs/integration/backpressure-loop/two/summary.md"
+    })
+  );
+
+  const historyState = await loadGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopHistory(rootDir);
+  const review = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopHistoryReview(historyState, {
+    generatedAt: "2026-04-17T20:20:00.000Z",
+    limit: 5
+  });
+  const summary = renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopHistoryReviewSummary(review);
+
+  assert.equal(review.historyCount, 2);
+  assert.equal(review.reviewCount, 2);
+  assert.equal(review.resumableCount, 1);
+  assert.equal(review.drainedCount, 1);
+  assert.equal(review.recoveryReadyCount, 1);
+  assert.match(summary, /backpressure-loop-two/);
+  assert.match(summary, /recovery_ready_count: 1/);
+});
+
+test("runtime loop recovery runtime cycle runtime coordination backpressure loop recovery assessment emits dispatch-ready contracts", () => {
+  const loopState = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopState([
+    {
+      loopIndex: 1,
+      completedSessions: 2,
+      totalPasses: 3,
+      totalAppliedCount: 2,
+      totalAutoReleaseCount: 1,
+      totalRefreshCount: 1,
+      totalEscalatedCount: 0,
+      sessionStopReason: "loop_limit_reached",
+      stopReason: "loop_limit_reached",
+      summaryPath: "runs/integration/backpressure-loop/two/summary.md"
+    }
+  ], {
+    generatedAt: "2026-04-17T20:30:00.000Z",
+    runtimeCycleLimit: 3,
+    runtimeSessionLimit: 2,
+    loopLimit: 3,
+    stopReason: "loop_limit_reached"
+  });
+  const resumeContract = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopResumeContract(loopState, {
+    generatedAt: "2026-04-17T20:31:00.000Z",
+    loopStatePath: "runs/integration/backpressure-loop/two/state.json"
+  });
+  const assessment = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopRecoveryAssessment(loopState, [
+    { totalAppliedCount: 2 }
+  ], {
+    generatedAt: "2026-04-17T20:32:00.000Z",
+    resumeContractPath: "runs/integration/backpressure-loop/two/resume-contract.json",
+    resumeContract
+  });
+  const contract = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopRecoveryContract({
+    loopState,
+    receipts: [{ totalAppliedCount: 2 }],
+    recoveryAssessment: assessment,
+    resumeContract
+  }, {
+    generatedAt: "2026-04-17T20:33:00.000Z",
+    runId: "backpressure-loop-two",
+    loopStatePath: "runs/integration/backpressure-loop/two/state.json",
+    receiptsPath: "runs/integration/backpressure-loop/two/receipts.json",
+    resumeContractPath: "runs/integration/backpressure-loop/two/resume-contract.json",
+    recoveryContractPath: "runs/integration/backpressure-loop/two/recovery-contract.json",
+    summaryPath: "runs/integration/backpressure-loop/two/summary.md"
+  });
+
+  assert.equal(assessment.effectiveStatus, "dispatch_ready_runtime_loop_recovery_runtime_cycle_runtime_coordination_backpressure_loop_recovery_contract");
+  assert.equal(assessment.action, "recover_via_resume");
+  assert.equal(contract.contractStatus, "dispatch_ready_runtime_loop_recovery_runtime_cycle_runtime_coordination_backpressure_loop_recovery_contract");
+  assert.equal(contract.resumeReady, true);
+  assert.equal(contract.remainingLoopBudget, 2);
+});
+
+test("runtime loop recovery runtime cycle runtime coordination backpressure loop recovery review picks the best recovery candidate", async () => {
+  const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-gh-service-backpressure-loop-recovery-review-"));
+  const previewLoopState = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopState([
+    {
+      loopIndex: 1,
+      completedSessions: 1,
+      totalPasses: 1,
+      totalAppliedCount: 0,
+      totalAutoReleaseCount: 0,
+      totalRefreshCount: 0,
+      totalEscalatedCount: 0,
+      sessionStopReason: "dry_run_preview",
+      stopReason: "dry_run_preview",
+      summaryPath: "runs/integration/backpressure-loop/preview/summary.md"
+    }
+  ], {
+    generatedAt: "2026-04-17T20:40:00.000Z",
+    runtimeCycleLimit: 3,
+    runtimeSessionLimit: 2,
+    loopLimit: 3,
+    stopReason: "dry_run_preview"
+  });
+  const resumableLoopState = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopState([
+    {
+      loopIndex: 1,
+      completedSessions: 2,
+      totalPasses: 3,
+      totalAppliedCount: 2,
+      totalAutoReleaseCount: 1,
+      totalRefreshCount: 1,
+      totalEscalatedCount: 0,
+      sessionStopReason: "loop_limit_reached",
+      stopReason: "loop_limit_reached",
+      summaryPath: "runs/integration/backpressure-loop/resumable/summary.md"
+    }
+  ], {
+    generatedAt: "2026-04-17T20:41:00.000Z",
+    runtimeCycleLimit: 3,
+    runtimeSessionLimit: 2,
+    loopLimit: 3,
+    stopReason: "loop_limit_reached"
+  });
+
+  await appendGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopHistory(
+    rootDir,
+    buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopHistoryEntry(previewLoopState, [], {
+      runId: "backpressure-loop-preview",
+      recoveryStatus: "runtime_loop_recovery_runtime_cycle_runtime_coordination_backpressure_preview_only",
+      summaryPath: "runs/integration/backpressure-loop/preview/summary.md"
+    })
+  );
+  await appendGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopHistory(
+    rootDir,
+    buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopHistoryEntry(resumableLoopState, [
+      { totalAppliedCount: 2 }
+    ], {
+      runId: "backpressure-loop-resumable",
+      recoveryStatus: "dispatch_ready_runtime_loop_recovery_runtime_cycle_runtime_coordination_backpressure_loop_recovery_contract",
+      recoveryContractPath: "runs/integration/backpressure-loop/resumable/recovery-contract.json",
+      summaryPath: "runs/integration/backpressure-loop/resumable/summary.md"
+    })
+  );
+
+  const historyState = await loadGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopHistory(rootDir);
+  const review = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopRecoveryReview(historyState, {
+    generatedAt: "2026-04-17T20:42:00.000Z",
+    limit: 5
+  });
+  const summary = renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeCoordinationBackpressureLoopRecoveryReviewSummary(review);
+
+  assert.equal(review.dispatchReadyCount, 1);
+  assert.equal(review.previewOnlyCount, 1);
+  assert.equal(review.bestCandidate?.runId, "backpressure-loop-resumable");
+  assert.match(summary, /dispatch_ready_count: 1/);
+  assert.match(summary, /backpressure-loop-resumable/);
+});
+
+test("runtime loop recovery runtime cycle runtime plan respects coordination holds between families", async () => {
+  const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-gh-service-loop-recovery-runtime-cycle-runtime-coordination-plan-"));
+  const familyAState = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleState([
+    { roundIndex: 1, workerCount: 1, selectedCount: 6, executedCount: 0, blockedCount: 0, laneCount: 1, stopReason: "manual_preview" }
+  ], {
+    workerIds: ["worker-a"],
+    cycleLimit: 2,
+    stopReason: "manual_preview"
+  });
+  const familyBState = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleState([
+    { roundIndex: 1, workerCount: 1, selectedCount: 5, executedCount: 0, blockedCount: 0, laneCount: 1, stopReason: "manual_preview" }
+  ], {
+    workerIds: ["worker-b"],
+    cycleLimit: 2,
+    stopReason: "manual_preview"
+  });
+
+  await appendGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(rootDir, buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(familyAState, {
+    runId: "coord-plan-family-a",
+    resumeContractPath: "runs/integration/github-app-service-runtime-loop-recovery-runtime-cycle/coord-plan-family-a/service-runtime-loop-recovery-runtime-cycle-resume-contract.json"
+  }));
+  await appendGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(rootDir, buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(familyBState, {
+    runId: "coord-plan-family-b",
+    resumeContractPath: "runs/integration/github-app-service-runtime-loop-recovery-runtime-cycle/coord-plan-family-b/service-runtime-loop-recovery-runtime-cycle-resume-contract.json"
+  }));
+
+  const receiptState = await loadGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipts(rootDir);
+  const plan = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimePlan(receiptState, {
+    workerIds: ["worker-a", "worker-b"],
+    coordinationState: {
+      families: [
+        {
+          workerFamilyKey: "worker-a",
+          coordinationGroupKey: "overlap:worker-a|worker-b",
+          status: "coordination_hold",
+          blockedByFamilyKey: "worker-a|worker-b"
+        }
+      ]
+    }
+  });
+
+  assert.equal(plan.selectedCount, 1);
+  assert.ok(plan.blockedReceipts.some((entry) => entry.runtimeStatus === "coordination_hold"));
+});
+
+test("runtime loop recovery runtime cycle runtime plan respects coordination group backpressure", async () => {
+  const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-gh-service-loop-recovery-runtime-cycle-runtime-coordination-backpressure-plan-"));
+  const familyAState = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleState([
+    { roundIndex: 1, workerCount: 1, selectedCount: 6, executedCount: 0, blockedCount: 0, laneCount: 1, stopReason: "manual_preview" }
+  ], {
+    workerIds: ["worker-a"],
+    cycleLimit: 2,
+    stopReason: "manual_preview"
+  });
+  const familyBState = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleState([
+    { roundIndex: 1, workerCount: 1, selectedCount: 5, executedCount: 0, blockedCount: 0, laneCount: 1, stopReason: "manual_preview" }
+  ], {
+    workerIds: ["worker-b"],
+    cycleLimit: 2,
+    stopReason: "manual_preview"
+  });
+
+  await appendGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(rootDir, buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(familyAState, {
+    runId: "coord-backpressure-plan-family-a",
+    resumeContractPath: "runs/integration/github-app-service-runtime-loop-recovery-runtime-cycle/coord-backpressure-plan-family-a/service-runtime-loop-recovery-runtime-cycle-resume-contract.json"
+  }));
+  await appendGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(rootDir, buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(familyBState, {
+    runId: "coord-backpressure-plan-family-b",
+    resumeContractPath: "runs/integration/github-app-service-runtime-loop-recovery-runtime-cycle/coord-backpressure-plan-family-b/service-runtime-loop-recovery-runtime-cycle-resume-contract.json"
+  }));
+
+  const receiptState = await loadGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipts(rootDir);
+  const plan = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimePlan(receiptState, {
+    workerIds: ["worker-a", "worker-b"],
+    coordinationBackpressureState: {
+      groups: [
+        {
+          coordinationGroupKey: "overlap:worker-a|worker-b",
+          status: "group_backpressure",
+          blockedUntil: "2099-01-01T00:00:00.000Z",
+          workerFamilyKeys: ["worker-a"]
+        }
+      ]
+    }
+  });
+
+  assert.equal(plan.selectedCount, 1);
+  assert.equal(plan.coordinationBackpressureCount, 1);
+  assert.ok(plan.blockedReceipts.some((entry) => entry.runtimeStatus === "coordination_backpressure"));
+});
+
+test("runtime loop recovery runtime cycle runtime plan respects escalated coordination group backpressure", async () => {
+  const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-gh-service-loop-recovery-runtime-cycle-runtime-coordination-backpressure-escalated-plan-"));
+  const familyAState = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleState([
+    { roundIndex: 1, workerCount: 1, selectedCount: 6, executedCount: 0, blockedCount: 0, laneCount: 1, stopReason: "manual_preview" }
+  ], {
+    workerIds: ["worker-a"],
+    cycleLimit: 2,
+    stopReason: "manual_preview"
+  });
+
+  await appendGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(rootDir, buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipt(familyAState, {
+    runId: "coord-backpressure-escalated-plan-family-a",
+    resumeContractPath: "runs/integration/github-app-service-runtime-loop-recovery-runtime-cycle/coord-backpressure-escalated-plan-family-a/service-runtime-loop-recovery-runtime-cycle-resume-contract.json"
+  }));
+
+  const receiptState = await loadGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleReceipts(rootDir);
+  const plan = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimePlan(receiptState, {
+    workerIds: ["worker-a"],
+    coordinationBackpressureState: {
+      groups: [
+        {
+          coordinationGroupKey: "overlap:worker-a",
+          status: "group_escalated",
+          blockedUntil: "2099-01-01T00:00:00.000Z",
+          workerFamilyKeys: ["worker-a"]
+        }
+      ]
+    }
+  });
+
+  assert.equal(plan.selectedCount, 0);
+  assert.equal(plan.coordinationGroupEscalatedCount, 1);
+  assert.ok(plan.blockedReceipts.some((entry) => entry.runtimeStatus === "coordination_group_escalated"));
+});
+
+test("runtime loop recovery runtime cycle runtime governance release plan requires clear-budget for budget exhausted families", () => {
+  const plan = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeGovernanceReleasePlan({
+    families: [
+      {
+        workerFamilyKey: "worker-a",
+        status: "family_budget_exhausted",
+        maxSelectedCount: 3
+      }
+    ]
+  }, {
+    fromStatus: "problematic"
+  });
+  const summary = renderGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeGovernanceReleaseSummary(plan);
+
+  assert.equal(plan.selectedCount, 0);
+  assert.equal(plan.blockedCount, 1);
+  assert.equal(plan.blockedFamilies[0].releaseAction, "needs_clear_budget");
+  assert.match(summary, /blocked_count: 1/);
+});
+
+test("runtime loop recovery runtime cycle runtime governance release plan selects held families and can clear budgets", () => {
+  const plan = buildGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeGovernanceReleasePlan({
+    families: [
+      {
+        workerFamilyKey: "worker-a|worker-b",
+        status: "family_manual_hold",
+        holdReason: "manual gate"
+      },
+      {
+        workerFamilyKey: "worker-c",
+        status: "family_budget_exhausted",
+        maxSelectedCount: 2
+      }
+    ]
+  }, {
+    fromStatus: "problematic",
+    clearBudget: true
+  });
+
+  assert.equal(plan.selectedCount, 2);
+  assert.equal(plan.blockedCount, 0);
+  assert.equal(plan.selectedFamilies.find((item) => item.workerFamilyKey === "worker-c")?.clearBudget, true);
+});
+
+test("apply runtime loop recovery runtime cycle runtime governance release removes fully released families", () => {
+  const applied = applyGithubWebhookServiceRuntimeLoopRecoveryRuntimeCycleRuntimeGovernanceReleasePlan({
+    families: [
+      {
+        workerFamilyKey: "worker-a|worker-b",
+        status: "family_manual_hold",
+        holdReason: "manual gate"
+      },
+      {
+        workerFamilyKey: "worker-c",
+        status: "family_budget_exhausted",
+        maxSelectedCount: 2,
+        preferredWorkerId: "worker-c"
+      }
+    ]
+  }, {
+    selectedFamilies: [
+      {
+        workerFamilyKey: "worker-a|worker-b",
+        currentEntry: {
+          workerFamilyKey: "worker-a|worker-b",
+          status: "family_manual_hold",
+          holdReason: "manual gate"
+        },
+        clearBudget: false
+      },
+      {
+        workerFamilyKey: "worker-c",
+        currentEntry: {
+          workerFamilyKey: "worker-c",
+          status: "family_budget_exhausted",
+          maxSelectedCount: 2,
+          preferredWorkerId: "worker-c"
+        },
+        clearBudget: true
+      }
+    ]
+  }, {
+    releasedAt: "2026-04-17T12:20:00.000Z",
+    notes: "family release after review"
+  });
+
+  assert.equal(applied.receipts.length, 2);
+  assert.equal(applied.nextState.families.length, 1);
+  assert.equal(applied.nextState.families[0].workerFamilyKey, "worker-c");
+  assert.equal(applied.nextState.families[0].status, "family_ready");
+  assert.equal(applied.nextState.families[0].maxSelectedCount, null);
+  assert.equal(applied.nextState.families[0].preferredWorkerId, "worker-c");
+});
+
 test("writeGithubWebhookServiceArtifacts writes service files", async () => {
   const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-gh-service-artifacts-"));
   const plan = {
@@ -1953,4 +3502,446 @@ test("writeGithubWebhookServiceArtifacts writes service files", async () => {
   assert.equal(writtenPlan.queueCount, 1);
   assert.deepEqual(writtenReceipts, []);
   assert.match(writtenSummary, /Patternpilot GitHub App Service Tick/);
+});
+
+test("runtime ops review prioritizes dead-letter and open recovery work", () => {
+  const review = buildGithubWebhookServiceRuntimeOpsReview({
+    queueState: {
+      queue: [{}, {}, {}],
+      pendingQueue: [{}],
+      claimedQueue: [{}],
+      blockedQueue: [],
+      deadLetterQueue: [{}]
+    },
+    runtimeClaimsState: {
+      claims: [
+        { laneKey: "priority:worker-a", workerId: "worker-a" }
+      ]
+    },
+    runtimeLoopHistoryState: {
+      entries: []
+    },
+    runtimeLoopRecoveryReceiptsState: {
+      receipts: [
+        {
+          receiptId: "runtime-open",
+          receiptState: "open",
+          recoveryStatus: "dispatch_ready_runtime_loop_recovery_contract",
+          maxAttempts: 3,
+          attemptCount: 0
+        }
+      ]
+    },
+    runtimeLoopRecoveryRuntimeCycleHistoryState: {
+      entries: []
+    },
+    runtimeLoopRecoveryRuntimeCycleReceiptsState: {
+      receipts: []
+    },
+    coordinationBackpressureHistoryState: {
+      entries: []
+    },
+    coordinationBackpressureLoopHistoryState: {
+      entries: [
+        {
+          runId: "backpressure-loop-one",
+          stopReason: "loop_limit_reached",
+          recoveryStatus: "dispatch_ready_runtime_loop_recovery_runtime_cycle_runtime_coordination_backpressure_loop_recovery_contract",
+          completedLoops: 1,
+          totalSessions: 2,
+          totalPasses: 3,
+          appliedCount: 2,
+          remainingLoopBudget: 2,
+          resumeReady: true
+        }
+      ]
+    }
+  }, {
+    generatedAt: "2026-04-17T18:00:00.000Z",
+    limit: 5
+  });
+
+  assert.equal(review.healthStatus, "critical_attention");
+  assert.equal(review.queueSummary.deadLetterCount, 1);
+  assert.equal(review.runtimeLoopRecoveryReceiptsReview.openCount, 1);
+  assert.equal(review.coordinationBackpressureLoopRecoveryReview.dispatchReadyCount, 1);
+  assert.equal(review.prioritizedActions[0].key, "queue_dead_letter");
+  assert.ok(review.prioritizedActions.some((item) => item.key === "runtime_loop_recovery_open"));
+});
+
+test("runtime ops summary renders consolidated health counts", () => {
+  const review = buildGithubWebhookServiceRuntimeOpsReview({
+    queueState: {
+      queue: [],
+      pendingQueue: [],
+      claimedQueue: [],
+      blockedQueue: [],
+      deadLetterQueue: []
+    },
+    runtimeClaimsState: {
+      claims: []
+    },
+    runtimeLoopHistoryState: {
+      entries: []
+    },
+    runtimeLoopRecoveryReceiptsState: {
+      receipts: []
+    },
+    runtimeLoopRecoveryRuntimeCycleHistoryState: {
+      entries: []
+    },
+    runtimeLoopRecoveryRuntimeCycleReceiptsState: {
+      receipts: []
+    },
+    coordinationBackpressureHistoryState: {
+      entries: []
+    },
+    coordinationBackpressureLoopHistoryState: {
+      entries: []
+    }
+  }, {
+    generatedAt: "2026-04-17T18:05:00.000Z",
+    limit: 5
+  });
+  const summary = renderGithubWebhookServiceRuntimeOpsSummary(review);
+
+  assert.equal(review.healthStatus, "healthy");
+  assert.match(summary, /health_status: healthy/);
+  assert.match(summary, /queue_count: 0/);
+  assert.match(summary, /Prioritized Actions/);
+});
+
+test("runtime integrity review detects duplicate identities, duplicate lane claims and missing contracts", () => {
+  const review = buildGithubWebhookServiceRuntimeIntegrityReview({
+    queueState: {
+      queue: [
+        {
+          fileName: "pending.json",
+          queueState: "pending",
+          contract: {
+            contractKind: "execution_contract",
+            deliveryId: "delivery-1",
+            selectedProjectKey: "eventbear-worker",
+            serviceState: { identity: "execution_contract::delivery-1::eventbear-worker::-" }
+          }
+        },
+        {
+          fileName: "dead-letter.json",
+          queueState: "dead_letter",
+          contract: {
+            contractKind: "execution_contract",
+            deliveryId: "delivery-1",
+            selectedProjectKey: "eventbear-worker",
+            serviceState: { identity: "execution_contract::delivery-1::eventbear-worker::-" }
+          }
+        }
+      ],
+      claimedQueue: [
+        {
+          fileName: "claimed.json",
+          queueState: "claimed",
+          contract: {
+            contractKind: "resume_contract",
+            serviceState: { identity: "resume_contract::delivery-2::eventbear-worker::on-demand" }
+          }
+        }
+      ]
+    },
+    runtimeClaimsState: {
+      claims: [
+        { laneKey: "lane:a", workerId: "worker-a", leaseExpiresAt: "2099-01-01T00:00:00.000Z" },
+        { laneKey: "lane:a", workerId: "worker-b", leaseExpiresAt: "2099-01-01T00:00:00.000Z" }
+      ]
+    },
+    runtimeLoopHistoryState: {
+      entries: [
+        {
+          runId: "loop-1",
+          resumeReady: true,
+          resumeContractPath: null,
+          recoveryStatus: "dispatch_ready_runtime_loop_recovery_contract",
+          recoveryContractPath: null
+        }
+      ]
+    },
+    runtimeLoopRecoveryReceiptsState: {
+      receipts: [
+        {
+          receiptId: "receipt-1",
+          receiptState: "open",
+          recoveryStatus: "dispatch_ready_runtime_loop_recovery_contract",
+          attemptCount: 0,
+          maxAttempts: 3,
+          recoveryContractPath: null,
+          resumeContractPath: null
+        }
+      ]
+    },
+    runtimeLoopRecoveryRuntimeCycleHistoryState: { entries: [] },
+    runtimeLoopRecoveryRuntimeCycleReceiptsState: {
+      receipts: [
+        {
+          receiptId: "cycle-receipt-1",
+          receiptState: "open",
+          resumeReady: true,
+          resumeContractPath: null
+        }
+      ]
+    },
+    coordinationBackpressureLoopHistoryState: {
+      entries: [
+        {
+          runId: "bp-loop-1",
+          resumeReady: true,
+          resumeContractPath: null,
+          recoveryStatus: "dispatch_ready_runtime_loop_recovery_runtime_cycle_runtime_coordination_backpressure_loop_recovery_contract",
+          recoveryContractPath: null
+        }
+      ]
+    },
+    referenceChecks: [
+      {
+        sourceType: "runtime_loop_history",
+        sourceId: "loop-1",
+        field: "summaryPath",
+        referencePath: "runs/integration/missing-summary.md",
+        exists: false
+      }
+    ]
+  }, {
+    generatedAt: "2026-04-17T09:00:00.000Z"
+  });
+
+  assert.equal(review.integrityStatus, "integrity_critical");
+  assert.ok(review.prioritizedIssues.some((issue) => issue.key === "duplicate_queue_identity"));
+  assert.ok(review.prioritizedIssues.some((issue) => issue.key === "duplicate_runtime_lane_claims"));
+  assert.ok(review.prioritizedIssues.some((issue) => issue.key === "runtime_loop_recovery_receipt_missing_recovery_contract"));
+  assert.ok(review.prioritizedIssues.some((issue) => issue.key === "missing_runtime_artifact_files"));
+});
+
+test("runtime integrity summary renders consolidated integrity counts", () => {
+  const summary = renderGithubWebhookServiceRuntimeIntegritySummary({
+    generatedAt: "2026-04-17T09:00:00.000Z",
+    integrityStatus: "integrity_attention",
+    queueCount: 2,
+    runtimeClaimCount: 1,
+    referenceCheckCount: 4,
+    missingReferenceCount: 1,
+    duplicateQueueIdentityCount: 0,
+    duplicateRuntimeLaneClaimCount: 0,
+    prioritizedIssues: [
+      {
+        severity: "medium",
+        key: "missing_runtime_artifact_files",
+        title: "Runtime states point to missing artifact files",
+        detail: "1 referenced runtime state/receipt/summary artifact file is missing.",
+        nextAction: "Refresh or clean up stale artifact pointers so runtime review remains trustworthy.",
+        examples: ["runtime_loop_history:loop-1:summaryPath -> runs/integration/missing-summary.md"]
+      }
+    ],
+    nextAction: "Refresh or clean up stale artifact pointers so runtime review remains trustworthy."
+  });
+
+  assert.match(summary, /integrity_status: integrity_attention/);
+  assert.match(summary, /missing_reference_count: 1/);
+  assert.match(summary, /missing_runtime_artifact_files/);
+});
+
+test("runtime maintenance plan separates safe reclaim actions from manual follow-up", () => {
+  const plan = buildGithubWebhookServiceRuntimeMaintenancePlan({
+    integrityState: {
+      queueState: {
+        queue: [],
+        claimedQueue: [
+          {
+            fileName: "claimed-old.json",
+            queueState: "claimed",
+            contract: {
+              serviceLease: {
+                leaseExpiresAt: "2026-04-17T08:00:00.000Z"
+              }
+            }
+          }
+        ]
+      },
+      runtimeClaimsState: {
+        claims: [
+          {
+            laneKey: "lane:a",
+            workerId: "worker-a",
+            leaseExpiresAt: "2026-04-17T08:00:00.000Z"
+          }
+        ]
+      },
+      runtimeLoopHistoryState: {
+        entries: [
+          {
+            runId: "loop-1",
+            resumeReady: true,
+            resumeContractPath: null
+          }
+        ]
+      },
+      runtimeLoopRecoveryReceiptsState: { receipts: [] },
+      runtimeLoopRecoveryRuntimeCycleHistoryState: { entries: [] },
+      runtimeLoopRecoveryRuntimeCycleReceiptsState: { receipts: [] },
+      coordinationBackpressureHistoryState: { entries: [] },
+      coordinationBackpressureLoopHistoryState: { entries: [] },
+      referenceChecks: []
+    }
+  }, {
+    generatedAt: "2026-04-17T09:00:00.000Z"
+  });
+
+  assert.equal(plan.safeActionCount, 2);
+  assert.equal(plan.manualActionCount, 1);
+  assert.equal(plan.maintenanceStatus, "maintenance_attention");
+  assert.ok(plan.safeActions.some((action) => action.key === "reclaim_expired_queue_claims"));
+  assert.ok(plan.safeActions.some((action) => action.key === "reclaim_expired_runtime_lane_claims"));
+  assert.ok(plan.manualActions.some((action) => action.key === "runtime_loop_history_missing_resume_contract"));
+});
+
+test("runtime maintenance summary renders safe and manual sections", () => {
+  const summary = renderGithubWebhookServiceRuntimeMaintenanceSummary({
+    generatedAt: "2026-04-17T09:00:00.000Z",
+    maintenanceStatus: "maintenance_attention",
+    integrityStatus: "integrity_attention",
+    safeActionCount: 1,
+    manualActionCount: 1,
+    expiredClaimedQueueCount: 1,
+    expiredRuntimeClaimCount: 0,
+    safeActions: [
+      {
+        severity: "high",
+        key: "reclaim_expired_queue_claims",
+        detail: "1 claimed queue entry has an expired lease and can safely move back to pending.",
+        examples: ["claimed-old.json"]
+      }
+    ],
+    manualActions: [
+      {
+        severity: "high",
+        key: "runtime_loop_history_missing_resume_contract",
+        detail: "1 runtime loop history entry is resume-ready without a resume contract path.",
+        examples: ["loop-1"]
+      }
+    ],
+    nextAction: "Apply maintenance to reclaim stale queue leases before the next service tick."
+  }, {
+    appliedAt: "2026-04-17T09:05:00.000Z",
+    queueClaimsReclaimed: 1,
+    runtimeClaimsReclaimed: 0,
+    plannedSafeActionCount: 1,
+    remainingManualActionCount: 1
+  });
+
+  assert.match(summary, /maintenance_status: maintenance_attention/);
+  assert.match(summary, /Safe Actions/);
+  assert.match(summary, /Manual Follow-up/);
+  assert.match(summary, /queue_claims_reclaimed: 1/);
+});
+
+test("runtime control review combines ops integrity and maintenance into one closing view", () => {
+  const review = buildGithubWebhookServiceRuntimeControlReview({
+    queueState: {
+      queue: [{}, {}],
+      pendingQueue: [],
+      claimedQueue: [],
+      blockedQueue: [],
+      deadLetterQueue: [{}]
+    },
+    runtimeClaimsState: { claims: [] },
+    runtimeLoopHistoryState: { entries: [] },
+    runtimeLoopRecoveryReceiptsState: { receipts: [] },
+    runtimeLoopRecoveryRuntimeCycleHistoryState: { entries: [] },
+    runtimeLoopRecoveryRuntimeCycleReceiptsState: { receipts: [] },
+    coordinationBackpressureHistoryState: { entries: [] },
+    coordinationBackpressureLoopHistoryState: { entries: [] },
+    referenceChecks: []
+  }, {
+    generatedAt: "2026-04-17T09:00:00.000Z"
+  });
+
+  assert.equal(review.controlStatus, "runtime_control_critical");
+  assert.equal(review.opsReview.healthStatus, "critical_attention");
+  assert.ok(review.highlights.some((item) => item.source === "ops"));
+});
+
+test("runtime control summary renders combined control surface", () => {
+  const summary = renderGithubWebhookServiceRuntimeControlSummary({
+    generatedAt: "2026-04-17T09:00:00.000Z",
+    controlStatus: "runtime_control_healthy",
+    opsReview: {
+      healthStatus: "healthy",
+      queueSummary: { queueCount: 0 },
+      runtimeClaimsSummary: { activeClaimCount: 0 }
+    },
+    integrityReview: {
+      integrityStatus: "integrity_healthy",
+      prioritizedIssues: []
+    },
+    maintenancePlan: {
+      maintenanceStatus: "maintenance_clear",
+      safeActionCount: 0,
+      manualActionCount: 0
+    },
+    highlights: [],
+    nextAction: "GitHub App runtime control surface looks healthy."
+  });
+
+  assert.match(summary, /control_status: runtime_control_healthy/);
+  assert.match(summary, /ops_status: healthy/);
+  assert.match(summary, /maintenance_status: maintenance_clear/);
+});
+
+test("runtime closeout review reaches 100 percent when control is healthy", () => {
+  const review = buildGithubWebhookServiceRuntimeCloseoutReview({
+    queueState: {
+      queue: [],
+      pendingQueue: [],
+      claimedQueue: [],
+      blockedQueue: [],
+      deadLetterQueue: []
+    },
+    runtimeClaimsState: { claims: [] },
+    runtimeLoopHistoryState: { entries: [] },
+    runtimeLoopRecoveryReceiptsState: { receipts: [] },
+    runtimeLoopRecoveryRuntimeCycleHistoryState: { entries: [] },
+    runtimeLoopRecoveryRuntimeCycleReceiptsState: { receipts: [] },
+    coordinationBackpressureHistoryState: { entries: [] },
+    coordinationBackpressureLoopHistoryState: { entries: [] },
+    referenceChecks: []
+  }, {
+    generatedAt: "2026-04-17T09:00:00.000Z"
+  });
+
+  assert.equal(review.closeoutStatus, "closeout_ready");
+  assert.equal(review.completionPercent, 100);
+  assert.equal(review.followupCount, 0);
+});
+
+test("runtime closeout summary renders final completion state", () => {
+  const summary = renderGithubWebhookServiceRuntimeCloseoutSummary({
+    generatedAt: "2026-04-17T09:00:00.000Z",
+    closeoutStatus: "closeout_ready",
+    completionPercent: 100,
+    controlReview: {
+      controlStatus: "runtime_control_healthy"
+    },
+    checklist: [
+      {
+        key: "ops_surface",
+        status: "pass",
+        label: "Runtime ops surface is healthy",
+        detail: "GitHub App runtime control surface looks healthy."
+      }
+    ],
+    passCount: 1,
+    followupCount: 0,
+    nextAction: "GitHub App runtime closeout is ready."
+  });
+
+  assert.match(summary, /closeout_status: closeout_ready/);
+  assert.match(summary, /completion_percent: 100/);
+  assert.match(summary, /Closeout Checklist/);
 });

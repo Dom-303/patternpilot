@@ -13,6 +13,7 @@ Diese Dokumentation enthaelt die dauerhaft wichtigen Patternpilot-Grundlagen.
 
 Wichtige Referenz fuer Stage 3:
 
+- `foundation/ROAD_TO_100_CLOSEOUT.md`
 - `reference/PROJECT_ALIGNMENT_MODEL.md`
 - `reference/GITHUB_TOKEN_SETUP.md`
 - `reference/GITHUB_DISCOVERY_MODEL.md`

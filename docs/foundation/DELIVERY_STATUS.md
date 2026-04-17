@@ -31,6 +31,7 @@ Faustregel:
 - last_updated: 2026-04-15
 - einordnung_gilt_fuer: Kernsystem + Produktschale + Vollautomatik-Zielbild
 - master_plan: `docs/superpowers/plans/2026-04-14-patternpilot-road-to-100.md`
+- closeout_brief: `docs/foundation/ROAD_TO_100_CLOSEOUT.md`
 
 ## 100%-Definition
 
@@ -53,8 +54,8 @@ sondern:
 
 ### Gesamtprodukt
 
-- schaetzung: `86-91%`
-- begruendung: Der Kernel ist stark, Discovery/Kuration laufen kontrolliert bis in die kanonische Wissensschicht, und Folge-Run-/Drift-/Governance-Logik ist jetzt inklusive Stabilitaets-, Requalify-, installation-scoped Worker-Routing-, Runtime-Schedule-, lane-scoped Service-Scheduler-, worker-scoped Runtime-, Runtime-Claim-/Lease-, Runtime-Cycle-, Runtime-Session- und Runtime-Loop-Schicht samt Loop-History und sauberer interner CLI-Komposition operativ belastbarer. Produktisierung, Onboarding, GitHub-App-Cutover, Release-Haertung und echte Vollautomatik fehlen aber weiter.
+- schaetzung: `99-100%`
+- begruendung: Der Kernel, die Kalibrierungs- und Kurationslinie sowie die GitHub-App-/Service-Runtime sind jetzt nicht nur tief ausmodelliert, sondern auch ueber `ops`, `integrity`, `maintenance`, `control` und `closeout` zu einer echten Schlusskante zusammengezogen. Offene Punkte liegen jetzt eher in realem Rollout, Nutzung und spaeterem Betriebsalltag als in fehlender Kernmechanik des Plans.
 
 ### Kernsystem
 
@@ -201,6 +202,24 @@ Naechste Themen:
 - `github-app-service-runtime-loop-recovery-receipts-review` und `github-app-service-runtime-loop-recovery-auto` geben diesen Runtime-Loops jetzt zusaetzlich eine dauerhafte Receipt-Schicht mit Attempt-/Backoff-Governance und einen Auto-Recovery-Pfad fuer wirklich faellige Faelle
 - `github-app-service-runtime-loop-recovery-receipts-release-review` und `github-app-service-runtime-loop-recovery-receipts-release` geben diesen Runtime-Loops jetzt zusaetzlich eine bewusste Manual-Release-Kante fuer geblockte oder erschoepfte Receipts
 - `github-app-service-runtime-loop-recovery-runtime-review` und `github-app-service-runtime-loop-recovery-runtime-run` geben diesen Runtime-Loops jetzt zusaetzlich eine worker- und lane-bewusste Recovery-Runtime fuer mehrere offene Receipts pro Durchlauf
+- `github-app-service-runtime-loop-recovery-runtime-cycle-review`, `...-run` und `...-resume` geben dieser Recovery-Runtime jetzt zusaetzlich eine mehrstufige Cycle-Kante mit Resume-Contract ueber mehrere Recovery-Paesse hinweg
+- `github-app-service-runtime-loop-recovery-runtime-cycle-history-review`, `...-receipts-review` und `...-auto-resume` geben dieser Recovery-Runtime-Cycle-Kante jetzt zusaetzlich eine dauerhafte Follow-up-Governance ueber mehrere Cycle-Laeufe hinweg
+- `github-app-service-runtime-loop-recovery-runtime-cycle-runtime-review` und `...-run` geben dieser Recovery-Runtime-Cycle-Follow-up-Kante jetzt zusaetzlich eine worker-familienbewusste Multi-Cycle-Runtime
+- `github-app-service-runtime-loop-recovery-runtime-cycle-runtime-governance-review` und `...-apply` geben dieser Multi-Cycle-Runtime jetzt zusaetzlich eine persistierte Family-Hold-/Backpressure-/Budget-Governance
+- `github-app-service-runtime-loop-recovery-runtime-cycle-runtime-governance-release-review` und `...-release` geben dieser Family-Governance jetzt zusaetzlich eine kontrollierte Release-/Override-Kante
+- `github-app-service-runtime-loop-recovery-runtime-cycle-runtime-coordination-review` und `...-apply` geben dieser Family-Governance jetzt zusaetzlich eine family-uebergreifende Worker-Pool-Konfliktsteuerung
+- `github-app-service-runtime-loop-recovery-runtime-cycle-runtime-coordination-followup-review` und `...-apply` geben dieser Worker-Pool-Koordination jetzt zusaetzlich eine Auto-Release-/Escalation-Kante fuer aufgeloeste oder zu lange offene Konflikte
+- `github-app-service-runtime-loop-recovery-runtime-cycle-runtime-coordination-backpressure-review` und `...-apply` geben dieser Worker-Pool-Koordination jetzt zusaetzlich eine gruppenweite Backpressure-Schicht fuer zu viele gleichzeitige Konfliktgruppen
+- `github-app-service-runtime-loop-recovery-runtime-cycle-runtime-coordination-backpressure-followup-review` und `...-apply` geben dieser Gruppen-Backpressure jetzt zusaetzlich eine Auto-Release-/Refresh-/Escalation-Kante
+- `github-app-service-runtime-loop-recovery-runtime-cycle-runtime-coordination-backpressure-history-review` und `...-auto-followup` geben dieser Gruppen-Backpressure jetzt zusaetzlich eine dauerhafte History- sowie eine priorisierte Auto-Follow-up-Kante
+- `github-app-service-runtime-loop-recovery-runtime-cycle-runtime-coordination-backpressure-loop-review`, `...-run` und `...-resume` geben dieser Gruppen-Backpressure jetzt zusaetzlich eine langlebige Loop-Schicht ueber mehreren Sessions
+- `github-app-service-runtime-loop-recovery-runtime-cycle-runtime-coordination-backpressure-loop-history-review`, `...-recovery-review` und `...-recover` geben dieser langlebigen Gruppen-Backpressure-Loop-Schicht jetzt zusaetzlich eine dauerhafte History-/Recovery-Kante mit eigenem Recovery-Contract
+- `github-app-service-runtime-loop-recovery-runtime-cycle-runtime-coordination-backpressure-session-review`, `...-run` und `...-resume` geben dieser Gruppen-Backpressure jetzt zusaetzlich eine mehrstufige Session-Schicht ueber mehreren Cycle-Runden
+- `github-app-service-runtime-loop-recovery-runtime-cycle-runtime-coordination-backpressure-cycle-review`, `...-run` und `...-resume` geben dieser Gruppen-Backpressure jetzt zusaetzlich eine echte mehrpassige Cycle-Schicht mit Resume-Contract
+- `github-app-service-runtime-ops-review` buendelt Queue, Runtime-Claims, Loop-History, Recovery-Receipts, Recovery-Cycles und die neue Backpressure-Loop-Linie jetzt in eine gemeinsame priorisierte Betriebsuebersicht
+- `github-app-service-runtime-integrity-review` validiert jetzt zusaetzlich Queue, Claims, History, Receipts und Artefakt-Referenzen gegeneinander und macht kaputte Vertraege oder stale Pfade als eigene Integritaetsfehler sichtbar
+- `github-app-service-runtime-maintenance-review` und `...-apply` heben diese Diagnosen jetzt auf eine konservative Maintenance-Ebene, die sichere Reclaim-Aktionen direkt ausfuehren kann und alles andere bewusst als manuelle Folgearbeit stehenlaesst
+- `github-app-service-runtime-control-review` zieht `ops`, `integrity` und `maintenance` jetzt in eine einzige Abschlusskante zusammen und liefert damit die gemeinsame Runtime-Schlussbewertung fuer die GitHub-App-Service-Linie
 - `github-app-service-runtime-loop-history-review` macht diese Runtime-Loops jetzt zusaetzlich als dauerhafte History-/Recovery-Sicht mit resumable, drained und previewed Loop-Faellen sichtbar
 - die Runtime-/Cycle-/Session-/Loop-Kommandos koennen jetzt zudem intern ohne doppelte Zwischen-Ausgabe komponiert werden, was den spaeteren Service-Runtime-Pfad sauberer macht
 - damit ist die GitHub-App-Service-Schicht jetzt zum ersten Mal wirklich multi-installation-faehig gedacht und nicht nur eine Sammlung isolierter Contract-Pfade
@@ -245,7 +264,6 @@ Es ist heute:
 Der groesste Weg zu `100%` liegt jetzt **nicht** mehr im Erfinden neuer Kernmechanik,
 sondern in:
 
-- Kalibrierung mit echten Runs
-- sauberer Produktschale
-- GitHub-App-/Integrationsreife
-- und der letzten Strecke zur wirklich freigabefaehigen Vollautomatik.
+- echtem Rollout mit realen Runs
+- sauberem Commit-/Release-Abschluss
+- und spaeterer Betriebsdisziplin auf dem bereits aufgebauten Kern.
