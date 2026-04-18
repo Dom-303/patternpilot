@@ -56,6 +56,8 @@ Es hilft dir, externe GitHub-Repositories nicht nur zu sammeln, sondern im Konte
 
 ### Schnellster echter Einstieg
 
+Wenn du direkt sauber mit GitHub arbeiten willst, nimm diesen gefuehrten Pfad:
+
 ```bash
 npm install
 npm run init:env
@@ -103,7 +105,7 @@ npm run intake -- --project my-project https://github.com/example/repo
 
 Danach hast du einen ersten echten Durchlauf.
 
-Wenn du gleich stabil gegen GitHub arbeiten willst, nimm direkt danach noch:
+Wenn du danach stabil gegen GitHub arbeiten willst, nimm direkt noch:
 
 ```bash
 npm run init:env
@@ -182,29 +184,12 @@ npm run getting-started
   Arbeitet die Watchlist fuer ein Projekt ab.
 - `npm run review:watchlist -- --project my-project --dry-run`
   Verdichtet Watchlist-Funde zu einem Review.
+- `npm run patternpilot -- discover --project my-project --dry-run`
+  Sucht optional automatisch nach moeglich passenden GitHub-Repos fuer dein Zielprojekt.
 - `npm run validate:cohort`
   Faellt die breite Fremdprojekt-Welle ueber die eingebaute Referenzkohorte.
 - `npm run patternpilot -- product-readiness`
   Zeigt, wie nah dein lokaler Setup an einem belastbaren Betriebszustand ist.
-
-## Automatische Suche oder manuelle Watchlist?
-
-Beides ist moeglich, aber nicht gleich stark fuer denselben Zweck.
-
-- `discover` ist die automatische GitHub-Suche.
-  `patternpilot` nutzt dabei Projekt-Binding, Alignment-Regeln und Discovery-Policy, um passende Repos heuristisch zu suchen und vorzusortieren.
-- `watchlist` und explizites `intake` sind die bewusst kuratierte Linie.
-  Sie sind heute der berechenbarste und klarste Weg, wenn du schon konkrete Repo-Hinweise hast.
-
-Kurz gesagt:
-
-- Ja, `patternpilot` kann schon automatisch suchen.
-- Nein, es ist nicht als unsichtbar-magischer Vollautomat gedacht, der ohne Produktkontext perfekt selbst entscheidet.
-- Der starke Produktkern ist aktuell:
-  - Zielprojekt anbinden
-  - gezielt intaken oder suchen
-  - Ergebnisse reviewen
-  - dann bewusst weiter entscheiden
 
 ## Produktlogik in einem Satz
 
@@ -226,6 +211,8 @@ Wenn du tiefer einsteigen willst:
   [OPERATING_MODEL.md](docs/foundation/OPERATING_MODEL.md)
 - Projekt-Alignment:
   [PROJECT_ALIGNMENT_MODEL.md](docs/reference/PROJECT_ALIGNMENT_MODEL.md)
+- Einordnung der GitHub-Suche:
+  `discover` ist eine projektbezogene, heuristische Suchschicht und kein magischer Vollautomat.
 - GitHub-Discovery:
   [GITHUB_DISCOVERY_MODEL.md](docs/reference/GITHUB_DISCOVERY_MODEL.md)
 - Automation und Alerts:
