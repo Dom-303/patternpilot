@@ -26,6 +26,7 @@
   ],
   "scripts": {
     "analyze": "node scripts/patternpilot.mjs on-demand",
+    "on-demand": "node scripts/patternpilot.mjs on-demand",
     "run-plan": "node scripts/patternpilot.mjs run-plan",
     "run-drift": "node scripts/patternpilot.mjs run-drift",
     "run-governance": "node scripts/patternpilot.mjs run-governance",

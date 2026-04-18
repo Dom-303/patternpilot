@@ -22,6 +22,12 @@ Nicht gemeint ist:
 - dass die GitHub-App-/Full-Automation-Linie schon dieselbe Abschlussreife haben muss
 - dass jede spaetere Integrationsidee schon heute mitgebaut wird
 
+## Aktueller Fortschritt
+
+- Stand: `2026-04-18`
+- Phase 1: im Kern abgeschlossen
+- Naechster Fokus: Phase 2 `Automation- und Governance-Haertung`
+
 ## Zielbild
 
 Am Ende dieser Phase soll `patternpilot` nicht mehr wie ein starker, aber noch junger Produktstand wirken.

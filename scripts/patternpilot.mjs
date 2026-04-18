@@ -10,6 +10,7 @@ import {
   renderPatternpilotHelp,
   resolvePatternpilotCommandName
 } from "./shared/command-registry.mjs";
+import { buildCommandFailureGuidance } from "./shared/error-guidance.mjs";
 import {
   runIntake,
   runDiscover,
@@ -379,10 +380,26 @@ async function main() {
     );
   }
 
-  await handler(rootDir, config, options);
+  try {
+    await handler(rootDir, config, options);
+  } catch (error) {
+    error.patternpilotContext = {
+      commandName: commandEntry.name,
+      projectKey: options.project || config.defaultProject || null
+    };
+    throw error;
+  }
 }
 
 main().catch((error) => {
   console.error(`Patternpilot failed: ${error.message}`);
+  const guidance = buildCommandFailureGuidance(
+    error.message,
+    error.patternpilotContext ?? {}
+  );
+  if (guidance) {
+    console.error("");
+    console.error(guidance);
+  }
   process.exitCode = error.exitCode ?? 1;
 });
