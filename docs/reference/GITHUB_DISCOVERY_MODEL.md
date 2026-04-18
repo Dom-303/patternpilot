@@ -42,6 +42,30 @@ Discovery fuegt jetzt bewusst negative Suchterme gegen typische Rauschquellen ei
 
 Diese Begriffe bleiben pro Projekt ueber `discoveryStrategy` anpassbar.
 
+## Ranking und Evidenz
+
+Nach dem Search-Hit priorisiert Discovery Kandidaten heute nicht mehr nur ueber einen einfachen Gesamtscore.
+
+Es kombiniert jetzt:
+
+- Projekt-Fit
+- Capability-Matches
+- Query-Family-Breite
+- Keyword-, Topic- und README-Evidenz
+- Metadatastaerke
+- Aktivitaet und Reife
+
+Zusaetzlich traegt jeder Kandidat jetzt:
+
+- ein `discoveryEvidence`-Profil
+- eine `discoveryClass`, zum Beispiel:
+  - `fit_candidate`
+  - `research_signal`
+  - `boundary_signal`
+  - `risk_signal`
+
+Dadurch wird klarer, welche Treffer wirklich oben stehen sollten und welche eher nur Kontext oder Risiko liefern.
+
 ## Inputs
 
 Die Discovery-Linse speist sich aus:

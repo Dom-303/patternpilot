@@ -10,7 +10,9 @@ import {
 import {
   decorateDiscoveryCandidate,
   buildDiscoveryRunFields,
-  applyDiscoveryPolicyToCandidates
+  applyDiscoveryPolicyToCandidates,
+  scoreDiscoveryCandidate,
+  buildDiscoveryReasoning
 } from "../lib/discovery/candidates.mjs";
 import { defaultDiscoveryPolicy } from "../lib/policy/discovery-policy.mjs";
 
@@ -37,6 +39,73 @@ describe("discovery run-level engine fields", () => {
     assert.equal(decorated.decisionDataState, "complete");
     assert.equal(typeof decorated.dispositionReason, "string");
     assert.equal(decorated.gapAreaCanonical, "source_systems_and_families");
+  });
+
+  test("scoreDiscoveryCandidate attaches evidence profile and candidate class", () => {
+    const candidate = {
+      repo: makeFakeRepo(),
+      guess: makeFakeGuess({ mainLayer: "source_intake", gapArea: "source_systems_and_families" }),
+      enrichment: makeFakeEnrichment({
+        repo: {
+          description: "Calendar ingestion connector with validation and governance tooling",
+          topics: ["calendar", "connector", "validation", "events"]
+        },
+        readme: {
+          excerpt: "A calendar connector with validation, governance and review flows."
+        },
+        languages: ["JavaScript", "TypeScript"]
+      }),
+      projectAlignment: makeFakeProjectAlignment({
+        fitBand: "high",
+        fitScore: 84,
+        matchedCapabilities: ["source_first", "quality_governance"]
+      }),
+      queryLabels: ["Broad project scan", "Architecture and layer patterns"],
+      queryFamilies: ["broad", "architecture"],
+      risks: []
+    };
+
+    const score = scoreDiscoveryCandidate(candidate, ["calendar", "connector", "validation"]);
+    const reasoning = buildDiscoveryReasoning(candidate, ["calendar", "connector", "validation"]);
+
+    assert.ok(score > 60);
+    assert.equal(candidate.discoveryEvidence.grade, "strong");
+    assert.equal(candidate.discoveryClass, "fit_candidate");
+    assert.match(reasoning.join(" "), /Evidence grade is strong/i);
+    assert.match(reasoning.join(" "), /Candidate class: fit candidate/i);
+  });
+
+  test("scoreDiscoveryCandidate downgrades risk and boundary signals", () => {
+    const candidate = {
+      repo: makeFakeRepo({ name: "archived-template" }),
+      guess: makeFakeGuess({ buildVsBorrow: "observe_only", priority: "soon" }),
+      enrichment: makeFakeEnrichment({
+        repo: {
+          archived: true,
+          stars: 12,
+          description: "Starter template for event sites",
+          topics: ["template", "frontend"]
+        },
+        readme: {
+          excerpt: ""
+        }
+      }),
+      projectAlignment: makeFakeProjectAlignment({
+        fitBand: "medium",
+        fitScore: 44,
+        matchedCapabilities: [],
+        tensions: ["Surface-oriented and outside worker core."]
+      }),
+      queryLabels: ["Broad project scan"],
+      queryFamilies: ["broad"],
+      risks: ["archived", "template_heavy"]
+    };
+
+    const score = scoreDiscoveryCandidate(candidate, ["event", "template"]);
+
+    assert.ok(score < 50);
+    assert.equal(candidate.discoveryClass, "risk_signal");
+    assert.ok(["light", "solid"].includes(candidate.discoveryEvidence.grade));
   });
 
   test("buildDiscoveryRunFields adds schema version 2, itemsDataStateSummary, and weighted gap signals", () => {

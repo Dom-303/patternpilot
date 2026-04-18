@@ -17,9 +17,11 @@ Dieses Dokument ist der aktive Ausbauplan fuer genau diese Schicht.
 
 - Phase D1 — Corpus Upgrade: abgeschlossen
 - Phase D2 — Query Engineering: abgeschlossen
-- Naechster aktiver Block: Phase D3 — Ranking Upgrade
+- Phase D3 — Ranking Upgrade: abgeschlossen
+- Naechster aktiver Block: Phase D4 — Feedback Loop
 - Referenzbeleg fuer D1: [DISCOVERY_D1_CLOSEOUT.md](DISCOVERY_D1_CLOSEOUT.md)
 - Referenzbeleg fuer D2: [DISCOVERY_D2_CLOSEOUT.md](DISCOVERY_D2_CLOSEOUT.md)
+- Referenzbeleg fuer D3: [DISCOVERY_D3_CLOSEOUT.md](DISCOVERY_D3_CLOSEOUT.md)
 
 ## Was Discovery heute schon kann
 
@@ -229,6 +231,7 @@ Exit:
 
 - bessere Discovery-Scores
 - bessere Evidenz pro Kandidat
+- Status: abgeschlossen
 
 Exit:
 
