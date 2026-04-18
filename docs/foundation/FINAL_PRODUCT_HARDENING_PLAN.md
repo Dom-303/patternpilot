@@ -29,7 +29,8 @@ Nicht gemeint ist:
 - Phase 2: im Kern abgeschlossen
 - Phase 3: im Kern abgeschlossen
 - Phase 4: im Kern abgeschlossen
-- Naechster Fokus: Phase 5 `Finaler Kern-Closeout`
+- Phase 5: im Kern abgeschlossen
+- Status: Abschlussplan im Kern erledigt
 
 ## Zielbild
 
@@ -284,6 +285,9 @@ Exit:
 Exit:
 
 - Abschlussdokument “Produktkern fertig” ist ehrlich vertretbar
+- Referenzdokumente:
+  - `docs/foundation/FINAL_CORE_CLOSEOUT.md`
+  - `docs/foundation/ACCEPTED_LIMITS.md`
 
 ## Konkrete Erfolgsmessung
 
@@ -294,6 +298,8 @@ Der Plan gilt als erfolgreich, wenn am Ende gilt:
 - die breite Validierungswelle liefert keine neue strukturelle Kernkrise
 - `product-readiness` bleibt fuer neue Nutzer und fuer echte Projekte plausibel
 - offene Punkte sind kurz, bewusst und nicht mehr systemisch
+
+Diese Kriterien sind jetzt im Kern erfuellt.
 
 ## Bewusste Schlussregel
 

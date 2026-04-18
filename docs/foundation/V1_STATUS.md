@@ -7,7 +7,7 @@
 Der groesste Teil der eigentlichen Produktarbeit ist erledigt.
 Der wichtigste Fremdprojekt-Beweis ist inzwischen erbracht.
 Die breite Fremdprojekt-Welle ist inzwischen ebenfalls erbracht.
-Offen ist jetzt vor allem noch der finale Kern-Closeout.
+Der finale Kern-Closeout ist jetzt ebenfalls gezogen.
 
 ## Was bereits stark steht
 
@@ -24,12 +24,8 @@ Offen ist jetzt vor allem noch der finale Kern-Closeout.
 
 ## Was in der Zielgeraden liegt
 
-- der finale Kern-Closeout aus Phase 5
-- bewusste Einsortierung der verbleibenden Restpunkte:
-  - fixen
-  - dokumentieren
-  - akzeptieren
 - spaetere Launch- oder Kommunikationsarbeit nur noch als Nachlauf, nicht mehr als Produktblocker
+- optionale Weiterentwicklung nur noch aus echtem Produktnutzwert, nicht mehr als Kernpflicht
 
 ## Was nicht mehr der Hauptblocker ist
 
@@ -59,6 +55,14 @@ Wenn du den kompakten Beleg lesen willst:
 Wenn du den breiten Fremdprojekt-Beleg lesen willst:
 
 [PHASE4_VALIDATION_CLOSEOUT.md](PHASE4_VALIDATION_CLOSEOUT.md)
+
+Wenn du den finalen Kern-Closeout lesen willst:
+
+[FINAL_CORE_CLOSEOUT.md](FINAL_CORE_CLOSEOUT.md)
+
+Wenn du die bewusst akzeptierten Grenzen lesen willst:
+
+[ACCEPTED_LIMITS.md](ACCEPTED_LIMITS.md)
 
 Wenn du die Automation-Produktgrenze lesen willst:
 

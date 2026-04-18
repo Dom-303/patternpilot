@@ -23,6 +23,8 @@ Es hilft dir, externe GitHub-Repositories nicht nur zu sammeln, sondern im Konte
 - Release-Kommunikation: [RELEASE_COMMUNICATION.md](docs/foundation/RELEASE_COMMUNICATION.md)
 - `v1`-Closeout: [V1_CLOSEOUT.md](docs/foundation/V1_CLOSEOUT.md)
 - Phase-4-Validierung: [PHASE4_VALIDATION_CLOSEOUT.md](docs/foundation/PHASE4_VALIDATION_CLOSEOUT.md)
+- finaler Kern-Closeout: [FINAL_CORE_CLOSEOUT.md](docs/foundation/FINAL_CORE_CLOSEOUT.md)
+- akzeptierte Grenzen: [ACCEPTED_LIMITS.md](docs/foundation/ACCEPTED_LIMITS.md)
 - finale Kernhaertung: [FINAL_PRODUCT_HARDENING_PLAN.md](docs/foundation/FINAL_PRODUCT_HARDENING_PLAN.md)
 
 ## Quick View
@@ -109,6 +111,15 @@ npm run setup:checklist
 npm run doctor
 ```
 
+### Einfacher Start auf einen Blick
+
+Diese Grafik ist die kuerzeste visuelle Einstiegshilfe.
+Sie ist bewusst fuer normale Nutzer geschrieben: kurzer Schritt, passender Command, kurze Bedeutung.
+
+<p align="center">
+  <img src="assets/onboarding-map.svg" alt="Patternpilot onboarding map" width="860">
+</p>
+
 ## Was danach im Repo passiert
 
 `patternpilot` trennt bewusst vier Bereiche:
@@ -150,6 +161,10 @@ Es gibt jetzt zwei Einstiegsebenen:
   [V1_STATUS.md](docs/foundation/V1_STATUS.md)
 - Kompakter `v1`-Closeout:
   [V1_CLOSEOUT.md](docs/foundation/V1_CLOSEOUT.md)
+- Finaler Kern-Closeout:
+  [FINAL_CORE_CLOSEOUT.md](docs/foundation/FINAL_CORE_CLOSEOUT.md)
+- Bewusst akzeptierte Grenzen:
+  [ACCEPTED_LIMITS.md](docs/foundation/ACCEPTED_LIMITS.md)
 
 Wenn du lieber direkt in der CLI gefuehrt werden willst:
 
@@ -171,6 +186,25 @@ npm run getting-started
   Faellt die breite Fremdprojekt-Welle ueber die eingebaute Referenzkohorte.
 - `npm run patternpilot -- product-readiness`
   Zeigt, wie nah dein lokaler Setup an einem belastbaren Betriebszustand ist.
+
+## Automatische Suche oder manuelle Watchlist?
+
+Beides ist moeglich, aber nicht gleich stark fuer denselben Zweck.
+
+- `discover` ist die automatische GitHub-Suche.
+  `patternpilot` nutzt dabei Projekt-Binding, Alignment-Regeln und Discovery-Policy, um passende Repos heuristisch zu suchen und vorzusortieren.
+- `watchlist` und explizites `intake` sind die bewusst kuratierte Linie.
+  Sie sind heute der berechenbarste und klarste Weg, wenn du schon konkrete Repo-Hinweise hast.
+
+Kurz gesagt:
+
+- Ja, `patternpilot` kann schon automatisch suchen.
+- Nein, es ist nicht als unsichtbar-magischer Vollautomat gedacht, der ohne Produktkontext perfekt selbst entscheidet.
+- Der starke Produktkern ist aktuell:
+  - Zielprojekt anbinden
+  - gezielt intaken oder suchen
+  - Ergebnisse reviewen
+  - dann bewusst weiter entscheiden
 
 ## Produktlogik in einem Satz
 
