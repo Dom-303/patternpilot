@@ -12,6 +12,10 @@ import {
   runGithubDoctor
 } from "../../../lib/index.mjs";
 import { writeConfig } from "../../../lib/config.mjs";
+import {
+  buildGoldenPathCommands,
+  renderNextCommandSections
+} from "../../shared/golden-path.mjs";
 import { refreshContext } from "./shared.mjs";
 
 export async function runRefreshContext(rootDir, config) {
@@ -28,6 +32,7 @@ export async function runRefreshContext(rootDir, config) {
 }
 
 export async function runBootstrap(rootDir, config, options) {
+  const commandSet = buildGoldenPathCommands(options.project || "my-project");
   const localConfigPath = path.join(rootDir, "patternpilot.config.local.json");
   const localExists = await pathExists(localConfigPath);
 
@@ -43,9 +48,10 @@ export async function runBootstrap(rootDir, config, options) {
 
   if (!options.target) {
     console.log(``);
-    console.log(`## Next Step`);
-    console.log(`- run: npm run bootstrap -- --project my-project --target ../my-project --label "My Project"`);
-    console.log(`- optional: npm run getting-started`);
+    console.log(renderNextCommandSections({
+      primary: commandSet.bootstrap,
+      additional: [commandSet.gettingStarted]
+    }));
     return;
   }
 
@@ -62,10 +68,15 @@ export async function runBootstrap(rootDir, config, options) {
     console.log(`- ${output}`);
   }
   console.log(``);
-  console.log(`## Next Step`);
-  console.log(`- intake: npm run intake -- --project ${result.projectKey} https://github.com/example/repo`);
-  console.log(`- watchlist: edit bindings/${result.projectKey}/WATCHLIST.txt`);
-  console.log(`- sync: npm run sync:watchlist -- --project ${result.projectKey}`);
+  const bootstrappedCommands = buildGoldenPathCommands(result.projectKey);
+  console.log(renderNextCommandSections({
+    primary: bootstrappedCommands.intake,
+    additional: [
+      `edit bindings/${result.projectKey}/WATCHLIST.txt`,
+      bootstrappedCommands.syncWatchlist,
+      bootstrappedCommands.reviewWatchlist
+    ]
+  }));
 }
 
 export function runGettingStarted(rootDir, config) {
@@ -118,7 +129,7 @@ export function runGettingStarted(rootDir, config) {
   if (!hasProjects) {
     console.log(`## Aktueller Zustand`);
     console.log(`- configured_projects: 0`);
-    console.log(`- next_command: npm run bootstrap -- --project my-project --target ../my-project --label "My Project"`);
+    console.log(`- next_command: ${buildGoldenPathCommands("my-project").bootstrap}`);
     return;
   }
 
@@ -129,11 +140,15 @@ export function runGettingStarted(rootDir, config) {
     console.log(`- ${projectKey}: ${path.resolve(rootDir, project.projectRoot)} (${project.label ?? projectKey})`);
   }
   console.log(``);
-  console.log(`## Naechste Sinnvolle Befehle`);
-  console.log(`- show current binding: npm run show:project -- --project ${defaultProject ?? "<project>"}`);
-  console.log(`- intake one repo: npm run intake -- --project ${defaultProject ?? "<project>"} https://github.com/example/repo`);
-  console.log(`- sync watchlist: npm run sync:watchlist -- --project ${defaultProject ?? "<project>"}`);
-  console.log(`- review watchlist: npm run review:watchlist -- --project ${defaultProject ?? "<project>"} --dry-run`);
+  const commands = buildGoldenPathCommands(defaultProject ?? "<project>");
+  console.log(renderNextCommandSections({
+    primary: commands.intake,
+    additional: [
+      commands.syncWatchlist,
+      commands.reviewWatchlist,
+      commands.showProject
+    ]
+  }));
 }
 
 export async function runShowProject(rootDir, config, options) {
@@ -186,8 +201,9 @@ export function printProjectList(rootDir, config) {
   if (projectEntries.length === 0) {
     console.log(`- none`);
     console.log(``);
-    console.log(`## Next Step`);
-    console.log(`- npm run bootstrap -- --project my-project --target ../my-project --label "My Project"`);
+    console.log(renderNextCommandSections({
+      primary: buildGoldenPathCommands("my-project").bootstrap
+    }));
     return;
   }
   for (const [projectKey, project] of projectEntries) {

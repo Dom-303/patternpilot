@@ -16,6 +16,10 @@ import {
   writeRunArtifacts
 } from "../../lib/index.mjs";
 import {
+  buildGoldenPathCommands,
+  renderNextCommandSections
+} from "../shared/golden-path.mjs";
+import {
   buildWatchlistReview,
   buildWatchlistReviewReport,
   classifyReviewItemState
@@ -185,10 +189,19 @@ export async function runSyncWatchlist(rootDir, config, options) {
     urls: options.urls ?? []
   });
   if (watchlistUrls.length === 0) {
+    const commands = buildGoldenPathCommands(projectKey);
     console.log(`# Patternpilot Watchlist Sync`);
     console.log(``);
     console.log(`- project: ${projectKey}`);
     console.log(`- status: skipped_empty_watchlist`);
+    console.log(``);
+    console.log(renderNextCommandSections({
+      primary: `edit bindings/${projectKey}/WATCHLIST.txt`,
+      additional: [
+        commands.intake,
+        commands.reviewWatchlist
+      ]
+    }));
     return null;
   }
   return await runIntake(rootDir, config, {

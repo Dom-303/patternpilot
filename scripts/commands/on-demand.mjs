@@ -15,6 +15,10 @@ import {
   buildProjectRunGovernanceSnapshot,
   refreshContext
 } from "../shared/runtime-helpers.mjs";
+import {
+  renderNextCommandSections,
+  selectPrimaryNextStep
+} from "../shared/golden-path.mjs";
 import { runIntake } from "./discovery.mjs";
 import {
   runReEvaluate,
@@ -458,10 +462,10 @@ export async function runOnDemand(rootDir, config, options) {
   console.log(`- on_demand_summary_html: ${path.relative(rootDir, path.join(writtenOnDemandRunDir, "summary.html"))}${options.dryRun ? " (dry-run not written)" : ""}`);
   if (nextActions.length > 0) {
     console.log(``);
-    console.log(`## Suggested Next Actions`);
-    for (const action of nextActions) {
-      console.log(`- ${action}`);
-    }
+    console.log(renderNextCommandSections({
+      primary: selectPrimaryNextStep(nextActions),
+      additional: nextActions.slice(1)
+    }));
   }
 
   await refreshContext(rootDir, config, {

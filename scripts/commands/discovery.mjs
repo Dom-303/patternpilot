@@ -29,6 +29,10 @@ import {
   writeRunArtifacts
 } from "../../lib/index.mjs";
 import {
+  buildGoldenPathCommands,
+  renderNextCommandSections
+} from "../shared/golden-path.mjs";
+import {
   buildCandidateEvaluation,
   computeRulesFingerprint,
   deriveDisposition
@@ -269,6 +273,12 @@ export async function runIntake(rootDir, config, options) {
   if (options.dryRun) {
     console.log("Dry run only: queue and files were not written.");
   }
+  console.log(``);
+  const commands = buildGoldenPathCommands(projectKey);
+  console.log(renderNextCommandSections({
+    primary: commands.reviewWatchlist,
+    additional: [commands.releaseCheck]
+  }));
   await refreshContext(rootDir, config, {
     command: "intake",
     projectKey,
