@@ -6,3 +6,5 @@ Jedes Dossier startet als Arbeitsgrundlage fuer einen externen GitHub-Fund.
 Es ist noch keine kuratierte Wahrheit und darf erst nach Review in `knowledge/repo_landkarte.csv`, `knowledge/repo_learnings.md` oder `knowledge/repo_decisions.md` promoted werden.
 
 Ab Stage 3 enthalten die Dossiers zusaetzlich projektgebundene Alignment-Signale fuer den `eventbear-worker`.
+
+Die einzelnen Dossier-Dateien sind generierte Arbeitsartefakte und sollen normalerweise lokal bleiben, nicht nach GitHub.

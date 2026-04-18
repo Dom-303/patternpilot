@@ -13,3 +13,5 @@ Wichtig:
 - `intake/` ist der rohe projektgebundene Eingang
 - `promotions/` ist der kuratierbare Uebergang
 - erst nach `promote --apply` werden kanonische Dateien aktualisiert
+
+Die einzelnen Promotion-Pakete sind erzeugte Zwischenartefakte fuer den Review-/Apply-Pfad und sollen normalerweise nicht nach GitHub.

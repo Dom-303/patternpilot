@@ -1,2 +1,0 @@
-https://github.com/citybureau/city-scrapers
-https://github.com/oc/openevents

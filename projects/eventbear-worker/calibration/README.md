@@ -8,6 +8,8 @@ Sie soll bewusst kurz bleiben und nur festhalten:
 - wie der aktuelle Stand aussieht
 - welcher naechste echte Schleifenschritt sinnvoll ist
 
+Die datierten Unterordner unter `calibration/` sind erzeugte Laufartefakte fuer Workbench, Trial, Handoff und Apply. Der feste, versionierbare Teil hier sind die Top-Level-Notizen und Beispiel-/Policy-Dateien, nicht die einzelnen Run-Snapshots.
+
 ## Aktueller Stand
 
 - Phase im Masterplan: `Phase 1 — Real Discovery Calibration`
