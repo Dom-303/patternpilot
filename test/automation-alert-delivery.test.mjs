@@ -19,6 +19,21 @@ test("resolveAutomationAlertTargets falls back to stdout when nothing is configu
   assert.deepEqual(targets, [{ type: "stdout" }]);
 });
 
+test("resolveAutomationAlertTargets expands the built-in local-operator preset", () => {
+  const targets = resolveAutomationAlertTargets("/tmp/patternpilot", {
+    automationAlertPreset: "local-operator",
+    automationAlertTargets: []
+  }, {});
+
+  assert.equal(targets.length, 3);
+  assert.equal(targets[0].name, "alerts-journal");
+  assert.equal(targets[1].name, "operator-digest");
+  assert.equal(targets[1].minDeliveryPriority, "elevated");
+  assert.equal(targets[2].name, "operator-attention");
+  assert.equal(targets[2].minDeliveryPriority, "urgent");
+  assert.deepEqual(targets[2].attentionSignalsAny, ["operator_review_open", "operator_attention_alert"]);
+});
+
 test("deliverAutomationAlertPayload writes markdown to a configured file target", async () => {
   const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-alert-delivery-"));
   const payload = {
@@ -40,7 +55,12 @@ test("deliverAutomationAlertPayload writes markdown to a configured file target"
 
   const markdown = renderAutomationAlertDeliverySummary({
     generatedAt: payload.generatedAt,
-    deliveries: delivery.deliveries
+    deliveries: delivery.deliveries,
+    attention: {
+      status: "routine",
+      deliveryPriority: "routine",
+      signals: []
+    }
   });
   assert.match(markdown, /published-alerts\.md/);
 });
@@ -139,4 +159,118 @@ test("deliverAutomationAlertPayload executes the built-in patternpilot alert hoo
   assert.match(writtenMarkdown, /Patternpilot Alert Hook Digest/);
   assert.equal(writtenJson.digest.alertCount, 1);
   assert.equal(writtenJson.digest.nextJob.name, "eventbear-worker-apply");
+});
+
+test("deliverAutomationAlertPayload skips targets whose minimum delivery priority is not met", async () => {
+  const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-alert-delivery-skip-"));
+  const payload = {
+    generatedAt: "2026-04-18T08:00:00.000Z",
+    attention: {
+      status: "review_closeout_followup",
+      deliveryPriority: "elevated",
+      signals: ["operator_review_recent_closeout"]
+    },
+    markdown: "# Alerts\n\n- attention"
+  };
+
+  const delivery = await deliverAutomationAlertPayload(rootDir, {
+    automationAlertTargets: [
+      {
+        type: "file",
+        name: "urgent-only",
+        file: "state/urgent.md",
+        minDeliveryPriority: "urgent"
+      }
+    ]
+  }, payload, {
+    dryRun: false
+  });
+
+  assert.equal(delivery.deliveries[0].status, "skipped_delivery_priority");
+  assert.match(delivery.deliveries[0].reason, /below target minimum 'urgent'/);
+});
+
+test("deliverAutomationAlertPayload targets operator-review signals explicitly", async () => {
+  const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-alert-delivery-signals-"));
+  const payload = {
+    generatedAt: "2026-04-18T08:00:00.000Z",
+    attention: {
+      status: "operator_attention_required",
+      deliveryPriority: "urgent",
+      signals: ["operator_review_open", "high_severity_alert"]
+    },
+    markdown: "# Alerts\n\n- attention"
+  };
+
+  const delivery = await deliverAutomationAlertPayload(rootDir, {
+    automationAlertTargets: [
+      {
+        type: "file",
+        name: "operator-review-only",
+        file: "state/operator-review.md",
+        attentionSignalsAny: ["operator_review_open"]
+      },
+      {
+        type: "file",
+        name: "closeout-only",
+        file: "state/closeout.md",
+        attentionSignalsAny: ["operator_review_recent_closeout"]
+      }
+    ]
+  }, payload, {
+    dryRun: false
+  });
+
+  assert.equal(delivery.deliveries[0].status, "written");
+  assert.equal(delivery.deliveries[1].status, "skipped_attention_signals");
+  assert.match(delivery.deliveries[1].reason, /operator_review_recent_closeout/);
+});
+
+test("deliverAutomationAlertPayload applies the built-in local-operator preset", async () => {
+  const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-alert-delivery-preset-"));
+  await fs.mkdir(path.join(rootDir, "automation", "hooks"), { recursive: true });
+  await fs.writeFile(
+    path.join(rootDir, "automation", "hooks", "patternpilot-alert-hook.mjs"),
+    `import fs from "node:fs/promises";
+import path from "node:path";
+const payloadPath = process.env.PATTERNPILOT_ALERT_PAYLOAD_FILE;
+const payload = JSON.parse(await fs.readFile(payloadPath, "utf8"));
+const markdownPath = process.argv[process.argv.indexOf("--write-markdown") + 1];
+const jsonPath = process.argv[process.argv.indexOf("--write-json") + 1];
+await fs.mkdir(path.dirname(markdownPath), { recursive: true });
+await fs.mkdir(path.dirname(jsonPath), { recursive: true });
+await fs.writeFile(markdownPath, "# Test Digest\\n", "utf8");
+await fs.writeFile(jsonPath, JSON.stringify({ digest: { deliveryPriority: payload.attention?.deliveryPriority ?? null } }, null, 2), "utf8");
+`,
+    "utf8"
+  );
+  const payload = {
+    generatedAt: "2026-04-18T08:00:00.000Z",
+    attention: {
+      status: "operator_attention_required",
+      deliveryPriority: "urgent",
+      signals: ["operator_review_open", "high_severity_alert"]
+    },
+    markdown: "# Alerts\n\n- preset delivery"
+  };
+
+  const delivery = await deliverAutomationAlertPayload(rootDir, {
+    automationAlertPreset: "local-operator",
+    automationAlertTargets: []
+  }, payload, {
+    dryRun: false
+  });
+
+  assert.equal(delivery.deliveries.length, 3);
+  assert.equal(delivery.deliveries[0].status, "written");
+  assert.equal(delivery.deliveries[1].status, "executed");
+  assert.equal(delivery.deliveries[2].status, "written");
+
+  const journal = await fs.readFile(path.join(rootDir, "state", "automation_alerts_published.md"), "utf8");
+  const operatorAttention = await fs.readFile(path.join(rootDir, "state", "automation_operator_attention.md"), "utf8");
+  const digestJson = JSON.parse(await fs.readFile(path.join(rootDir, "state", "automation_alert_digest.json"), "utf8"));
+
+  assert.match(journal, /preset delivery/);
+  assert.match(operatorAttention, /preset delivery/);
+  assert.equal(digestJson.digest.deliveryPriority, "urgent");
 });

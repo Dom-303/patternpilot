@@ -58,6 +58,7 @@ import {
   runGithubAppExecutionRecover,
   runGithubAppExecutionRun,
   runGithubAppExecutionResume,
+  runGithubAppLivePilotReview,
   runGithubAppPlan,
   runGithubAppReadiness,
   runGithubAppServiceReview,
@@ -135,8 +136,11 @@ import {
 import {
   runAutomationJobs,
   runAutomationDispatch,
+  runAutomationDispatchHistory,
   runAutomationAlerts,
   runAutomationAlertDeliver,
+  runAutomationReviews,
+  runAutomationJobAck,
   runAutomationJobClear
 } from "./commands/automation/control-plane.mjs";
 import { runAutomation } from "./commands/automation/run.mjs";
@@ -151,7 +155,8 @@ import {
   runPolicyTrial,
   runPolicyCycle,
   runPolicyHandoff,
-  runPolicyApply
+  runPolicyApply,
+  runPolicyControl
 } from "./commands/policy-core.mjs";
 import {
   runPolicyCurate,
@@ -162,6 +167,7 @@ import {
   runPolicyCurationBatchApply
 } from "./commands/policy-curation.mjs";
 import { runPromote } from "./commands/promotion.mjs";
+import { runProductReadiness } from "./commands/product-readiness.mjs";
 
 function printHelp() {
   console.log(renderPatternpilotHelp());
@@ -176,6 +182,7 @@ function buildCommandHandlers(envFiles) {
     runStability,
     runGovernance,
     runRequalify,
+    runProductReadiness,
     runDoctor: (rootDir, config, options) => runDoctor(rootDir, config, options, envFiles),
     runGithubAppEventPreview,
     runGithubAppInstallationApply,
@@ -201,6 +208,7 @@ function buildCommandHandlers(envFiles) {
     runGithubAppExecutionRecover,
     runGithubAppExecutionRun,
     runGithubAppExecutionResume,
+    runGithubAppLivePilotReview,
     runGithubAppPlan,
     runGithubAppReadiness,
     runGithubAppServiceReview,
@@ -272,8 +280,11 @@ function buildCommandHandlers(envFiles) {
     runGithubAppWebhookPreview,
     runAutomationJobs,
     runAutomationDispatch,
+    runAutomationDispatchHistory,
     runAutomationAlerts,
     runAutomationAlertDeliver,
+    runAutomationReviews,
+    runAutomationJobAck,
     runAutomationJobClear,
     runDiscover,
     runDiscoverImport,
@@ -292,6 +303,7 @@ function buildCommandHandlers(envFiles) {
     runPolicyTrial,
     runPolicyCycle,
     runPolicyHandoff,
+    runPolicyControl,
     runPolicyCurate,
     runPolicyCurationReview,
     runPolicyCurationApply,

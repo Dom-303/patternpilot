@@ -23,6 +23,17 @@
 - proposed_policy: projects/eventbear-worker/calibration/workbench/2026-04-14T20-38-38-495Z/proposed-policy.json
 <!-- patternpilot:policy-workbench:2026-04-14T20-38-38-495Z:end -->
 
+<!-- patternpilot:policy-workbench:2026-04-17T19-45-24-672Z:start -->
+- generated_at: 2026-04-17T19:45:24.672Z
+- source_run: 2026-04-14T20-37-53-197Z
+- source_manifest: runs/eventbear-worker/2026-04-14T20-37-53-197Z/manifest.json
+- workbench_dir: projects/eventbear-worker/calibration/workbench/2026-04-17T19-45-24-672Z
+- source_candidates: 2
+- policy_blocked: 2
+- policy_preferred: 2
+- proposed_policy: projects/eventbear-worker/calibration/workbench/2026-04-17T19-45-24-672Z/proposed-policy.json
+<!-- patternpilot:policy-workbench:2026-04-17T19-45-24-672Z:end -->
+
 <!-- patternpilot:policy-workbench:end -->
 
 ## Discovery Policy Cycles

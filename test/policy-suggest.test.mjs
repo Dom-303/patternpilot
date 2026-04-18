@@ -32,6 +32,7 @@ test("buildPolicySuggestion can heuristically unblock observe_only false blocks"
   });
 
   assert.equal(suggestion.changed, true);
+  assert.equal(suggestion.decisionStatus, "trial_ready");
   assert.ok(suggestion.nextPolicy.allowDispositions.includes("observe_only"));
   assert.equal(suggestion.heuristicFalseBlockCount, 2);
   assert.match(suggestion.recommendations.join("\n"), /allowing observe_only/i);
@@ -47,6 +48,7 @@ test("renderPolicySuggestionSummary renders suggestion details", () => {
       manualVerdictCount: 0,
       heuristicFalseBlockCount: 2,
       changed: true,
+      decisionStatus: "trial_ready",
       suggestions: [
         {
           type: "allow_disposition",
@@ -71,4 +73,6 @@ test("renderPolicySuggestionSummary renders suggestion details", () => {
   assert.match(markdown, /allow_disposition :: value=observe_only/);
   assert.match(markdown, /delta_enforce_hidden: -2/);
   assert.match(markdown, /heuristic_false_blocks: 2/);
+  assert.match(markdown, /decision_status: trial_ready/);
+  assert.match(markdown, /next_command: npm run patternpilot -- policy-trial --project eventbear-worker --workbench-dir/);
 });

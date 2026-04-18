@@ -67,6 +67,12 @@ Warum:
 
 EventBaer ist trotzdem der **erste echte Testfall** von Patternpilot.
 
+Wichtig fuer die Produktperspektive:
+
+- projektnahe Discovery-Schaerfe lebt in `PROJECT_BINDING.json`
+- Policy-Blocker und Praeferenzen leben in `DISCOVERY_POLICY.json`
+- der Produktkern soll mehrere Zielrepos tragen, ohne EventBaer-Wissen fest einzucodieren
+
 ---
 
 ## Neuer Betriebszustand
@@ -117,6 +123,7 @@ Es hat jetzt einen lokalen Motor plus Workspace-Modus:
 - `npm run automation:alert-deliver -- --target command --target-hook patternpilot-alert-hook --payload-file state/automation_alert_hook_payload.json --hook-markdown-file state/automation_alert_digest.md --hook-json-file state/automation_alert_digest.json`
 - `npm run automation:dispatch`
 - `npm run patternpilot -- github-app-readiness`
+- `npm run patternpilot -- github-app-live-pilot-review --dry-run`
 - `npm run patternpilot -- github-app-plan`
 - `npm run github:app-event-preview -- --event-key installation.created --file deployment/github-app/examples/installation.created.json --dry-run`
 - `npm run github:app-installation-review -- --file deployment/github-app/examples/installation.created.json --headers-file deployment/github-app/examples/installation.created.headers.json --github-event installation --webhook-secret patternpilot-dev-secret --dry-run`
@@ -252,6 +259,7 @@ Darueber liegt jetzt ausserdem ein erster Scope-/Handoff-Pfad:
 - `github-app-service-runtime-maintenance-review` und `...-apply` heben diese Diagnosen jetzt auf eine konservative Maintenance-Ebene, die sichere Reclaim-Aktionen direkt ausfuehren kann und alles andere bewusst als manuelle Folgearbeit stehenlaesst
 - `github-app-service-runtime-control-review` zieht `ops`, `integrity` und `maintenance` jetzt in eine einzige Abschlusskante zusammen und liefert damit die gemeinsame Runtime-Schlussbewertung fuer die GitHub-App-Service-Linie
 - `github-app-service-runtime-closeout-review` legt diese Abschlusskante jetzt direkt auf die Road-to-100-Definition und liefert eine explizite Closeout-/Completion-Bewertung bis `100%`
+- `github-app-live-pilot-review` schliesst daran jetzt direkt an und sagt explizit, ob der erste reale Pilot gerade als `pilot_bridge_ready`, `pilot_live_ready`, `pilot_followup_required` oder `pilot_blocked` gelten sollte
 - `github-app-service-runtime-loop-history-review` macht diese langlebigeren Loop-Laeufe jetzt zudem als eigene History-/Recovery-Sicht ueber mehrere Runtime-Loops hinweg sichtbar
 - `github-app-service-runtime-loop-review`, `run`, `resume` und ihre Unterpfade drucken jetzt ausserdem keine verschachtelten Zwischen-Summaries mehr, wenn sie intern auf Runtime-/Cycle-/Session-Kommandos aufsetzen
 - damit kann ein gemeinsamer lokaler Service-Tick jetzt nicht mehr nur “das naechste passende Contract” nehmen, sondern bewusst mehrere Installationen gegeneinander priorisieren und in getrennte scheduler-scoped Runtime-Lanes aufspalten
@@ -281,6 +289,7 @@ Dieser Motor:
 - kann Alert-Summaries jetzt auch bewusst nach `stdout`, Datei, `GITHUB_STEP_SUMMARY`, an lokale Hook-Commands oder ueber den eingebauten Hook `patternpilot-alert-hook` ausliefern
 - kann jetzt manuelle Requalify-Latches fuer Folge-Runs halten und mit `run-requalify` bewusst wieder freigeben
 - kann den aktuellen PAT-/GitHub-App-Reifegrad mit `github-app-readiness` gegen den spaeteren Integrationspfad sichtbar machen
+- kann mit `github-app-live-pilot-review` jetzt ausserdem den ersten echten Pilot konservativ zwischen PAT-Bruecke, Live-App-Versuch und verbleibenden Blockern einordnen
 - schreibt menschenfreundliche HTML-Reports fuer Discovery- und Review-Laeufe
 - haelt fuer jedes Projekt einen direkten Report-Pointer in `projects/<project>/reports/browser-link`
 - schreibt Metadaten zum letzten Projekt-Report nach `projects/<project>/reports/latest-report.json`

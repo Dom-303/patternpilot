@@ -17,3 +17,7 @@ export {
   runPolicyHandoff,
   runPolicyApply
 } from "./policy/lifecycle.mjs";
+
+export {
+  runPolicyControl
+} from "./policy/control.mjs";

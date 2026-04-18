@@ -125,6 +125,68 @@ test("listProjectRunHistory reads and sorts saved run manifests", async () => {
   assert.equal(history[0].command, "on-demand");
 });
 
+test("listProjectRunHistory ignores intake-like subrun manifests that lack lifecycle fields", async () => {
+  const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-run-history-subruns-"));
+  const config = { runtimeRoot: "runs" };
+  const projectKey = "sample-project";
+  const lifecycleDir = path.join(rootDir, "runs", projectKey, "2026-04-14T12-00-00-000Z");
+  const intakeLikeDir = path.join(rootDir, "runs", projectKey, "2026-04-14T12-00-01-000Z");
+
+  await fs.mkdir(lifecycleDir, { recursive: true });
+  await fs.mkdir(intakeLikeDir, { recursive: true });
+  await fs.writeFile(path.join(lifecycleDir, "manifest.json"), JSON.stringify({
+    command: "on-demand",
+    runId: "2026-04-14T12-00-00-000Z",
+    createdAt: "2026-04-14T12:00:00.000Z",
+    sourceMode: "explicit_urls",
+    runPlan: { runKind: "follow_up_run" },
+    intakeRun: { items: 1 },
+    reviewRun: { items: 1, reviewScope: "selected_urls" }
+  }), "utf8");
+  await fs.writeFile(path.join(intakeLikeDir, "manifest.json"), JSON.stringify({
+    command: "on-demand",
+    runId: "2026-04-14T12-00-01-000Z",
+    createdAt: "2026-04-14T12:00:01.000Z",
+    items: [{ slug: "city-scrapers" }]
+  }), "utf8");
+
+  const history = await listProjectRunHistory(rootDir, config, projectKey);
+  assert.equal(history.length, 1);
+  assert.equal(history[0].runId, "2026-04-14T12-00-00-000Z");
+});
+
+test("listProjectRunHistory infers run kind for legacy lifecycle manifests without runPlan", async () => {
+  const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-run-history-legacy-runkind-"));
+  const config = { runtimeRoot: "runs" };
+  const projectKey = "sample-project";
+  const olderDir = path.join(rootDir, "runs", projectKey, "2026-04-14T10-00-00-000Z");
+  const newerDir = path.join(rootDir, "runs", projectKey, "2026-04-15T10-00-00-000Z");
+
+  await fs.mkdir(olderDir, { recursive: true });
+  await fs.mkdir(newerDir, { recursive: true });
+  await fs.writeFile(path.join(olderDir, "manifest.json"), JSON.stringify({
+    runId: "2026-04-14T10-00-00-000Z",
+    createdAt: "2026-04-14T10:00:00.000Z",
+    sourceMode: "explicit_urls",
+    explicitUrls: ["https://github.com/org/older"],
+    intakeRun: { items: 1 },
+    reviewRun: { items: 1, reviewScope: "selected_urls" }
+  }), "utf8");
+  await fs.writeFile(path.join(newerDir, "manifest.json"), JSON.stringify({
+    runId: "2026-04-15T10-00-00-000Z",
+    createdAt: "2026-04-15T10:00:00.000Z",
+    sourceMode: "explicit_urls",
+    explicitUrls: ["https://github.com/org/newer"],
+    intakeRun: { items: 1 },
+    reviewRun: { items: 1, reviewScope: "selected_urls" }
+  }), "utf8");
+
+  const history = await listProjectRunHistory(rootDir, config, projectKey);
+  assert.equal(history.length, 2);
+  assert.equal(history[0].runKind, "follow_up_run");
+  assert.equal(history[1].runKind, "first_run");
+});
+
 test("renderProjectRunLifecycleSummary renders lifecycle fields", () => {
   const markdown = renderProjectRunLifecycleSummary({
     projectKey: "eventbear-worker",

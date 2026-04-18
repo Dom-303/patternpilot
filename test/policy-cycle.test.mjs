@@ -32,4 +32,23 @@ test("renderPolicyCycleSummary renders the end-to-end cycle state", () => {
   assert.match(markdown, /policy_applied: yes/);
   assert.match(markdown, /trial_newly_visible: 2/);
   assert.match(markdown, /replay_visible: 2/);
+  assert.match(markdown, /trial_decision_status: -/);
+});
+
+test("renderPolicyCycleSummary suggests handoff after successful apply-ready trial", () => {
+  const markdown = renderPolicyCycleSummary({
+    projectKey: "eventbear-worker",
+    cycleId: "cycle-1",
+    generatedAt: "2026-04-14T21:00:00.000Z",
+    workbenchId: "wb-1",
+    sourceRunId: "run-1",
+    review: { rowsWithVerdict: 1, recommendations: [] },
+    suggestion: { changed: true, recommendations: [] },
+    trial: { newlyVisibleCount: 2, newlyHiddenCount: 0, decisionStatus: "apply_ready", recommendations: [] },
+    applyResult: { changed: true },
+    replay: { candidateCount: 2, visibleCount: 2 }
+  });
+
+  assert.match(markdown, /trial_decision_status: apply_ready/);
+  assert.match(markdown, /next_command: npm run patternpilot -- policy-handoff --project eventbear-worker --cycle-dir projects\/eventbear-worker\/calibration\/cycles\/cycle-1/);
 });

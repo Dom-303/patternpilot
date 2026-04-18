@@ -46,6 +46,8 @@ test("buildPolicyCurationApplyReview reports existing canonical mentions", () =>
   assert.equal(review.rows[0].landkarteAlreadyPresent, true);
   assert.equal(review.rows[0].learningMentions, 1);
   assert.equal(review.rows[0].decisionMentions, 1);
+  assert.equal(review.decisionStatus, "apply_with_care");
+  assert.equal(review.nextCommand, "policy-curation-apply");
 });
 
 test("renderPolicyCurationApplyReviewSummary renders selection and recommendations", () => {
@@ -56,6 +58,8 @@ test("renderPolicyCurationApplyReviewSummary renders selection and recommendatio
     curationId: "cur-1",
     review: {
       candidateCount: 1,
+      decisionStatus: "apply_with_care",
+      nextCommand: "policy-curation-apply",
       rows: [
         {
           repoRef: "alpha/repo",
@@ -70,6 +74,8 @@ test("renderPolicyCurationApplyReviewSummary renders selection and recommendatio
   });
 
   assert.match(markdown, /selected_candidates: 1/);
+  assert.match(markdown, /decision_status: apply_with_care/);
   assert.match(markdown, /alpha\/repo :: landkarte_present=no/);
   assert.match(markdown, /Review before apply/);
+  assert.match(markdown, /next_command: npm run patternpilot -- policy-curation-apply --project eventbear-worker/);
 });

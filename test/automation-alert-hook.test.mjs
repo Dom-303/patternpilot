@@ -46,6 +46,20 @@ test("buildAutomationAlertDigest counts severities, categories and jobs", () => 
       name: "eventbear-worker-apply",
       status: "ready"
     },
+    operatorReviewDigest: {
+      openCount: 1,
+      recentCloseoutCount: 1,
+      openReviews: [
+        {
+          jobName: "eventbear-worker-apply"
+        }
+      ],
+      recentCloseouts: [
+        {
+          jobName: "all-project-watchlists"
+        }
+      ]
+    },
     alerts: [
       { severity: "high", category: "blocked_manual", jobName: "eventbear-worker-apply" },
       { severity: "medium", category: "blocked_manual", jobName: "eventbear-worker-apply" },
@@ -57,6 +71,12 @@ test("buildAutomationAlertDigest counts severities, categories and jobs", () => 
   assert.equal(digest.severityCounts.high, 1);
   assert.equal(digest.topCategories[0].category, "blocked_manual");
   assert.equal(digest.touchedJobs[0].jobName, "eventbear-worker-apply");
+  assert.equal(digest.attentionStatus, "operator_attention_required");
+  assert.equal(digest.deliveryPriority, "urgent");
+  assert.ok(digest.attentionSignals.includes("operator_review_open"));
+  assert.equal(digest.operatorReviewOpenCount, 1);
+  assert.equal(digest.operatorReviewRecentCloseoutCount, 1);
+  assert.deepEqual(digest.operatorReviewOpenJobs, ["eventbear-worker-apply"]);
 });
 
 test("writeAutomationAlertHookOutputs writes markdown and json digests", async () => {
@@ -85,4 +105,42 @@ test("writeAutomationAlertHookOutputs writes markdown and json digests", async (
   assert.equal(writes.length, 2);
   assert.match(writtenMarkdown, /Patternpilot Alert Hook Digest/);
   assert.equal(writtenJson.digest.alertCount, 0);
+});
+
+test("renderAutomationAlertHookMarkdown includes operator review handoff", () => {
+  const payload = {
+    schemaVersion: 1,
+    generatedAt: "2026-04-17T22:47:30.000Z",
+    alerts: [],
+    operatorReviewDigest: {
+      openCount: 1,
+      recentCloseoutCount: 1,
+      openReviews: [
+        {
+          jobName: "eventbear-worker-apply",
+          category: "repeated_governance_block",
+          sourceStatus: "governance_escalated",
+          openedAt: "2026-04-17T22:46:15.614Z"
+        }
+      ],
+      recentCloseouts: [
+        {
+          jobName: "all-project-watchlists",
+          status: "acknowledged",
+          resolvedAt: "2026-04-17T22:47:00.000Z",
+          resolutionNotes: "review closed"
+        }
+      ]
+    }
+  };
+  const digest = buildAutomationAlertDigest(payload);
+  const markdown = renderAutomationAlertHookMarkdown(payload, digest);
+
+  assert.match(markdown, /attention_status: operator_attention_required/);
+  assert.match(markdown, /delivery_priority: urgent/);
+  assert.match(markdown, /Priority Focus/);
+  assert.match(markdown, /operator_reviews_open: 1/);
+  assert.match(markdown, /operator_reviews_recent_closeouts: 1/);
+  assert.match(markdown, /Operator Reviews Open/);
+  assert.match(markdown, /review closed/);
 });

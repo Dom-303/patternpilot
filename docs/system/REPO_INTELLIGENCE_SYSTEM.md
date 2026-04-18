@@ -163,6 +163,12 @@ Erst nach Review darf ein Fund in die kuratierten Artefakte uebergehen:
 - `knowledge/repo_learnings.md`
 - `knowledge/repo_decisions.md`
 
+Fuer den ersten Realbetrieb gilt zusaetzlich:
+
+- URL-Casing allein ist keine neue Repo-Identitaet.
+- Redirect-, Owner-Rename- oder Alias-Faelle werden aber ohne verlaessliche Canonical-Aufloesung nicht automatisch zusammengefaltet.
+- Wenn ein bereits promovierter Fund spaeter unter einer neuen Owner-Variante wieder auftaucht, bleibt der kuratierte Datensatz kanonisch, waehrend frische Pilot-Artefakte nur als Evidenz dienen.
+
 ---
 
 ## Autonome Discovery-Schicht

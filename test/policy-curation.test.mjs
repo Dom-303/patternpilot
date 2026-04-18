@@ -4,6 +4,7 @@ import { buildPolicyCuration, renderPolicyCurationSummary } from "../lib/policy/
 
 test("buildPolicyCuration ranks selected queue rows by curation score", () => {
   const curation = buildPolicyCuration({
+    projectKey: "eventbear-worker",
     handoffManifest: {
       selection: {
         urls: [
@@ -52,6 +53,8 @@ test("buildPolicyCuration ranks selected queue rows by curation score", () => {
 
   assert.equal(curation.curatedCandidates.length, 2);
   assert.equal(curation.curatedCandidates[0].repoRef, "alpha/repo");
+  assert.equal(curation.decisionStatus, "prepare_only");
+  assert.match(curation.nextCommand, /policy-curation-batch-review --project eventbear-worker/);
   assert.match(curation.recommendations[0], /Prepare promotion packets/);
 });
 
@@ -66,6 +69,8 @@ test("renderPolicyCurationSummary includes promotion linkage", () => {
       selectionCount: 2,
       candidateCount: 2,
       curatedCount: 1,
+      decisionStatus: "prepare_only",
+      nextCommand: "npm run patternpilot -- policy-curation-batch-review --project eventbear-worker",
       curatedCandidates: [
         {
           repoRef: "alpha/repo",
@@ -87,5 +92,7 @@ test("renderPolicyCurationSummary includes promotion linkage", () => {
   });
 
   assert.match(markdown, /promotion_run: prom-1/);
+  assert.match(markdown, /decision_status: prepare_only/);
   assert.match(markdown, /alpha\/repo :: score=92/);
+  assert.match(markdown, /next_command: npm run patternpilot -- policy-curation-batch-review --project eventbear-worker/);
 });

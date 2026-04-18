@@ -52,6 +52,7 @@ export async function runPolicyCurate(rootDir, config, options) {
   );
   const queueRows = await loadQueueEntries(rootDir, config);
   const curation = buildPolicyCuration({
+    projectKey,
     handoffManifest,
     queueRows,
     limit: options.limit
@@ -235,10 +236,15 @@ export async function runPolicyCurationApply(rootDir, config, options) {
     `- selected_candidates: ${reviewRun.selectedCandidates.length}`,
     `- promotion_run: ${promotionRun.runId}`,
     `- promotion_items: ${promotionRun.items.length}`,
+    `- decision_status: ${reviewRun.review.decisionStatus === "apply_ready" ? "applied" : "applied_with_care"}`,
     "",
     "## Applied Candidates",
     "",
     ...reviewRun.selectedCandidates.map((item) => `- ${item.repoRef} :: ${item.url}`),
+    "",
+    "## Next Step",
+    "",
+    `- next_command: npm run patternpilot -- re-evaluate --project ${projectKey} --stale-only`,
     ""
   ].join("\n");
   const manifest = {

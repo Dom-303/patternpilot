@@ -15,6 +15,8 @@ Die Discovery-Schicht arbeitet bewusst heuristikbasiert:
 - verbleibende Treffer voranreichern, klassifizieren und gegen das Zielprojekt abgleichen
 - daraus einen Discovery-Score und eine Disposition ableiten
 
+Die Suchschaerfe ist dabei bewusst **projektkonfigurierbar** und nicht fest auf EventBaer zugeschnitten.
+
 ## Inputs
 
 Die Discovery-Linse speist sich aus:
@@ -24,6 +26,7 @@ Die Discovery-Linse speist sich aus:
 - Referenzdateien aus `readBeforeAnalysis`
 - Verzeichnisstruktur aus `referenceDirectories`
 - optionalen `discoveryHints`
+- optionaler `discoveryStrategy` in `PROJECT_BINDING.json`
 - bereits bekannten Repos in:
   - `knowledge/repo_landkarte.csv`
   - `state/repo_intake_queue.csv`
@@ -60,6 +63,25 @@ Die Discovery vergibt aktuell eine grobe operative Disposition:
 Sie ist bewusst nicht die finale Entscheidung, sondern nur die naechste sinnvolle Bearbeitungsstufe.
 
 ## CLI
+
+## Projektkonfiguration
+
+Pro Zielprojekt kann `PROJECT_BINDING.json` die Discovery-Suche enger oder breiter setzen, zum Beispiel:
+
+```json
+{
+  "discoveryStrategy": {
+    "broadAnchorCount": 2,
+    "capabilitySignalCount": 2,
+    "seedSignalSources": ["discoveryHints"],
+    "seedRepoFields": ["fullName", "name", "description", "topics"],
+    "minSeedSignalHits": 2,
+    "minStrongSeedSignalHits": 1
+  }
+}
+```
+
+Damit bleibt `patternpilot` als Produktkern generisch, waehrend einzelne Zielprojekte ihre eigene Discovery-Schaerfe definieren koennen.
 
 Nur Discovery-Plan und Kandidaten:
 

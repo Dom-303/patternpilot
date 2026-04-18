@@ -361,6 +361,13 @@ describe("automation project run state", () => {
 
   test("summarizes project runs for audit output", () => {
     const completed = finalizeAutomationProjectRun(Object.assign(createAutomationProjectRun("one"), {
+      metrics: {
+        runKind: "maintenance_run",
+        recommendedFocus: "maintenance_and_drift_control",
+        runDriftStatus: "attention_required",
+        runGovernanceStatus: "manual_gate",
+        policyControlStatus: "followup_with_care"
+      },
       phases: {
         discover: { status: "completed", reason: "run_complete" },
         gate: { status: "completed", reason: "selected" },
@@ -389,7 +396,7 @@ describe("automation project run state", () => {
     assert.equal(summary.completed, 1);
     assert.equal(summary.failed, 1);
     assert.match(rendered, /projects_failed: 1/);
-    assert.match(rendered, /one: completed/);
+    assert.match(rendered, /one: completed \(run_kind=maintenance_run; focus=maintenance_and_drift_control; drift=attention_required; governance=manual_gate; policy=followup_with_care\)/);
     assert.match(rendered, /two: failed/);
   });
 });

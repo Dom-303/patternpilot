@@ -190,3 +190,65 @@ test("buildProjectRunDriftFromState reports stable projects without active drift
   assert.equal(drift.signals.length, 0);
   assert.equal(drift.resumeGuidance.mode, "continue_default_lifecycle");
 });
+
+test("buildProjectRunDriftFromState canonicalizes GitHub URL casing and softens explicit follow-up narrowing", async () => {
+  const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-run-drift-explicit-subset-"));
+  const projectKey = "focused-project";
+  const history = [
+    {
+      runId: "2026-04-15T12-00-00-000Z",
+      createdAt: "2026-04-15T12:00:00.000Z",
+      command: "on-demand",
+      sourceMode: "explicit_urls",
+      runKind: "follow_up_run",
+      manifestPath: "runs/focused-project/latest-manifest.json"
+    },
+    {
+      runId: "2026-04-14T12-00-00-000Z",
+      createdAt: "2026-04-14T12:00:00.000Z",
+      command: "on-demand",
+      sourceMode: "explicit_urls",
+      runKind: "follow_up_run",
+      manifestPath: "runs/focused-project/previous-manifest.json"
+    }
+  ];
+
+  await writeJson(path.join(rootDir, "runs", projectKey, "latest-manifest.json"), {
+    runId: history[0].runId,
+    createdAt: history[0].createdAt,
+    sourceMode: "explicit_urls",
+    effectiveUrls: ["https://github.com/City-Bureau/City-Scrapers"],
+    reviewRun: {
+      items: 1,
+      reviewScope: "selected_urls"
+    }
+  });
+  await writeJson(path.join(rootDir, "runs", projectKey, "previous-manifest.json"), {
+    runId: history[1].runId,
+    createdAt: history[1].createdAt,
+    sourceMode: "explicit_urls",
+    effectiveUrls: [
+      "https://github.com/city-bureau/city-scrapers",
+      "https://github.com/oc/openevents"
+    ],
+    reviewRun: {
+      items: 2,
+      reviewScope: "selected_urls"
+    }
+  });
+
+  const drift = await buildProjectRunDriftFromState(rootDir, {
+    projectKey,
+    history,
+    queueRows: [],
+    watchlistUrls: [],
+    currentFingerprint: "same"
+  });
+
+  assert.equal(drift.driftStatus, "light_drift");
+  assert.deepEqual(drift.effectiveUrlDelta.added, []);
+  assert.deepEqual(drift.effectiveUrlDelta.removed, ["https://github.com/oc/openevents"]);
+  assert.ok(drift.signals.some((item) => item.id === "effective_url_delta" && item.severity === "low"));
+  assert.equal(drift.resumeGuidance.mode, "focused_follow_up_review");
+  assert.match(drift.resumeGuidance.recommendedCommand, /review-watchlist/);
+});

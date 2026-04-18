@@ -62,6 +62,8 @@ test("buildPolicyCurationBatchReview reports overlap, risk, and governance plan"
   assert.equal(review.candidateCount, 2);
   assert.equal(review.applyCandidateCount, 0);
   assert.equal(review.manualReviewCount, 2);
+  assert.equal(review.decisionStatus, "manual_review_required");
+  assert.equal(review.nextCommand, "policy-curation-batch-plan");
   assert.equal(review.overlap.patternFamilies[0].value, "local_source_infra_framework");
   assert.equal(review.governance.manualReviewCandidates.length, 2);
   assert.equal(review.governance.safeApplyCandidates.length, 0);
@@ -139,6 +141,8 @@ test("buildPolicyCurationBatchReview creates safe apply batches for low-risk can
 
   assert.equal(review.applyCandidateCount, 2);
   assert.equal(review.manualReviewCount, 0);
+  assert.equal(review.decisionStatus, "apply_ready");
+  assert.equal(review.nextCommand, "policy-curation-batch-apply");
   assert.equal(review.governance.recommendedBatches.length, 2);
 });
 
@@ -153,6 +157,8 @@ test("renderPolicyCurationBatchReviewSummary renders governance sections", () =>
       applyCandidateCount: 1,
       alreadyPromotedCount: 1,
       manualReviewCount: 0,
+      decisionStatus: "apply_ready",
+      nextCommand: "policy-curation-batch-apply",
       rows: [
         {
           repoRef: "alpha/repo",
@@ -195,8 +201,10 @@ test("renderPolicyCurationBatchReviewSummary renders governance sections", () =>
   });
 
   assert.match(markdown, /manual_review: 0/);
+  assert.match(markdown, /decision_status: apply_ready/);
   assert.match(markdown, /Recommended Batches/);
   assert.match(markdown, /connector_families :: risk=low/);
+  assert.match(markdown, /next_command: npm run patternpilot -- policy-curation-batch-apply --project eventbear-worker/);
 });
 
 test("renderPolicyCurationBatchPlanSummary renders safe and manual review candidates", () => {
@@ -206,6 +214,7 @@ test("renderPolicyCurationBatchPlanSummary renders safe and manual review candid
     generatedAt: "2026-04-14T22:40:00.000Z",
     curationId: "cur-1",
     review: {
+      decisionStatus: "apply_ready",
       governance: {
         safeApplyCandidates: [
           { repoRef: "alpha/repo", repoUrl: "https://github.com/alpha/repo" }
@@ -223,5 +232,7 @@ test("renderPolicyCurationBatchPlanSummary renders safe and manual review candid
 
   assert.match(markdown, /safe_apply_candidates: 1/);
   assert.match(markdown, /manual_review_candidates: 1/);
+  assert.match(markdown, /decision_status: apply_ready/);
   assert.match(markdown, /beta\/repo :: risk=high/);
+  assert.match(markdown, /next_command: npm run patternpilot -- policy-curation-batch-apply --project eventbear-worker/);
 });

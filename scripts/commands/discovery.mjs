@@ -236,7 +236,7 @@ export async function runIntake(rootDir, config, options) {
     dryRun: options.dryRun
   });
   const manifest = {
-    command: "on-demand",
+    command: "intake",
     runId,
     projectKey,
     createdAt,

@@ -32,6 +32,7 @@ test("buildPolicyTrial shows newly visible candidates under softer policy", () =
   assert.equal(trial.baselineVisible, 0);
   assert.equal(trial.trialVisible, 2);
   assert.equal(trial.newlyVisibleCount, 2);
+  assert.equal(trial.decisionStatus, "apply_ready");
   assert.equal(trial.rows[0].visibilityChange, "newly_visible");
 });
 
@@ -50,6 +51,7 @@ test("renderPolicyTrialSummary renders trial outcome", () => {
       changedRows: 2,
       newlyVisibleCount: 2,
       newlyHiddenCount: 0,
+      decisionStatus: "apply_ready",
       rows: [
         {
           repoRef: "oc/openevents",
@@ -74,4 +76,6 @@ test("renderPolicyTrialSummary renders trial outcome", () => {
   assert.match(markdown, /newly_visible: 2/);
   assert.match(markdown, /delta_enforce_hidden: -2/);
   assert.match(markdown, /oc\/openevents :: fit=high\/73 :: newly_visible/);
+  assert.match(markdown, /decision_status: apply_ready/);
+  assert.match(markdown, /next_command: npm run patternpilot -- policy-apply --project eventbear-worker --workbench-dir/);
 });

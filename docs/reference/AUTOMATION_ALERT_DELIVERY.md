@@ -10,6 +10,10 @@
 - lokales Hook-Command
 - eingebauter Hook ueber `--target-hook`
 
+Ohne explizite `automationAlertTargets` kann Patternpilot ausserdem ein eingebautes lokales Profil aktivieren:
+
+- `automationAlertPreset: "local-operator"`
+
 ## Payload Contract
 
 Der Alert-Payload hat aktuell diese Form:
@@ -18,6 +22,14 @@ Der Alert-Payload hat aktuell diese Form:
 {
   "schemaVersion": 1,
   "generatedAt": "2026-04-15T12:00:00.000Z",
+  "attention": {
+    "status": "operator_attention_required",
+    "deliveryPriority": "urgent",
+    "signals": ["operator_review_open", "high_severity_alert"],
+    "promotedJobs": ["eventbear-worker-apply"],
+    "summary": "1 open operator review requires deliberate follow-up.",
+    "nextAction": "Acknowledge the latch deliberately before unattended dispatch resumes."
+  },
   "nextJob": {
     "name": "eventbear-worker-apply",
     "status": "ready",
@@ -77,17 +89,41 @@ Das baut intern ein lokales Command auf Basis von:
 
 ```json
 {
+  "automationAlertPreset": "local-operator",
   "automationAlertTargets": [
     {
       "type": "command",
+      "name": "operator-review-digest",
       "hook": "patternpilot-alert-hook",
       "payloadFile": "state/automation_alert_hook_payload.json",
       "hookMarkdownFile": "state/automation_alert_digest.md",
-      "hookJsonFile": "state/automation_alert_digest.json"
+      "hookJsonFile": "state/automation_alert_digest.json",
+      "minDeliveryPriority": "elevated",
+      "attentionSignalsAny": ["operator_review_open", "operator_attention_alert"]
     }
   ]
 }
 ```
+
+## Delivery Priorisierung
+
+Targets koennen optional auf die berechnete `attention` reagieren:
+
+- `minDeliveryPriority`: `routine`, `elevated`, `urgent`
+- `attentionSignalsAny`: liefert nur aus, wenn mindestens eines der Signale im Payload vorhanden ist
+
+So kann Patternpilot offene Operator-Faelle gezielt an schaerfere Kanaele ausliefern, ohne die Basispipeline repo-spezifisch zu verdrahten.
+
+## Built-in Preset
+
+`local-operator` ist das eingebaute Default-Profil fuer lokale Produktnutzung ohne externe Infrastruktur. Wenn `automationAlertTargets` leer sind, erzeugt das Preset:
+
+- `state/automation_alerts_published.md`
+- `state/automation_alert_digest.md`
+- `state/automation_alert_digest.json`
+- `state/automation_operator_attention.md` nur bei `urgent`-Operator-Signalen
+
+Damit hat Patternpilot out of the box einen lokalen Journal-, Digest- und Attention-Pfad, ohne dass zuerst eigene Delivery-Adapter geschrieben werden muessen.
 
 ## Warum dieser Zuschnitt
 

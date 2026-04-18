@@ -30,6 +30,7 @@ import {
   buildProjectRunGovernanceSnapshot,
   refreshContext
 } from "../../shared/runtime-helpers.mjs";
+import { loadProjectPolicyControlSnapshot } from "./shared.mjs";
 import { runDiscover, runIntake } from "../discovery.mjs";
 import { runPromote } from "../promotion.mjs";
 import { runReEvaluate, runReviewWatchlist } from "../watchlist.mjs";
@@ -128,6 +129,7 @@ export async function runAutomation(rootDir, config, options) {
             command: `automation-run --project ${projectKey} --promotion-mode ${promotionMode}`
           }
         });
+        const policyControl = await loadProjectPolicyControlSnapshot(rootDir, projectKey);
         projectRun.metrics.runKind = runPlan.runKind;
         projectRun.metrics.recommendedFocus = runPlan.recommendedFocus;
         projectRun.metrics.defaultPhases = runPlan.defaultPhases;
@@ -144,8 +146,13 @@ export async function runAutomation(rootDir, config, options) {
         projectRun.metrics.autoApplyAllowed = runGovernance.autoApplyAllowed;
         projectRun.metrics.recommendedPromotionMode = runGovernance.recommendedPromotionMode;
         projectRun.metrics.governanceNextAction = runGovernance.nextAction;
+        projectRun.metrics.policyControlStatus = policyControl?.overallStatus ?? "no_policy_activity";
+        projectRun.metrics.policyControlStage = policyControl?.currentStageKey ?? null;
+        projectRun.metrics.policyControlDecisionStatus = policyControl?.currentDecisionStatus ?? null;
+        projectRun.metrics.policyControlNextCommand = policyControl?.nextCommand ?? null;
+        projectRun.metrics.policyControlTopBlocker = policyControl?.topBlocker ?? null;
 
-        console.log(`- ${projectKey}: run_kind=${runPlan.runKind} | focus=${runPlan.recommendedFocus} | drift=${runDrift.driftStatus} | stability=${runStability.status} | governance=${runGovernance.status}`);
+        console.log(`- ${projectKey}: run_kind=${runPlan.runKind} | focus=${runPlan.recommendedFocus} | drift=${runDrift.driftStatus} | stability=${runStability.status} | governance=${runGovernance.status} | policy=${projectRun.metrics.policyControlStatus}`);
         let discoveredUrls = [];
 
         if (options.skipDiscovery) {

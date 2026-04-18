@@ -60,6 +60,10 @@ describe("buildDiscoveryPolicyCalibrationReport", () => {
     assert.equal(report.auditFlagged, 1);
     assert.equal(report.enforceHidden, 1);
     assert.equal(report.blockerCounts[0].value, "blocked_signal_pattern");
+    assert.equal(report.blockerExamples[0].blocker, "blocked_signal_pattern");
+    assert.equal(report.blockerExamples[0].repos[0].repoRef, "drop/template");
+    assert.equal(report.nextWorkbenchRun.runId, "r1");
+    assert.match(report.nextWorkbenchCommand, /policy-workbench --project demo --run-id r1/);
     assert.ok(report.recommendations.some((item) => item.includes("Top blocker")));
   });
 
@@ -76,8 +80,22 @@ describe("buildDiscoveryPolicyCalibrationReport", () => {
         enforceHidden: 1,
         preferredHits: 0,
         blockerCounts: [{ value: "blocked_signal_pattern", count: 1 }],
+        blockerExamples: [
+          {
+            blocker: "blocked_signal_pattern",
+            repos: [{ repoRef: "drop/template", runId: "r1", fitBand: "high", fitScore: 70 }]
+          }
+        ],
         auditStatusCounts: [{ value: "calibrating", count: 2 }],
         enforceStatusCounts: [{ value: "calibrating", count: 2 }],
+        nextWorkbenchRun: {
+          runId: "r1",
+          manifestPath: "runs/demo/r1/manifest.json",
+          sourceCandidateCount: 2,
+          hiddenByEnforce: 1,
+          blockerStatus: "calibrating"
+        },
+        nextWorkbenchCommand: "npm run patternpilot -- policy-workbench --project demo --run-id r1",
         recommendations: ["Inspect blocked examples."],
         runs: [
           {
@@ -92,7 +110,11 @@ describe("buildDiscoveryPolicyCalibrationReport", () => {
 
     assert.match(markdown, /Patternpilot Discovery Policy Calibration/);
     assert.match(markdown, /Top Blockers/);
+    assert.match(markdown, /Blocker Examples/);
     assert.match(markdown, /blocked_signal_pattern: 1/);
+    assert.match(markdown, /drop\/template \[r1\] fit=high\/70/);
+    assert.match(markdown, /Next Workbench Candidate/);
+    assert.match(markdown, /next_command: npm run patternpilot -- policy-workbench --project demo --run-id r1/);
     assert.match(markdown, /r1 :: candidates=2/);
   });
 });

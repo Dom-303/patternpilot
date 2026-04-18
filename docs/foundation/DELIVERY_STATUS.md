@@ -28,7 +28,7 @@ Faustregel:
 
 ## Stand
 
-- last_updated: 2026-04-15
+- last_updated: 2026-04-17
 - einordnung_gilt_fuer: Kernsystem + Produktschale + Vollautomatik-Zielbild
 - master_plan: `docs/superpowers/plans/2026-04-14-patternpilot-road-to-100.md`
 - closeout_brief: `docs/foundation/ROAD_TO_100_CLOSEOUT.md`
@@ -55,7 +55,7 @@ sondern:
 ### Gesamtprodukt
 
 - schaetzung: `99-100%`
-- begruendung: Der Kernel, die Kalibrierungs- und Kurationslinie sowie die GitHub-App-/Service-Runtime sind jetzt nicht nur tief ausmodelliert, sondern auch ueber `ops`, `integrity`, `maintenance`, `control` und `closeout` zu einer echten Schlusskante zusammengezogen. Offene Punkte liegen jetzt eher in realem Rollout, Nutzung und spaeterem Betriebsalltag als in fehlender Kernmechanik des Plans.
+- begruendung: Der Kernel, die Kalibrierungs- und Kurationslinie sowie die GitHub-App-/Service-Runtime sind jetzt nicht nur tief ausmodelliert, sondern auch ueber `ops`, `integrity`, `maintenance`, `control`, `closeout` und jetzt `github-app-live-pilot-review` zu einer echten Schluss- und Pilotkante zusammengezogen. Offene Punkte liegen jetzt eher in realem Rollout, Nutzung und spaeterem Betriebsalltag als in fehlender Kernmechanik des Plans.
 
 ### Kernsystem
 
@@ -165,6 +165,7 @@ Naechste Themen:
 
 - GitHub-App als spaeterer echter Integrationsmodus
 - `github-app-readiness` als fruehe Bruecke zwischen aktuellem CLI/PAT-Betrieb und spaeterer App-Integration weiter nutzen und schaerfen
+- `github-app-live-pilot-review` legt jetzt konservativ offen, ob der erste reale Pilot schon als PAT-Bruecke oder echter App-Versuch tragfaehig ist
 - `github-app-plan` beschreibt jetzt Rechte, Event-Bindings und Command-Pfade fuer den spaeteren App-Cutover explizit
 - `github-app-event-preview` kann jetzt einzelne Event-Payloads gegen den aktuellen Kernel spiegeln, bevor echte Webhooks oder Installationsfluesse live gehen
 - `github-app-webhook-preview` modelliert jetzt lokal Header, Delivery-ID, Signaturpruefung und das interne Envelope fuer spaetere echte Webhook-Zustellung

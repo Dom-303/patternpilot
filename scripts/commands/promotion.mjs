@@ -25,6 +25,15 @@ function buildPromotionSummary({ runId, projectKey, createdAt, items, dryRun, ap
     const mode = item.applied ? "applied" : "prepared";
     return `- ${item.repo.owner}/${item.repo.name} -> ${item.promotionDocRelativePath} (${mode}; queue_status=${item.queueStatus})`;
   });
+  const applyCount = items.filter((item) => item.applied).length;
+  const decisionStatus =
+    items.length === 0 ? "no_items"
+      : apply ? "promotion_applied"
+        : "promotion_prepared";
+  const nextCommand =
+    apply
+      ? `npm run patternpilot -- re-evaluate --project ${projectKey} --stale-only`
+      : `npm run patternpilot -- promote --project ${projectKey} --apply --from-status promotion_prepared`;
 
   return `# Patternpilot Promotion Run
 
@@ -33,10 +42,17 @@ function buildPromotionSummary({ runId, projectKey, createdAt, items, dryRun, ap
 - created_at: ${createdAt}
 - dry_run: ${dryRun ? "yes" : "no"}
 - apply: ${apply ? "yes" : "no"}
+- promotion_items: ${items.length}
+- applied_items: ${applyCount}
+- decision_status: ${decisionStatus}
 
 ## Items
 
 ${lines.join("\n")}
+
+## Next Step
+
+- next_command: ${nextCommand}
 `;
 }
 

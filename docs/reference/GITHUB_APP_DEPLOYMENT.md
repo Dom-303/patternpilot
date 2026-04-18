@@ -85,6 +85,7 @@ Diese Datei beschreibt den naechsten Produktisierungsschritt von Patternpilot we
 - `github-app-service-runtime-maintenance-review` und `...-apply` heben diese Diagnosen jetzt auf eine konservative Maintenance-Ebene, die sichere Reclaim-Aktionen direkt ausfuehren kann und alles andere bewusst als manuelle Folgearbeit stehenlaesst
 - `github-app-service-runtime-control-review` zieht `ops`, `integrity` und `maintenance` jetzt in eine einzige Abschlusskante zusammen und liefert damit die gemeinsame Runtime-Schlussbewertung fuer die GitHub-App-Service-Linie
 - `github-app-service-runtime-closeout-review` legt diese Abschlusskante jetzt direkt auf die Road-to-100-Definition und liefert eine explizite Closeout-/Completion-Bewertung bis `100%`
+- `github-app-live-pilot-review` legt diese Abschlusskante jetzt auf den naechsten realen Einsatzschritt und unterscheidet explizit zwischen `pilot_bridge_ready`, `pilot_live_ready`, `pilot_followup_required` und `pilot_blocked`
 - `github-app-service-runtime-loop-history-review` macht diese Runtime-Loops jetzt zusaetzlich ueber `state/github-app-service-runtime-loop-history.json` als dauerhafte Review-/Recovery-Sicht sichtbar
 - die Runtime-/Cycle-/Session-/Loop-Kommandos lassen sich jetzt ausserdem intern ohne verschachtelte CLI-Zwischenausgaben komponieren, was spaetere Service-Runtimes deutlich sauberer macht
 - damit ist die lokale Runtime-Schicht nicht mehr nur installation-aware, sondern kann mehrere Installationen bewusst gegeneinander priorisieren
@@ -99,6 +100,25 @@ Diese Datei beschreibt den naechsten Produktisierungsschritt von Patternpilot we
 2. App-IDs und Private Key lokal oder in CI hinterlegen
 3. Webhook-Events auf Intake-/Watchlist-Pipeline mappen
 4. Patternpilot-Automation ueber Actions, Cron oder spaeter einen kleinen Service ausfuehren
+
+## Pilot-Readiness
+
+Fuer den ersten echten Einsatz gibt es jetzt bewusst noch einen konservativen Zwischenschritt:
+
+- `github-app-live-pilot-review`
+
+Der Command zieht zusammen:
+
+- aktueller Credential-/Readiness-Stand
+- Runtime-Control- und Closeout-Zustand
+- lokale Bootstrap-Dateien
+- vorhandene Installations-Registry
+
+Er beantwortet damit nicht mehr nur "Ist die Architektur fertig?", sondern konkret:
+
+- koennen wir jetzt einen echten PAT-/CLI-Pilot fahren
+- koennen wir schon einen kleinen Live-GitHub-App-Versuch fahren
+- oder gibt es noch verbleibende Blocker/Follow-up-Punkte
 
 ## Was du spaeter noch nachreichen musst
 

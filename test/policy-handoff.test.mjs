@@ -8,19 +8,24 @@ test("selectPolicyHandoffCandidates prefers newly visible trial rows by default"
       {
         repoRef: "alpha/repo",
         repoUrl: "https://github.com/alpha/repo",
-        visibilityChange: "newly_visible"
+        visibilityChange: "newly_visible",
+        fitBand: "medium",
+        fitScore: 50
       },
       {
-        repoRef: "beta/repo",
-        repoUrl: "https://github.com/beta/repo",
-        visibilityChange: "unchanged"
+        repoRef: "gamma/repo",
+        repoUrl: "https://github.com/gamma/repo",
+        visibilityChange: "newly_visible",
+        fitBand: "high",
+        fitScore: 90
       }
     ]
   });
 
   assert.equal(selection.scope, "newly_visible");
-  assert.deepEqual(selection.repoRefs, ["alpha/repo"]);
-  assert.deepEqual(selection.urls, ["https://github.com/alpha/repo"]);
+  assert.deepEqual(selection.repoRefs, ["gamma/repo", "alpha/repo"]);
+  assert.deepEqual(selection.urls, ["https://github.com/gamma/repo", "https://github.com/alpha/repo"]);
+  assert.match(selection.recommendations.join("\n"), /highest-fit candidate first: gamma\/repo/i);
 });
 
 test("selectPolicyHandoffCandidates can use replay visible candidates", () => {
@@ -62,7 +67,9 @@ test("renderPolicyHandoffSummary shows selected repos and on-demand linkage", ()
         {
           repoRef: "alpha/repo",
           url: "https://github.com/alpha/repo",
-          reason: "newly_visible"
+          reason: "newly_visible",
+          fitBand: "high",
+          fitScore: 88
         }
       ],
       recommendations: ["Use the focused handoff."]
@@ -83,6 +90,8 @@ test("renderPolicyHandoffSummary shows selected repos and on-demand linkage", ()
   });
 
   assert.match(markdown, /selected_repos: 1/);
+  assert.match(markdown, /decision_status: handoff_review_ready/);
   assert.match(markdown, /on_demand_run: on-demand-1/);
-  assert.match(markdown, /alpha\/repo :: newly_visible/);
+  assert.match(markdown, /alpha\/repo :: newly_visible :: fit=high\/88/);
+  assert.match(markdown, /next_command: npm run patternpilot -- promote --project eventbear-worker --from-status pending_review/);
 });

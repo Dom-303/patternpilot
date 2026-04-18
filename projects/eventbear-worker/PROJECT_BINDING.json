@@ -28,6 +28,41 @@
     "feed",
     "wordpress plugin"
   ],
+  "discoveryStrategy": {
+    "broadAnchorCount": 2,
+    "broadSignalCount": 1,
+    "broadMaxTerms": 3,
+    "capabilityAnchorCount": 1,
+    "capabilitySignalCount": 2,
+    "capabilityMaxTerms": 4,
+    "manualAnchorCount": 1,
+    "manualMaxTerms": 4,
+    "seedSignalSources": [
+      "discoveryHints"
+    ],
+    "seedRepoFields": [
+      "fullName",
+      "name",
+      "description",
+      "homepage",
+      "topics"
+    ],
+    "minSeedSignalHits": 2,
+    "minStrongSeedSignalHits": 1,
+    "defaultStrongSignals": [
+      "api",
+      "calendar",
+      "connector",
+      "crawler",
+      "event",
+      "feed",
+      "gastro",
+      "plugin",
+      "scraper",
+      "venue",
+      "wordpress"
+    ]
+  },
   "alignmentRulesFile": "projects/eventbear-worker/ALIGNMENT_RULES.json",
   "discoveryPolicyFile": "projects/eventbear-worker/DISCOVERY_POLICY.json",
   "analysisQuestions": [

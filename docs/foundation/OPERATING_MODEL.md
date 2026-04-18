@@ -44,6 +44,17 @@ Erst nach Review darf ein Fund aufsteigen in:
 - `knowledge/repo_learnings.md`
 - `knowledge/repo_decisions.md`
 
+### 3.1 Canonical Repo Handling im Pilotbetrieb
+
+Im Realbetrieb gilt fuer GitHub-Repos zunaechst eine konservative Regel:
+
+- Case-only-Varianten derselben URL duerfen in Queue und Intake zusammengefuehrt werden.
+- Owner-Rename-, Redirect- oder Alias-Faelle werden nicht blind automatisch gemergt.
+- Wenn bereits ein promovierter kanonischer Datensatz existiert und spaeter eine neue Owner-Variante auftaucht, bleibt der vorhandene kuratierte Datensatz massgeblich.
+- Neue Pilot-Artefakte duerfen als Evidenz stehenbleiben, aber ein frischer Queue-Duplikatfall soll aus dem Live-State wieder entfernt werden, bis eine verlaessliche Canonical-Resolution existiert.
+
+Diese Regel schuetzt die kuratierte Wissensschicht davor, im Pilotbetrieb unterschiedliche Owner-Slugs heuristisch zu frueh als identisch zu behandeln.
+
 ### 4. Projektwirksamer Output
 
 Jeder Fund muss am Ende auf mindestens eine dieser Formen hinauslaufen:

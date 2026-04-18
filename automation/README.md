@@ -100,6 +100,13 @@ Der Alert-Adapter kann Alerts jetzt ueber mehrere Oberflaechen ausliefern:
 - frei konfigurierbares lokales Command
 - eingebauter Hook ueber `--target-hook patternpilot-alert-hook`
 
+Wenn in `patternpilot.config.json` `automationAlertPreset: "local-operator"` gesetzt ist, liefert Patternpilot ausserdem ohne weitere Zielkonfiguration automatisch in lokale Produkt-Artefakte aus:
+
+- `state/automation_alerts_published.md`
+- `state/automation_alert_digest.md`
+- `state/automation_alert_digest.json`
+- `state/automation_operator_attention.md` fuer dringende Operator-Faelle
+
 Die Hook-Referenz liegt unter:
 
 - `automation/hooks/README.md`

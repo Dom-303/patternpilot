@@ -7,6 +7,7 @@
   "automationJobStateFile": "state/automation_jobs_state.json",
   "automationAlertsJsonFile": "state/automation_alerts.json",
   "automationAlertsMarkdownFile": "state/automation_alerts.md",
+  "automationAlertPreset": "local-operator",
   "automationAlertTargets": [],
   "automationLockFile": "state/automation.lock.json",
   "landkarteFile": "knowledge/repo_landkarte.csv",

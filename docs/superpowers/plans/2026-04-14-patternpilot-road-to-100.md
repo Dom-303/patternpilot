@@ -254,6 +254,7 @@ Das Produkt soll nicht nur den ersten Lauf gut koennen, sondern auch den zweiten
   - `github-app-service-runtime-maintenance-review` und `...-apply` heben diese Diagnosen jetzt auf eine konservative Maintenance-Ebene, die sichere Reclaim-Aktionen direkt ausfuehren kann und alles andere bewusst als manuelle Folgearbeit stehenlaesst
   - `github-app-service-runtime-control-review` zieht `ops`, `integrity` und `maintenance` jetzt in eine einzige Abschlusskante zusammen und liefert damit die gemeinsame Runtime-Schlussbewertung fuer die GitHub-App-Service-Linie
   - `github-app-service-runtime-closeout-review` legt diese Abschlusskante jetzt direkt auf die Road-to-100-Definition und liefert eine explizite Closeout-/Completion-Bewertung bis `100%`
+  - `github-app-live-pilot-review` zieht diese Abschlusskante jetzt auf den naechsten realen Einsatz und sagt konservativ, ob der erste echte Pilot schon als PAT-Bruecke oder als Live-App-Versuch tragfaehig ist
   - `github-app-service-runtime-loop-history-review` macht diese Runtime-Loops jetzt zusaetzlich als dauerhafte History-/Recovery-Sicht mit resumable, drained und previewed Loop-Faellen sichtbar
   - die Runtime-/Cycle-/Session-/Loop-Kommandos koennen jetzt zudem intern ohne doppelte Zwischen-Ausgabe komponiert werden, was den spaeteren Service-Runtime-Pfad sauberer macht
   - damit ist die Phase-4-Runtime jetzt erstmals nicht nur installation-aware, sondern auch als gemeinsamer Multi-Installation-Service gedacht

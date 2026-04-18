@@ -18,6 +18,10 @@ export {
 } from "./project-admin/github-app-preview.mjs";
 
 export {
+  runGithubAppLivePilotReview
+} from "./project-admin/github-app-live-pilot.mjs";
+
+export {
   runGithubAppInstallationApply,
   runGithubAppInstallationGovernanceApply,
   runGithubAppInstallationGovernanceReview,

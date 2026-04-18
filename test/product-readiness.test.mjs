@@ -1,0 +1,146 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+
+import {
+  buildPatternpilotProductReadinessReview,
+  renderPatternpilotProductReadinessSummary
+} from "../lib/product-readiness.mjs";
+
+test("buildPatternpilotProductReadinessReview returns ready_with_followups for healthy core plus pilot followups", () => {
+  const review = buildPatternpilotProductReadinessReview({
+    generatedAt: "2026-04-18T10:00:00.000Z",
+    auth: {
+      tokenPresent: true,
+      authSource: "PATTERNPILOT_GITHUB_TOKEN"
+    },
+    githubApi: {
+      networkStatus: "ok",
+      rateLimit: {
+        remaining: 4999
+      }
+    },
+    alertDelivery: {
+      configured: true,
+      preset: "local-operator",
+      targetCount: 3
+    },
+    automation: {
+      jobsConfigured: 2,
+      jobsReady: 1,
+      jobsBlocked: 1,
+      jobsBackoff: 0,
+      attentionStatus: "elevated_alerting",
+      deliveryPriority: "elevated",
+      nextAction: "Run run-stability."
+    },
+    projects: [
+      {
+        projectKey: "eventbear-worker",
+        label: "EventBaer Worker",
+        watchlistCount: 12,
+        governanceStatus: "manual_requalify",
+        governanceNextAction: "Run run-stability.",
+        policyControlStatus: "followup_with_care",
+        policyControlNextCommand: "npm run patternpilot -- re-evaluate --project eventbear-worker --stale-only",
+        jobName: "eventbear-worker-apply",
+        jobStatus: "ready",
+        alertCount: 2,
+        highAlertCount: 1,
+        topAlertCategory: "governance_requalify",
+        topAlertNextAction: "Run run-stability."
+      }
+    ]
+  });
+
+  assert.equal(review.overallStatus, "ready_with_followups");
+  assert.equal(review.releaseDecision, "go_with_followups");
+  assert.equal(review.counts.fail, 0);
+  assert.ok(review.counts.followup >= 1);
+  assert.equal(review.projects[0].overallStatus, "ready_with_followups");
+  assert.match(review.nextAction ?? "", /run-stability/i);
+});
+
+test("buildPatternpilotProductReadinessReview returns not_ready when GitHub access fails", () => {
+  const review = buildPatternpilotProductReadinessReview({
+    generatedAt: "2026-04-18T10:00:00.000Z",
+    auth: {
+      tokenPresent: false
+    },
+    githubApi: {
+      networkStatus: "failed",
+      error: "getaddrinfo EAI_AGAIN"
+    },
+    alertDelivery: {
+      configured: false,
+      targetCount: 0
+    },
+    automation: {
+      jobsConfigured: 0,
+      attentionStatus: "routine",
+      deliveryPriority: "routine"
+    },
+    projects: []
+  });
+  const rendered = renderPatternpilotProductReadinessSummary(review);
+
+  assert.equal(review.overallStatus, "not_ready");
+  assert.equal(review.releaseDecision, "hold");
+  assert.ok(review.counts.fail >= 2);
+  assert.match(rendered, /overall_status: not_ready/);
+  assert.match(rendered, /FAIL \| github_access/);
+});
+
+test("buildPatternpilotProductReadinessReview suppresses freshly completed next actions and advances to the next follow-up", () => {
+  const review = buildPatternpilotProductReadinessReview({
+    generatedAt: "2026-04-18T10:05:00.000Z",
+    auth: {
+      tokenPresent: true,
+      authSource: "PATTERNPILOT_GITHUB_TOKEN"
+    },
+    githubApi: {
+      networkStatus: "ok"
+    },
+    alertDelivery: {
+      configured: true,
+      preset: "local-operator",
+      targetCount: 3
+    },
+    automation: {
+      jobsConfigured: 1,
+      jobsReady: 1,
+      jobsBlocked: 0,
+      jobsBackoff: 0,
+      attentionStatus: "elevated_alerting",
+      deliveryPriority: "elevated",
+      nextAction: "npm run patternpilot -- review-watchlist --project eventbear-worker",
+      fallbackNextAction: "npm run patternpilot -- re-evaluate --project eventbear-worker --stale-only"
+    },
+    projects: [
+      {
+        projectKey: "eventbear-worker",
+        label: "EventBaer Worker",
+        watchlistCount: 1,
+        governanceStatus: "manual_gate",
+        governanceNextAction: "npm run patternpilot -- review-watchlist --project eventbear-worker",
+        policyControlStatus: "followup_with_care",
+        policyControlNextCommand: "npm run patternpilot -- re-evaluate --project eventbear-worker --stale-only",
+        jobName: "eventbear-worker-apply",
+        jobStatus: "ready",
+        alertCount: 1,
+        highAlertCount: 1,
+        topAlertCategory: "governance_manual_gate",
+        topAlertNextAction: "npm run patternpilot -- review-watchlist --project eventbear-worker",
+        recentCompletedCommands: [
+          {
+            command: "review-watchlist",
+            createdAt: "2026-04-18T10:04:10.000Z"
+          }
+        ]
+      }
+    ]
+  });
+
+  assert.equal(review.overallStatus, "ready_with_followups");
+  assert.match(review.nextAction ?? "", /re-evaluate/);
+  assert.equal(review.projects[0].nextAction, "npm run patternpilot -- re-evaluate --project eventbear-worker --stale-only");
+});
