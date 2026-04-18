@@ -63,7 +63,22 @@ Erwartung:
 - frischer Zustand ohne Projekt: `not_ready` mit Bootstrap-Hinweis
 - echter Betriebszustand: klarer Go-/Follow-up-/Hold-Befund
 
-## 6. Letzte Sicht auf Git
+## 6. Fremdprojekt-Beweis nicht vergessen
+
+Vor einer echten `v1`-Freigabe sollte mindestens ein frischer Fremdprojekt-Durchlauf belegt sein:
+
+- frischer Workspace
+- GitHub-Zugang verifiziert
+- `bootstrap`
+- `intake` oder `sync:watchlist`
+- `review`
+- `product-readiness`
+
+Der aktuelle dokumentierte Beleg liegt hier:
+
+- [V1_CLOSEOUT.md](V1_CLOSEOUT.md)
+
+## 7. Letzte Sicht auf Git
 
 Vor dem Push:
 

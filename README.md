@@ -132,6 +132,8 @@ Es gibt jetzt zwei Einstiegsebenen:
   [RELEASE_CHECKLIST.md](docs/foundation/RELEASE_CHECKLIST.md)
 - Ehrlicher Produktstatus:
   [V1_STATUS.md](docs/foundation/V1_STATUS.md)
+- Kompakter `v1`-Closeout:
+  [V1_CLOSEOUT.md](docs/foundation/V1_CLOSEOUT.md)
 
 Wenn du lieber direkt in der CLI gefuehrt werden willst:
 

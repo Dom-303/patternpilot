@@ -5,7 +5,8 @@
 `patternpilot` ist jetzt sehr nah an einem sauberen `v1` als eigenstaendiges lokales Produkt.
 
 Der groesste Teil der eigentlichen Produktarbeit ist erledigt.
-Offen ist vor allem noch die letzte Betriebs- und Launch-Disziplin.
+Der wichtigste Fremdprojekt-Beweis ist inzwischen erbracht.
+Offen ist vor allem noch die letzte Launch-Disziplin.
 
 ## Was bereits stark steht
 
@@ -16,12 +17,13 @@ Offen ist vor allem noch die letzte Betriebs- und Launch-Disziplin.
 - GitHub-Token-Onboarding mit klaren Statusmeldungen
 - neutrale Beispieloberflaeche statt realer EventBaer-Defaults
 - Release-Checkliste und Smoke-Pfad
+- erfolgreicher authentifizierter Fremdprojekt-Pilot in einem frischen Temp-Workspace
 
 ## Was in der Zielgeraden liegt
 
-- ein weiterer starker Fremdprojekt-Pilot mit verifiziertem GitHub-Zugang
 - letzte Launch-Entscheidungen wie Release-Tag, Changelog und Freigabeform
-- optionale weitere Oberflaechenpolitur, wenn sie echten Nutzwert bringt
+- optional weitere Oberflaechenpolitur, wenn sie echten Nutzwert bringt
+- eine bewusste finale Freigabeentscheidung auf Basis von Readiness und Closeout
 
 ## Was nicht mehr der Hauptblocker ist
 
@@ -41,3 +43,9 @@ Ein neuer Nutzer kann:
 5. einen ersten Repo-Fund sauber durch Intake und Review fuehren
 
 Wenn das fuer einen fremden Projektfall stabil klappt, ist `patternpilot` praktisch im `v1`-Bereich.
+
+Genau dieser Nachweis ist jetzt erbracht.
+
+Wenn du den kompakten Beleg lesen willst:
+
+[V1_CLOSEOUT.md](V1_CLOSEOUT.md)
