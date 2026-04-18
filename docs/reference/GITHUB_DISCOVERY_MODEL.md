@@ -10,6 +10,7 @@ Die Discovery-Schicht arbeitet bewusst heuristikbasiert:
 
 - Zielprojekt lesen
 - Discovery-Hinweise und Alignment-Signale einsammeln
+- technischen Projektkorpus aus Manifesten, Abhaengigkeiten, Scriptnamen, Dateinamen und Verzeichnisstruktur verdichten
 - daraus mehrere GitHub-Suchlensen bauen
 - Suchtreffer gegen bekannte Queue-, Watchlist- und Landkarten-Repos deduplizieren
 - verbleibende Treffer voranreichern, klassifizieren und gegen das Zielprojekt abgleichen
@@ -25,6 +26,12 @@ Die Discovery-Linse speist sich aus:
 - `bindings/<project>/ALIGNMENT_RULES.json`
 - Referenzdateien aus `readBeforeAnalysis`
 - Verzeichnisstruktur aus `referenceDirectories`
+- technische Signale aus dem Zielrepo, zum Beispiel:
+  - Paket- und Projektnamen
+  - Beschreibungen und Keywords aus Manifesten
+  - Abhaengigkeiten
+  - Scriptnamen
+  - Dateinamen und Erweiterungen in Referenzverzeichnissen
 - optionalen `discoveryHints`
 - optionaler `discoveryStrategy` in `bindings/<project>/PROJECT_BINDING.json`
 - bereits bekannten Repos in:
@@ -50,6 +57,19 @@ Eine spaetere LLM-Schicht kann darauf aufsetzen, zum Beispiel fuer:
 - semantische Clusterbildung
 - Musterverdichtung ueber mehrere Repos
 - priorisierte Review-Briefs
+
+## Was das praktisch bedeutet
+
+Discovery baut seine Queries heute nicht nur aus freiem Text wie `README.md`, sondern auch aus technischeren Signalschichten des Zielprojekts.
+
+Beispiele:
+
+- ein Paketname wie `calendar-sync`
+- eine Abhaengigkeit wie `airtable`
+- ein Scriptname wie `ingest`
+- ein Verzeichnisname wie `connectors`
+
+Dadurch wird die Suche projektnaeher und weniger rein beschreibungsgetrieben.
 
 ## Dispositionen
 

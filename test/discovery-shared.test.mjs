@@ -87,4 +87,33 @@ describe("buildDiscoveryPlan", () => {
     assert.equal(plan.plans[0].query, "event archived:false fork:false stars:>=3");
     assert.equal(plan.plans[1].query, "calendar scraper venue archived:false fork:false stars:>=3");
   });
+
+  test("uses richer project profile discovery signals as query anchors", () => {
+    const binding = {
+      projectKey: "sample-project",
+      projectLabel: "Sample Project",
+      discoveryHints: ["ingestion"]
+    };
+
+    const plan = buildDiscoveryPlan(binding, { capabilities: [] }, {
+      corpus: "",
+      discoverySignals: ["calendar", "adapter", "venue"],
+      manifestSignals: {
+        packageNames: ["@demo/calendar-sync"],
+        descriptions: ["calendar ingestion worker"],
+        keywords: ["calendar", "venue"],
+        dependencySignals: ["airtable", "rss-parser"],
+        scriptSignals: ["ingest"]
+      },
+      architectureSignals: {
+        directorySignals: ["connectors", "feeds"],
+        extensionHints: ["ts", "md"]
+      }
+    }, {
+      discoveryProfile: "focused"
+    });
+
+    assert.match(plan.plans[0].query, /ingestion/);
+    assert.match(plan.plans[0].query, /calendar/);
+  });
 });

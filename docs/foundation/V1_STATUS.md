@@ -68,6 +68,10 @@ Wenn du den naechsten aktiven Ausbaupfad lesen willst:
 
 [DISCOVERY_EXCELLENCE_PLAN.md](DISCOVERY_EXCELLENCE_PLAN.md)
 
+Wenn du den ersten bereits abgeschlossenen Discovery-Ausbauschritt lesen willst:
+
+[DISCOVERY_D1_CLOSEOUT.md](DISCOVERY_D1_CLOSEOUT.md)
+
 Wenn du die Automation-Produktgrenze lesen willst:
 
 [AUTOMATION_OPERATING_MODE.md](AUTOMATION_OPERATING_MODE.md)

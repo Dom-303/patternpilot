@@ -13,6 +13,12 @@ Die naechste echte Qualitaetsstufe liegt nicht mehr im Grundfluss, sondern in de
 
 Dieses Dokument ist der aktive Ausbauplan fuer genau diese Schicht.
 
+## Aktueller Stand
+
+- Phase D1 — Corpus Upgrade: abgeschlossen
+- Naechster aktiver Block: Phase D2 — Query Engineering
+- Referenzbeleg fuer D1: [DISCOVERY_D1_CLOSEOUT.md](DISCOVERY_D1_CLOSEOUT.md)
+
 ## Was Discovery heute schon kann
 
 Die aktuelle Discovery ist bereits **projektkontextbasiert**.
@@ -201,6 +207,7 @@ Discovery wird nicht mehr nach Bauchgefuehl, sondern nach realem Output verbesse
 
 - Zielprojekt-Signale breiter und technischer einsammeln
 - Project Profile als echten Discovery-Input schaerfen
+- Status: abgeschlossen
 
 Exit:
 
