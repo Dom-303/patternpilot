@@ -16,8 +16,10 @@ Dieses Dokument ist der aktive Ausbauplan fuer genau diese Schicht.
 ## Aktueller Stand
 
 - Phase D1 — Corpus Upgrade: abgeschlossen
-- Naechster aktiver Block: Phase D2 — Query Engineering
+- Phase D2 — Query Engineering: abgeschlossen
+- Naechster aktiver Block: Phase D3 — Ranking Upgrade
 - Referenzbeleg fuer D1: [DISCOVERY_D1_CLOSEOUT.md](DISCOVERY_D1_CLOSEOUT.md)
+- Referenzbeleg fuer D2: [DISCOVERY_D2_CLOSEOUT.md](DISCOVERY_D2_CLOSEOUT.md)
 
 ## Was Discovery heute schon kann
 
@@ -217,6 +219,7 @@ Exit:
 
 - Query-Familien erweitern
 - negative Filter und Projektprofile einziehen
+- Status: abgeschlossen
 
 Exit:
 

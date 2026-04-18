@@ -49,13 +49,17 @@ describe("buildDiscoveryPlan", () => {
     const plan = buildDiscoveryPlan(binding, alignmentRules, { corpus: "" }, {
       discoveryProfile: "focused"
     });
+    const broadPlan = plan.plans.find((item) => item.id === "broad-project-scan");
+    const archetypePlan = plan.plans.find((item) => item.family === "archetype");
+    const layerPlan = plan.plans.find((item) => item.id === "architecture-patterns" || item.id === "capability-source_first");
 
-    assert.equal(plan.plans[0].query, "event calendar source archived:false fork:false stars:>=3");
-    assert.equal(
-      plan.plans[1].query,
-      "event source system connector archived:false fork:false stars:>=3"
-    );
-    assert.doesNotMatch(plan.plans[1].query, /"/);
+    assert.ok(broadPlan);
+    assert.ok(archetypePlan);
+    assert.ok(layerPlan);
+    assert.match(broadPlan.query, /^event calendar source /);
+    assert.match(broadPlan.query, /-awesome/);
+    assert.match(layerPlan.query, /connector|source/);
+    assert.doesNotMatch(layerPlan.query, /"/);
   });
 
   test("allows per-project discovery strategy overrides", () => {
@@ -80,12 +84,19 @@ describe("buildDiscoveryPlan", () => {
     const plan = buildDiscoveryPlan(binding, { capabilities: [] }, { corpus: "" }, {
       query: "calendar scraper venue"
     });
+    const broadPlan = plan.plans.find((item) => item.id === "broad-project-scan");
+    const manualPlan = plan.plans.find((item) => item.id === "manual-query");
 
     assert.equal(strategy.broadAnchorCount, 1);
     assert.equal(strategy.minSeedSignalHits, 3);
     assert.deepEqual(strategy.seedSignalSources, ["discoveryhints", "targetcapabilities"]);
-    assert.equal(plan.plans[0].query, "event archived:false fork:false stars:>=3");
-    assert.equal(plan.plans[1].query, "calendar scraper venue archived:false fork:false stars:>=3");
+    assert.ok(broadPlan);
+    assert.ok(manualPlan);
+    assert.equal(broadPlan.query, "event -awesome -boilerplate -starter archived:false fork:false stars:>=3");
+    assert.equal(
+      manualPlan.query,
+      "calendar scraper venue -awesome -boilerplate -starter archived:false fork:false stars:>=3"
+    );
   });
 
   test("uses richer project profile discovery signals as query anchors", () => {
@@ -112,8 +123,55 @@ describe("buildDiscoveryPlan", () => {
     }, {
       discoveryProfile: "focused"
     });
+    const broadPlan = plan.plans.find((item) => item.id === "broad-project-scan");
 
-    assert.match(plan.plans[0].query, /ingestion/);
-    assert.match(plan.plans[0].query, /calendar/);
+    assert.ok(broadPlan);
+    assert.match(broadPlan.query, /ingestion/);
+    assert.match(broadPlan.query, /calendar/);
+  });
+
+  test("builds archetype, architecture and dependency query families with anti-noise filters", () => {
+    const binding = {
+      projectKey: "sample-project",
+      projectLabel: "Sample Project",
+      discoveryHints: ["calendar", "connector", "review"],
+      discoveryStrategy: {
+        negativeTermCount: 2
+      }
+    };
+
+    const plan = buildDiscoveryPlan(binding, {
+      capabilities: [
+        { id: "source_first", label: "source-first", signals: ["connector", "adapter", "feed"] }
+      ]
+    }, {
+      corpus: "",
+      discoverySignals: ["calendar", "adapter", "review", "schema"],
+      manifestSignals: {
+        packageNames: ["calendar-sync"],
+        descriptions: ["calendar connector and validation worker"],
+        keywords: ["calendar", "connector", "validation"],
+        dependencySignals: ["airtable", "rss-parser"],
+        scriptSignals: ["ingest", "review"]
+      },
+      architectureSignals: {
+        directorySignals: ["connectors", "parsers", "reviews"],
+        extensionHints: ["ts"]
+      }
+    }, {
+      discoveryProfile: "balanced"
+    });
+
+    const architecturePlan = plan.plans.find((item) => item.id === "architecture-patterns");
+    const dependencyPlan = plan.plans.find((item) => item.id === "dependency-neighbors");
+    const archetypePlan = plan.plans.find((item) => item.id.startsWith("archetype-"));
+
+    assert.ok(archetypePlan);
+    assert.ok(architecturePlan);
+    assert.ok(dependencyPlan);
+    assert.match(archetypePlan.query, /-awesome/);
+    assert.match(architecturePlan.query, /connector|review|parser/);
+    assert.match(dependencyPlan.query, /airtable|rss|ingest|review/);
+    assert.ok(plan.inferredArchetypes.length >= 1);
   });
 });

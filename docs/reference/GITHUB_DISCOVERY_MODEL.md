@@ -18,6 +18,30 @@ Die Discovery-Schicht arbeitet bewusst heuristikbasiert:
 
 Die Suchschaerfe ist dabei bewusst **projektkonfigurierbar** und nicht auf ein einzelnes Dogfood-Projekt zugeschnitten.
 
+## Query-Familien
+
+Discovery baut heute nicht nur eine einzige breite Query, sondern mehrere Suchfamilien:
+
+- Broad project scan
+- Archetype-Queries
+- Architecture-and-layer-Queries
+- Dependency-and-tooling-neighbor-Queries
+- Capability-Queries
+- optional manueller Query-Boost via `--query`
+
+Dadurch wird die Suche vielseitiger und weniger monoton.
+
+## Anti-Noise
+
+Discovery fuegt jetzt bewusst negative Suchterme gegen typische Rauschquellen ein, zum Beispiel:
+
+- `-awesome`
+- `-boilerplate`
+- `-starter`
+- `-template`
+
+Diese Begriffe bleiben pro Projekt ueber `discoveryStrategy` anpassbar.
+
 ## Inputs
 
 Die Discovery-Linse speist sich aus:

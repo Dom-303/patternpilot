@@ -72,6 +72,10 @@ Wenn du den ersten bereits abgeschlossenen Discovery-Ausbauschritt lesen willst:
 
 [DISCOVERY_D1_CLOSEOUT.md](DISCOVERY_D1_CLOSEOUT.md)
 
+Wenn du den zweiten bereits abgeschlossenen Discovery-Ausbauschritt lesen willst:
+
+[DISCOVERY_D2_CLOSEOUT.md](DISCOVERY_D2_CLOSEOUT.md)
+
 Wenn du die Automation-Produktgrenze lesen willst:
 
 [AUTOMATION_OPERATING_MODE.md](AUTOMATION_OPERATING_MODE.md)
