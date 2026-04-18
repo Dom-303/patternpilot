@@ -137,4 +137,64 @@ describe("reEvaluateQueueEntries", () => {
       workspace.cleanup();
     }
   });
+
+  test("reports dry-run previews without mutating the intake doc", async () => {
+    const row = makeQueueRow();
+    const header = Object.keys(row);
+    const workspace = makeTempQueueWorkspace({
+      header,
+      rows: [row]
+    });
+
+    try {
+      const intakePath = path.join(workspace.rootDir, row.intake_doc);
+      fs.mkdirSync(path.dirname(intakePath), { recursive: true });
+      const originalContent = `# Intake Dossier
+
+## Decision Signals
+
+- effort: unknown
+- value: unknown
+`;
+      fs.writeFileSync(intakePath, originalContent, "utf8");
+
+      const updates = await reEvaluateQueueEntries(
+        workspace.rootDir,
+        workspace.config,
+        [row],
+        makeFakeAlignmentRules(),
+        { dryRun: true }
+      );
+
+      assert.equal(updates[0].intakeDocResult.status, "dry_run_preview");
+      assert.equal(fs.readFileSync(intakePath, "utf8"), originalContent);
+    } finally {
+      workspace.cleanup();
+    }
+  });
+
+  test("reports missing intake docs without failing the queue refresh", async () => {
+    const row = makeQueueRow({
+      intake_doc: "projects/sample-project/intake/missing.md"
+    });
+    const header = Object.keys(row);
+    const workspace = makeTempQueueWorkspace({
+      header,
+      rows: [row]
+    });
+
+    try {
+      const updates = await reEvaluateQueueEntries(
+        workspace.rootDir,
+        workspace.config,
+        [row],
+        makeFakeAlignmentRules(),
+        { dryRun: false }
+      );
+
+      assert.equal(updates[0].intakeDocResult.status, "missing_intake_doc");
+    } finally {
+      workspace.cleanup();
+    }
+  });
 });

@@ -18,6 +18,7 @@ import {
   loadProjectBinding,
   loadProjectDiscoveryPolicy,
   loadProjectProfile,
+  loadQueueEntries,
   normalizeGithubUrl,
   renderDiscoveryHtmlReport,
   renderDiscoverySummary,
@@ -39,6 +40,32 @@ import {
 } from "../../lib/classification/evaluation.mjs";
 import { refreshContext } from "../shared/runtime-helpers.mjs";
 
+function buildIntakeCommandGuidance(projectKey, items = []) {
+  const commands = buildGoldenPathCommands(projectKey);
+  const hasNew = items.some((item) => String(item.action ?? "").includes("new"));
+  const hasKnown = items.some((item) => String(item.action ?? "").includes("known"));
+  const hasEnrichmentFailures = items.some((item) => item.enrichment?.status === "failed");
+
+  if (!hasNew && hasKnown) {
+    return {
+      primary: "npm run re-evaluate -- --project " + projectKey,
+      additional: [commands.reviewWatchlist, commands.showProject]
+    };
+  }
+
+  if (hasEnrichmentFailures) {
+    return {
+      primary: commands.reviewWatchlist,
+      additional: ["npm run doctor", commands.releaseCheck]
+    };
+  }
+
+  return {
+    primary: commands.reviewWatchlist,
+    additional: [commands.releaseCheck]
+  };
+}
+
 export async function runIntake(rootDir, config, options) {
   if (process.env.PATTERNPILOT_DEBUG === "1") {
     console.error(`[patternpilot-debug] rootDir=${rootDir}`);
@@ -57,6 +84,13 @@ export async function runIntake(rootDir, config, options) {
   const runId = createRunId(new Date(createdAt));
   const items = [];
   const preloadedCandidates = indexPreloadedCandidates(options.preloadedCandidates ?? []);
+  const existingQueueRows = await loadQueueEntries(rootDir, config);
+  const knownProjectUrls = new Set(
+    existingQueueRows
+      .filter((row) => row.project_key === projectKey)
+      .map((row) => row.normalized_repo_url || row.repo_url)
+      .filter(Boolean)
+  );
 
   await ensureDirectory(path.join(rootDir, project.intakeRoot), options.dryRun);
 
@@ -219,6 +253,19 @@ export async function runIntake(rootDir, config, options) {
       dryRun: options.dryRun,
       force: options.force
     });
+    const wasKnown = knownProjectUrls.has(repo.normalizedRepoUrl);
+    const action =
+      options.dryRun
+        ? wasKnown
+          ? "planned_known_repo"
+          : "planned_new_repo"
+        : wasKnown
+          ? docWrite.created
+            ? "known_repo_doc_refreshed"
+            : "known_repo_reused_doc"
+          : docWrite.created
+            ? "new_repo_created"
+            : "new_repo_reused_doc";
 
     items.push({
       repo,
@@ -227,7 +274,7 @@ export async function runIntake(rootDir, config, options) {
       landkarteCandidate,
       candidate: decisionFields,
       projectAlignment,
-      action: options.dryRun ? "planned" : docWrite.created ? "created_or_updated" : "reused_existing_doc",
+      action,
       intakeDocRelativePath
     });
   }
@@ -274,11 +321,7 @@ export async function runIntake(rootDir, config, options) {
     console.log("Dry run only: queue and files were not written.");
   }
   console.log(``);
-  const commands = buildGoldenPathCommands(projectKey);
-  console.log(renderNextCommandSections({
-    primary: commands.reviewWatchlist,
-    additional: [commands.releaseCheck]
-  }));
+  console.log(renderNextCommandSections(buildIntakeCommandGuidance(projectKey, items)));
   await refreshContext(rootDir, config, {
     command: "intake",
     projectKey,

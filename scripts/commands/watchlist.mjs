@@ -39,10 +39,15 @@ function buildReviewCommandGuidance(projectKey, review) {
   const commands = buildGoldenPathCommands(projectKey);
 
   if ((review.items?.length ?? 0) <= 0) {
-    return {
-      primary: commands.syncWatchlist,
-      additional: [commands.intake, commands.showProject]
-    };
+    return (review.missingUrls?.length ?? 0) > 0
+      ? {
+          primary: commands.syncWatchlist,
+          additional: [commands.intake, commands.showProject]
+        }
+      : {
+          primary: commands.intake,
+          additional: [commands.syncWatchlist, commands.showProject]
+        };
   }
 
   if ((review.missingUrls?.length ?? 0) > 0) {
@@ -301,6 +306,13 @@ export async function runReEvaluate(rootDir, config, options) {
   if (selection.targets.length === 0) {
     console.log(``);
     console.log(`- status: skipped_no_targets`);
+    console.log(`- note: Queue entries are already current for this selection.`);
+    console.log(``);
+    const commands = buildGoldenPathCommands(projectKey);
+    console.log(renderNextCommandSections({
+      primary: commands.reviewWatchlist,
+      additional: [commands.releaseCheck, commands.showProject]
+    }));
     await refreshContext(rootDir, config, {
       command: "re-evaluate",
       projectKey,
@@ -331,6 +343,12 @@ export async function runReEvaluate(rootDir, config, options) {
       `- ${repoRef}: disposition=${update.decisionFields.reviewDisposition} | effort=${update.decisionFields.effortBand} (${update.decisionFields.effortScore}) | value=${update.decisionFields.valueBand} (${update.decisionFields.valueScore}) | intake_doc=${update.intakeDocResult.status}`
     );
   }
+  console.log(``);
+  const commands = buildGoldenPathCommands(projectKey);
+  console.log(renderNextCommandSections({
+    primary: commands.reviewWatchlist,
+    additional: [commands.releaseCheck, commands.showProject]
+  }));
 
   await refreshContext(rootDir, config, {
     command: "re-evaluate",
