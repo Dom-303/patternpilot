@@ -19,11 +19,13 @@ Dieses Dokument ist der aktive Ausbauplan fuer genau diese Schicht.
 - Phase D2 — Query Engineering: abgeschlossen
 - Phase D3 — Ranking Upgrade: abgeschlossen
 - Phase D4 — Feedback Loop: abgeschlossen
-- Naechster aktiver Block: Phase D5 — Discovery Evaluation
+- Phase D5 — Discovery Evaluation: abgeschlossen
+- Aktiver Status: Discovery-Exzellenz-Plan im Kern abgeschlossen
 - Referenzbeleg fuer D1: [DISCOVERY_D1_CLOSEOUT.md](DISCOVERY_D1_CLOSEOUT.md)
 - Referenzbeleg fuer D2: [DISCOVERY_D2_CLOSEOUT.md](DISCOVERY_D2_CLOSEOUT.md)
 - Referenzbeleg fuer D3: [DISCOVERY_D3_CLOSEOUT.md](DISCOVERY_D3_CLOSEOUT.md)
 - Referenzbeleg fuer D4: [DISCOVERY_D4_CLOSEOUT.md](DISCOVERY_D4_CLOSEOUT.md)
+- Referenzbeleg fuer D5: [DISCOVERY_D5_CLOSEOUT.md](DISCOVERY_D5_CLOSEOUT.md)
 
 ## Was Discovery heute schon kann
 
@@ -252,7 +254,7 @@ Exit:
 
 - Suchqualitaet sichtbar messen
 - Query-Qualitaet auswerten
-- Status: naechster aktiver Block
+- Status: abgeschlossen
 
 Exit:
 
@@ -260,7 +262,7 @@ Exit:
 
 ## Definition Von Fertig
 
-Discovery darf erst dann als wirklich exzellent gelten, wenn:
+Discovery darf mit diesem Plan erst dann als im Kern abgeschlossen gelten, wenn:
 
 - Treffer ueber mehrere Projekte hinweg spuerbar relevanter werden
 - Noise sichtbar sinkt

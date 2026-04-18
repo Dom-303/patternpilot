@@ -27,6 +27,7 @@ Es hilft dir, externe GitHub-Repositories nicht nur zu sammeln, sondern im Konte
 - akzeptierte Grenzen: [ACCEPTED_LIMITS.md](docs/foundation/ACCEPTED_LIMITS.md)
 - Discovery-Exzellenz-Plan: [DISCOVERY_EXCELLENCE_PLAN.md](docs/foundation/DISCOVERY_EXCELLENCE_PLAN.md)
 - Discovery D4 Closeout: [DISCOVERY_D4_CLOSEOUT.md](docs/foundation/DISCOVERY_D4_CLOSEOUT.md)
+- Discovery D5 Closeout: [DISCOVERY_D5_CLOSEOUT.md](docs/foundation/DISCOVERY_D5_CLOSEOUT.md)
 
 ## Quick View
 
@@ -168,10 +169,12 @@ Es gibt jetzt zwei Einstiegsebenen:
   [FINAL_CORE_CLOSEOUT.md](docs/foundation/FINAL_CORE_CLOSEOUT.md)
 - Bewusst akzeptierte Grenzen:
   [ACCEPTED_LIMITS.md](docs/foundation/ACCEPTED_LIMITS.md)
-- Nächster Such-/Discovery-Ausbau:
+- Discovery-Exzellenz-Plan und Abschlussverlauf:
   [DISCOVERY_EXCELLENCE_PLAN.md](docs/foundation/DISCOVERY_EXCELLENCE_PLAN.md)
 - Bereits abgeschlossener Feedback-Loop-Ausbau:
   [DISCOVERY_D4_CLOSEOUT.md](docs/foundation/DISCOVERY_D4_CLOSEOUT.md)
+- Bereits abgeschlossener Evaluations-Ausbau:
+  [DISCOVERY_D5_CLOSEOUT.md](docs/foundation/DISCOVERY_D5_CLOSEOUT.md)
 
 Wenn du lieber direkt in der CLI gefuehrt werden willst:
 
@@ -191,6 +194,8 @@ npm run getting-started
   Verdichtet Watchlist-Funde zu einem Review.
 - `npm run patternpilot -- discover --project my-project --dry-run`
   Sucht optional automatisch nach moeglich passenden GitHub-Repos fuer dein Zielprojekt.
+- `npm run patternpilot -- discover-evaluate --project my-project`
+  Bewertet gespeicherte Discovery-Runs und zeigt gute oder noisige Query-Familien.
 - `npm run validate:cohort`
   Faellt die breite Fremdprojekt-Welle ueber die eingebaute Referenzkohorte.
 - `npm run patternpilot -- product-readiness`

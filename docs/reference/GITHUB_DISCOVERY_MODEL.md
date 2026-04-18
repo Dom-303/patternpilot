@@ -100,6 +100,32 @@ Die Snapshot-Artefakte dazu landen lokal unter:
 - `state/discovery_feedback/<project>.json`
 - `state/discovery_feedback/<project>.md`
 
+## Evaluation
+
+Discovery hat jetzt zusaetzlich eine eigene Evaluationsoberflaeche.
+
+Der Command:
+
+```bash
+npm run patternpilot -- discover-evaluate --project my-project
+```
+
+zieht zusammen:
+
+- gespeicherte Discovery-Run-Manifeste
+- Queue-Outcomes aus `state/repo_intake_queue.csv`
+- Query-Familien
+- Query-Labels
+
+und macht sichtbar:
+
+- beste Query-Familien
+- noisigste Query-Familien
+- beste Query-Labels
+- noisigste Query-Labels
+- Run-Highlights pro Discovery-Run
+- konkrete Empfehlungen fuer den naechsten Discovery-Schritt
+
 ## Inputs
 
 Die Discovery-Linse speist sich aus:

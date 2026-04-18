@@ -64,7 +64,7 @@ Wenn du die bewusst akzeptierten Grenzen lesen willst:
 
 [ACCEPTED_LIMITS.md](ACCEPTED_LIMITS.md)
 
-Wenn du den naechsten aktiven Ausbaupfad lesen willst:
+Wenn du den Discovery-Ausbaupfad und Abschlussverlauf lesen willst:
 
 [DISCOVERY_EXCELLENCE_PLAN.md](DISCOVERY_EXCELLENCE_PLAN.md)
 
@@ -83,6 +83,10 @@ Wenn du den dritten bereits abgeschlossenen Discovery-Ausbauschritt lesen willst
 Wenn du den vierten bereits abgeschlossenen Discovery-Ausbauschritt lesen willst:
 
 [DISCOVERY_D4_CLOSEOUT.md](DISCOVERY_D4_CLOSEOUT.md)
+
+Wenn du den fuenften bereits abgeschlossenen Discovery-Ausbauschritt lesen willst:
+
+[DISCOVERY_D5_CLOSEOUT.md](DISCOVERY_D5_CLOSEOUT.md)
 
 Wenn du die Automation-Produktgrenze lesen willst:
 
