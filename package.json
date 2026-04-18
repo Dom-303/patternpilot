@@ -1,12 +1,29 @@
 {
   "name": "patternpilot",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "type": "module",
   "bin": {
     "patternpilot": "./scripts/patternpilot.mjs"
   },
   "description": "Patternpilot intake and repo intelligence tooling",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dom-303/patternpilot.git"
+  },
+  "homepage": "https://github.com/Dom-303/patternpilot#readme",
+  "bugs": {
+    "url": "https://github.com/Dom-303/patternpilot/issues"
+  },
+  "keywords": [
+    "repo-intelligence",
+    "github",
+    "watchlist",
+    "review",
+    "automation",
+    "local-first"
+  ],
   "scripts": {
     "analyze": "node scripts/patternpilot.mjs on-demand",
     "run-plan": "node scripts/patternpilot.mjs run-plan",

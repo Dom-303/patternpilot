@@ -12,6 +12,16 @@ Es hilft dir, externe GitHub-Repositories nicht nur zu sammeln, sondern im Konte
 - Was ist nur interessant?
 - Was solltest du uebernehmen, beobachten oder bewusst nicht uebernehmen?
 
+## Open Source
+
+- Lizenz: [Apache-2.0](LICENSE)
+- Changelog: [CHANGELOG.md](CHANGELOG.md)
+- Freigabeform: [OPEN_SOURCE_RELEASE.md](docs/foundation/OPEN_SOURCE_RELEASE.md)
+- Mitmachen: [CONTRIBUTING.md](CONTRIBUTING.md)
+- Release-Check: [RELEASE_CHECKLIST.md](docs/foundation/RELEASE_CHECKLIST.md)
+- Release-Kommunikation: [RELEASE_COMMUNICATION.md](docs/foundation/RELEASE_COMMUNICATION.md)
+- `v1`-Closeout: [V1_CLOSEOUT.md](docs/foundation/V1_CLOSEOUT.md)
+
 ## Quick View
 
 <p align="center">
