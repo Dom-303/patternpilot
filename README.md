@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo-horizontal.png" alt="Patternpilot logo" width="420">
+  <img src="assets/logo-hero.png" alt="Patternpilot logo" width="520">
 </p>
 
 # Patternpilot
