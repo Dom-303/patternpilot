@@ -2,6 +2,7 @@ export {
   printProjectList,
   runDiscoverWorkspace,
   runDoctor,
+  runGettingStarted,
   runInitEnv,
   runInitProject,
   runRefreshContext,

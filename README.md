@@ -98,6 +98,30 @@ Wichtig fuer die aktuelle Repo-Form:
 
 ---
 
+## Frischer Start
+
+Wenn du `patternpilot` neu installierst und noch kein Zielprojekt angebunden hast, ist der kuerzeste sinnvolle Weg:
+
+```bash
+npm install
+npm run doctor -- --offline
+npm run init:project -- --project my-project --target ../my-project --label "My Project"
+npm run intake -- --project my-project https://github.com/example/repo
+```
+
+Danach gilt:
+
+- `bindings/my-project/` beschreibt, wie Patternpilot dein Zielrepo lesen soll
+- `projects/my-project/` zeigt, was Patternpilot fuer dieses Zielprojekt erzeugt
+
+Fuer einen gefuehrten Einstieg gibt es jetzt auch:
+
+```bash
+npm run getting-started
+```
+
+---
+
 ## Neuer Betriebszustand
 
 Patternpilot ist nicht mehr nur ein Dokumentations-Seed.

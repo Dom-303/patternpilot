@@ -25,6 +25,59 @@ export async function runRefreshContext(rootDir, config) {
   console.log(`- open_questions_file: OPEN_QUESTION.md`);
 }
 
+export function runGettingStarted(rootDir, config) {
+  const projects = Object.entries(config.projects ?? {});
+  const hasProjects = projects.length > 0;
+  const defaultProject = config.defaultProject ?? null;
+
+  console.log(`# Patternpilot Getting Started`);
+  console.log(``);
+  console.log(`Patternpilot arbeitet immer auf ein Zielprojekt hin.`);
+  console.log(`Du bindest zuerst ein eigenes Repo an und nutzt danach Intake, Watchlist und Review fuer dieses Ziel.`);
+  console.log(``);
+
+  console.log(`## Frischer Start`);
+  console.log(`1. Repository installieren und Abhaengigkeiten laden`);
+  console.log(`   npm install`);
+  console.log(`2. Lokale Voraussetzungen pruefen`);
+  console.log(`   npm run doctor -- --offline`);
+  console.log(`3. Eigenes Zielrepo anbinden`);
+  console.log(`   npm run init:project -- --project my-project --target ../my-project --label "My Project"`);
+  console.log(`4. Dann entweder direkt ein Repo intaken`);
+  console.log(`   npm run intake -- --project my-project https://github.com/example/repo`);
+  console.log(`5. Oder zuerst eine Watchlist pflegen`);
+  console.log(`   edit bindings/my-project/WATCHLIST.txt`);
+  console.log(`   npm run sync:watchlist -- --project my-project`);
+  console.log(``);
+
+  console.log(`## Was Danach Entsteht`);
+  console.log(`- bindings/<project>/: technische Zielrepo-Bindung`);
+  console.log(`- projects/<project>/: lesbarer Arbeits- und Ergebnisraum`);
+  console.log(`- runs/<project>/: Laufprotokolle`);
+  console.log(`- state/repo_intake_queue.csv: operative Intake-Queue`);
+  console.log(``);
+
+  if (!hasProjects) {
+    console.log(`## Aktueller Zustand`);
+    console.log(`- configured_projects: 0`);
+    console.log(`- next_command: npm run init:project -- --project my-project --target ../my-project --label "My Project"`);
+    return;
+  }
+
+  console.log(`## Aktueller Zustand`);
+  console.log(`- configured_projects: ${projects.length}`);
+  console.log(`- default_project: ${defaultProject ?? "-"}`);
+  for (const [projectKey, project] of projects) {
+    console.log(`- ${projectKey}: ${path.resolve(rootDir, project.projectRoot)} (${project.label ?? projectKey})`);
+  }
+  console.log(``);
+  console.log(`## Naechste Sinnvolle Befehle`);
+  console.log(`- show current binding: npm run show:project -- --project ${defaultProject ?? "<project>"}`);
+  console.log(`- intake one repo: npm run intake -- --project ${defaultProject ?? "<project>"} https://github.com/example/repo`);
+  console.log(`- sync watchlist: npm run sync:watchlist -- --project ${defaultProject ?? "<project>"}`);
+  console.log(`- review watchlist: npm run review:watchlist -- --project ${defaultProject ?? "<project>"} --dry-run`);
+}
+
 export async function runShowProject(rootDir, config, options) {
   const projectKey = options.project || config.defaultProject;
   const { project, binding, bindingPath } = await loadProjectBinding(rootDir, config, projectKey);

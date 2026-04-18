@@ -1,4 +1,5 @@
 const COMMANDS = [
+  { name: "getting-started", description: "Show the shortest useful first-run path for a fresh local installation", handlerKey: "runGettingStarted", aliases: ["first-run"] },
   { name: "on-demand", description: "Run the primary manual flow for one project in a single step", handlerKey: "runOnDemand", aliases: ["analyze"] },
   { name: "policy-audit", description: "Run discovery with project policy in audit mode for calibration", handlerKey: "runPolicyAudit" },
   { name: "policy-calibrate", description: "Aggregate saved discovery runs into a project-wide policy calibration report", handlerKey: "runPolicyCalibrate" },
@@ -152,6 +153,7 @@ const ALIAS_MAP = new Map(
 );
 
 const HELP_EXAMPLES = [
+  "npm run patternpilot -- getting-started",
   "npm run analyze -- --project eventbear-worker https://github.com/City-Bureau/city-scrapers",
   "npm run patternpilot -- policy-audit --project eventbear-worker --dry-run",
   "npm run patternpilot -- policy-calibrate --project eventbear-worker",
