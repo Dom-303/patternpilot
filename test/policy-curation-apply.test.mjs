@@ -52,7 +52,7 @@ test("buildPolicyCurationApplyReview reports existing canonical mentions", () =>
 
 test("renderPolicyCurationApplyReviewSummary renders selection and recommendations", () => {
   const markdown = renderPolicyCurationApplyReviewSummary({
-    projectKey: "eventbear-worker",
+    projectKey: "sample-project",
     reviewId: "rev-1",
     generatedAt: "2026-04-14T22:10:00.000Z",
     curationId: "cur-1",
@@ -77,5 +77,5 @@ test("renderPolicyCurationApplyReviewSummary renders selection and recommendatio
   assert.match(markdown, /decision_status: apply_with_care/);
   assert.match(markdown, /alpha\/repo :: landkarte_present=no/);
   assert.match(markdown, /Review before apply/);
-  assert.match(markdown, /next_command: npm run patternpilot -- policy-curation-apply --project eventbear-worker/);
+  assert.match(markdown, /next_command: npm run patternpilot -- policy-curation-apply --project sample-project/);
 });

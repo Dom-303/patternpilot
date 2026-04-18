@@ -34,7 +34,7 @@ test("buildPolicyCurationBatchReview reports overlap, risk, and governance plan"
         reviewDisposition: "observe_only",
         queueRow: {
           main_layer_guess: "source_intake",
-          eventbaer_gap_area_guess: "connector_families",
+          project_gap_area_guess: "connector_families",
           pattern_family_guess: "local_source_infra_framework",
           promotion_status: "prepared",
           status: "promotion_prepared"
@@ -50,7 +50,7 @@ test("buildPolicyCurationBatchReview reports overlap, risk, and governance plan"
         reviewDisposition: "observe_only",
         queueRow: {
           main_layer_guess: "source_intake",
-          eventbaer_gap_area_guess: "connector_families",
+          project_gap_area_guess: "connector_families",
           pattern_family_guess: "local_source_infra_framework",
           promotion_status: "prepared",
           status: "promotion_prepared"
@@ -114,7 +114,7 @@ test("buildPolicyCurationBatchReview creates safe apply batches for low-risk can
         reviewDisposition: "observe_only",
         queueRow: {
           main_layer_guess: "source_intake",
-          eventbaer_gap_area_guess: "connector_families",
+          project_gap_area_guess: "connector_families",
           pattern_family_guess: "family_a",
           promotion_status: "prepared",
           status: "promotion_prepared"
@@ -130,7 +130,7 @@ test("buildPolicyCurationBatchReview creates safe apply batches for low-risk can
         reviewDisposition: "observe_only",
         queueRow: {
           main_layer_guess: "location_place_enrichment",
-          eventbaer_gap_area_guess: "venue_intelligence",
+          project_gap_area_guess: "venue_intelligence",
           pattern_family_guess: "family_b",
           promotion_status: "prepared",
           status: "promotion_prepared"
@@ -148,7 +148,7 @@ test("buildPolicyCurationBatchReview creates safe apply batches for low-risk can
 
 test("renderPolicyCurationBatchReviewSummary renders governance sections", () => {
   const markdown = renderPolicyCurationBatchReviewSummary({
-    projectKey: "eventbear-worker",
+    projectKey: "sample-project",
     reviewId: "batch-1",
     generatedAt: "2026-04-14T22:30:00.000Z",
     curationId: "cur-1",
@@ -204,12 +204,12 @@ test("renderPolicyCurationBatchReviewSummary renders governance sections", () =>
   assert.match(markdown, /decision_status: apply_ready/);
   assert.match(markdown, /Recommended Batches/);
   assert.match(markdown, /connector_families :: risk=low/);
-  assert.match(markdown, /next_command: npm run patternpilot -- policy-curation-batch-apply --project eventbear-worker/);
+  assert.match(markdown, /next_command: npm run patternpilot -- policy-curation-batch-apply --project sample-project/);
 });
 
 test("renderPolicyCurationBatchPlanSummary renders safe and manual review candidates", () => {
   const markdown = renderPolicyCurationBatchPlanSummary({
-    projectKey: "eventbear-worker",
+    projectKey: "sample-project",
     planId: "plan-1",
     generatedAt: "2026-04-14T22:40:00.000Z",
     curationId: "cur-1",
@@ -234,5 +234,5 @@ test("renderPolicyCurationBatchPlanSummary renders safe and manual review candid
   assert.match(markdown, /manual_review_candidates: 1/);
   assert.match(markdown, /decision_status: apply_ready/);
   assert.match(markdown, /beta\/repo :: risk=high/);
-  assert.match(markdown, /next_command: npm run patternpilot -- policy-curation-batch-apply --project eventbear-worker/);
+  assert.match(markdown, /next_command: npm run patternpilot -- policy-curation-batch-apply --project sample-project/);
 });

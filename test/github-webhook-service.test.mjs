@@ -159,7 +159,7 @@ test("queueGithubWebhookServiceContract skips active duplicates", async () => {
     contractKind: "resume_contract",
     contractStatus: "dispatch_ready_resume_contract",
     deliveryId: "delivery-dup",
-    selectedProjectKey: "eventbear-worker",
+    selectedProjectKey: "sample-project",
     resumeFromCommand: "on-demand"
   }, {
     timestamp: "2026-04-15T12-00-00-000Z"
@@ -169,7 +169,7 @@ test("queueGithubWebhookServiceContract skips active duplicates", async () => {
     contractKind: "resume_contract",
     contractStatus: "dispatch_ready_resume_contract",
     deliveryId: "delivery-dup",
-    selectedProjectKey: "eventbear-worker",
+    selectedProjectKey: "sample-project",
     resumeFromCommand: "on-demand"
   }, {
     timestamp: "2026-04-15T12-01-00-000Z"
@@ -207,7 +207,7 @@ test("classifyGithubWebhookServiceQueueEntry blocks installation-scoped executio
       contractKind: "execution_contract",
       contractStatus: "dispatch_ready_contract_only",
       installationId: 10101,
-      selectedProjectKey: "eventbear-worker"
+      selectedProjectKey: "sample-project"
     }
   }, {
     installationState: {
@@ -236,7 +236,7 @@ test("classifyGithubWebhookServiceQueueEntry allows installation-scoped executio
       contractKind: "execution_contract",
       contractStatus: "dispatch_ready_contract_only",
       installationId: 10101,
-      selectedProjectKey: "eventbear-worker"
+      selectedProjectKey: "sample-project"
     }
   }, {
     installationState: {
@@ -265,7 +265,7 @@ test("classifyGithubWebhookServiceQueueEntry respects installation service lane 
       contractKind: "execution_contract",
       contractStatus: "dispatch_ready_contract_only",
       installationId: 10101,
-      selectedProjectKey: "eventbear-worker"
+      selectedProjectKey: "sample-project"
     }
   }, {
     installationState: {
@@ -300,7 +300,7 @@ test("classifyGithubWebhookServiceQueueEntry respects scheduler-scoped installat
       contractKind: "execution_contract",
       contractStatus: "dispatch_ready_contract_only",
       installationId: 10101,
-      selectedProjectKey: "eventbear-worker"
+      selectedProjectKey: "sample-project"
     }
   }, {
     schedulerLane: "recovery_priority:worker:worker-a",
@@ -1410,7 +1410,7 @@ test("claimGithubWebhookServiceQueueEntries dead-letters contracts after max ser
     contractStatus: "dispatch_ready_contract_only",
     deliveryId: "delivery-a",
     serviceState: {
-      identity: "execution_contract::delivery-a::eventbear-worker::-",
+      identity: "execution_contract::delivery-a::sample-project::-",
       attemptCount: 3,
       maxAttempts: 3,
       queuedAt: "2026-04-15T12:00:00.000Z",
@@ -1445,7 +1445,7 @@ test("buildGithubWebhookServiceReviewPlan defaults to problematic blocked states
       contract: {
         contractKind: "recovery_contract",
         contractStatus: "recovery_backoff_pending",
-        selectedProjectKey: "eventbear-worker"
+        selectedProjectKey: "sample-project"
       }
     },
     {
@@ -1455,11 +1455,11 @@ test("buildGithubWebhookServiceReviewPlan defaults to problematic blocked states
       contract: {
         contractKind: "execution_contract",
         contractStatus: "dispatch_ready_contract_only",
-        selectedProjectKey: "eventbear-worker"
+        selectedProjectKey: "sample-project"
       }
     }
   ], {
-    project: "eventbear-worker"
+    project: "sample-project"
   });
 
   assert.equal(plan.totalMatches, 1);
@@ -1474,7 +1474,7 @@ test("requeueGithubWebhookServiceQueueEntries moves dead-letter contracts back t
     contractStatus: "recovery_manual_review",
     deliveryId: "delivery-z",
     serviceState: {
-      identity: "recovery_contract::delivery-z::eventbear-worker::-",
+      identity: "recovery_contract::delivery-z::sample-project::-",
       attemptCount: 4,
       maxAttempts: 3,
       queuedAt: "2026-04-15T12:00:00.000Z",
@@ -3621,8 +3621,8 @@ test("runtime integrity review detects duplicate identities, duplicate lane clai
           contract: {
             contractKind: "execution_contract",
             deliveryId: "delivery-1",
-            selectedProjectKey: "eventbear-worker",
-            serviceState: { identity: "execution_contract::delivery-1::eventbear-worker::-" }
+            selectedProjectKey: "sample-project",
+            serviceState: { identity: "execution_contract::delivery-1::sample-project::-" }
           }
         },
         {
@@ -3631,8 +3631,8 @@ test("runtime integrity review detects duplicate identities, duplicate lane clai
           contract: {
             contractKind: "execution_contract",
             deliveryId: "delivery-1",
-            selectedProjectKey: "eventbear-worker",
-            serviceState: { identity: "execution_contract::delivery-1::eventbear-worker::-" }
+            selectedProjectKey: "sample-project",
+            serviceState: { identity: "execution_contract::delivery-1::sample-project::-" }
           }
         }
       ],
@@ -3642,7 +3642,7 @@ test("runtime integrity review detects duplicate identities, duplicate lane clai
           queueState: "claimed",
           contract: {
             contractKind: "resume_contract",
-            serviceState: { identity: "resume_contract::delivery-2::eventbear-worker::on-demand" }
+            serviceState: { identity: "resume_contract::delivery-2::sample-project::on-demand" }
           }
         }
       ]

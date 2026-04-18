@@ -9,7 +9,7 @@ test("buildDiscoveryPolicyComparisonReport captures changed policy impact", () =
   const records = [
     {
       runId: "run-1",
-      relativeManifestPath: "runs/eventbear-worker/run-1/manifest.json",
+      relativeManifestPath: "runs/sample-project/run-1/manifest.json",
       manifest: {
         discovery: {
           candidates: [
@@ -34,11 +34,11 @@ test("buildDiscoveryPolicyComparisonReport captures changed policy impact", () =
   ];
 
   const baselinePolicy = {
-    projectKey: "eventbear-worker",
+    projectKey: "sample-project",
     allowDispositions: ["intake_now", "review_queue"]
   };
   const candidatePolicy = {
-    projectKey: "eventbear-worker",
+    projectKey: "sample-project",
     allowDispositions: ["intake_now", "review_queue"],
     blockedPatternFamilies: ["portal_fed_by_many_scrapers"],
     preferredPatternFamilies: ["place_data_infrastructure"]
@@ -57,10 +57,10 @@ test("buildDiscoveryPolicyComparisonReport captures changed policy impact", () =
 
 test("renderDiscoveryPolicyComparisonReport renders aggregate deltas", () => {
   const markdown = renderDiscoveryPolicyComparisonReport({
-    projectKey: "eventbear-worker",
+    projectKey: "sample-project",
     generatedAt: "2026-04-14T20:30:00.000Z",
     limit: 5,
-    candidatePolicyPath: "projects/eventbear-worker/DISCOVERY_POLICY.next.json",
+    candidatePolicyPath: "projects/sample-project/DISCOVERY_POLICY.next.json",
     report: {
       reviewedRuns: 2,
       changedRuns: 1,
@@ -80,7 +80,7 @@ test("renderDiscoveryPolicyComparisonReport renders aggregate deltas", () => {
     }
   });
 
-  assert.match(markdown, /candidate_policy: projects\/eventbear-worker\/DISCOVERY_POLICY.next.json/);
+  assert.match(markdown, /candidate_policy: projects\/sample-project\/DISCOVERY_POLICY.next.json/);
   assert.match(markdown, /enforce_hidden_delta: 1/);
   assert.match(markdown, /run-1 :: candidates=3 :: changed=yes/);
 });

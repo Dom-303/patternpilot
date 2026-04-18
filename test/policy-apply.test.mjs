@@ -8,7 +8,7 @@ import { applyProjectPolicy } from "../lib/policy/policy-apply.mjs";
 test("applyProjectPolicy snapshots and overwrites policy file", async () => {
   const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "patternpilot-policy-apply-"));
   try {
-    const projectDir = path.join(rootDir, "projects", "eventbear-worker");
+    const projectDir = path.join(rootDir, "projects", "sample-project");
     fs.mkdirSync(path.join(projectDir, "calibration"), { recursive: true });
     const currentPolicyPath = path.join(projectDir, "DISCOVERY_POLICY.json");
     const nextPolicyPath = path.join(projectDir, "calibration", "proposed-policy.json");
@@ -18,7 +18,7 @@ test("applyProjectPolicy snapshots and overwrites policy file", async () => {
 
     const out = await applyProjectPolicy({
       rootDir,
-      projectKey: "eventbear-worker",
+      projectKey: "sample-project",
       currentPolicyPath,
       nextPolicyPath,
       notesPath,
@@ -31,7 +31,7 @@ test("applyProjectPolicy snapshots and overwrites policy file", async () => {
     assert.match(updated, /observe_only/);
     assert.equal(out.changed, true);
     assert.equal(out.applyStatus, "applied");
-    assert.match(out.nextCommand, /policy-calibrate --project eventbear-worker --limit 5/);
+    assert.match(out.nextCommand, /policy-calibrate --project sample-project --limit 5/);
     assert.ok(fs.existsSync(path.join(rootDir, out.summaryPath)));
   } finally {
     fs.rmSync(rootDir, { recursive: true, force: true });
@@ -41,7 +41,7 @@ test("applyProjectPolicy snapshots and overwrites policy file", async () => {
 test("applyProjectPolicy marks dry-run apply status explicitly", async () => {
   const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "patternpilot-policy-apply-dryrun-"));
   try {
-    const projectDir = path.join(rootDir, "projects", "eventbear-worker");
+    const projectDir = path.join(rootDir, "projects", "sample-project");
     fs.mkdirSync(path.join(projectDir, "calibration"), { recursive: true });
     const currentPolicyPath = path.join(projectDir, "DISCOVERY_POLICY.json");
     const nextPolicyPath = path.join(projectDir, "calibration", "proposed-policy.json");
@@ -50,7 +50,7 @@ test("applyProjectPolicy marks dry-run apply status explicitly", async () => {
 
     const out = await applyProjectPolicy({
       rootDir,
-      projectKey: "eventbear-worker",
+      projectKey: "sample-project",
       currentPolicyPath,
       nextPolicyPath,
       notesPath: null,
@@ -67,7 +67,7 @@ test("applyProjectPolicy marks dry-run apply status explicitly", async () => {
 test("applyProjectPolicy rejects invalid policy shape", async () => {
   const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "patternpilot-policy-apply-invalid-"));
   try {
-    const projectDir = path.join(rootDir, "projects", "eventbear-worker");
+    const projectDir = path.join(rootDir, "projects", "sample-project");
     fs.mkdirSync(path.join(projectDir, "calibration"), { recursive: true });
     const currentPolicyPath = path.join(projectDir, "DISCOVERY_POLICY.json");
     const nextPolicyPath = path.join(projectDir, "calibration", "proposed-policy.json");
@@ -78,7 +78,7 @@ test("applyProjectPolicy rejects invalid policy shape", async () => {
       () =>
         applyProjectPolicy({
           rootDir,
-          projectKey: "eventbear-worker",
+          projectKey: "sample-project",
           currentPolicyPath,
           nextPolicyPath,
           notesPath: null,

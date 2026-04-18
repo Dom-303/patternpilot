@@ -18,26 +18,26 @@ test("automation operator reviews track open reviews and closeouts with notes", 
   };
 
   const opened = recordAutomationOperatorReviewOpen(initial, {
-    jobName: "eventbear-worker-apply",
+    jobName: "sample-project-apply",
     category: "repeated_governance_block",
     sourceStatus: "governance_escalated",
     openedAt: "2026-04-17T22:38:25.614Z",
     reason: "Repeated governance block detected.",
     nextAction: "Acknowledge after review.",
-    nextCommand: "npm run patternpilot -- automation-job-ack --automation-job eventbear-worker-apply"
+    nextCommand: "npm run patternpilot -- automation-job-ack --automation-job sample-project-apply"
   });
 
   const acknowledged = recordAutomationOperatorReviewResolution(opened.state, {
-    jobName: "eventbear-worker-apply",
+    jobName: "sample-project-apply",
     resolvedAt: "2026-04-17T22:38:33.000Z",
     status: "acknowledged",
     notes: "manual ack after dispatch escalation review",
     nextCommand: "npm run patternpilot -- automation-dispatch --dry-run"
   });
 
-  const jobSummary = summarizeAutomationOperatorReviewsForJob(acknowledged.state, "eventbear-worker-apply");
+  const jobSummary = summarizeAutomationOperatorReviewsForJob(acknowledged.state, "sample-project-apply");
   const summary = summarizeAutomationOperatorReviews(acknowledged.state, {
-    jobName: "eventbear-worker-apply",
+    jobName: "sample-project-apply",
     limit: 5
   });
   const rendered = renderAutomationOperatorReviewSummary({

@@ -136,6 +136,8 @@
     "doctor": "node scripts/patternpilot.mjs doctor",
     "bootstrap": "node scripts/patternpilot.mjs bootstrap",
     "getting-started": "node scripts/patternpilot.mjs getting-started",
+    "release:check": "node scripts/patternpilot.mjs product-readiness",
+    "release:smoke": "node --test test/config.test.mjs test/product-readiness.test.mjs test/review.test.mjs test/re-evaluate.test.mjs test/policy-curation.test.mjs test/policy-curation-batch.test.mjs test/discovery.test.mjs test/discovery-import.test.mjs",
     "discover:workspace": "node scripts/patternpilot.mjs discover-workspace",
     "init:env": "node scripts/patternpilot.mjs init-env",
     "init:project": "node scripts/patternpilot.mjs init-project",

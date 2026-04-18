@@ -47,8 +47,8 @@ import {
 test("buildGithubAppInstallationPacket maps repositories to known projects", () => {
   const packet = buildGithubAppInstallationPacket({
     projects: {
-      "eventbear-worker": {
-        projectRoot: "../eventbear-worker"
+      "sample-project": {
+        projectRoot: "../sample-project"
       },
       "patternpilot": {
         projectRoot: "."
@@ -66,8 +66,8 @@ test("buildGithubAppInstallationPacket maps repositories to known projects", () 
     payload: {
       repositories: [
         {
-          full_name: "Dom-303/eventbear-worker",
-          name: "eventbear-worker",
+          full_name: "Dom-303/sample-project",
+          name: "sample-project",
           default_branch: "main",
           visibility: "public",
           owner: { login: "Dom-303" }
@@ -84,9 +84,9 @@ test("buildGithubAppInstallationPacket maps repositories to known projects", () 
   });
 
   assert.equal(packet.packetStatus, "multi_project_review");
-  assert.deepEqual(packet.mappedProjects, ["eventbear-worker", "patternpilot"]);
+  assert.deepEqual(packet.mappedProjects, ["patternpilot", "sample-project"]);
   assert.equal(packet.repositoryCount, 2);
-  assert.match(renderGithubAppInstallationPacketSummary(packet), /mapped_projects: eventbear-worker, patternpilot/);
+  assert.match(renderGithubAppInstallationPacketSummary(packet), /mapped_projects: patternpilot, sample-project/);
 });
 
 test("applyGithubAppInstallationPacketToState merges repositories into installation registry", () => {
@@ -101,12 +101,12 @@ test("applyGithubAppInstallationPacketToState merges repositories into installat
     },
     repositories: [
       {
-        fullName: "Dom-303/eventbear-worker",
-        mappedProjectKey: "eventbear-worker"
+        fullName: "Dom-303/sample-project",
+        mappedProjectKey: "sample-project"
       }
     ],
     repositoryCount: 1,
-    mappedProjects: ["eventbear-worker"],
+    mappedProjects: ["sample-project"],
     packetStatus: "single_project_candidate"
   };
 
@@ -123,7 +123,7 @@ test("applyGithubAppInstallationPacketToState merges repositories into installat
   assert.equal(state.installations.length, 1);
   assert.equal(state.installations[0].installationId, 10101);
   assert.equal(state.installations[0].repositories.length, 1);
-  assert.equal(state.installations[0].mappedProjects[0], "eventbear-worker");
+  assert.equal(state.installations[0].mappedProjects[0], "sample-project");
   assert.match(buildGithubAppInstallationStateSummary(state, {
     generatedAt: "2026-04-15T12:06:00.000Z"
   }), /installation_count: 1/);
@@ -181,8 +181,8 @@ test("writeGithubAppInstallationState and artifacts persist registry outputs", a
 test("buildGithubAppInstallationScopePlan selects watchlist candidates", () => {
   const plan = buildGithubAppInstallationScopePlan({
     projects: {
-      "eventbear-worker": {
-        projectRoot: "../eventbear-worker"
+      "sample-project": {
+        projectRoot: "../sample-project"
       }
     }
   }, {
@@ -193,8 +193,8 @@ test("buildGithubAppInstallationScopePlan selects watchlist candidates", () => {
         targetType: "Organization",
         repositories: [
           {
-            fullName: "Dom-303/eventbear-worker",
-            mappedProjectKey: "eventbear-worker",
+            fullName: "Dom-303/sample-project",
+            mappedProjectKey: "sample-project",
             mappedProjectSource: "repository_match",
             visibility: "public"
           },
@@ -215,7 +215,7 @@ test("buildGithubAppInstallationScopePlan selects watchlist candidates", () => {
   assert.equal(plan.watchlistCandidateCount, 1);
   assert.equal(plan.manualReviewCount, 1);
   assert.equal(plan.selectedEntries.length, 1);
-  assert.equal(plan.selectedEntries[0].fullName, "Dom-303/eventbear-worker");
+  assert.equal(plan.selectedEntries[0].fullName, "Dom-303/sample-project");
   assert.match(renderGithubAppInstallationScopeSummary(plan), /watchlist_candidate_count: 1/);
 });
 
@@ -225,7 +225,7 @@ test("buildGithubAppInstallationGovernancePlan suggests allowed projects from ma
       {
         installationId: 10101,
         accountLogin: "Dom-303",
-        mappedProjects: ["eventbear-worker"]
+        mappedProjects: ["sample-project"]
       }
     ]
   }, {
@@ -233,8 +233,8 @@ test("buildGithubAppInstallationGovernancePlan suggests allowed projects from ma
   });
 
   assert.equal(plan.installationCount, 1);
-  assert.deepEqual(plan.entries[0].suggestedAllowedProjects, ["eventbear-worker"]);
-  assert.match(renderGithubAppInstallationGovernanceSummary(plan), /suggested_allowed=eventbear-worker/);
+  assert.deepEqual(plan.entries[0].suggestedAllowedProjects, ["sample-project"]);
+  assert.match(renderGithubAppInstallationGovernanceSummary(plan), /suggested_allowed=sample-project/);
 });
 
 test("applyGithubAppInstallationGovernanceToState persists installation governance", () => {
@@ -243,7 +243,7 @@ test("applyGithubAppInstallationGovernanceToState persists installation governan
       {
         installationId: 10101,
         accountLogin: "Dom-303",
-        mappedProjects: ["eventbear-worker"],
+        mappedProjects: ["sample-project"],
         repositories: []
       }
     ]
@@ -258,7 +258,7 @@ test("applyGithubAppInstallationGovernanceToState persists installation governan
 
   assert.equal(applied.receipts.length, 1);
   assert.equal(applied.nextState.installations[0].governance.status, "watchlist_governed");
-  assert.deepEqual(applied.nextState.installations[0].governance.allowedProjects, ["eventbear-worker"]);
+  assert.deepEqual(applied.nextState.installations[0].governance.allowedProjects, ["sample-project"]);
 });
 
 test("buildGithubAppInstallationRuntimePlan suggests limited unattended for governed clean scope", () => {
@@ -267,15 +267,15 @@ test("buildGithubAppInstallationRuntimePlan suggests limited unattended for gove
       {
         installationId: 10101,
         accountLogin: "Dom-303",
-        mappedProjects: ["eventbear-worker"],
+        mappedProjects: ["sample-project"],
         governance: {
           status: "watchlist_governed",
-          allowedProjects: ["eventbear-worker"]
+          allowedProjects: ["sample-project"]
         },
         repositories: [
           {
-            fullName: "Dom-303/eventbear-worker",
-            mappedProjectKey: "eventbear-worker"
+            fullName: "Dom-303/sample-project",
+            mappedProjectKey: "sample-project"
           }
         ]
       }
@@ -296,15 +296,15 @@ test("applyGithubAppInstallationRuntimeToState persists installation runtime pol
       {
         installationId: 10101,
         accountLogin: "Dom-303",
-        mappedProjects: ["eventbear-worker"],
+        mappedProjects: ["sample-project"],
         governance: {
           status: "watchlist_governed",
-          allowedProjects: ["eventbear-worker"]
+          allowedProjects: ["sample-project"]
         },
         repositories: [
           {
-            fullName: "Dom-303/eventbear-worker",
-            mappedProjectKey: "eventbear-worker"
+            fullName: "Dom-303/sample-project",
+            mappedProjectKey: "sample-project"
           }
         ]
       }
@@ -327,8 +327,8 @@ test("applyGithubAppInstallationRuntimeToState persists installation runtime pol
 test("buildGithubAppInstallationScopePlan respects manual-only runtime blocks", () => {
   const plan = buildGithubAppInstallationScopePlan({
     projects: {
-      "eventbear-worker": {
-        projectRoot: "../eventbear-worker"
+      "sample-project": {
+        projectRoot: "../sample-project"
       }
     }
   }, {
@@ -339,7 +339,7 @@ test("buildGithubAppInstallationScopePlan respects manual-only runtime blocks", 
         targetType: "Organization",
         governance: {
           status: "watchlist_governed",
-          allowedProjects: ["eventbear-worker"]
+          allowedProjects: ["sample-project"]
         },
         runtime: {
           status: "runtime_governed",
@@ -347,8 +347,8 @@ test("buildGithubAppInstallationScopePlan respects manual-only runtime blocks", 
         },
         repositories: [
           {
-            fullName: "Dom-303/eventbear-worker",
-            mappedProjectKey: "eventbear-worker",
+            fullName: "Dom-303/sample-project",
+            mappedProjectKey: "sample-project",
             mappedProjectSource: "repository_match",
             visibility: "public"
           }
@@ -373,7 +373,7 @@ test("buildGithubAppInstallationOperationsPlan suggests service readiness for li
         accountLogin: "Dom-303",
         governance: {
           status: "watchlist_governed",
-          allowedProjects: ["eventbear-worker"]
+          allowedProjects: ["sample-project"]
         },
         runtime: {
           status: "runtime_governed",
@@ -383,8 +383,8 @@ test("buildGithubAppInstallationOperationsPlan suggests service readiness for li
         },
         repositories: [
           {
-            fullName: "Dom-303/eventbear-worker",
-            mappedProjectKey: "eventbear-worker"
+            fullName: "Dom-303/sample-project",
+            mappedProjectKey: "sample-project"
           }
         ]
       }
@@ -407,7 +407,7 @@ test("applyGithubAppInstallationOperationsToState persists operations policy", (
         accountLogin: "Dom-303",
         governance: {
           status: "watchlist_governed",
-          allowedProjects: ["eventbear-worker"]
+          allowedProjects: ["sample-project"]
         },
         runtime: {
           status: "runtime_governed",
@@ -417,8 +417,8 @@ test("applyGithubAppInstallationOperationsToState persists operations policy", (
         },
         repositories: [
           {
-            fullName: "Dom-303/eventbear-worker",
-            mappedProjectKey: "eventbear-worker"
+            fullName: "Dom-303/sample-project",
+            mappedProjectKey: "sample-project"
           }
         ]
       }
@@ -445,7 +445,7 @@ test("buildGithubAppInstallationServiceLanePlan suggests recovery lane for servi
         installationId: 10101,
         accountLogin: "Dom-303",
         repositories: [
-          { fullName: "Dom-303/eventbear-worker", mappedProjectKey: "eventbear-worker" }
+          { fullName: "Dom-303/sample-project", mappedProjectKey: "sample-project" }
         ],
         operations: {
           status: "operations_governed",
@@ -481,7 +481,7 @@ test("applyGithubAppInstallationServiceLaneToState persists lane policy", () => 
         installationId: 10101,
         accountLogin: "Dom-303",
         repositories: [
-          { fullName: "Dom-303/eventbear-worker", mappedProjectKey: "eventbear-worker" }
+          { fullName: "Dom-303/sample-project", mappedProjectKey: "sample-project" }
         ],
         operations: {
           status: "operations_governed",
@@ -783,8 +783,8 @@ test("assessGithubAppInstallationServiceAdmin blocks dead-letter requeue when in
 test("buildGithubAppInstallationScopePlan respects installation governance blocks", () => {
   const plan = buildGithubAppInstallationScopePlan({
     projects: {
-      "eventbear-worker": {
-        projectRoot: "../eventbear-worker"
+      "sample-project": {
+        projectRoot: "../sample-project"
       }
     }
   }, {
@@ -794,14 +794,14 @@ test("buildGithubAppInstallationScopePlan respects installation governance block
         governance: {
           status: "watchlist_governed",
           allowedProjects: [],
-          blockedRepositories: ["Dom-303/eventbear-worker"],
+          blockedRepositories: ["Dom-303/sample-project"],
           defaultMappedAction: "watchlist_candidate",
           defaultUnmappedAction: "manual_review"
         },
         repositories: [
           {
-            fullName: "Dom-303/eventbear-worker",
-            mappedProjectKey: "eventbear-worker",
+            fullName: "Dom-303/sample-project",
+            mappedProjectKey: "sample-project",
             mappedProjectSource: "repository_match",
             visibility: "public"
           }
@@ -829,8 +829,8 @@ test("applyGithubAppInstallationScopeHandoff updates repo handoff status", async
         targetType: "Organization",
         repositories: [
           {
-            fullName: "Dom-303/eventbear-worker",
-            mappedProjectKey: "eventbear-worker",
+            fullName: "Dom-303/sample-project",
+            mappedProjectKey: "sample-project",
             mappedProjectSource: "repository_match",
             visibility: "public"
           }
@@ -840,9 +840,9 @@ test("applyGithubAppInstallationScopeHandoff updates repo handoff status", async
   };
   const plan = buildGithubAppInstallationScopePlan({
     projects: {
-      "eventbear-worker": {
-        projectRoot: "../eventbear-worker",
-        watchlistFile: "projects/eventbear-worker/WATCHLIST.txt"
+      "sample-project": {
+        projectRoot: "../sample-project",
+        watchlistFile: "projects/sample-project/WATCHLIST.txt"
       }
     }
   }, state, {
@@ -851,9 +851,9 @@ test("applyGithubAppInstallationScopeHandoff updates repo handoff status", async
 
   const handoff = await applyGithubAppInstallationScopeHandoff(rootDir, {
     projects: {
-      "eventbear-worker": {
-        projectRoot: "../eventbear-worker",
-        watchlistFile: "projects/eventbear-worker/WATCHLIST.txt"
+      "sample-project": {
+        projectRoot: "../sample-project",
+        watchlistFile: "projects/sample-project/WATCHLIST.txt"
       }
     }
   }, state, plan, {
@@ -867,7 +867,7 @@ test("applyGithubAppInstallationScopeHandoff updates repo handoff status", async
   });
 
   assert.equal(handoff.receipts.length, 1);
-  assert.equal(handoff.receipts[0].projectKey, "eventbear-worker");
+  assert.equal(handoff.receipts[0].projectKey, "sample-project");
   assert.equal(handoff.nextState.installations[0].repositories[0].handoff.status, "appended_urls");
   assert.match(renderGithubAppInstallationScopeSummary(plan, handoff.receipts), /appended_urls/);
 });
@@ -877,7 +877,7 @@ test("writeGithubAppInstallationScopeArtifacts writes scope files", async () => 
   const plan = {
     generatedAt: "2026-04-15T12:00:00.000Z",
     installationId: 10101,
-    project: "eventbear-worker",
+    project: "sample-project",
     installationCount: 1,
     totalEntries: 1,
     watchlistCandidateCount: 1,
@@ -911,7 +911,7 @@ test("writeGithubAppInstallationServiceLaneArtifacts writes service lane files",
   const plan = {
     generatedAt: "2026-04-16T10:00:00.000Z",
     installationId: 10101,
-    project: "eventbear-worker",
+    project: "sample-project",
     installationCount: 1,
     entries: [],
     nextAction: "Review it."
@@ -941,7 +941,7 @@ test("writeGithubAppInstallationServicePlanArtifacts writes service plan files",
   const plan = {
     generatedAt: "2026-04-16T10:00:00.000Z",
     installationId: 10101,
-    project: "eventbear-worker",
+    project: "sample-project",
     installationCount: 1,
     entries: [],
     nextAction: "Review it."
@@ -971,7 +971,7 @@ test("writeGithubAppInstallationServiceScheduleArtifacts writes service schedule
   const plan = {
     generatedAt: "2026-04-16T11:30:00.000Z",
     installationId: 10101,
-    project: "eventbear-worker",
+    project: "sample-project",
     workerId: "worker-a",
     installationCount: 1,
     entries: [],
@@ -1002,7 +1002,7 @@ test("writeGithubAppInstallationWorkerRoutingArtifacts writes worker routing fil
   const plan = {
     generatedAt: "2026-04-16T11:00:00.000Z",
     installationId: 10101,
-    project: "eventbear-worker",
+    project: "sample-project",
     workerId: "worker-a",
     installationCount: 1,
     entries: [],

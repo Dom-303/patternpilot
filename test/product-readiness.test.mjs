@@ -35,14 +35,14 @@ test("buildPatternpilotProductReadinessReview returns ready_with_followups for h
     },
     projects: [
       {
-        projectKey: "eventbear-worker",
-        label: "EventBaer Worker",
+        projectKey: "sample-project",
+        label: "Sample Project",
         watchlistCount: 12,
         governanceStatus: "manual_requalify",
         governanceNextAction: "Run run-stability.",
         policyControlStatus: "followup_with_care",
-        policyControlNextCommand: "npm run patternpilot -- re-evaluate --project eventbear-worker --stale-only",
-        jobName: "eventbear-worker-apply",
+        policyControlNextCommand: "npm run patternpilot -- re-evaluate --project sample-project --stale-only",
+        jobName: "sample-project-apply",
         jobStatus: "ready",
         alertCount: 2,
         highAlertCount: 1,
@@ -140,24 +140,24 @@ test("buildPatternpilotProductReadinessReview suppresses freshly completed next 
       jobsBackoff: 0,
       attentionStatus: "elevated_alerting",
       deliveryPriority: "elevated",
-      nextAction: "npm run patternpilot -- review-watchlist --project eventbear-worker",
-      fallbackNextAction: "npm run patternpilot -- re-evaluate --project eventbear-worker --stale-only"
+      nextAction: "npm run patternpilot -- review-watchlist --project sample-project",
+      fallbackNextAction: "npm run patternpilot -- re-evaluate --project sample-project --stale-only"
     },
     projects: [
       {
-        projectKey: "eventbear-worker",
-        label: "EventBaer Worker",
+        projectKey: "sample-project",
+        label: "Sample Project",
         watchlistCount: 1,
         governanceStatus: "manual_gate",
-        governanceNextAction: "npm run patternpilot -- review-watchlist --project eventbear-worker",
+        governanceNextAction: "npm run patternpilot -- review-watchlist --project sample-project",
         policyControlStatus: "followup_with_care",
-        policyControlNextCommand: "npm run patternpilot -- re-evaluate --project eventbear-worker --stale-only",
-        jobName: "eventbear-worker-apply",
+        policyControlNextCommand: "npm run patternpilot -- re-evaluate --project sample-project --stale-only",
+        jobName: "sample-project-apply",
         jobStatus: "ready",
         alertCount: 1,
         highAlertCount: 1,
         topAlertCategory: "governance_manual_gate",
-        topAlertNextAction: "npm run patternpilot -- review-watchlist --project eventbear-worker",
+        topAlertNextAction: "npm run patternpilot -- review-watchlist --project sample-project",
         recentCompletedCommands: [
           {
             command: "review-watchlist",
@@ -170,5 +170,5 @@ test("buildPatternpilotProductReadinessReview suppresses freshly completed next 
 
   assert.equal(review.overallStatus, "ready_with_followups");
   assert.match(review.nextAction ?? "", /re-evaluate/);
-  assert.equal(review.projects[0].nextAction, "npm run patternpilot -- re-evaluate --project eventbear-worker --stale-only");
+  assert.equal(review.projects[0].nextAction, "npm run patternpilot -- re-evaluate --project sample-project --stale-only");
 });

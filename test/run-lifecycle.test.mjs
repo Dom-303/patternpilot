@@ -189,7 +189,7 @@ test("listProjectRunHistory infers run kind for legacy lifecycle manifests witho
 
 test("renderProjectRunLifecycleSummary renders lifecycle fields", () => {
   const markdown = renderProjectRunLifecycleSummary({
-    projectKey: "eventbear-worker",
+    projectKey: "sample-project",
     generatedAt: "2026-04-14T22:20:00.000Z",
     lifecycle: {
       runKind: "follow_up_run",

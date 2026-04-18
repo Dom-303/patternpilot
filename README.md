@@ -38,18 +38,20 @@ Wichtig:
 
 - Dieses Repo startet jetzt produktseitig leer.
 - Es wird kein reales Kunden- oder Dogfood-Projekt mehr als aktives Beispiel mitgeliefert.
-- Wenn du ein Beispiel sehen willst, nutze das bewusst fiktive Paket unter [examples/demo-city-guide/README.md](/home/domi/eventbaer/dev/patternpilot/examples/demo-city-guide/README.md:1).
+- Wenn du ein Beispiel sehen willst, nutze das bewusst fiktive Paket unter [examples/demo-city-guide/README.md](examples/demo-city-guide/README.md).
 
 ## Onboarding
 
 Es gibt jetzt zwei Einstiegsebenen:
 
 - Einfach und kurz:
-  [GETTING_STARTED.md](/home/domi/eventbaer/dev/patternpilot/docs/foundation/GETTING_STARTED.md:1)
+  [GETTING_STARTED.md](docs/foundation/GETTING_STARTED.md)
 - Technischer und ausfuehrlicher:
-  [ADVANCED_GUIDE.md](/home/domi/eventbaer/dev/patternpilot/docs/foundation/ADVANCED_GUIDE.md:1)
+  [ADVANCED_GUIDE.md](docs/foundation/ADVANCED_GUIDE.md)
 - Oeffentlich vs. lokal:
-  [PUBLIC_VS_LOCAL.md](/home/domi/eventbaer/dev/patternpilot/docs/foundation/PUBLIC_VS_LOCAL.md:1)
+  [PUBLIC_VS_LOCAL.md](docs/foundation/PUBLIC_VS_LOCAL.md)
+- Release-Disziplin:
+  [RELEASE_CHECKLIST.md](docs/foundation/RELEASE_CHECKLIST.md)
 
 Wenn du lieber direkt in der CLI gefuehrt werden willst:
 
@@ -81,13 +83,13 @@ Darum ist der erste echte Schritt fast nie `discover`, sondern fast immer `boots
 Wenn du tiefer einsteigen willst:
 
 - Betriebsmodell:
-  [OPERATING_MODEL.md](/home/domi/eventbaer/dev/patternpilot/docs/foundation/OPERATING_MODEL.md:1)
+  [OPERATING_MODEL.md](docs/foundation/OPERATING_MODEL.md)
 - Projekt-Alignment:
-  [PROJECT_ALIGNMENT_MODEL.md](/home/domi/eventbaer/dev/patternpilot/docs/reference/PROJECT_ALIGNMENT_MODEL.md:1)
+  [PROJECT_ALIGNMENT_MODEL.md](docs/reference/PROJECT_ALIGNMENT_MODEL.md)
 - GitHub-Discovery:
-  [GITHUB_DISCOVERY_MODEL.md](/home/domi/eventbaer/dev/patternpilot/docs/reference/GITHUB_DISCOVERY_MODEL.md:1)
+  [GITHUB_DISCOVERY_MODEL.md](docs/reference/GITHUB_DISCOVERY_MODEL.md)
 - Automation und Alerts:
-  [AUTOMATION_ALERT_DELIVERY.md](/home/domi/eventbaer/dev/patternpilot/docs/reference/AUTOMATION_ALERT_DELIVERY.md:1)
+  [AUTOMATION_ALERT_DELIVERY.md](docs/reference/AUTOMATION_ALERT_DELIVERY.md)
 
 ## Wichtige Produktentscheidung
 

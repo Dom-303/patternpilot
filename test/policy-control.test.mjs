@@ -4,12 +4,12 @@ import { buildPolicyControlReview, renderPolicyControlSummary } from "../lib/pol
 
 test("buildPolicyControlReview prioritizes chain refresh when newer upstream artifacts outpace downstream state", () => {
   const review = buildPolicyControlReview({
-    projectKey: "eventbear-worker",
+    projectKey: "sample-project",
     cycle: {
       stageKey: "cycle",
       artifactId: "cycle-2",
       generatedAt: "2026-04-17T19:45:00.000Z",
-      relativeDir: "projects/eventbear-worker/calibration/cycles/cycle-2",
+      relativeDir: "projects/sample-project/calibration/cycles/cycle-2",
       manifest: {
         cycleId: "cycle-2",
         generatedAt: "2026-04-17T19:45:00.000Z",
@@ -24,7 +24,7 @@ test("buildPolicyControlReview prioritizes chain refresh when newer upstream art
       stageKey: "handoff",
       artifactId: "handoff-1",
       generatedAt: "2026-04-17T19:40:00.000Z",
-      relativeDir: "projects/eventbear-worker/calibration/handoffs/handoff-1",
+      relativeDir: "projects/sample-project/calibration/handoffs/handoff-1",
       manifest: {
         handoffId: "handoff-1",
         generatedAt: "2026-04-17T19:40:00.000Z",
@@ -39,18 +39,18 @@ test("buildPolicyControlReview prioritizes chain refresh when newer upstream art
   assert.match(review.topBlocker, /Latest handoff still points to cycle cycle-1/i);
   assert.equal(
     review.nextCommand,
-    "npm run patternpilot -- policy-handoff --project eventbear-worker --cycle-dir projects/eventbear-worker/calibration/cycles/cycle-2"
+    "npm run patternpilot -- policy-handoff --project sample-project --cycle-dir projects/sample-project/calibration/cycles/cycle-2"
   );
 });
 
 test("buildPolicyControlReview follows the most recent downstream apply step when the chain is healthy", () => {
   const review = buildPolicyControlReview({
-    projectKey: "eventbear-worker",
+    projectKey: "sample-project",
     cycle: {
       stageKey: "cycle",
       artifactId: "cycle-1",
       generatedAt: "2026-04-17T19:00:00.000Z",
-      relativeDir: "projects/eventbear-worker/calibration/cycles/cycle-1",
+      relativeDir: "projects/sample-project/calibration/cycles/cycle-1",
       manifest: {
         cycleId: "cycle-1",
         generatedAt: "2026-04-17T19:00:00.000Z",
@@ -65,7 +65,7 @@ test("buildPolicyControlReview follows the most recent downstream apply step whe
       stageKey: "handoff",
       artifactId: "handoff-1",
       generatedAt: "2026-04-17T19:10:00.000Z",
-      relativeDir: "projects/eventbear-worker/calibration/handoffs/handoff-1",
+      relativeDir: "projects/sample-project/calibration/handoffs/handoff-1",
       manifest: {
         handoffId: "handoff-1",
         generatedAt: "2026-04-17T19:10:00.000Z",
@@ -78,7 +78,7 @@ test("buildPolicyControlReview follows the most recent downstream apply step whe
       stageKey: "curation",
       artifactId: "curation-1",
       generatedAt: "2026-04-17T19:20:00.000Z",
-      relativeDir: "projects/eventbear-worker/calibration/curation/curation-1",
+      relativeDir: "projects/sample-project/calibration/curation/curation-1",
       manifest: {
         curationId: "curation-1",
         generatedAt: "2026-04-17T19:20:00.000Z",
@@ -95,7 +95,7 @@ test("buildPolicyControlReview follows the most recent downstream apply step whe
       stageKey: "apply_review",
       artifactId: "review-1",
       generatedAt: "2026-04-17T19:25:00.000Z",
-      relativeDir: "projects/eventbear-worker/calibration/apply-review/review-1",
+      relativeDir: "projects/sample-project/calibration/apply-review/review-1",
       manifest: {
         reviewId: "review-1",
         generatedAt: "2026-04-17T19:25:00.000Z",
@@ -110,7 +110,7 @@ test("buildPolicyControlReview follows the most recent downstream apply step whe
       stageKey: "apply",
       artifactId: "apply-1",
       generatedAt: "2026-04-17T19:30:00.000Z",
-      relativeDir: "projects/eventbear-worker/calibration/apply/apply-1",
+      relativeDir: "projects/sample-project/calibration/apply/apply-1",
       manifest: {
         applyId: "apply-1",
         generatedAt: "2026-04-17T19:30:00.000Z",
@@ -129,13 +129,13 @@ test("buildPolicyControlReview follows the most recent downstream apply step whe
   assert.match(review.topBlocker, /observe_only path/i);
   assert.equal(
     review.nextCommand,
-    "npm run patternpilot -- re-evaluate --project eventbear-worker --stale-only"
+    "npm run patternpilot -- re-evaluate --project sample-project --stale-only"
   );
 });
 
 test("renderPolicyControlSummary renders the compact operator view", () => {
   const markdown = renderPolicyControlSummary({
-    projectKey: "eventbear-worker",
+    projectKey: "sample-project",
     controlId: "control-1",
     generatedAt: "2026-04-17T20:00:00.000Z",
     dryRun: true,
@@ -145,7 +145,7 @@ test("renderPolicyControlSummary renders the compact operator view", () => {
       currentDecisionStatus: "applied",
       stageCount: 2,
       topBlocker: "No blocking issue detected in the latest apply step.",
-      nextCommand: "npm run patternpilot -- re-evaluate --project eventbear-worker --stale-only",
+      nextCommand: "npm run patternpilot -- re-evaluate --project sample-project --stale-only",
       chainWarnings: [],
       recommendations: ["Latest applied candidate: alpha/repo."],
       stages: [
@@ -153,13 +153,13 @@ test("renderPolicyControlSummary renders the compact operator view", () => {
           stageKey: "cycle",
           decisionStatus: "handoff_ready",
           summaryLine: "cycle=cycle-1 :: verdicts=1 :: newly_visible=2 :: replay_visible=2",
-          relativeDir: "projects/eventbear-worker/calibration/cycles/cycle-1"
+          relativeDir: "projects/sample-project/calibration/cycles/cycle-1"
         },
         {
           stageKey: "apply",
           decisionStatus: "applied",
           summaryLine: "apply=apply-1 :: selected=1 :: applied_items=1 :: promotion_run=promote-1",
-          relativeDir: "projects/eventbear-worker/calibration/apply/apply-1"
+          relativeDir: "projects/sample-project/calibration/apply/apply-1"
         }
       ]
     }
@@ -169,5 +169,5 @@ test("renderPolicyControlSummary renders the compact operator view", () => {
   assert.match(markdown, /current_stage: apply/);
   assert.match(markdown, /cycle :: handoff_ready/);
   assert.match(markdown, /apply :: applied/);
-  assert.match(markdown, /next_command: npm run patternpilot -- re-evaluate --project eventbear-worker --stale-only/);
+  assert.match(markdown, /next_command: npm run patternpilot -- re-evaluate --project sample-project --stale-only/);
 });

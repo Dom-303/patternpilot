@@ -17,7 +17,7 @@ test("buildReplayImportPayloadFromDiscovery uses evaluated candidates", () => {
 
 test("renderPolicyCycleSummary renders the end-to-end cycle state", () => {
   const markdown = renderPolicyCycleSummary({
-    projectKey: "eventbear-worker",
+    projectKey: "sample-project",
     cycleId: "cycle-1",
     generatedAt: "2026-04-14T21:00:00.000Z",
     workbenchId: "wb-1",
@@ -37,7 +37,7 @@ test("renderPolicyCycleSummary renders the end-to-end cycle state", () => {
 
 test("renderPolicyCycleSummary suggests handoff after successful apply-ready trial", () => {
   const markdown = renderPolicyCycleSummary({
-    projectKey: "eventbear-worker",
+    projectKey: "sample-project",
     cycleId: "cycle-1",
     generatedAt: "2026-04-14T21:00:00.000Z",
     workbenchId: "wb-1",
@@ -50,5 +50,5 @@ test("renderPolicyCycleSummary suggests handoff after successful apply-ready tri
   });
 
   assert.match(markdown, /trial_decision_status: apply_ready/);
-  assert.match(markdown, /next_command: npm run patternpilot -- policy-handoff --project eventbear-worker --cycle-dir projects\/eventbear-worker\/calibration\/cycles\/cycle-1/);
+  assert.match(markdown, /next_command: npm run patternpilot -- policy-handoff --project sample-project --cycle-dir projects\/sample-project\/calibration\/cycles\/cycle-1/);
 });

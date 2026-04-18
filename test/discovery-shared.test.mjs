@@ -6,8 +6,8 @@ import { buildDiscoveryPlan, resolveDiscoveryStrategy } from "../lib/discovery/s
 describe("buildDiscoveryPlan", () => {
   test("keeps manual query visible inside the discovery budget", () => {
     const binding = {
-      projectKey: "eventbear-worker",
-      projectLabel: "EventBaer Worker",
+      projectKey: "sample-project",
+      projectLabel: "Sample Project",
       discoveryHints: ["events", "calendar", "scraper", "venue"]
     };
     const alignmentRules = {
@@ -36,8 +36,8 @@ describe("buildDiscoveryPlan", () => {
 
   test("builds broader github search queries without quoted phrases", () => {
     const binding = {
-      projectKey: "eventbear-worker",
-      projectLabel: "EventBaer Worker",
+      projectKey: "sample-project",
+      projectLabel: "Sample Project",
       discoveryHints: ["events", "calendar", "scraper", "connector", "venue"]
     };
     const alignmentRules = {

@@ -163,7 +163,7 @@ describe("selectAutomationDiscoveryCandidates", () => {
 
   test("applies discovery policy blockers before watchlist handoff", () => {
     const policy = {
-      ...defaultDiscoveryPolicy("eventbear-worker"),
+      ...defaultDiscoveryPolicy("sample-project"),
       blockedRepoPatterns: ["demo"],
       minProjectFitScore: 60
     };
@@ -213,7 +213,7 @@ describe("evaluateDiscoveryCandidatePolicy", () => {
       }
     });
     const policy = {
-      ...defaultDiscoveryPolicy("eventbear-worker"),
+      ...defaultDiscoveryPolicy("sample-project"),
       preferredPatternFamilies: ["local_source_infra_framework"],
       preferredMainLayers: ["source_intake"],
       preferredTopics: ["events"]
@@ -252,7 +252,7 @@ describe("evaluateDiscoveryCandidatePolicy", () => {
       }
     });
     const policy = {
-      ...defaultDiscoveryPolicy("eventbear-worker"),
+      ...defaultDiscoveryPolicy("sample-project"),
       blockedLicenseCategories: ["copyleft"],
       blockedHomepageHosts: ["facebook.com"],
       blockedSignalPatterns: ["starter boilerplate"],
@@ -281,7 +281,7 @@ describe("evaluateDiscoveryCandidatePolicy", () => {
       }
     });
     const policy = {
-      ...defaultDiscoveryPolicy("eventbear-worker"),
+      ...defaultDiscoveryPolicy("sample-project"),
       allowGapAreas: ["source_systems_and_families"],
       allowCapabilitiesAny: ["source_first", "candidate_first"]
     };
@@ -345,7 +345,7 @@ describe("buildDiscoveryPolicyCalibration", () => {
 
 describe("automation project run state", () => {
   test("marks completed_with_blocks when completed and blocked phases coexist", () => {
-    const run = createAutomationProjectRun("eventbear-worker");
+    const run = createAutomationProjectRun("sample-project");
     setAutomationPhase(run, "discover", { status: "completed", reason: "run_complete", count: 4 });
     setAutomationPhase(run, "gate", { status: "blocked", reason: "low_confidence" });
     setAutomationPhase(run, "watchlist_handoff", { status: "skipped", reason: "no_selected_urls" });
@@ -418,7 +418,7 @@ describe("automation ops helpers", () => {
 
     try {
       const first = await acquireAutomationLock(rootDir, config, {
-        project: "eventbear-worker",
+        project: "sample-project",
         allProjects: false,
         dryRun: true,
         forceLock: false,
@@ -430,7 +430,7 @@ describe("automation ops helpers", () => {
 
       await assert.rejects(
         () => acquireAutomationLock(rootDir, config, {
-          project: "eventbear-worker",
+          project: "sample-project",
           allProjects: false,
           dryRun: true,
           forceLock: false,

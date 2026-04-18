@@ -105,7 +105,7 @@ describe("applyDiscoveryPolicyToCandidates", () => {
       }
     ];
     const policy = {
-      ...defaultDiscoveryPolicy("eventbear-worker"),
+      ...defaultDiscoveryPolicy("sample-project"),
       blockedSignalPatterns: ["starter template"]
     };
 
@@ -129,7 +129,7 @@ describe("applyDiscoveryPolicyToCandidates", () => {
       }
     ];
     const policy = {
-      ...defaultDiscoveryPolicy("eventbear-worker"),
+      ...defaultDiscoveryPolicy("sample-project"),
       blockedSignalPatterns: ["starter template"],
       blockedLicenseCategories: ["copyleft"]
     };

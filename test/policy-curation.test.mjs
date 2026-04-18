@@ -4,7 +4,7 @@ import { buildPolicyCuration, renderPolicyCurationSummary } from "../lib/policy/
 
 test("buildPolicyCuration ranks selected queue rows by curation score", () => {
   const curation = buildPolicyCuration({
-    projectKey: "eventbear-worker",
+    projectKey: "sample-project",
     handoffManifest: {
       selection: {
         urls: [
@@ -22,7 +22,7 @@ test("buildPolicyCuration ranks selected queue rows by curation score", () => {
         project_fit_score: "80",
         value_score: "60",
         effort_score: "40",
-        eventbaer_relevance_guess: "high",
+        project_relevance_guess: "high",
         decision_guess: "adapt",
         matched_capabilities: "source_first,distribution_surfaces",
         project_fit_band: "high",
@@ -39,7 +39,7 @@ test("buildPolicyCuration ranks selected queue rows by curation score", () => {
         project_fit_score: "50",
         value_score: "30",
         effort_score: "20",
-        eventbaer_relevance_guess: "medium",
+        project_relevance_guess: "medium",
         decision_guess: "observe",
         matched_capabilities: "",
         project_fit_band: "medium",
@@ -54,13 +54,13 @@ test("buildPolicyCuration ranks selected queue rows by curation score", () => {
   assert.equal(curation.curatedCandidates.length, 2);
   assert.equal(curation.curatedCandidates[0].repoRef, "alpha/repo");
   assert.equal(curation.decisionStatus, "prepare_only");
-  assert.match(curation.nextCommand, /policy-curation-batch-review --project eventbear-worker/);
+  assert.match(curation.nextCommand, /policy-curation-batch-review --project sample-project/);
   assert.match(curation.recommendations[0], /Prepare promotion packets/);
 });
 
 test("renderPolicyCurationSummary includes promotion linkage", () => {
   const markdown = renderPolicyCurationSummary({
-    projectKey: "eventbear-worker",
+    projectKey: "sample-project",
     curationId: "cur-1",
     generatedAt: "2026-04-14T22:00:00.000Z",
     handoffId: "handoff-1",
@@ -70,7 +70,7 @@ test("renderPolicyCurationSummary includes promotion linkage", () => {
       candidateCount: 2,
       curatedCount: 1,
       decisionStatus: "prepare_only",
-      nextCommand: "npm run patternpilot -- policy-curation-batch-review --project eventbear-worker",
+      nextCommand: "npm run patternpilot -- policy-curation-batch-review --project sample-project",
       curatedCandidates: [
         {
           repoRef: "alpha/repo",
@@ -94,5 +94,5 @@ test("renderPolicyCurationSummary includes promotion linkage", () => {
   assert.match(markdown, /promotion_run: prom-1/);
   assert.match(markdown, /decision_status: prepare_only/);
   assert.match(markdown, /alpha\/repo :: score=92/);
-  assert.match(markdown, /next_command: npm run patternpilot -- policy-curation-batch-review --project eventbear-worker/);
+  assert.match(markdown, /next_command: npm run patternpilot -- policy-curation-batch-review --project sample-project/);
 });

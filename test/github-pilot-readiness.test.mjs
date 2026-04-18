@@ -13,7 +13,7 @@ test("buildGithubAppLivePilotReview marks PAT bridge pilot as ready when runtime
 
   try {
     const review = buildGithubAppLivePilotReview({
-      defaultProject: "eventbear-worker",
+      defaultProject: "sample-project",
       github: {
         authEnvVars: ["PATTERNPILOT_GITHUB_TOKEN"]
       }
@@ -44,7 +44,7 @@ test("buildGithubAppLivePilotReview marks PAT bridge pilot as ready when runtime
     assert.equal(review.pilotStatus, "pilot_bridge_ready");
     assert.equal(review.pilotMode, "cli_bridge_pilot");
     assert.equal(review.closeoutReview.closeoutStatus, "closeout_ready");
-    assert.ok(review.recommendedCommands.some((item) => item.includes("on-demand --project eventbear-worker")));
+    assert.ok(review.recommendedCommands.some((item) => item.includes("on-demand --project sample-project")));
 
     const summary = renderGithubAppLivePilotSummary(review);
     assert.match(summary, /pilot_status: pilot_bridge_ready/);
@@ -64,7 +64,7 @@ test("buildGithubAppLivePilotReview blocks pilot when auth is missing or runtime
 
   try {
     const review = buildGithubAppLivePilotReview({
-      defaultProject: "eventbear-worker",
+      defaultProject: "sample-project",
       github: {
         authEnvVars: ["PATTERNPILOT_GITHUB_TOKEN"]
       }

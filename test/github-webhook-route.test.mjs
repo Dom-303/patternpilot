@@ -14,25 +14,25 @@ import {
 test("resolveProjectKeyForWebhookRoute can infer project from repository basename", () => {
   const selection = resolveProjectKeyForWebhookRoute({
     projects: {
-      "eventbear-worker": {
-        projectRoot: "../eventbear-worker"
+      "sample-project": {
+        projectRoot: "../sample-project"
       }
     }
   }, {
     repository: {
-      fullName: "Dom-303/eventbear-worker"
+      fullName: "Dom-303/sample-project"
     }
   });
 
-  assert.equal(selection.projectKey, "eventbear-worker");
+  assert.equal(selection.projectKey, "sample-project");
   assert.equal(selection.source, "repository_match");
 });
 
 test("buildGithubWebhookRoutePlan creates a dispatchable on-demand route from repository_dispatch", () => {
   const routePlan = buildGithubWebhookRoutePlan({
     projects: {
-      "eventbear-worker": {
-        projectRoot: "../eventbear-worker"
+      "sample-project": {
+        projectRoot: "../sample-project"
       }
     }
   }, {
@@ -48,7 +48,7 @@ test("buildGithubWebhookRoutePlan creates a dispatchable on-demand route from re
     },
     payload: {
       client_payload: {
-        project: "eventbear-worker",
+        project: "sample-project",
         urls: ["https://github.com/oc/openevents"]
       }
     }
@@ -99,8 +99,8 @@ test("writeGithubWebhookRouteArtifacts writes route plan artifacts", async () =>
     commands: [
       {
         commandName: "run-drift",
-        args: ["--project", "eventbear-worker"],
-        shellCommand: "\"npm\" \"run\" \"patternpilot\" \"--\" \"run-drift\" \"--project\" \"eventbear-worker\""
+        args: ["--project", "sample-project"],
+        shellCommand: "\"npm\" \"run\" \"patternpilot\" \"--\" \"run-drift\" \"--project\" \"sample-project\""
       }
     ],
     artifacts: ["runs/<project>/<run-id>/summary.md"],
@@ -110,7 +110,7 @@ test("writeGithubWebhookRouteArtifacts writes route plan artifacts", async () =>
     routePlan,
     envelope: {
       repository: {
-        fullName: "Dom-303/eventbear-worker"
+        fullName: "Dom-303/sample-project"
       }
     }
   });

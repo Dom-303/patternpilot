@@ -55,7 +55,7 @@ test("selectPolicyHandoffCandidates can use replay visible candidates", () => {
 
 test("renderPolicyHandoffSummary shows selected repos and on-demand linkage", () => {
   const markdown = renderPolicyHandoffSummary({
-    projectKey: "eventbear-worker",
+    projectKey: "sample-project",
     handoffId: "handoff-1",
     generatedAt: "2026-04-14T21:30:00.000Z",
     cycleId: "cycle-1",
@@ -93,5 +93,5 @@ test("renderPolicyHandoffSummary shows selected repos and on-demand linkage", ()
   assert.match(markdown, /decision_status: handoff_review_ready/);
   assert.match(markdown, /on_demand_run: on-demand-1/);
   assert.match(markdown, /alpha\/repo :: newly_visible :: fit=high\/88/);
-  assert.match(markdown, /next_command: npm run patternpilot -- promote --project eventbear-worker --from-status pending_review/);
+  assert.match(markdown, /next_command: npm run patternpilot -- promote --project sample-project --from-status pending_review/);
 });

@@ -31,7 +31,7 @@ describe("updateAutomationJobState", () => {
     };
 
     const failed = updateAutomationJobState(initial, {
-      jobName: "eventbear-worker-apply",
+      jobName: "sample-project-apply",
       runId: "run-1",
       createdAt: "2026-04-14T18:00:00.000Z",
       counts: { failed: 1, completed: 0, completed_with_blocks: 0 },
@@ -50,7 +50,7 @@ describe("updateAutomationJobState", () => {
             policyControlStatus: "chain_refresh_recommended",
             policyControlStage: "handoff",
             policyControlDecisionStatus: "handoff_review_ready",
-            policyControlNextCommand: "npm run patternpilot -- policy-handoff --project eventbear-worker",
+            policyControlNextCommand: "npm run patternpilot -- policy-handoff --project sample-project",
             policyControlTopBlocker: "Latest handoff still points to an older cycle.",
             autoDispatchAllowed: false,
             autoApplyAllowed: false,
@@ -60,7 +60,7 @@ describe("updateAutomationJobState", () => {
       ],
       failures: [
         {
-          projectKey: "eventbear-worker",
+          projectKey: "sample-project",
           error: "GitHub API timed out",
           retryable: true,
           recommendedDelayMinutes: 15,
@@ -72,30 +72,30 @@ describe("updateAutomationJobState", () => {
       ]
     });
 
-    assert.equal(failed.jobs["eventbear-worker-apply"].retryable, true);
-    assert.equal(failed.jobs["eventbear-worker-apply"].blockedManual, false);
-    assert.equal(failed.jobs["eventbear-worker-apply"].consecutiveRetryableFailures, 1);
-    assert.equal(failed.jobs["eventbear-worker-apply"].nextRetryAt, "2026-04-14T18:15:00.000Z");
-    assert.equal(failed.jobs["eventbear-worker-apply"].runKind, "maintenance_run");
-    assert.equal(failed.jobs["eventbear-worker-apply"].driftStatus, "attention_required");
-    assert.equal(failed.jobs["eventbear-worker-apply"].governanceStatus, "manual_gate");
-    assert.equal(failed.jobs["eventbear-worker-apply"].policyControlStatus, "chain_refresh_recommended");
-    assert.equal(failed.jobs["eventbear-worker-apply"].policyControlStage, "handoff");
-    assert.equal(failed.jobs["eventbear-worker-apply"].requalificationRequired, false);
-    assert.equal(failed.jobs["eventbear-worker-apply"].autoDispatchAllowed, false);
-    assert.equal(failed.jobs["eventbear-worker-apply"].resumeRecommendation.strategy, "retry_after_backoff");
+    assert.equal(failed.jobs["sample-project-apply"].retryable, true);
+    assert.equal(failed.jobs["sample-project-apply"].blockedManual, false);
+    assert.equal(failed.jobs["sample-project-apply"].consecutiveRetryableFailures, 1);
+    assert.equal(failed.jobs["sample-project-apply"].nextRetryAt, "2026-04-14T18:15:00.000Z");
+    assert.equal(failed.jobs["sample-project-apply"].runKind, "maintenance_run");
+    assert.equal(failed.jobs["sample-project-apply"].driftStatus, "attention_required");
+    assert.equal(failed.jobs["sample-project-apply"].governanceStatus, "manual_gate");
+    assert.equal(failed.jobs["sample-project-apply"].policyControlStatus, "chain_refresh_recommended");
+    assert.equal(failed.jobs["sample-project-apply"].policyControlStage, "handoff");
+    assert.equal(failed.jobs["sample-project-apply"].requalificationRequired, false);
+    assert.equal(failed.jobs["sample-project-apply"].autoDispatchAllowed, false);
+    assert.equal(failed.jobs["sample-project-apply"].resumeRecommendation.strategy, "retry_after_backoff");
 
     const succeeded = updateAutomationJobState(failed, {
-      jobName: "eventbear-worker-apply",
+      jobName: "sample-project-apply",
       runId: "run-2",
       createdAt: "2026-04-14T18:30:00.000Z",
       counts: { failed: 0, completed: 1, completed_with_blocks: 0 },
       failures: []
     });
 
-    assert.equal(succeeded.jobs["eventbear-worker-apply"].retryable, false);
-    assert.equal(succeeded.jobs["eventbear-worker-apply"].consecutiveRetryableFailures, 0);
-    assert.equal(succeeded.jobs["eventbear-worker-apply"].lastSuccessAt, "2026-04-14T18:30:00.000Z");
+    assert.equal(succeeded.jobs["sample-project-apply"].retryable, false);
+    assert.equal(succeeded.jobs["sample-project-apply"].consecutiveRetryableFailures, 0);
+    assert.equal(succeeded.jobs["sample-project-apply"].lastSuccessAt, "2026-04-14T18:30:00.000Z");
   });
 
   test("latches manual requalification until a later stable success clears it", () => {
@@ -106,7 +106,7 @@ describe("updateAutomationJobState", () => {
     };
 
     const latched = updateAutomationJobState(initial, {
-      jobName: "eventbear-worker-apply",
+      jobName: "sample-project-apply",
       runId: "run-1",
       createdAt: "2026-04-14T18:00:00.000Z",
       counts: { failed: 0, completed: 0, completed_with_blocks: 1 },
@@ -123,11 +123,11 @@ describe("updateAutomationJobState", () => {
       failures: []
     });
 
-    assert.equal(latched.jobs["eventbear-worker-apply"].requalificationRequired, true);
-    assert.equal(latched.jobs["eventbear-worker-apply"].requalificationTriggeredAt, "2026-04-14T18:00:00.000Z");
+    assert.equal(latched.jobs["sample-project-apply"].requalificationRequired, true);
+    assert.equal(latched.jobs["sample-project-apply"].requalificationTriggeredAt, "2026-04-14T18:00:00.000Z");
 
     const cleared = updateAutomationJobState(latched, {
-      jobName: "eventbear-worker-apply",
+      jobName: "sample-project-apply",
       runId: "run-2",
       createdAt: "2026-04-14T20:00:00.000Z",
       counts: { failed: 0, completed: 1, completed_with_blocks: 0 },
@@ -143,8 +143,8 @@ describe("updateAutomationJobState", () => {
       failures: []
     });
 
-    assert.equal(cleared.jobs["eventbear-worker-apply"].requalificationRequired, false);
-    assert.equal(cleared.jobs["eventbear-worker-apply"].requalificationClearedAt, "2026-04-14T20:00:00.000Z");
+    assert.equal(cleared.jobs["sample-project-apply"].requalificationRequired, false);
+    assert.equal(cleared.jobs["sample-project-apply"].requalificationClearedAt, "2026-04-14T20:00:00.000Z");
   });
 
   test("preserves operator-ack latch state across later automation updates", () => {
@@ -152,30 +152,30 @@ describe("updateAutomationJobState", () => {
       schemaVersion: 1,
       updatedAt: "2026-04-17T22:25:36.790Z",
       jobs: {
-        "eventbear-worker-apply": {
-          jobName: "eventbear-worker-apply",
+        "sample-project-apply": {
+          jobName: "sample-project-apply",
           operatorAckRequired: true,
           operatorAckCategory: "repeated_governance_block",
           operatorAckSourceStatus: "governance_escalated",
           operatorAckTriggeredAt: "2026-04-17T22:25:36.790Z",
           operatorAckReason: "Repeated governance block.",
-          operatorAckNextAction: "npm run patternpilot -- automation-job-ack --automation-job eventbear-worker-apply",
-          operatorAckCommand: "npm run patternpilot -- automation-job-ack --automation-job eventbear-worker-apply"
+          operatorAckNextAction: "npm run patternpilot -- automation-job-ack --automation-job sample-project-apply",
+          operatorAckCommand: "npm run patternpilot -- automation-job-ack --automation-job sample-project-apply"
         }
       }
     };
 
     const updated = updateAutomationJobState(initial, {
-      jobName: "eventbear-worker-apply",
+      jobName: "sample-project-apply",
       runId: "run-3",
       createdAt: "2026-04-17T22:30:00.000Z",
       counts: { failed: 0, completed: 1, completed_with_blocks: 0 },
       failures: []
     });
 
-    assert.equal(updated.jobs["eventbear-worker-apply"].operatorAckRequired, true);
-    assert.equal(updated.jobs["eventbear-worker-apply"].operatorAckCategory, "repeated_governance_block");
-    assert.equal(updated.jobs["eventbear-worker-apply"].operatorAckSourceStatus, "governance_escalated");
+    assert.equal(updated.jobs["sample-project-apply"].operatorAckRequired, true);
+    assert.equal(updated.jobs["sample-project-apply"].operatorAckCategory, "repeated_governance_block");
+    assert.equal(updated.jobs["sample-project-apply"].operatorAckSourceStatus, "governance_escalated");
   });
 });
 
@@ -303,8 +303,8 @@ describe("automation alerting and clear flows", () => {
       schemaVersion: 1,
       updatedAt: "2026-04-14T18:00:00.000Z",
       jobs: {
-        "eventbear-worker-apply": {
-          jobName: "eventbear-worker-apply",
+        "sample-project-apply": {
+          jobName: "sample-project-apply",
           blockedManual: true,
           retryable: true,
           nextRetryAt: "2026-04-14T18:30:00.000Z",
@@ -313,38 +313,38 @@ describe("automation alerting and clear flows", () => {
       }
     };
 
-    const out = clearAutomationJobState(state, "eventbear-worker-apply", {
+    const out = clearAutomationJobState(state, "sample-project-apply", {
       clearedAt: "2026-04-14T18:05:00.000Z",
       reason: "manual_resume_after_fix"
     });
 
     assert.equal(out.result.status, "cleared");
-    assert.equal(out.state.jobs["eventbear-worker-apply"].blockedManual, false);
-    assert.equal(out.state.jobs["eventbear-worker-apply"].retryable, false);
-    assert.equal(out.state.jobs["eventbear-worker-apply"].nextRetryAt, null);
-    assert.equal(out.state.jobs["eventbear-worker-apply"].requalificationRequired, false);
-    assert.equal(out.state.jobs["eventbear-worker-apply"].manualClearReason, "manual_resume_after_fix");
+    assert.equal(out.state.jobs["sample-project-apply"].blockedManual, false);
+    assert.equal(out.state.jobs["sample-project-apply"].retryable, false);
+    assert.equal(out.state.jobs["sample-project-apply"].nextRetryAt, null);
+    assert.equal(out.state.jobs["sample-project-apply"].requalificationRequired, false);
+    assert.equal(out.state.jobs["sample-project-apply"].manualClearReason, "manual_resume_after_fix");
   });
 
   test("builds policy-control alerts for stale chains and careful follow-up", () => {
     const alerts = buildAutomationAlerts([
       {
-        name: "eventbear-worker-apply",
+        name: "sample-project-apply",
         status: "ready",
         jobState: {
           policyControlStatus: "chain_refresh_recommended",
           policyControlStage: "handoff",
-          policyControlNextCommand: "npm run patternpilot -- policy-handoff --project eventbear-worker",
+          policyControlNextCommand: "npm run patternpilot -- policy-handoff --project sample-project",
           policyControlTopBlocker: "Latest handoff still points to an older cycle."
         }
       },
       {
-        name: "eventbear-worker-watchlist",
+        name: "sample-project-watchlist",
         status: "ready",
         jobState: {
           policyControlStatus: "followup_with_care",
           policyControlStage: "apply",
-          policyControlNextCommand: "npm run patternpilot -- re-evaluate --project eventbear-worker --stale-only",
+          policyControlNextCommand: "npm run patternpilot -- re-evaluate --project sample-project --stale-only",
           policyControlTopBlocker: "Observe-only promotions should be monitored."
         }
       }
@@ -434,10 +434,10 @@ describe("automation dispatch selection", () => {
   test("selects the next dispatchable job and reports blocked requests", () => {
     const evaluations = [
       {
-        name: "eventbear-worker-apply",
+        name: "sample-project-apply",
         status: "ready",
         reason: "never_run",
-        command: "npm run automation:run -- --project eventbear-worker --automation-job eventbear-worker-apply",
+        command: "npm run automation:run -- --project sample-project --automation-job sample-project-apply",
         liveGovernance: {
           autoDispatchAllowed: false
         }
@@ -547,10 +547,10 @@ describe("automation dispatch history", () => {
   test("builds reroute-aware history entries and summarizes them by job", () => {
     const evaluations = [
       {
-        name: "eventbear-worker-apply",
+        name: "sample-project-apply",
         status: "ready",
         reason: "never_run",
-        command: "npm run automation:run -- --project eventbear-worker --automation-job eventbear-worker-apply",
+        command: "npm run automation:run -- --project sample-project --automation-job sample-project-apply",
         liveGovernance: {
           autoDispatchAllowed: false,
           status: "manual_requalify",
@@ -577,8 +577,8 @@ describe("automation dispatch history", () => {
     });
     const blockedEntry = buildAutomationDispatchHistoryEntry({
       generatedAt: "2026-04-17T22:05:00.000Z",
-      requestedJobName: "eventbear-worker-apply",
-      selection: resolveAutomationDispatchJob(evaluations, "eventbear-worker-apply"),
+      requestedJobName: "sample-project-apply",
+      selection: resolveAutomationDispatchJob(evaluations, "sample-project-apply"),
       evaluations
     });
     const history = {
@@ -587,9 +587,9 @@ describe("automation dispatch history", () => {
       entries: [blockedEntry, rerouteEntry]
     };
 
-    const jobSummary = summarizeAutomationDispatchHistoryForJob(history, "eventbear-worker-apply");
+    const jobSummary = summarizeAutomationDispatchHistoryForJob(history, "sample-project-apply");
     const summary = summarizeAutomationDispatchHistory(history, {
-      jobName: "eventbear-worker-apply",
+      jobName: "sample-project-apply",
       limit: 5
     });
     const rendered = renderAutomationDispatchHistorySummary({
@@ -597,7 +597,7 @@ describe("automation dispatch history", () => {
       summary
     });
 
-    assert.equal(rerouteEntry.reroutedFromJobName, "eventbear-worker-apply");
+    assert.equal(rerouteEntry.reroutedFromJobName, "sample-project-apply");
     assert.equal(rerouteEntry.selectedJobName, "all-project-watchlists");
     assert.equal(blockedEntry.selectionStatus, "governance_blocked");
     assert.equal(jobSummary.reroutedCount, 1);
@@ -606,7 +606,7 @@ describe("automation dispatch history", () => {
     assert.equal(jobSummary.governanceBlockedStreak, 1);
     assert.equal(jobSummary.blockedStreak, 1);
     assert.equal(summary.totalEntries, 2);
-    assert.match(rendered, /filter_job: eventbear-worker-apply/);
+    assert.match(rendered, /filter_job: sample-project-apply/);
     assert.match(rendered, /blocked: 1/);
     assert.match(rendered, /governance_blocked: 1/);
     assert.match(rendered, /rerouted: 1/);
@@ -706,7 +706,7 @@ describe("automation jobs summary", () => {
       generatedAt: "2026-04-17T20:00:00.000Z",
       evaluations: [
         {
-          name: "eventbear-worker-apply",
+          name: "sample-project-apply",
           status: "ready",
           priority: 100,
           reason: "interval_elapsed",
@@ -753,7 +753,7 @@ describe("automation alert reporting", () => {
   test("includes operator review digest in alert payload and rendered summary", () => {
     const evaluations = [
       {
-        name: "eventbear-worker-apply",
+        name: "sample-project-apply",
         status: "ready",
         reason: "never_run",
         jobState: {
@@ -795,7 +795,7 @@ describe("automation alert reporting", () => {
     assert.equal(payload.attention.status, "operator_attention_required");
     assert.equal(payload.attention.deliveryPriority, "urgent");
     assert.ok(payload.attention.signals.includes("operator_review_open"));
-    assert.equal(payload.operatorReviewDigest.openReviews[0].jobName, "eventbear-worker-apply");
+    assert.equal(payload.operatorReviewDigest.openReviews[0].jobName, "sample-project-apply");
     assert.equal(payload.operatorReviewDigest.recentCloseouts[0].jobName, "all-project-watchlists");
     assert.match(payload.markdown, /attention_status: operator_attention_required/);
     assert.match(payload.markdown, /delivery_priority: urgent/);
@@ -819,7 +819,7 @@ describe("automation alert reporting", () => {
       operatorReviewDigest: {
         openReviews: [
           {
-            jobName: "eventbear-worker-apply",
+            jobName: "sample-project-apply",
             category: "repeated_governance_block",
             sourceStatus: "governance_escalated",
             nextAction: "Acknowledge after manual review."
@@ -828,15 +828,15 @@ describe("automation alert reporting", () => {
         recentCloseouts: []
       },
       nextJob: {
-        name: "eventbear-worker-apply",
-        command: "npm run patternpilot -- automation-job-ack --automation-job eventbear-worker-apply"
+        name: "sample-project-apply",
+        command: "npm run patternpilot -- automation-job-ack --automation-job sample-project-apply"
       }
     });
 
     assert.equal(attention.status, "operator_attention_required");
     assert.equal(attention.deliveryPriority, "urgent");
     assert.ok(attention.signals.includes("operator_review_open"));
-    assert.equal(attention.promotedJobs[0], "eventbear-worker-apply");
+    assert.equal(attention.promotedJobs[0], "sample-project-apply");
     assert.match(attention.summary, /open operator review/);
     assert.match(attention.nextAction, /Acknowledge after manual review/);
   });

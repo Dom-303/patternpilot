@@ -164,7 +164,7 @@ describe("buildWatchlistReview", () => {
       fs.writeFileSync(
         path.join(rootDir, "state/repo_intake_queue.csv"),
         [
-          "project_key;repo_url;normalized_repo_url;owner;name;status;project_fit_band;project_fit_score;matched_capabilities;recommended_worker_areas;eventbaer_gap_area_guess;main_layer_guess;pattern_family_guess;build_vs_borrow_guess;priority_guess;activity_status;eventbaer_relevance_guess;strengths;weaknesses;risks;learning_for_eventbaer;possible_implication;suggested_next_step;stars;license;decision_summary;effort_band;effort_score;value_band;value_score;review_disposition;rules_fingerprint",
+          "project_key;repo_url;normalized_repo_url;owner;name;status;project_fit_band;project_fit_score;matched_capabilities;recommended_worker_areas;project_gap_area_guess;main_layer_guess;pattern_family_guess;build_vs_borrow_guess;priority_guess;activity_status;project_relevance_guess;strengths;weaknesses;risks;learning_for_project;possible_implication;suggested_next_step;stars;license;decision_summary;effort_band;effort_score;value_band;value_score;review_disposition;rules_fingerprint",
           `demo;https://github.com/acme/one;https://github.com/acme/one;acme;one;pending_review;high;82;source_first;lib/fetch.mjs;source_systems_and_families;source_intake;local_source_infra_framework;adapt_pattern;now;current;high;strong;;;learning;implication;next;42;MIT;strong fit;low;20;high;80;intake_now;${fingerprint}`
         ].join("\n"),
         "utf8"

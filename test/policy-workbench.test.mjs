@@ -27,7 +27,7 @@ test("buildPolicyWorkbench creates candidate rows with focus hints", () => {
     ]
   };
   const policy = {
-    ...defaultDiscoveryPolicy("eventbear-worker"),
+    ...defaultDiscoveryPolicy("sample-project"),
     blockedSignalPatterns: ["starter template"]
   };
 
@@ -41,9 +41,9 @@ test("buildPolicyWorkbench creates candidate rows with focus hints", () => {
 
 test("renderPolicyWorkbenchSummary renders manual workflow guidance", () => {
   const markdown = renderPolicyWorkbenchSummary({
-    projectKey: "eventbear-worker",
+    projectKey: "sample-project",
     sourceRunId: "run-1",
-    sourceManifestPath: "runs/eventbear-worker/run-1/manifest.json",
+    sourceManifestPath: "runs/sample-project/run-1/manifest.json",
     workbench: {
       sourceCandidateCount: 1,
       blockedCount: 0,

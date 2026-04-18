@@ -241,7 +241,7 @@ describe("recommended actions cutover", () => {
 describe("review html scope rendering", () => {
   test("selected-url review renders scope section and missing selected title", () => {
     const html = renderWatchlistReviewHtmlReport({
-      projectKey: "eventbear-worker",
+      projectKey: "sample-project",
       createdAt: "2026-04-14T18:00:00.000Z",
       analysisProfile: { id: "architecture", label: "Architecture" },
       analysisDepth: { id: "standard" },
@@ -315,9 +315,9 @@ describe("review html scope rendering", () => {
 describe("discovery html policy rendering", () => {
   test("discovery report renders discovery policy stats and section", () => {
     const html = renderDiscoveryHtmlReport({
-      projectKey: "eventbear-worker",
+      projectKey: "sample-project",
       createdAt: "2026-04-14T19:00:00.000Z",
-      binding: { projectKey: "eventbear-worker", readBeforeAnalysis: [], referenceDirectories: [] },
+      binding: { projectKey: "sample-project", readBeforeAnalysis: [], referenceDirectories: [] },
       projectProfile: { contextSources: { loadedFiles: [], missingFiles: [], scannedDirectories: [] }, capabilitiesPresent: [] },
       discovery: {
         discoveryProfile: { id: "balanced", limit: 8 },
@@ -374,7 +374,7 @@ describe("on-demand run html rendering", () => {
   test("renders a landing page with artifacts and run summary", () => {
     const html = renderOnDemandRunHtmlReport({
       runId: "2026-04-14T18-30-00-000Z",
-      projectKey: "eventbear-worker",
+      projectKey: "sample-project",
       createdAt: "2026-04-14T18:30:00.000Z",
       sourceMode: "explicit_urls",
       explicitUrls: ["https://github.com/acme/demo"],
@@ -437,12 +437,12 @@ describe("on-demand run html rendering", () => {
       },
       promoteRun: null,
       artifacts: {
-        reviewReportHref: "../../../projects/eventbear-worker/reports/patternpilot-report-eventbear-worker-2026-04-14-on-demand.html",
-        reviewReportLabel: "projects/eventbear-worker/reports/patternpilot-report-eventbear-worker-2026-04-14-on-demand.html",
-        latestReportHref: "../../../projects/eventbear-worker/reports/latest-report.json",
-        latestReportLabel: "projects/eventbear-worker/reports/latest-report.json",
-        browserLinkHref: "../../../projects/eventbear-worker/reports/browser-link",
-        browserLinkLabel: "projects/eventbear-worker/reports/browser-link"
+        reviewReportHref: "../../../projects/sample-project/reports/patternpilot-report-sample-project-2026-04-14-on-demand.html",
+        reviewReportLabel: "projects/sample-project/reports/patternpilot-report-sample-project-2026-04-14-on-demand.html",
+        latestReportHref: "../../../projects/sample-project/reports/latest-report.json",
+        latestReportLabel: "projects/sample-project/reports/latest-report.json",
+        browserLinkHref: "../../../projects/sample-project/reports/browser-link",
+        browserLinkLabel: "projects/sample-project/reports/browser-link"
       },
       nextActions: [
         "Open the review report first.",

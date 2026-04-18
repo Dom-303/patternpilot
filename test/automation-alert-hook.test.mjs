@@ -43,7 +43,7 @@ test("buildAutomationAlertDigest counts severities, categories and jobs", () => 
     schemaVersion: 1,
     generatedAt: "2026-04-15T12:00:00.000Z",
     nextJob: {
-      name: "eventbear-worker-apply",
+      name: "sample-project-apply",
       status: "ready"
     },
     operatorReviewDigest: {
@@ -51,7 +51,7 @@ test("buildAutomationAlertDigest counts severities, categories and jobs", () => 
       recentCloseoutCount: 1,
       openReviews: [
         {
-          jobName: "eventbear-worker-apply"
+          jobName: "sample-project-apply"
         }
       ],
       recentCloseouts: [
@@ -61,8 +61,8 @@ test("buildAutomationAlertDigest counts severities, categories and jobs", () => 
       ]
     },
     alerts: [
-      { severity: "high", category: "blocked_manual", jobName: "eventbear-worker-apply" },
-      { severity: "medium", category: "blocked_manual", jobName: "eventbear-worker-apply" },
+      { severity: "high", category: "blocked_manual", jobName: "sample-project-apply" },
+      { severity: "medium", category: "blocked_manual", jobName: "sample-project-apply" },
       { severity: "low", category: "drift_attention", jobName: "all-project-watchlists" }
     ]
   });
@@ -70,13 +70,13 @@ test("buildAutomationAlertDigest counts severities, categories and jobs", () => 
   assert.equal(digest.alertCount, 3);
   assert.equal(digest.severityCounts.high, 1);
   assert.equal(digest.topCategories[0].category, "blocked_manual");
-  assert.equal(digest.touchedJobs[0].jobName, "eventbear-worker-apply");
+  assert.equal(digest.touchedJobs[0].jobName, "sample-project-apply");
   assert.equal(digest.attentionStatus, "operator_attention_required");
   assert.equal(digest.deliveryPriority, "urgent");
   assert.ok(digest.attentionSignals.includes("operator_review_open"));
   assert.equal(digest.operatorReviewOpenCount, 1);
   assert.equal(digest.operatorReviewRecentCloseoutCount, 1);
-  assert.deepEqual(digest.operatorReviewOpenJobs, ["eventbear-worker-apply"]);
+  assert.deepEqual(digest.operatorReviewOpenJobs, ["sample-project-apply"]);
 });
 
 test("writeAutomationAlertHookOutputs writes markdown and json digests", async () => {
@@ -117,7 +117,7 @@ test("renderAutomationAlertHookMarkdown includes operator review handoff", () =>
       recentCloseoutCount: 1,
       openReviews: [
         {
-          jobName: "eventbear-worker-apply",
+          jobName: "sample-project-apply",
           category: "repeated_governance_block",
           sourceStatus: "governance_escalated",
           openedAt: "2026-04-17T22:46:15.614Z"

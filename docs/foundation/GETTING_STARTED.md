@@ -83,7 +83,7 @@ npm run review:watchlist -- --project my-project --dry-run
 
 Es gibt ein bewusst fiktives Beispiel unter:
 
-[examples/demo-city-guide/README.md](/home/domi/eventbaer/dev/patternpilot/examples/demo-city-guide/README.md:1)
+[examples/demo-city-guide/README.md](../../examples/demo-city-guide/README.md)
 
 Dieses Beispiel ist nur zur Orientierung da.
 Es ist kein reales Kundenprojekt und kein aktiver Default.
@@ -92,10 +92,10 @@ Es ist kein reales Kundenprojekt und kein aktiver Default.
 
 Dann geh weiter zu:
 
-[ADVANCED_GUIDE.md](/home/domi/eventbaer/dev/patternpilot/docs/foundation/ADVANCED_GUIDE.md:1)
+[ADVANCED_GUIDE.md](ADVANCED_GUIDE.md)
 
 ## Wenn du wissen willst, was oeffentlich wird
 
 Dann lies als Naechstes:
 
-[PUBLIC_VS_LOCAL.md](/home/domi/eventbaer/dev/patternpilot/docs/foundation/PUBLIC_VS_LOCAL.md:1)
+[PUBLIC_VS_LOCAL.md](PUBLIC_VS_LOCAL.md)

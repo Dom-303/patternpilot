@@ -16,7 +16,7 @@ import { loadQueueEntries } from "../lib/queue.mjs";
 function makeQueueRow(overrides = {}) {
   return {
     intake_id: "run__acme__demo",
-    project_key: "eventbear-worker",
+    project_key: "sample-project",
     status: "pending_review",
     created_at: "2026-04-14T00:00:00.000Z",
     updated_at: "2026-04-14T00:00:00.000Z",
@@ -55,7 +55,7 @@ function makeQueueRow(overrides = {}) {
     category_guess: "connector",
     pattern_family_guess: "local_source_infra_framework",
     main_layer_guess: "source_intake",
-    eventbaer_gap_area_guess: "source_systems_and_families",
+    project_gap_area_guess: "source_systems_and_families",
     build_vs_borrow_guess: "adapt_pattern",
     priority_guess: "now",
     secondary_layers: "",
@@ -68,12 +68,12 @@ function makeQueueRow(overrides = {}) {
     strengths: "source focus",
     weaknesses: "",
     risks: "",
-    learning_for_eventbaer: "useful source-family signal",
+    learning_for_project: "useful source-family signal",
     possible_implication: "adapt family conventions",
     decision_guess: "adapt_pattern",
-    eventbaer_relevance_guess: "high",
+    project_relevance_guess: "high",
     project_relevance_note: "Strong fit",
-    intake_doc: "projects/eventbear-worker/intake/acme__demo.md",
+    intake_doc: "projects/sample-project/intake/acme__demo.md",
     run_id: "2026-04-14T00-00-00-000Z",
     notes: "",
     ...overrides

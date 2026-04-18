@@ -30,7 +30,7 @@ Faustregel:
 
 - last_updated: 2026-04-17
 - einordnung_gilt_fuer: Kernsystem + Produktschale + Vollautomatik-Zielbild
-- master_plan: `docs/superpowers/plans/2026-04-14-patternpilot-road-to-100.md`
+- master_plan: internal_historical_plan_removed_from_active_docs
 - closeout_brief: `docs/foundation/ROAD_TO_100_CLOSEOUT.md`
 
 ## 100%-Definition

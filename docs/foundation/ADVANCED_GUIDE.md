@@ -109,7 +109,7 @@ Lokal bleiben bewusst:
 
 Die einfache Grundregel dazu steht hier:
 
-[PUBLIC_VS_LOCAL.md](/home/domi/eventbaer/dev/patternpilot/docs/foundation/PUBLIC_VS_LOCAL.md:1)
+[PUBLIC_VS_LOCAL.md](PUBLIC_VS_LOCAL.md)
 
 ## 6. Readiness statt Bauchgefuehl
 
@@ -139,4 +139,4 @@ Die richtige Reihenfolge ist:
 
 Wenn du die Struktur erst anschauen willst, ohne ein echtes Projekt zu verbinden:
 
-[examples/demo-city-guide/README.md](/home/domi/eventbaer/dev/patternpilot/examples/demo-city-guide/README.md:1)
+[examples/demo-city-guide/README.md](../../examples/demo-city-guide/README.md)

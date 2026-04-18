@@ -20,7 +20,7 @@ test("buildPolicyWorkbenchReview summarizes verdicts and recommendations", () =>
 
 test("renderPolicyWorkbenchReviewSummary renders comparison and verdict counts", () => {
   const markdown = renderPolicyWorkbenchReviewSummary({
-    projectKey: "eventbear-worker",
+    projectKey: "sample-project",
     workbenchId: "wb-1",
     sourceRunId: "run-1",
     review: {
@@ -43,5 +43,5 @@ test("renderPolicyWorkbenchReviewSummary renders comparison and verdict counts",
   assert.match(markdown, /delta_enforce_hidden: -1/);
   assert.match(markdown, /rows_with_verdict: 2/);
   assert.match(markdown, /decision_status: ready_for_suggestion/);
-  assert.match(markdown, /next_command: npm run patternpilot -- policy-suggest --project eventbear-worker --workbench-dir/);
+  assert.match(markdown, /next_command: npm run patternpilot -- policy-suggest --project sample-project --workbench-dir/);
 });

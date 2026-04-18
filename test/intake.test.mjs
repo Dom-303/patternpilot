@@ -13,7 +13,7 @@ import {
 
 function makeBinding() {
   return {
-    projectKey: "eventbear-worker",
+    projectKey: "sample-project",
     readBeforeAnalysis: [],
     referenceDirectories: [],
     analysisQuestions: [],
@@ -34,8 +34,8 @@ describe("renderIntakeDoc decision signals block", () => {
       projectAlignment: makeFakeProjectAlignment(),
       projectProfile: { referenceFiles: [] },
       binding: makeBinding(),
-      projectLabel: "eventbear-worker",
-      repoRoot: "../eventbear-worker",
+      projectLabel: "sample-project",
+      repoRoot: "../sample-project",
       createdAt: "2026-04-13T00:00:00.000Z",
       notes: [],
       candidate: {

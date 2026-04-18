@@ -23,7 +23,7 @@ test("discoverImportedCandidates builds a discovery run from imported candidates
       },
       {},
       {
-        projectKey: "eventbear-worker",
+        projectKey: "sample-project",
         projectLabel: "Eventbear Worker",
         targetCapabilities: ["source-first"],
         analysisQuestions: ["What should this teach the worker?"],
@@ -46,7 +46,7 @@ test("discoverImportedCandidates builds a discovery run from imported candidates
         ]
       },
       {
-        discoveryPolicy: defaultDiscoveryPolicy("eventbear-worker"),
+        discoveryPolicy: defaultDiscoveryPolicy("sample-project"),
         discoveryPolicyMode: "audit",
         discoveryProfile: "focused"
       }

@@ -123,7 +123,7 @@ test("deliverAutomationAlertPayload executes the built-in patternpilot alert hoo
     schemaVersion: 1,
     generatedAt: "2026-04-15T12:00:00.000Z",
     nextJob: {
-      name: "eventbear-worker-apply",
+      name: "sample-project-apply",
       status: "ready",
       reason: "interval_elapsed",
       command: "npm run automation:run"
@@ -132,7 +132,7 @@ test("deliverAutomationAlertPayload executes the built-in patternpilot alert hoo
       {
         severity: "high",
         category: "blocked_manual",
-        jobName: "eventbear-worker-apply",
+        jobName: "sample-project-apply",
         message: "Blocked for manual intervention.",
         nextAction: "Inspect the failing run."
       }
@@ -158,7 +158,7 @@ test("deliverAutomationAlertPayload executes the built-in patternpilot alert hoo
   assert.equal(delivery.deliveries[0].hookName, "patternpilot-alert-hook");
   assert.match(writtenMarkdown, /Patternpilot Alert Hook Digest/);
   assert.equal(writtenJson.digest.alertCount, 1);
-  assert.equal(writtenJson.digest.nextJob.name, "eventbear-worker-apply");
+  assert.equal(writtenJson.digest.nextJob.name, "sample-project-apply");
 });
 
 test("deliverAutomationAlertPayload skips targets whose minimum delivery priority is not met", async () => {

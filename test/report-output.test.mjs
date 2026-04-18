@@ -15,10 +15,11 @@ describe("buildBrowserLinkTarget", () => {
     process.env.WSL_DISTRO_NAME = "Ubuntu-24.04";
 
     try {
-      const out = buildBrowserLinkTarget("/home/domi/eventbaer/dev/patternpilot/projects/demo/reports/report.html");
+      const inputPath = "/home/example/patternpilot/projects/demo/reports/report.html";
+      const out = buildBrowserLinkTarget(inputPath);
       assert.equal(
         out,
-        "\\\\wsl.localhost\\Ubuntu-24.04\\home\\domi\\eventbaer\\dev\\patternpilot\\projects\\demo\\reports\\report.html"
+        "\\\\wsl.localhost\\Ubuntu-24.04\\home\\example\\patternpilot\\projects\\demo\\reports\\report.html"
       );
     } finally {
       if (previous === undefined) {

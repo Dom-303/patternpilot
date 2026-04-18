@@ -230,7 +230,7 @@ test("buildGithubWebhookExecutionContract captures runner mode and scheduled com
     },
     routePlan: {
       projectSelection: {
-        selectedProjectKey: "eventbear-worker"
+        selectedProjectKey: "sample-project"
       },
       routeStatus: "dispatchable"
     },

@@ -35,4 +35,4 @@ npm run bootstrap -- --project my-project --target ../my-project --label "My Pro
 
 Ein rein fiktives Referenzbeispiel liegt unter:
 
-[examples/demo-city-guide/README.md](/home/domi/eventbaer/dev/patternpilot/examples/demo-city-guide/README.md:1)
+[examples/demo-city-guide/README.md](../examples/demo-city-guide/README.md)

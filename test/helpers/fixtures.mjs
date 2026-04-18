@@ -5,8 +5,8 @@ import os from "node:os";
 export function makeFakeRepo(overrides = {}) {
   return {
     owner: "acme",
-    name: "eventbear-worker",
-    normalizedRepoUrl: "https://github.com/acme/eventbear-worker",
+    name: "sample-project",
+    normalizedRepoUrl: "https://github.com/acme/sample-project",
     description: "Event discovery and intake worker",
     size: 500,
     ...overrides
@@ -70,7 +70,7 @@ export function makeFakeProjectAlignment(overrides = {}) {
 
 export function makeFakeAlignmentRules(overrides = {}) {
   return {
-    projectKey: "eventbear-worker",
+    projectKey: "sample-project",
     capabilities: [
       {
         id: "source_first",
@@ -122,7 +122,7 @@ export function makeFakeAlignmentRules(overrides = {}) {
         effort_bias: -5,
         worker_areas: ["docs/SOURCE_MASTERLIST_POLICY.md", "docs/SOURCE_SYSTEMS_TARGET_ARCHITECTURE.md", "sources/"],
         review_docs: ["docs/SOURCE_MASTERLIST_POLICY.md", "docs/SOURCE_SYSTEMS_TARGET_ARCHITECTURE.md"],
-        next_step: "Check whether the repo suggests a reusable source-family or intake contract for EventBaer."
+        next_step: "Check whether the repo suggests a reusable source-family or intake contract for Sample Project."
       },
       parsing_extraction: {
         fit_bias: 22,
@@ -169,7 +169,7 @@ export function makeFakeAlignmentRules(overrides = {}) {
       source_systems_and_families: {
         fit_bias: 24,
         value_bias: 22,
-        suggested_next_step: "Compare the repo against EventBaer's source-system target architecture and family scaling goals."
+        suggested_next_step: "Compare the repo against Sample Project's source-system target architecture and family scaling goals."
       },
       adapter_handoff_contracts: {
         fit_bias: 20,
@@ -209,7 +209,7 @@ export function makeFakeAlignmentRules(overrides = {}) {
       risk_and_dependency_awareness: {
         fit_bias: 6,
         value_bias: 2,
-        suggested_next_step: "Read primarily as a risk or anti-pattern signal for EventBaer."
+        suggested_next_step: "Read primarily as a risk or anti-pattern signal for Sample Project."
       }
     },
     patternTensions: {

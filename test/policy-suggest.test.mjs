@@ -40,7 +40,7 @@ test("buildPolicySuggestion can heuristically unblock observe_only false blocks"
 
 test("renderPolicySuggestionSummary renders suggestion details", () => {
   const markdown = renderPolicySuggestionSummary({
-    projectKey: "eventbear-worker",
+    projectKey: "sample-project",
     workbenchId: "wb-1",
     sourceRunId: "run-1",
     suggestion: {
@@ -74,5 +74,5 @@ test("renderPolicySuggestionSummary renders suggestion details", () => {
   assert.match(markdown, /delta_enforce_hidden: -2/);
   assert.match(markdown, /heuristic_false_blocks: 2/);
   assert.match(markdown, /decision_status: trial_ready/);
-  assert.match(markdown, /next_command: npm run patternpilot -- policy-trial --project eventbear-worker --workbench-dir/);
+  assert.match(markdown, /next_command: npm run patternpilot -- policy-trial --project sample-project --workbench-dir/);
 });

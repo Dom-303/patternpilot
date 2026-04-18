@@ -29,12 +29,12 @@ test("upsertQueueEntry auto-extends header with new engine-decision columns", as
     rows: [
       {
         intake_id: "1",
-        project_key: "eventbear-worker",
+        project_key: "sample-project",
         status: "queued",
         created_at: "2025-04-01T00:00:00.000Z",
         updated_at: "2025-04-01T00:00:00.000Z",
-        repo_url: "https://github.com/acme/eventbear-worker",
-        normalized_repo_url: "https://github.com/acme/eventbear-worker"
+        repo_url: "https://github.com/acme/sample-project",
+        normalized_repo_url: "https://github.com/acme/sample-project"
       }
     ]
   });
@@ -42,12 +42,12 @@ test("upsertQueueEntry auto-extends header with new engine-decision columns", as
   try {
     await upsertQueueEntry(workspace.rootDir, workspace.config, {
       intake_id: "1",
-      project_key: "eventbear-worker",
+      project_key: "sample-project",
       status: "queued",
       created_at: "2025-04-01T00:00:00.000Z",
       updated_at: "2025-04-02T00:00:00.000Z",
-      repo_url: "https://github.com/acme/eventbear-worker",
-      normalized_repo_url: "https://github.com/acme/eventbear-worker",
+      repo_url: "https://github.com/acme/sample-project",
+      normalized_repo_url: "https://github.com/acme/sample-project",
       effort_band: "low",
       effort_score: 25,
       value_band: "high",
@@ -79,7 +79,7 @@ test("loadQueueEntries returns empty strings for missing new columns in legacy r
     rows: [
       {
         intake_id: "7",
-        project_key: "eventbear-worker",
+        project_key: "sample-project",
         status: "queued",
         repo_url: "https://github.com/acme/legacy",
         normalized_repo_url: "https://github.com/acme/legacy"
@@ -120,14 +120,14 @@ test("upsertQueueEntry matches GitHub URLs case-insensitively and preserves stro
     rows: [
       {
         intake_id: "old-run__city-bureau__city-scrapers",
-        project_key: "eventbear-worker",
+        project_key: "sample-project",
         status: "promoted",
         created_at: "2026-04-14T21:27:22.421Z",
         updated_at: "2026-04-14T21:38:26.541Z",
         repo_url: "https://github.com/city-bureau/city-scrapers",
         normalized_repo_url: "https://github.com/city-bureau/city-scrapers",
         promotion_status: "applied",
-        promotion_packet: "projects/eventbear-worker/promotions/city-bureau__city-scrapers.md",
+        promotion_packet: "projects/sample-project/promotions/city-bureau__city-scrapers.md",
         promoted_at: "2026-04-14T21:38:26.541Z",
         description: "Existing promoted repo",
         enrichment_status: "success"
@@ -138,7 +138,7 @@ test("upsertQueueEntry matches GitHub URLs case-insensitively and preserves stro
   try {
     await upsertQueueEntry(workspace.rootDir, workspace.config, {
       intake_id: "new-run__city-bureau__city-scrapers",
-      project_key: "eventbear-worker",
+      project_key: "sample-project",
       status: "pending_review",
       created_at: "2026-04-17T18:55:50.316Z",
       updated_at: "2026-04-17T18:55:50.316Z",
@@ -155,7 +155,7 @@ test("upsertQueueEntry matches GitHub URLs case-insensitively and preserves stro
     assert.equal(rows.length, 1);
     assert.equal(rows[0].status, "promoted");
     assert.equal(rows[0].promotion_status, "applied");
-    assert.equal(rows[0].promotion_packet, "projects/eventbear-worker/promotions/city-bureau__city-scrapers.md");
+    assert.equal(rows[0].promotion_packet, "projects/sample-project/promotions/city-bureau__city-scrapers.md");
     assert.equal(rows[0].promoted_at, "2026-04-14T21:38:26.541Z");
     assert.equal(rows[0].normalized_repo_url, "https://github.com/city-bureau/city-scrapers");
     assert.equal(rows[0].description, "Existing promoted repo");

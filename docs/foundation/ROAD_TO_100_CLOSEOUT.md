@@ -2,11 +2,9 @@
 
 ## Zweck
 
-Dieses Dokument ist der bewusste Abschlussbrief fuer den grossen `patternpilot`-Masterplan aus:
+Dieses Dokument ist der bewusste Abschlussbrief fuer einen frueheren grossen internen Ausbauplan von `patternpilot`.
 
-- `docs/superpowers/plans/2026-04-14-patternpilot-road-to-100.md`
-
-Es ersetzt den Plan nicht.
+Es ersetzt die alte Planungsdiskussion in der aktiven Produktoberflaeche.
 
 Es haelt fest:
 
