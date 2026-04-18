@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import {
+  buildReviewAgentView,
   collectUrls,
   createRunId,
   ensureDirectory,
@@ -173,6 +174,7 @@ export async function runReviewWatchlist(rootDir, config, options) {
     runId,
     command: options.outputSlug === "on-demand" ? "on-demand" : "review-watchlist",
     reportKind: "review",
+    agentHandoffPayload: buildReviewAgentView(review).payload,
     dryRun: options.dryRun
   });
 
@@ -182,6 +184,7 @@ export async function runReviewWatchlist(rootDir, config, options) {
   console.log(`HTML report: ${htmlReportRelativePath}`);
   console.log(`Browser link: ${path.relative(rootDir, reportPointers.browserLinkPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
   console.log(`Latest report metadata: ${path.relative(rootDir, reportPointers.latestReportPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
+  console.log(`Agent handoff: ${path.relative(rootDir, reportPointers.agentHandoffPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
   if (options.dryRun) {
     console.log("Dry run only: review report was not written.");
   }

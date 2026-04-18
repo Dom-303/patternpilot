@@ -68,14 +68,14 @@ describe("decision summary cutover", () => {
       candidates: [makeCandidate()]
     });
 
-    assert.match(html, /Run confidence/);
-    assert.match(html, />medium</);
-    assert.match(html, /balanced signals/);
+    assert.match(html, /Vertrauen in den Lauf/);
+    assert.match(html, />mittel</);
+    assert.match(html, /ausgewogene Signale/);
     assert.match(html, /section-warn/);
     assert.match(html, /50%/);
-    assert.match(html, /Top gap signal/);
-    assert.match(html, /source_systems_and_families/);
-    assert.match(html, /count 2 · strength 81/);
+    assert.match(html, /Staerkstes Lueckensignal/);
+    assert.match(html, /Quellsysteme und Familien/);
+    assert.match(html, /Anzahl 2 · Staerke 81/);
     assert.ok(!html.includes("(heuristic)"));
   });
 });
@@ -109,7 +109,7 @@ describe("license classification and rendering", () => {
     assert.match(renderLicenseTag("MIT"), /action-item__license license-permissive/);
     assert.match(renderLicenseTag("GPL-3.0"), /action-item__license license-copyleft/);
     assert.match(renderLicenseTag(null), /action-item__license license-unknown/);
-    assert.match(renderLicenseTag(null), /License \?/);
+    assert.match(renderLicenseTag(null), /Lizenz \?/);
   });
 });
 
@@ -217,14 +217,14 @@ describe("recommended actions cutover", () => {
       ]
     });
 
-    assert.match(html, /Recommended Actions/);
+    assert.match(html, /Empfohlene Aktionen/);
     assert.ok(html.indexOf("alpha/permissive") < html.indexOf("beta/copyleft"));
     assert.ok(html.indexOf("beta/copyleft") < html.indexOf("gamma/unknown"));
     assert.match(html, /delta\/watch/);
     assert.match(html, /action-item__license license-permissive/);
     assert.match(html, /action-item__license license-copyleft/);
     assert.match(html, /action-item__license license-unknown/);
-    assert.match(html, /License \?/);
+    assert.match(html, /Lizenz \?/);
   });
 
   test("recommended actions stay empty when run schema is missing", () => {
@@ -305,10 +305,17 @@ describe("review html scope rendering", () => {
       itemsDataStateSummary: { complete: 1, fallback: 0, stale: 0 }
     }, "standard");
 
-    assert.match(html, /Run scope/);
-    assert.match(html, /Selected URLs/);
-    assert.match(html, /Missing selected intake/);
-    assert.match(html, /Input URLs/);
+    assert.match(html, /Umfang des Laufs/);
+    assert.match(html, /Explizite URLs/);
+    assert.match(html, /Fehlendes Intake fuer Auswahl/);
+    assert.match(html, /Eingangs-URLs/);
+    assert.match(html, /Staerkste Vergleichs-Repos/);
+    assert.match(html, /Lueckenbereich/);
+    assert.match(html, /Naechster Schritt/);
+    assert.match(html, /Relevanz/);
+    assert.match(html, /KI Coding Agents/);
+    assert.match(html, /Wichtiger Kontext/);
+    assert.match(html, /Offene Unsicherheiten/);
   });
 });
 
@@ -358,15 +365,17 @@ describe("discovery html policy rendering", () => {
       }
     });
 
-    assert.match(html, /Discovery policy/);
-    assert.match(html, /Policy flagged/);
-    assert.match(html, /Mode audit kept 5 of 5 evaluated candidates visible/);
-    assert.match(html, /Policy calibration/);
+    assert.match(html, /Discovery-Regelwerk/);
+    assert.match(html, /Vom Regelwerk markiert/);
+    assert.match(html, /Der Modus audit hat 5 von 5 bewerteten Kandidaten sichtbar gelassen/);
+    assert.match(html, /Regel-Kalibrierung/);
     assert.match(html, /strict_needs_review/);
     assert.match(html, /Audit mode keeps flagged repos visible/);
     assert.match(html, /blocked_signal_pattern: 3/);
     assert.match(html, /drop\/demo: blocked_signal_pattern/);
-    assert.match(html, /Raw found/);
+    assert.match(html, /Roh gefunden/);
+    assert.match(html, /KI Coding Agents/);
+    assert.match(html, /id="patternpilot-agent-payload"/);
   });
 });
 
@@ -441,6 +450,8 @@ describe("on-demand run html rendering", () => {
         reviewReportLabel: "projects/sample-project/reports/patternpilot-report-sample-project-2026-04-14-on-demand.html",
         latestReportHref: "../../../projects/sample-project/reports/latest-report.json",
         latestReportLabel: "projects/sample-project/reports/latest-report.json",
+        agentHandoffHref: "../../../projects/sample-project/reports/agent-handoff.json",
+        agentHandoffLabel: "projects/sample-project/reports/agent-handoff.json",
         browserLinkHref: "../../../projects/sample-project/reports/browser-link",
         browserLinkLabel: "projects/sample-project/reports/browser-link"
       },
@@ -450,13 +461,21 @@ describe("on-demand run html rendering", () => {
       ]
     });
 
-    assert.match(html, /ON-DEMAND RUN/);
-    assert.match(html, /Run summary/);
-    assert.match(html, /Artifacts/);
-    assert.match(html, /What now/);
-    assert.match(html, /Review report/);
-    assert.match(html, /Latest report metadata/);
-    assert.match(html, /Browser link/);
-    assert.match(html, /Decide whether the repo should enter the watchlist/);
+    assert.match(html, /AD-HOC-LAUF/);
+    assert.match(html, /Laufzusammenfassung/);
+    assert.match(html, /Artefakte/);
+    assert.match(html, /Was jetzt/);
+    assert.match(html, /Review-Bericht/);
+    assert.match(html, /Letzte Report-Metadaten/);
+    assert.match(html, /Agent Hand-Off/);
+    assert.match(html, /Browser-Link/);
+    assert.match(html, /Beobachtungsliste aufgenommen werden soll|Oeffne zuerst den Review-Bericht/);
+    assert.match(html, /KI Coding Agents/);
+    assert.match(html, /Wichtiger Kontext/);
+    assert.match(html, /Offene Unsicherheiten/);
+    assert.match(html, /Agent Hand-Off oeffnen/);
+    assert.match(html, /Agent Hand-Off herunterladen/);
+    assert.match(html, /id="patternpilot-agent-payload"/);
+    assert.match(html, /"reportType":\s*"on_demand"/);
   });
 });

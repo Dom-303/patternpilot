@@ -1,6 +1,7 @@
 const COMMANDS = [
   { name: "bootstrap", description: "Create a local config overlay and optionally bind the first target project", handlerKey: "runBootstrap" },
   { name: "getting-started", description: "Show the shortest useful first-run path for a fresh local installation", handlerKey: "runGettingStarted", aliases: ["first-run"] },
+  { name: "agent-handoff", description: "Show or export the current KI-Agent-Handoffdatei for one project", handlerKey: "runAgentHandoff" },
   { name: "on-demand", description: "Run the primary manual flow for one project in a single step", handlerKey: "runOnDemand", aliases: ["analyze"] },
   { name: "policy-audit", description: "Run discovery with project policy in audit mode for calibration", handlerKey: "runPolicyAudit" },
   { name: "policy-calibrate", description: "Aggregate saved discovery runs into a project-wide policy calibration report", handlerKey: "runPolicyCalibrate" },
@@ -157,6 +158,7 @@ const ALIAS_MAP = new Map(
 
 const HELP_EXAMPLES = [
   "npm run patternpilot -- getting-started",
+  "npm run patternpilot -- agent-handoff --project my-project",
   "npm run bootstrap -- --project my-project --target ../my-project --label \"My Project\"",
   "npm run analyze -- --project my-project https://github.com/example/repo",
   "npm run patternpilot -- discover --project my-project --discovery-profile balanced --dry-run",
@@ -192,6 +194,7 @@ function categorizeCommand(command) {
   if (
     command.name === "bootstrap"
     || command.name === "getting-started"
+    || command.name === "agent-handoff"
     || command.name === "doctor"
     || command.name === "init-project"
     || command.name === "discover-workspace"

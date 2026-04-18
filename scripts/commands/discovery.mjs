@@ -6,6 +6,7 @@ import {
   buildLandkarteCandidate,
   buildProjectAlignment,
   buildProjectRelevanceNote,
+  buildDiscoveryAgentView,
   collectUrls,
   createRunId,
   discoverGithubCandidates,
@@ -484,6 +485,10 @@ export async function runDiscover(rootDir, config, options) {
     runId,
     command: commandName,
     reportKind: "discovery",
+    agentHandoffPayload: buildDiscoveryAgentView({
+      projectKey,
+      discovery
+    }).payload,
     dryRun: options.dryRun
   });
   const feedbackSnapshot = await writeDiscoveryFeedbackSnapshot(
@@ -500,6 +505,7 @@ export async function runDiscover(rootDir, config, options) {
   console.log(`HTML report: ${projectReportRelativePath}`);
   console.log(`Browser link: ${path.relative(rootDir, reportPointers.browserLinkPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
   console.log(`Latest report metadata: ${path.relative(rootDir, reportPointers.latestReportPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
+  console.log(`Agent handoff: ${path.relative(rootDir, reportPointers.agentHandoffPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
 
   const candidateUrls = discovery.candidates.map((candidate) => candidate.repo.normalizedRepoUrl);
   if (options.appendWatchlist) {
@@ -699,6 +705,10 @@ export async function runDiscoverImport(rootDir, config, options) {
     runId,
     command: "discover-import",
     reportKind: "discovery",
+    agentHandoffPayload: buildDiscoveryAgentView({
+      projectKey,
+      discovery
+    }).payload,
     dryRun: options.dryRun
   });
   const feedbackSnapshot = await writeDiscoveryFeedbackSnapshot(
@@ -715,6 +725,7 @@ export async function runDiscoverImport(rootDir, config, options) {
   console.log(`HTML report: ${projectReportRelativePath}`);
   console.log(`Browser link: ${path.relative(rootDir, reportPointers.browserLinkPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
   console.log(`Latest report metadata: ${path.relative(rootDir, reportPointers.latestReportPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
+  console.log(`Agent handoff: ${path.relative(rootDir, reportPointers.agentHandoffPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
 
   await refreshContext(rootDir, config, {
     command: "discover-import",

@@ -4,7 +4,7 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 
-import { loadConfig, writeConfig } from "../lib/config.mjs";
+import { loadConfig, parseArgs, writeConfig } from "../lib/config.mjs";
 
 async function makeTempRoot() {
   return fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-config-"));
@@ -70,4 +70,20 @@ test("writeConfig with preferLocal writes a local overlay file", async () => {
   const localConfig = JSON.parse(localRaw);
   assert.equal(localConfig.defaultProject, "demo");
   assert.equal(localConfig.projects.demo.label, "Demo");
+});
+
+test("parseArgs captures agent handoff output flags", () => {
+  const { command, options } = parseArgs([
+    "agent-handoff",
+    "--project",
+    "demo",
+    "--output",
+    "exports/demo-agent-handoff.json",
+    "--stdout"
+  ]);
+
+  assert.equal(command, "agent-handoff");
+  assert.equal(options.project, "demo");
+  assert.equal(options.output, "exports/demo-agent-handoff.json");
+  assert.equal(options.stdout, true);
 });

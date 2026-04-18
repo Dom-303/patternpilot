@@ -23,6 +23,7 @@ import {
   runReEvaluate
 } from "./commands/watchlist.mjs";
 import { runOnDemand } from "./commands/on-demand.mjs";
+import { runAgentHandoff } from "./commands/agent-handoff.mjs";
 import {
   runPlan,
   runDrift,
@@ -201,6 +202,7 @@ const COMMANDS_ALLOWED_WITHOUT_PROJECT = new Set([
 function buildCommandHandlers(envFiles) {
   return {
     runBootstrap,
+    runAgentHandoff,
     runIntake,
     runOnDemand,
     runPlan,

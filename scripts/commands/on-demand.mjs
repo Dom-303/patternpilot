@@ -318,6 +318,7 @@ export async function runOnDemand(rootDir, config, options) {
   if (reviewRun?.reportPointers) {
     console.log(`- browser_link: ${path.relative(rootDir, reviewRun.reportPointers.browserLinkPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
     console.log(`- latest_report_metadata: ${path.relative(rootDir, reviewRun.reportPointers.latestReportPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
+    console.log(`- agent_handoff: ${path.relative(rootDir, reviewRun.reportPointers.agentHandoffPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
   }
   if (promoteRun) {
     console.log(`- promotion_items: ${promoteRun.items.length}`);
@@ -329,6 +330,8 @@ export async function runOnDemand(rootDir, config, options) {
     reviewReportLabel: reviewRun?.htmlReportPath ?? null,
     latestReportHref: reviewRun?.reportPointers ? path.relative(onDemandRunDir, reviewRun.reportPointers.latestReportPath) : null,
     latestReportLabel: reviewRun?.reportPointers ? path.relative(rootDir, reviewRun.reportPointers.latestReportPath) : null,
+    agentHandoffHref: reviewRun?.reportPointers ? path.relative(onDemandRunDir, reviewRun.reportPointers.agentHandoffPath) : null,
+    agentHandoffLabel: reviewRun?.reportPointers ? path.relative(rootDir, reviewRun.reportPointers.agentHandoffPath) : null,
     browserLinkHref: reviewRun?.reportPointers ? path.relative(onDemandRunDir, reviewRun.reportPointers.browserLinkPath) : null,
     browserLinkLabel: reviewRun?.reportPointers ? path.relative(rootDir, reviewRun.reportPointers.browserLinkPath) : null
   };
@@ -408,7 +411,8 @@ export async function runOnDemand(rootDir, config, options) {
       items: reviewRun.review.items.length,
       htmlReportPath: reviewRun.htmlReportPath,
       browserLinkPath: path.relative(rootDir, reviewRun.reportPointers.browserLinkPath),
-      latestReportPath: path.relative(rootDir, reviewRun.reportPointers.latestReportPath)
+      latestReportPath: path.relative(rootDir, reviewRun.reportPointers.latestReportPath),
+      agentHandoffPath: path.relative(rootDir, reviewRun.reportPointers.agentHandoffPath)
     } : null,
     promoteRun: promoteRun ? {
       runId: promoteRun.runId,
@@ -418,6 +422,7 @@ export async function runOnDemand(rootDir, config, options) {
     artifacts: {
       reviewReportPath: artifacts.reviewReportLabel,
       latestReportPath: artifacts.latestReportLabel,
+      agentHandoffPath: artifacts.agentHandoffLabel,
       browserLinkPath: artifacts.browserLinkLabel
     },
     nextActions

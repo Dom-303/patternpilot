@@ -32,7 +32,7 @@ describe("buildBrowserLinkTarget", () => {
 });
 
 describe("writeLatestReportPointers", () => {
-  test("writes browser-link and latest-report metadata", async () => {
+  test("writes browser-link, latest-report metadata, and agent handoff artifacts", async () => {
     const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "patternpilot-report-output-"));
     const reportPath = path.join(rootDir, "projects/demo/reports/patternpilot-report-demo-2026-04-14-on-demand.html");
     fs.mkdirSync(path.dirname(reportPath), { recursive: true });
@@ -47,17 +47,41 @@ describe("writeLatestReportPointers", () => {
         runId: "2026-04-14T12-00-00-000Z",
         command: "on-demand",
         reportKind: "review",
+        agentHandoffPayload: {
+          reportType: "review",
+          projectKey: "demo",
+          topRepos: [
+            {
+              repo: "acme/demo",
+              fitBand: "high",
+              nextStep: "Gezielt pruefen."
+            }
+          ]
+        },
         dryRun: false
       });
 
       const browserLinkContent = fs.readFileSync(out.browserLinkPath, "utf8").trim();
       const latestReport = JSON.parse(fs.readFileSync(out.latestReportPath, "utf8"));
+      const agentHandoff = JSON.parse(fs.readFileSync(out.agentHandoffPath, "utf8"));
 
       assert.equal(browserLinkContent, out.browserLink);
       assert.equal(latestReport.projectKey, "demo");
       assert.equal(latestReport.command, "on-demand");
       assert.equal(latestReport.reportKind, "review");
       assert.equal(latestReport.reportPath, "projects/demo/reports/patternpilot-report-demo-2026-04-14-on-demand.html");
+      assert.equal(latestReport.agentHandoffPath, "projects/demo/reports/agent-handoff.json");
+      assert.equal(agentHandoff.schemaVersion, 1);
+      assert.equal(agentHandoff.projectKey, "demo");
+      assert.equal(agentHandoff.reportKind, "review");
+      assert.equal(agentHandoff.reportPath, "projects/demo/reports/patternpilot-report-demo-2026-04-14-on-demand.html");
+      assert.deepEqual(agentHandoff.handoff.topRepos, [
+        {
+          repo: "acme/demo",
+          fitBand: "high",
+          nextStep: "Gezielt pruefen."
+        }
+      ]);
     } finally {
       fs.rmSync(rootDir, { recursive: true, force: true });
     }
