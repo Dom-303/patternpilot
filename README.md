@@ -22,6 +22,7 @@ Es hilft dir, externe GitHub-Repositories nicht nur zu sammeln, sondern im Konte
 - Release-Check: [RELEASE_CHECKLIST.md](docs/foundation/RELEASE_CHECKLIST.md)
 - Release-Kommunikation: [RELEASE_COMMUNICATION.md](docs/foundation/RELEASE_COMMUNICATION.md)
 - `v1`-Closeout: [V1_CLOSEOUT.md](docs/foundation/V1_CLOSEOUT.md)
+- finale Kernhaertung: [FINAL_PRODUCT_HARDENING_PLAN.md](docs/foundation/FINAL_PRODUCT_HARDENING_PLAN.md)
 
 ## Quick View
 

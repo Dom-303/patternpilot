@@ -49,3 +49,7 @@ Genau dieser Nachweis ist jetzt erbracht.
 Wenn du den kompakten Beleg lesen willst:
 
 [V1_CLOSEOUT.md](V1_CLOSEOUT.md)
+
+Wenn du die naechste Abschlussphase lesen willst:
+
+[FINAL_PRODUCT_HARDENING_PLAN.md](FINAL_PRODUCT_HARDENING_PLAN.md)
