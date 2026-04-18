@@ -2,12 +2,34 @@
 
 Danke, dass du `patternpilot` verbessern willst.
 
-## Bevor du loslegst
+## Was "Contributing" hier bedeutet
 
-Der wichtigste Produktgrundsatz ist:
+`Contributing` heisst hier einfach:
 
-- Produktcode und gepflegte Referenzdoku gehoeren ins Repo
-- lokale Runtime-Zustaende und Run-Artefakte nicht
+- du willst einen Bug beheben
+- du willst die Doku klarer machen
+- du willst die Nutzerfuehrung verbessern
+- du willst einen Report, einen Command oder die Discovery besser machen
+- du willst einen sinnvollen Produktbeitrag leisten
+
+Du musst dafuer nicht gleich ein grosses Feature bauen.
+Auch kleine, saubere Verbesserungen sind wertvoll.
+
+## Was "Mitmachen" praktisch heisst
+
+In der README steht bei Open Source der Punkt `Mitmachen`.
+
+Gemeint ist damit genau dieses Dokument:
+
+- [CONTRIBUTING.md](CONTRIBUTING.md)
+
+Also: Wie man sinnvoll an diesem Projekt mitarbeitet.
+
+## Wichtiger Produktgrundsatz
+
+Produktcode und gepflegte Referenzdoku gehoeren ins Repo.
+
+Lokale Runtime-Zustaende und Run-Artefakte nicht.
 
 Wenn du dazu unsicher bist, lies:
 
@@ -46,11 +68,13 @@ npm run release:check
 
 ## Wenn du an Doku arbeitest
 
-Bitte halte die drei Nutzerpfade sauber auseinander:
+Bitte halte diese Ebenen sauber getrennt:
 
 - `docs/foundation/SIMPLE_GUIDE.md`
 - `docs/foundation/GETTING_STARTED.md`
 - `docs/foundation/ADVANCED_GUIDE.md`
+- `docs/foundation/OPERATING_MODEL.md`
+- `docs/foundation/V1_STATUS.md`
 
 ## Wenn du an Produktlogik arbeitest
 
@@ -60,7 +84,8 @@ Bitte bevorzuge:
 - lesbare Statusausgaben
 - produktneutrale Beispiele
 - lokale-first Betriebslogik
+- echte Verbesserungen aus Nutzung statt theoretischer Ausbau um seiner selbst willen
 
 ## Lizenz
 
-Mit Beitragen zu diesem Repo erklaerst du dich damit einverstanden, dass dein Beitrag unter der Apache-2.0-Lizenz dieses Projekts veroeffentlicht wird.
+Mit Beitraegen zu diesem Repo erklaerst du dich damit einverstanden, dass dein Beitrag unter der Apache-2.0-Lizenz dieses Projekts veroeffentlicht wird.
