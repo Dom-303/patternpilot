@@ -17,6 +17,8 @@ state/automation_dispatch_history.json
 state/automation_jobs_state.json
 state/automation_operator_reviews.json
 state/runtime_context.json
+STATUS.md
+OPEN_QUESTION.md
 
 projects/*/reports/latest-report.json
 projects/*/reports/patternpilot-report-*.html

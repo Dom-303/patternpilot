@@ -149,6 +149,8 @@ Sie sollen sichtbar halten:
 - was der letzte sinnvolle Einstiegspunkt ist
 - welche Fragen wirklich noch offen sind
 
+Sie sind bewusst lokale, generierte Arbeitsdateien und keine versionierten Produktartefakte.
+
 ---
 
 ## Plugin-Richtung

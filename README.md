@@ -319,7 +319,7 @@ Dieser Motor:
 - schreibt menschenfreundliche HTML-Reports fuer Discovery- und Review-Laeufe
 - haelt fuer jedes Projekt einen direkten Report-Pointer in `projects/<project>/reports/browser-link`
 - schreibt Metadaten zum letzten Projekt-Report nach `projects/<project>/reports/latest-report.json`
-- haelt `STATUS.md` und `OPEN_QUESTION.md` als Uebergabeflaechen fuer Agenten aktuell
+- haelt lokal generierte `STATUS.md` und `OPEN_QUESTION.md` als Uebergabeflaechen fuer Agenten aktuell
 - legt projektbezogene Intake-Dossiers an
 - schreibt Run-Protokolle
 - kann Promotion-Pakete vorbereiten oder direkt anwenden
@@ -336,7 +336,7 @@ Es nutzt pro Zielprojekt nur die dort konfigurierten Kontextquellen als schnelle
 
 Ordnungslogik:
 
-- `STATUS.md` und `OPEN_QUESTION.md` bleiben im Repo-Root als operative Handoff-Schicht.
+- `STATUS.md` und `OPEN_QUESTION.md` bleiben lokal im Repo-Root als operative Handoff-Schicht, sind aber bewusst keine versionierten Produktdateien.
 - `knowledge/repo_decisions.md` gehoert nicht in diese Handoff-Schicht, sondern zur kuratierten Wissensebene zusammen mit `knowledge/repo_landkarte.csv` und `knowledge/repo_learnings.md`.
 
 ---
@@ -687,6 +687,7 @@ Uebergabedateien:
 - `STATUS.md` zeigt den aktuellen Patternpilot-Betriebsstand
 - `OPEN_QUESTION.md` haelt die wirklich offenen Produkt- und Betriebsfragen sichtbar
 - die Kernlaeufe aktualisieren diese Dateien automatisch
+- beide Dateien sind lokale, generierte Arbeitsflaechen und nicht Teil des versionierten Produktkerns
 - zusaetzlich gibt es `npm run refresh:context`
 
 Analyse-Profile:
