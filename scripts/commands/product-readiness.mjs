@@ -29,6 +29,10 @@ import {
 } from "../../lib/index.mjs";
 import { computeRulesFingerprint } from "../../lib/classification/evaluation.mjs";
 import { enrichAutomationEvaluationsWithGovernance } from "./automation/shared.mjs";
+import {
+  buildGoldenPathCommands,
+  renderNextCommandSections
+} from "../shared/golden-path.mjs";
 import { buildProjectRunDiagnostics, refreshContext } from "../shared/runtime-helpers.mjs";
 
 async function safeLoadJson(filePath) {
@@ -235,6 +239,15 @@ export async function runProductReadiness(rootDir, config, options) {
     console.log(`- artifact_root: ${path.relative(rootDir, artifacts.artifactRoot)}${options.dryRun ? " (dry-run not written)" : ""}`);
     console.log(`- artifact_review: ${path.relative(rootDir, artifacts.reviewPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
     console.log(`- artifact_summary: ${path.relative(rootDir, artifacts.summaryPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
+    console.log(``);
+    const targetProject = options.project || config.defaultProject || review.projects?.[0]?.projectKey || "my-project";
+    const commands = buildGoldenPathCommands(targetProject);
+    console.log(renderNextCommandSections({
+      primary: review.nextAction ?? commands.bootstrap,
+      additional: review.projects.length > 0
+        ? [commands.showProject, commands.reviewWatchlist]
+        : [commands.gettingStarted]
+    }));
   }
 
   await refreshContext(rootDir, config, {

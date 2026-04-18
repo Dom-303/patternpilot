@@ -35,6 +35,29 @@ function buildReviewReportPath(rootDir, binding, review, outputSlug) {
   return path.join(rootDir, "projects", binding.projectKey, "reviews", reportFilename);
 }
 
+function buildReviewCommandGuidance(projectKey, review) {
+  const commands = buildGoldenPathCommands(projectKey);
+
+  if ((review.items?.length ?? 0) <= 0) {
+    return {
+      primary: commands.syncWatchlist,
+      additional: [commands.intake, commands.showProject]
+    };
+  }
+
+  if ((review.missingUrls?.length ?? 0) > 0) {
+    return {
+      primary: commands.syncWatchlist,
+      additional: [commands.reviewWatchlist, commands.releaseCheck]
+    };
+  }
+
+  return {
+    primary: commands.releaseCheck,
+    additional: [commands.reviewWatchlist, commands.showProject]
+  };
+}
+
 function selectReEvaluateTargets(queueRows, alignmentRules, options = {}) {
   const currentFingerprint = computeRulesFingerprint(alignmentRules);
   const requestedUrls = new Set(
@@ -157,6 +180,9 @@ export async function runReviewWatchlist(rootDir, config, options) {
   if (options.dryRun) {
     console.log("Dry run only: review report was not written.");
   }
+  console.log(``);
+  const commandGuidance = buildReviewCommandGuidance(projectKey, review);
+  console.log(renderNextCommandSections(commandGuidance));
   await refreshContext(rootDir, config, {
     command: "review-watchlist",
     projectKey,
