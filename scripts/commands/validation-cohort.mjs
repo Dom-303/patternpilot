@@ -497,7 +497,7 @@ export async function runValidateCohort(rootDir, _config, options) {
       : [
         "npm run release:smoke",
         "npm run patternpilot -- product-readiness",
-        "Open docs/foundation/FINAL_PRODUCT_HARDENING_PLAN.md and mark Phase 4 complete."
+        "Review docs/foundation/V1_STATUS.md and fold any product-relevant findings into the stable docs."
       ]
   }));
 

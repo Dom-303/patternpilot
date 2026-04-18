@@ -21,13 +21,8 @@ Es hilft dir, externe GitHub-Repositories nicht nur zu sammeln, sondern im Konte
 - Mitmachen: [CONTRIBUTING.md](CONTRIBUTING.md)
 - Release-Check: [RELEASE_CHECKLIST.md](docs/foundation/RELEASE_CHECKLIST.md)
 - Release-Kommunikation: [RELEASE_COMMUNICATION.md](docs/foundation/RELEASE_COMMUNICATION.md)
-- `v1`-Closeout: [V1_CLOSEOUT.md](docs/foundation/V1_CLOSEOUT.md)
-- Phase-4-Validierung: [PHASE4_VALIDATION_CLOSEOUT.md](docs/foundation/PHASE4_VALIDATION_CLOSEOUT.md)
-- finaler Kern-Closeout: [FINAL_CORE_CLOSEOUT.md](docs/foundation/FINAL_CORE_CLOSEOUT.md)
-- akzeptierte Grenzen: [ACCEPTED_LIMITS.md](docs/foundation/ACCEPTED_LIMITS.md)
-- Discovery-Exzellenz-Plan: [DISCOVERY_EXCELLENCE_PLAN.md](docs/foundation/DISCOVERY_EXCELLENCE_PLAN.md)
-- Discovery D4 Closeout: [DISCOVERY_D4_CLOSEOUT.md](docs/foundation/DISCOVERY_D4_CLOSEOUT.md)
-- Discovery D5 Closeout: [DISCOVERY_D5_CLOSEOUT.md](docs/foundation/DISCOVERY_D5_CLOSEOUT.md)
+- Produktmodell: [OPERATING_MODEL.md](docs/foundation/OPERATING_MODEL.md)
+- Produktstatus: [V1_STATUS.md](docs/foundation/V1_STATUS.md)
 
 ## Quick View
 
@@ -163,18 +158,8 @@ Es gibt jetzt zwei Einstiegsebenen:
   [AUTOMATION_OPERATING_MODE.md](docs/foundation/AUTOMATION_OPERATING_MODE.md)
 - Ehrlicher Produktstatus:
   [V1_STATUS.md](docs/foundation/V1_STATUS.md)
-- Kompakter `v1`-Closeout:
-  [V1_CLOSEOUT.md](docs/foundation/V1_CLOSEOUT.md)
-- Finaler Kern-Closeout:
-  [FINAL_CORE_CLOSEOUT.md](docs/foundation/FINAL_CORE_CLOSEOUT.md)
-- Bewusst akzeptierte Grenzen:
-  [ACCEPTED_LIMITS.md](docs/foundation/ACCEPTED_LIMITS.md)
-- Discovery-Exzellenz-Plan und Abschlussverlauf:
-  [DISCOVERY_EXCELLENCE_PLAN.md](docs/foundation/DISCOVERY_EXCELLENCE_PLAN.md)
-- Bereits abgeschlossener Feedback-Loop-Ausbau:
-  [DISCOVERY_D4_CLOSEOUT.md](docs/foundation/DISCOVERY_D4_CLOSEOUT.md)
-- Bereits abgeschlossener Evaluations-Ausbau:
-  [DISCOVERY_D5_CLOSEOUT.md](docs/foundation/DISCOVERY_D5_CLOSEOUT.md)
+- Produkt- und Systembild:
+  [OPERATING_MODEL.md](docs/foundation/OPERATING_MODEL.md)
 
 Wenn du lieber direkt in der CLI gefuehrt werden willst:
 

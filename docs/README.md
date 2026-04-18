@@ -1,32 +1,41 @@
 # Docs
 
-Diese Dokumentation enthaelt die dauerhaft wichtigen Patternpilot-Grundlagen.
+Diese Doku ist jetzt bewusst auf dauerhafte Produkt- und Systemdokumente konzentriert.
 
-## Struktur
+Umsetzungsplaene, Zwischen-Closeouts und historische Schritt-fuer-Schritt-Artefakte gehoeren nicht mehr zur aktiven Produktdoku.
 
-- `foundation/` fuer Mission, Operating Model und Ausbaupfade
-- `system/` fuer das kanonische Repo-Intelligence-System
-- `taxonomy/` fuer kontrollierte Bewertungslogik
-- `reference/` fuer ergaenzende Referenzdokumente
-- `superpowers/plans/` fuer konkrete Umsetzungsplaene und Migrationspfade
-- `superpowers/specs/` fuer dazugehoerige Zielbilder und Detail-Designs
+## Wichtigste Einstiege
 
-Wichtige Referenz fuer Stage 3:
+- `foundation/SIMPLE_GUIDE.md`
+  sehr einfache Sprache fuer Nicht-Techies
+- `foundation/GETTING_STARTED.md`
+  kurzer praktischer Start
+- `foundation/ADVANCED_GUIDE.md`
+  technischer Einstieg
 
-- `foundation/ROAD_TO_100_CLOSEOUT.md`
+## Dauerhafte Foundations
+
+- `foundation/OPERATING_MODEL.md`
+  grosses Bild, Produktrolle, Architektur und Betriebslogik
+- `foundation/V1_STATUS.md`
+  Reifegrad, Belege und akzeptierte Grenzen
+- `foundation/AUTOMATION_OPERATING_MODE.md`
+  Produktgrenze fuer Automation
+- `foundation/PUBLIC_VS_LOCAL.md`
+  was oeffentlich ist und was lokal bleibt
+- `foundation/RELEASE_CHECKLIST.md`
+  Release- und Smoke-Disziplin
+
+## Referenzen
+
+- `reference/GITHUB_DISCOVERY_MODEL.md`
 - `reference/PROJECT_ALIGNMENT_MODEL.md`
 - `reference/GITHUB_TOKEN_SETUP.md`
-- `reference/GITHUB_DISCOVERY_MODEL.md`
 - `reference/REPORT_OUTPUT_MODEL.md`
 - `reference/REPORT_UI_FRAMEWORK.md`
 - `reference/WATCHLIST_REVIEW_MODEL.md`
-- `reference/GITHUB_APP_DEPLOYMENT.md`
 - `reference/SETUP_CHECKLIST.md`
-- `reference/WORKSPACE_PLUGIN_MODE.md`
 
-Aktuelle Umsetzungsplaene:
+## Grundregel
 
-- `superpowers/plans/2026-04-15-patternpilot-script-structure.md`
-- `superpowers/plans/2026-04-16-modularization-implementation-plan.md`
-
-Die Root von `patternpilot` bleibt damit staerker auf Einstieg, Konfiguration, Motor und operative Artefakte fokussiert.
+Wenn eine Datei vor allem eine vergangene Umsetzungsphase beschreibt, gehoert sie nicht mehr in die aktive Foundations-Doku.

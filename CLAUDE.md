@@ -7,7 +7,8 @@ Diese Datei ist der knappe Einstiegspunkt fuer Claude Code in `patternpilot`.
 @AGENT_CONTEXT.md
 @STATUS.md
 @OPEN_QUESTION.md
-@docs/foundation/MISSION_VISION.md
+@docs/foundation/OPERATING_MODEL.md
+@docs/foundation/V1_STATUS.md
 @docs/system/REPO_INTELLIGENCE_SYSTEM.md
 
 Wenn projektbezogen gearbeitet wird, zusaetzlich die Dateien des aktiven Zielprojekts lesen:

@@ -22,9 +22,9 @@ Diese Dateien in dieser Reihenfolge zuerst lesen:
 1. `README.md`
 2. `STATUS.md`
 3. `OPEN_QUESTION.md`
-4. `docs/foundation/MISSION_VISION.md`
-5. `docs/system/REPO_INTELLIGENCE_SYSTEM.md`
-6. `docs/foundation/OPERATING_MODEL.md`
+4. `docs/foundation/OPERATING_MODEL.md`
+5. `docs/foundation/V1_STATUS.md`
+6. `docs/system/REPO_INTELLIGENCE_SYSTEM.md`
 7. `docs/reference/REPORT_OUTPUT_MODEL.md`
 8. `docs/reference/REPORT_UI_FRAMEWORK.md`
 9. `patternpilot.config.json`

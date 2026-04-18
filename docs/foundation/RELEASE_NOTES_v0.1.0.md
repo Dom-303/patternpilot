@@ -10,7 +10,7 @@
 - Intake-, Watchlist-, Review- und Readiness-Flow als zusammenhaengender Produktpfad
 - visuelle Produkt- und Onboarding-Oberflaeche mit statischen SVG-Assets
 - neutrale Beispieloberflaeche statt aktiver Dogfood-Defaults
-- dokumentierter `v1`-Closeout mit erfolgreich validiertem Fremdprojekt-Pilot
+- dokumentierter Produktstatus mit erfolgreich validiertem Fremdprojekt-Pilot
 
 ## Fuer wen diese Version gedacht ist
 
@@ -47,4 +47,5 @@ npm run bootstrap -- --project my-project --target ../my-project --label "My Pro
 - [CHANGELOG.md](../../CHANGELOG.md)
 - [SIMPLE_GUIDE.md](SIMPLE_GUIDE.md)
 - [GETTING_STARTED.md](GETTING_STARTED.md)
-- [V1_CLOSEOUT.md](V1_CLOSEOUT.md)
+- [OPERATING_MODEL.md](OPERATING_MODEL.md)
+- [V1_STATUS.md](V1_STATUS.md)

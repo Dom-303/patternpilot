@@ -74,9 +74,9 @@ Vor einer echten `v1`-Freigabe sollte mindestens ein frischer Fremdprojekt-Durch
 - `review`
 - `product-readiness`
 
-Der aktuelle dokumentierte Beleg liegt hier:
+Der aktuelle Produktstatus und Reife-Beleg liegen hier:
 
-- [V1_CLOSEOUT.md](V1_CLOSEOUT.md)
+- [V1_STATUS.md](V1_STATUS.md)
 
 ## 7. Letzte Sicht auf Git
 

@@ -60,7 +60,7 @@ export async function runGithubAppServiceRuntimeCloseoutReview(rootDir, config, 
   console.log(`- artifact_root: ${path.relative(rootDir, artifacts.rootPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
   console.log(`- artifact_review: ${path.relative(rootDir, artifacts.reviewPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
   console.log(`- artifact_summary: ${path.relative(rootDir, artifacts.summaryPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
-  console.log(`- reference_doc: docs/foundation/DELIVERY_STATUS.md`);
+  console.log(`- reference_doc: docs/foundation/V1_STATUS.md`);
 
   if (options.refreshContext !== false) {
     await refreshContext(rootDir, config, {

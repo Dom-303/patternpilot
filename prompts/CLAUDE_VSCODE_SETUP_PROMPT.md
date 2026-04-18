@@ -22,7 +22,8 @@ Erzeuge die Grundstruktur fuer ein eigenstaendiges `patternpilot`-Repo mit:
 ## Referenzdateien
 
 - `README.md`
-- `docs/foundation/MISSION_VISION.md`
+- `docs/foundation/OPERATING_MODEL.md`
+- `docs/foundation/V1_STATUS.md`
 - `docs/foundation/OPERATING_MODEL.md`
 - `docs/foundation/GETTING_STARTED.md`
 - `docs/foundation/ADVANCED_GUIDE.md`

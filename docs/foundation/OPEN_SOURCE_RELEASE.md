@@ -39,7 +39,7 @@ Menschen koennen `patternpilot` klonen, anpassen, weiterentwickeln und auch komm
 - `README.md`
 - `RELEASE_CHECKLIST.md`
 - `V1_STATUS.md`
-- `V1_CLOSEOUT.md`
+- `OPERATING_MODEL.md`
 
 ## Was nicht zur ersten Freigabe gehoert
 
