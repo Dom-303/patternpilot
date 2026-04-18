@@ -1,5 +1,8 @@
 # Final Product Hardening Plan
 
+> Status: abgeschlossenes historisches Closeout-Dokument.
+> Der aktive naechste Ausbaupfad ist jetzt [DISCOVERY_EXCELLENCE_PLAN.md](DISCOVERY_EXCELLENCE_PLAN.md).
+
 ## Zweck
 
 Dieses Dokument ist der bewusste Abschlussplan fuer die Phase:

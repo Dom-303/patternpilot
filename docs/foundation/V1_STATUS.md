@@ -64,10 +64,14 @@ Wenn du die bewusst akzeptierten Grenzen lesen willst:
 
 [ACCEPTED_LIMITS.md](ACCEPTED_LIMITS.md)
 
+Wenn du den naechsten aktiven Ausbaupfad lesen willst:
+
+[DISCOVERY_EXCELLENCE_PLAN.md](DISCOVERY_EXCELLENCE_PLAN.md)
+
 Wenn du die Automation-Produktgrenze lesen willst:
 
 [AUTOMATION_OPERATING_MODE.md](AUTOMATION_OPERATING_MODE.md)
 
-Wenn du die naechste Abschlussphase lesen willst:
+Wenn du den abgeschlossenen Hardening-Verlauf lesen willst:
 
 [FINAL_PRODUCT_HARDENING_PLAN.md](FINAL_PRODUCT_HARDENING_PLAN.md)
