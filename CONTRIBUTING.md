@@ -1,29 +1,29 @@
 # Contributing
 
-Danke, dass du `patternpilot` verbessern willst.
+Dieses Dokument beschreibt die Regeln fuer Beitraege zu `patternpilot`.
 
 ## Was "Contributing" hier bedeutet
 
 `Contributing` heisst hier einfach:
 
 - du willst einen Bug beheben
-- du willst die Doku klarer machen
-- du willst die Nutzerfuehrung verbessern
 - du willst einen Report, einen Command oder die Discovery besser machen
 - du willst einen sinnvollen Produktbeitrag leisten
 
 Du musst dafuer nicht gleich ein grosses Feature bauen.
 Auch kleine, saubere Verbesserungen sind wertvoll.
 
-## Was "Mitmachen" praktisch heisst
+## Wichtige Erwartung
 
-In der README steht bei Open Source der Punkt `Mitmachen`.
+`patternpilot` ist kein offenes Wiki.
 
-Gemeint ist damit genau dieses Dokument:
+Bitte gehe nicht davon aus, dass breite Doku-Umbauten, stilistische Umschreibungen oder freie Produktumdeutungen automatisch gewuenscht sind.
+Bevorzuge stattdessen:
 
-- [CONTRIBUTING.md](CONTRIBUTING.md)
-
-Also: Wie man sinnvoll an diesem Projekt mitarbeitet.
+- konkrete Bugfixes
+- klare Produktverbesserungen
+- enge, sachliche Doku-Korrekturen
+- nachvollziehbare Tests oder Absicherungen
 
 ## Wichtiger Produktgrundsatz
 
@@ -75,6 +75,8 @@ Bitte halte diese Ebenen sauber getrennt:
 - `docs/foundation/ADVANCED_GUIDE.md`
 - `docs/foundation/OPERATING_MODEL.md`
 - `docs/foundation/V1_STATUS.md`
+
+Bitte vermeide breite Umformulierungen der Produktdoku ohne klaren sachlichen Grund.
 
 ## Wenn du an Produktlogik arbeitest
 

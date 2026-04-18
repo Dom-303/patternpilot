@@ -82,6 +82,17 @@ npm run intake -- --project my-project https://github.com/example/repo
 
 Danach hast du einen ersten echten Durchlauf.
 
+### Die Vier Befehle Kurz Erklaert
+
+- `npm install`
+  Installiert `patternpilot` lokal.
+- `npm run doctor -- --offline`
+  Prueft den lokalen Grundzustand ohne GitHub-Zugang.
+- `npm run bootstrap -- --project my-project --target ../my-project --label "My Project"`
+  Bindet dein eigenes Zielprojekt an.
+- `npm run intake -- --project my-project https://github.com/example/repo`
+  Zieht das erste externe Repo in den echten Bewertungsfluss.
+
 ### Wenn du direkt sauber mit GitHub arbeiten willst
 
 ```bash
@@ -185,7 +196,7 @@ Wichtig:
   [AUTOMATION_OPERATING_MODE.md](docs/foundation/AUTOMATION_OPERATING_MODE.md)
 
 
-## Open Source Und Mitmachen
+## Open Source
 
 ### Was Open Source hier bedeutet
 
@@ -202,24 +213,10 @@ Die Lizenz dafuer ist:
 
 - [Apache-2.0](LICENSE)
 
-### Was "Mitmachen" hier bedeutet
-
-"Mitmachen" meint hier `Contributing`.
-
-Das bedeutet konkret:
-
-- Bugs melden
-- Doku verbessern
-- kleine oder groessere Code-Verbesserungen beisteuern
-- Nutzerfuehrung klarer machen
-- Reports, Discovery oder Workflows verbessern
-
-Die Regeln und der lokale Entwicklungsfluss stehen hier:
-
-- [CONTRIBUTING.md](CONTRIBUTING.md)
-
 ### Wichtige Open-Source-Dokumente
 
+- Beitragsregeln:
+  [CONTRIBUTING.md](CONTRIBUTING.md)
 - Changelog:
   [CHANGELOG.md](CHANGELOG.md)
 - Release Notes:
@@ -230,23 +227,3 @@ Die Regeln und der lokale Entwicklungsfluss stehen hier:
   [RELEASE_CHECKLIST.md](docs/foundation/RELEASE_CHECKLIST.md)
 - Release-Kommunikation:
   [RELEASE_COMMUNICATION.md](docs/foundation/RELEASE_COMMUNICATION.md)
-
-
-## Oeffentlich Vs. Lokal
-
-`patternpilot` versioniert Produktcode und bewusst gepflegte Referenzdokumente.
-
-Faustregel:
-
-- Was in Git committed und nach GitHub gepusht wird, ist oeffentlich.
-- Was von `.gitignore` erfasst ist oder nur lokal untracked bleibt, bleibt lokal.
-
-Es versioniert nicht automatisch:
-
-- lokale Runtime-Zustaende aus `state/`
-- datierte Run-Artefakte
-- frische Intake-, Review- oder Promotion-Ausgaben aus Einzelruns
-
-Details dazu stehen in:
-
-- [PUBLIC_VS_LOCAL.md](docs/foundation/PUBLIC_VS_LOCAL.md)
