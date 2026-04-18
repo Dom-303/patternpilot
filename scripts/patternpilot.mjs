@@ -340,7 +340,7 @@ function buildCommandHandlers(envFiles) {
     runAutomation,
     runInitProject,
     runDiscoverWorkspace,
-    runSetupChecklist: (_rootDir, _config, options) => runSetupChecklist(options),
+    runSetupChecklist,
     runSyncWatchlist,
     runSyncAllWatchlists,
     printProjectList,

@@ -10,6 +10,8 @@ Diese Datei beschreibt die naechsten Angaben, die Patternpilot fuer den echten p
 
 - Wert fuer `PATTERNPILOT_GITHUB_TOKEN`
 - eintragen in `.env.local`
+- Beispielzeile:
+  - `PATTERNPILOT_GITHUB_TOKEN=github_pat_...`
 - finden unter:
   - GitHub
   - `Settings`
@@ -18,6 +20,20 @@ Diese Datei beschreibt die naechsten Angaben, die Patternpilot fuer den echten p
   - `Fine-grained tokens`
 - offizielle Doku:
   - https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens
+
+Danach direkt pruefen:
+
+```bash
+npm run doctor
+```
+
+Gewuenschter Zustand:
+
+- `auth_mode: token`
+- `auth_assessment: token_verified`
+- `network_status: ok`
+
+Wenn das nicht so aussieht, ist der GitHub-Zugang noch nicht sauber angeschlossen.
 
 ## Voller GitHub-App-Betrieb
 

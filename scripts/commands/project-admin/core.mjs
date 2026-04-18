@@ -89,11 +89,15 @@ export function runGettingStarted(rootDir, config) {
   console.log(`   npm install`);
   console.log(`2. Lokale Voraussetzungen pruefen`);
   console.log(`   npm run doctor -- --offline`);
-  console.log(`3. Eigenes Zielrepo anbinden`);
+  console.log(`3. Optional, aber fuer echten GitHub-Betrieb empfohlen: GitHub-Zugang einrichten`);
+  console.log(`   npm run init:env`);
+  console.log(`   npm run setup:checklist`);
+  console.log(`   npm run doctor`);
+  console.log(`4. Eigenes Zielrepo anbinden`);
   console.log(`   npm run bootstrap -- --project my-project --target ../my-project --label "My Project"`);
-  console.log(`4. Dann entweder direkt ein Repo intaken`);
+  console.log(`5. Dann entweder direkt ein Repo intaken`);
   console.log(`   npm run intake -- --project my-project https://github.com/example/repo`);
-  console.log(`5. Oder zuerst eine Watchlist pflegen`);
+  console.log(`6. Oder zuerst eine Watchlist pflegen`);
   console.log(`   edit bindings/my-project/WATCHLIST.txt`);
   console.log(`   npm run sync:watchlist -- --project my-project`);
   console.log(``);
@@ -103,6 +107,12 @@ export function runGettingStarted(rootDir, config) {
   console.log(`- projects/<project>/: lesbarer Arbeits- und Ergebnisraum`);
   console.log(`- runs/<project>/: Laufprotokolle`);
   console.log(`- state/repo_intake_queue.csv: operative Intake-Queue`);
+  console.log(``);
+
+  console.log(`## GitHub-Zugang`);
+  console.log(`- fuer den ersten lokalen Test optional`);
+  console.log(`- fuer stabile echte GitHub-Laeufe empfohlen`);
+  console.log(`- gefuehrter pfad: npm run init:env -> npm run setup:checklist -> npm run doctor`);
   console.log(``);
 
   if (!hasProjects) {
@@ -237,6 +247,17 @@ export async function runDoctor(rootDir, config, options, envFiles) {
   console.log(`- auth_source: ${auth.authSource ?? "-"}`);
   console.log(`- token_present: ${auth.tokenPresent ? "yes" : "no"}`);
   console.log(`- configured_env_vars: ${auth.configuredEnvVars.join(", ") || "-"}`);
+  let authAssessment = "offline_check_only";
+  if (!auth.tokenPresent) {
+    authAssessment = "token_missing";
+  } else if (options.offline) {
+    authAssessment = "token_present_not_verified";
+  } else if (doctor.networkStatus === "ok") {
+    authAssessment = "token_verified";
+  } else if (doctor.networkStatus === "failed") {
+    authAssessment = "token_present_but_api_failed";
+  }
+  console.log(`- auth_assessment: ${authAssessment}`);
   console.log(``);
   console.log(`## GitHub App Auth`);
   console.log(`- app_ready: ${githubApp.appReady ? "yes" : "no"}`);
@@ -254,6 +275,22 @@ export async function runDoctor(rootDir, config, options, envFiles) {
   }
   if (doctor.error) {
     console.log(`- error: ${doctor.error}`);
+  }
+  console.log(``);
+  console.log(`## Next Step`);
+  if (!auth.tokenPresent) {
+    console.log(`- run: npm run init:env`);
+    console.log(`- then: npm run setup:checklist`);
+    console.log(`- then: npm run doctor`);
+  } else if (options.offline) {
+    console.log(`- token detected locally; re-run without --offline to verify live GitHub access`);
+    console.log(`- run: npm run doctor`);
+  } else if (doctor.networkStatus === "ok") {
+    console.log(`- GitHub access looks healthy; continue with bootstrap, intake or review flows`);
+  } else {
+    console.log(`- token was detected but live GitHub verification failed`);
+    console.log(`- check whether the env file is loaded in this shell/session`);
+    console.log(`- if needed, create or replace the token and run npm run doctor again`);
   }
   console.log(``);
   console.log(`## Workspace Discovery`);
@@ -287,23 +324,45 @@ export async function runInitEnv(rootDir, options) {
   }
 }
 
-export function runSetupChecklist(options) {
+export function runSetupChecklist(rootDir, config, options) {
   const checklist = buildSetupChecklist();
+  const auth = inspectGithubAuth(config);
   const githubApp = inspectGithubAppAuth();
 
   if (options.json) {
-    console.log(JSON.stringify({ checklist, githubApp }, null, 2));
+    console.log(JSON.stringify({ checklist, githubAuth: auth, githubApp }, null, 2));
     return;
   }
 
   console.log(`# Patternpilot Setup Checklist`);
   console.log(``);
+  console.log(`## Schnellster GitHub-Pfad`);
+  console.log(`1. Lokale Env-Datei anlegen`);
+  console.log(`   npm run init:env`);
+  console.log(`2. Fine-grained Token in .env.local eintragen`);
+  console.log(`3. Danach live pruefen`);
+  console.log(`   npm run doctor`);
+  console.log(``);
   console.log(`## PAT`);
   console.log(`- env_var: ${checklist.pat.envVar}`);
   console.log(`- put_it_here: ${checklist.pat.filePath}`);
+  console.log(`- example_line: ${checklist.pat.exampleLine}`);
   console.log(`- where_to_find_it: ${checklist.pat.whereToFind}`);
+  console.log(`- minimum_access: ${checklist.pat.minimumAccess}`);
   console.log(`- docs: ${checklist.pat.docsUrl}`);
   console.log(`- note: ${checklist.pat.note}`);
+  console.log(`- verify: ${checklist.pat.verifyWith}`);
+  console.log(`- current_status: ${auth.tokenPresent ? `token_detected_via_${auth.authSource}` : "no_token_detected"}`);
+  console.log(``);
+  console.log(`## Was du danach sehen willst`);
+  console.log(`- auth_mode: token`);
+  console.log(`- auth_assessment: token_verified`);
+  console.log(`- network_status: ok`);
+  console.log(``);
+  console.log(`## Wenn es nicht klappt`);
+  console.log(`- kein token erkannt: pruefe .env.local und starte die Session oder den Befehl neu`);
+  console.log(`- token erkannt, aber network_status failed: token neu erzeugen oder Rechte/Session pruefen`);
+  console.log(`- fuer lokalen Einstieg ist erst der PAT wichtig; GitHub App ist spaeter optional`);
   console.log(``);
   console.log(`## GitHub App`);
   for (const item of checklist.githubApp) {

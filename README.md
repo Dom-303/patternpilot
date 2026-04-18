@@ -21,6 +21,14 @@ npm run intake -- --project my-project https://github.com/example/repo
 
 Danach hast du einen ersten echten Durchlauf.
 
+Wenn du gleich stabil gegen GitHub arbeiten willst, nimm direkt danach noch:
+
+```bash
+npm run init:env
+npm run setup:checklist
+npm run doctor
+```
+
 ## Was danach im Repo passiert
 
 `patternpilot` trennt bewusst vier Bereiche:
@@ -50,6 +58,8 @@ Es gibt jetzt zwei Einstiegsebenen:
   [ADVANCED_GUIDE.md](docs/foundation/ADVANCED_GUIDE.md)
 - Oeffentlich vs. lokal:
   [PUBLIC_VS_LOCAL.md](docs/foundation/PUBLIC_VS_LOCAL.md)
+- GitHub-Token-Setup:
+  [GITHUB_TOKEN_SETUP.md](docs/reference/GITHUB_TOKEN_SETUP.md)
 - Release-Disziplin:
   [RELEASE_CHECKLIST.md](docs/foundation/RELEASE_CHECKLIST.md)
 

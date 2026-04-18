@@ -62,6 +62,27 @@ Danach schreibt `patternpilot` unter anderem:
 - nach `projects/my-project/intake/`
 - nach `runs/my-project/`
 
+## Wenn du GitHub stabil und professionell anbinden willst
+
+Fuer den ersten lokalen Test geht es notfalls auch anonym.
+Fuer echte Nutzung ist ein GitHub-Token aber klar empfohlen.
+
+Der gefuehrte Pfad ist:
+
+```bash
+npm run init:env
+npm run setup:checklist
+npm run doctor
+```
+
+Danach willst du im Doctor sehen:
+
+- `auth_mode: token`
+- `auth_assessment: token_verified`
+- `network_status: ok`
+
+Wenn dort stattdessen `token_missing` oder `token_present_but_api_failed` steht, ist der GitHub-Zugang noch nicht sauber eingerichtet.
+
 ## Wenn du lieber mit mehreren Repos startest
 
 Dann arbeite mit einer Watchlist:

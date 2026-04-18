@@ -30,6 +30,22 @@ Wenn eine davon gesetzt ist, authentifiziert sich der Intake gegen die GitHub-RE
 
 Als Startpunkt liegt jetzt auch eine `.env.example` im Repo.
 
+## Empfohlener Nutzerpfad
+
+Der einfachste stabile Ablauf ist:
+
+```bash
+npm run init:env
+npm run setup:checklist
+npm run doctor
+```
+
+Danach sollte `doctor` idealerweise zeigen:
+
+- `auth_mode: token`
+- `auth_assessment: token_verified`
+- `network_status: ok`
+
 ## Diagnose
 
 Du kannst den aktuellen Zustand mit dem Doctor pruefen:
@@ -43,6 +59,13 @@ Oder mit API-Check:
 ```bash
 npm run doctor
 ```
+
+Wenn `doctor` stattdessen zeigt:
+
+- `auth_assessment: token_missing`
+  Dann ist noch kein Token in der laufenden Session angekommen.
+- `auth_assessment: token_present_but_api_failed`
+  Dann wurde zwar ein Token gefunden, aber die Live-Pruefung gegen GitHub ist fehlgeschlagen. In dem Fall Token, Session oder Rechte pruefen.
 
 ## Empfohlene Stufen
 
