@@ -34,6 +34,7 @@ import {
   runShowProject,
   printProjectList,
   runDoctor,
+  runBootstrap,
   runGettingStarted,
   runGithubAppEventPreview,
   runGithubAppInstallationApply,
@@ -174,8 +175,21 @@ function printHelp() {
   console.log(renderPatternpilotHelp());
 }
 
+const COMMANDS_ALLOWED_WITHOUT_PROJECT = new Set([
+  "doctor",
+  "bootstrap",
+  "getting-started",
+  "init-env",
+  "init-project",
+  "discover-workspace",
+  "product-readiness",
+  "setup-checklist",
+  "list-projects"
+]);
+
 function buildCommandHandlers(envFiles) {
   return {
+    runBootstrap,
     runIntake,
     runOnDemand,
     runPlan,
@@ -350,6 +364,13 @@ async function main() {
   const handler = handlers[commandEntry.handlerKey];
   if (!handler) {
     throw new Error(`No handler configured for command '${commandEntry.name}'.`);
+  }
+
+  const hasConfiguredProjects = Object.keys(config.projects ?? {}).length > 0;
+  if (!hasConfiguredProjects && !COMMANDS_ALLOWED_WITHOUT_PROJECT.has(commandEntry.name)) {
+    throw new Error(
+      `No project is configured yet. Run 'npm run getting-started' or 'npm run bootstrap -- --project my-project --target ../my-project --label "My Project"' first.`
+    );
   }
 
   await handler(rootDir, config, options);

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "defaultProject": "eventbear-worker",
+  "defaultProject": null,
   "runtimeRoot": "runs",
   "queueFile": "state/repo_intake_queue.csv",
   "automationJobsFile": "automation/patternpilot-jobs.json",
@@ -28,17 +28,5 @@
     ],
     "userAgent": "patternpilot-stage6"
   },
-  "projects": {
-    "eventbear-worker": {
-      "label": "EventBaer Worker",
-      "projectRoot": "../eventbear-worker",
-      "projectContextFile": "projects/eventbear-worker/PROJECT_CONTEXT.md",
-      "projectBindingFile": "bindings/eventbear-worker/PROJECT_BINDING.json",
-      "alignmentRulesFile": "bindings/eventbear-worker/ALIGNMENT_RULES.json",
-      "discoveryPolicyFile": "bindings/eventbear-worker/DISCOVERY_POLICY.json",
-      "watchlistFile": "bindings/eventbear-worker/WATCHLIST.txt",
-      "intakeRoot": "projects/eventbear-worker/intake",
-      "promotionRoot": "projects/eventbear-worker/promotions"
-    }
-  }
+  "projects": {}
 }

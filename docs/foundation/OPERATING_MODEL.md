@@ -95,9 +95,9 @@ Sie macht bewusst noch nicht:
 
 Ein frisches Zielprojekt entsteht zuerst ueber:
 
-`npm run init:project -- --project sample-worker --target ../sample-worker --label "Sample Worker"`
+`npm run bootstrap -- --project sample-worker --target ../sample-worker --label "Sample Worker"`
 
-Danach ist `projects/sample-worker/` Teil des lokalen Patternpilot-Workspace.
+Danach existieren sowohl `bindings/sample-worker/` als technische Zieldefinition als auch `projects/sample-worker/` als lokaler Arbeitsraum.
 
 ---
 

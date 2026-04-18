@@ -8,8 +8,10 @@ import {
   inspectGithubAppAuth,
   inspectGithubAuth,
   loadProjectBinding,
+  pathExists,
   runGithubDoctor
 } from "../../../lib/index.mjs";
+import { writeConfig } from "../../../lib/config.mjs";
 import { refreshContext } from "./shared.mjs";
 
 export async function runRefreshContext(rootDir, config) {
@@ -23,6 +25,47 @@ export async function runRefreshContext(rootDir, config) {
   console.log(``);
   console.log(`- status_file: STATUS.md`);
   console.log(`- open_questions_file: OPEN_QUESTION.md`);
+}
+
+export async function runBootstrap(rootDir, config, options) {
+  const localConfigPath = path.join(rootDir, "patternpilot.config.local.json");
+  const localExists = await pathExists(localConfigPath);
+
+  if (!localExists && !options.dryRun) {
+    await writeConfig(rootDir, config, { preferLocal: true });
+  }
+
+  console.log(`# Patternpilot Bootstrap`);
+  console.log(``);
+  console.log(`- local_config: ${path.relative(rootDir, localConfigPath)}`);
+  console.log(`- local_config_status: ${localExists ? "existing" : options.dryRun ? "planned" : "created"}`);
+  console.log(`- configured_projects_before: ${Object.keys(config.projects ?? {}).length}`);
+
+  if (!options.target) {
+    console.log(``);
+    console.log(`## Next Step`);
+    console.log(`- run: npm run bootstrap -- --project my-project --target ../my-project --label "My Project"`);
+    console.log(`- optional: npm run getting-started`);
+    return;
+  }
+
+  const result = await initializeProjectBinding(rootDir, config, options);
+  console.log(``);
+  console.log(`## Project Bootstrapped`);
+  console.log(`- project: ${result.projectKey}`);
+  console.log(`- label: ${result.projectLabel}`);
+  console.log(`- target_path: ${result.targetPath}`);
+  console.log(`- dry_run: ${options.dryRun ? "yes" : "no"}`);
+  console.log(``);
+  console.log(`## Generated Files`);
+  for (const output of result.outputs) {
+    console.log(`- ${output}`);
+  }
+  console.log(``);
+  console.log(`## Next Step`);
+  console.log(`- intake: npm run intake -- --project ${result.projectKey} https://github.com/example/repo`);
+  console.log(`- watchlist: edit bindings/${result.projectKey}/WATCHLIST.txt`);
+  console.log(`- sync: npm run sync:watchlist -- --project ${result.projectKey}`);
 }
 
 export function runGettingStarted(rootDir, config) {
@@ -42,7 +85,7 @@ export function runGettingStarted(rootDir, config) {
   console.log(`2. Lokale Voraussetzungen pruefen`);
   console.log(`   npm run doctor -- --offline`);
   console.log(`3. Eigenes Zielrepo anbinden`);
-  console.log(`   npm run init:project -- --project my-project --target ../my-project --label "My Project"`);
+  console.log(`   npm run bootstrap -- --project my-project --target ../my-project --label "My Project"`);
   console.log(`4. Dann entweder direkt ein Repo intaken`);
   console.log(`   npm run intake -- --project my-project https://github.com/example/repo`);
   console.log(`5. Oder zuerst eine Watchlist pflegen`);
@@ -60,7 +103,7 @@ export function runGettingStarted(rootDir, config) {
   if (!hasProjects) {
     console.log(`## Aktueller Zustand`);
     console.log(`- configured_projects: 0`);
-    console.log(`- next_command: npm run init:project -- --project my-project --target ../my-project --label "My Project"`);
+    console.log(`- next_command: npm run bootstrap -- --project my-project --target ../my-project --label "My Project"`);
     return;
   }
 
@@ -121,9 +164,18 @@ export function printProjectList(rootDir, config) {
   console.log(`# Patternpilot Projects`);
   console.log(``);
   console.log(`- default_project: ${config.defaultProject ?? "-"}`);
+  console.log(`- configured_projects: ${Object.keys(config.projects ?? {}).length}`);
   console.log(``);
   console.log(`## Configured Projects`);
-  for (const [projectKey, project] of Object.entries(config.projects ?? {})) {
+  const projectEntries = Object.entries(config.projects ?? {});
+  if (projectEntries.length === 0) {
+    console.log(`- none`);
+    console.log(``);
+    console.log(`## Next Step`);
+    console.log(`- npm run bootstrap -- --project my-project --target ../my-project --label "My Project"`);
+    return;
+  }
+  for (const [projectKey, project] of projectEntries) {
     console.log(`- ${projectKey}: ${path.resolve(rootDir, project.projectRoot)} (${project.label ?? projectKey})`);
   }
 }

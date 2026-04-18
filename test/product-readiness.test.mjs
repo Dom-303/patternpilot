@@ -90,6 +90,34 @@ test("buildPatternpilotProductReadinessReview returns not_ready when GitHub acce
   assert.match(rendered, /FAIL \| github_access/);
 });
 
+test("buildPatternpilotProductReadinessReview blocks fresh installs without any configured project", () => {
+  const review = buildPatternpilotProductReadinessReview({
+    generatedAt: "2026-04-18T10:00:00.000Z",
+    auth: {
+      tokenPresent: true,
+      authSource: "PATTERNPILOT_GITHUB_TOKEN"
+    },
+    githubApi: {
+      networkStatus: "ok"
+    },
+    alertDelivery: {
+      configured: true,
+      preset: "local-operator",
+      targetCount: 1
+    },
+    automation: {
+      jobsConfigured: 0,
+      attentionStatus: "routine",
+      deliveryPriority: "routine"
+    },
+    projects: []
+  });
+
+  assert.equal(review.overallStatus, "not_ready");
+  assert.equal(review.releaseDecision, "hold");
+  assert.match(review.nextAction ?? "", /bootstrap/);
+});
+
 test("buildPatternpilotProductReadinessReview suppresses freshly completed next actions and advances to the next follow-up", () => {
   const review = buildPatternpilotProductReadinessReview({
     generatedAt: "2026-04-18T10:05:00.000Z",

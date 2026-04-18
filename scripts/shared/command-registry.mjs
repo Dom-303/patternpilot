@@ -1,4 +1,5 @@
 const COMMANDS = [
+  { name: "bootstrap", description: "Create a local config overlay and optionally bind the first target project", handlerKey: "runBootstrap" },
   { name: "getting-started", description: "Show the shortest useful first-run path for a fresh local installation", handlerKey: "runGettingStarted", aliases: ["first-run"] },
   { name: "on-demand", description: "Run the primary manual flow for one project in a single step", handlerKey: "runOnDemand", aliases: ["analyze"] },
   { name: "policy-audit", description: "Run discovery with project policy in audit mode for calibration", handlerKey: "runPolicyAudit" },
@@ -311,6 +312,45 @@ function padCommandName(name, width) {
   return name.padEnd(width, " ");
 }
 
+function categorizeCommand(command) {
+  if (
+    command.name === "bootstrap"
+    || command.name === "getting-started"
+    || command.name === "doctor"
+    || command.name === "init-project"
+    || command.name === "discover-workspace"
+    || command.name === "list-projects"
+    || command.name === "show-project"
+    || command.name === "setup-checklist"
+    || command.name === "init-env"
+  ) {
+    return "Start Here";
+  }
+  if (
+    command.name === "intake"
+    || command.name === "on-demand"
+    || command.name === "discover"
+    || command.name === "sync-watchlist"
+    || command.name === "review-watchlist"
+    || command.name === "promote"
+    || command.name === "re-evaluate"
+  ) {
+    return "Core Workflow";
+  }
+  if (
+    command.name.startsWith("policy-")
+    || command.name.startsWith("run-")
+    || command.name.startsWith("automation-")
+    || command.name === "product-readiness"
+  ) {
+    return "Operations";
+  }
+  if (command.name.startsWith("github-app-")) {
+    return "Advanced GitHub App";
+  }
+  return "Other";
+}
+
 export function listPatternpilotCommands() {
   return COMMANDS.map((command) => ({ ...command }));
 }
@@ -329,14 +369,26 @@ export function getPatternpilotCommand(commandName) {
 
 export function renderPatternpilotHelp() {
   const width = Math.max(...COMMANDS.map((command) => command.name.length)) + 2;
-  const lines = COMMANDS.map((command) => {
-    return `  ${padCommandName(command.name, width)}${command.description}`;
-  });
+  const grouped = new Map();
+  for (const command of COMMANDS) {
+    const category = categorizeCommand(command);
+    const lines = grouped.get(category) ?? [];
+    lines.push(`  ${padCommandName(command.name, width)}${command.description}`);
+    grouped.set(category, lines);
+  }
+  const groupOrder = ["Start Here", "Core Workflow", "Operations", "Advanced GitHub App", "Other"];
+  const sections = groupOrder
+    .filter((group) => grouped.has(group))
+    .map((group) => `${group}:\n${grouped.get(group).join("\n")}`)
+    .join("\n\n");
 
   return `Patternpilot CLI
 
-Commands:
-${lines.join("\n")}
+Quick start:
+  npm run getting-started
+  npm run bootstrap -- --project my-project --target ../my-project --label "My Project"
+
+${sections}
 
 Examples:
   ${HELP_EXAMPLES.join("\n  ")}

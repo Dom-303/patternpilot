@@ -93,7 +93,8 @@ Wichtig fuer die aktuelle Repo-Form:
 - `bindings/eventbear-worker/` ist die technische Dogfood-Bindung
 - `projects/eventbear-worker/` ist der zugehoerige Arbeits- und Ergebnisraum
 - ein frisches Setup kann mit leerem oder minimalem `projects/`-Verzeichnis starten
-- `patternpilot.config.json` in diesem Repo ist die aktive Dogfood-Konfiguration fuer die lokale Entwicklung
+- `patternpilot.config.json` in diesem Repo ist jetzt der produktseitige Empty-default
+- lokale echte Nutzung laeuft ueber `patternpilot.config.local.json`
 - fuer eine neue Installation ist [patternpilot.config.example.json](/home/domi/eventbaer/dev/patternpilot/patternpilot.config.example.json:1) der bessere Startpunkt
 
 ---
@@ -105,7 +106,7 @@ Wenn du `patternpilot` neu installierst und noch kein Zielprojekt angebunden has
 ```bash
 npm install
 npm run doctor -- --offline
-npm run init:project -- --project my-project --target ../my-project --label "My Project"
+npm run bootstrap -- --project my-project --target ../my-project --label "My Project"
 npm run intake -- --project my-project https://github.com/example/repo
 ```
 

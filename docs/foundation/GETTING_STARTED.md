@@ -18,7 +18,7 @@ Deshalb ist der erste echte Schritt nie ein GitHub-Scan, sondern immer die Bindu
 ```bash
 npm install
 npm run doctor -- --offline
-npm run init:project -- --project my-project --target ../my-project --label "My Project"
+npm run bootstrap -- --project my-project --target ../my-project --label "My Project"
 npm run intake -- --project my-project https://github.com/example/repo
 ```
 
@@ -42,9 +42,11 @@ Zeigt:
 
 ### 3. Eigenes Zielprojekt anbinden
 
-`npm run init:project -- --project my-project --target ../my-project --label "My Project"`
+`npm run bootstrap -- --project my-project --target ../my-project --label "My Project"`
 
-Das erzeugt zwei verschiedene Dinge:
+Das erzeugt zuerst eine lokale Konfigurationsdatei und danach zwei verschiedene Dinge:
+
+- `patternpilot.config.local.json`
 
 - `bindings/my-project/`
 - `projects/my-project/`

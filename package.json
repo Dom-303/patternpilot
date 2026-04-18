@@ -134,6 +134,7 @@
     "policy:workbench": "node scripts/patternpilot.mjs policy-workbench",
     "policy:workbench-review": "node scripts/patternpilot.mjs policy-workbench-review",
     "doctor": "node scripts/patternpilot.mjs doctor",
+    "bootstrap": "node scripts/patternpilot.mjs bootstrap",
     "getting-started": "node scripts/patternpilot.mjs getting-started",
     "discover:workspace": "node scripts/patternpilot.mjs discover-workspace",
     "init:env": "node scripts/patternpilot.mjs init-env",

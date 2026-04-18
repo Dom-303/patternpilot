@@ -4,6 +4,7 @@ npm-debug.log*
 **/.env
 .env.local
 **/.env.local
+patternpilot.config.local.json
 *.pem
 .superpowers/
 **/browser-link
