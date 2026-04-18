@@ -6,12 +6,39 @@ Dieses Dokument beschreibt die Regeln fuer Beitraege zu `patternpilot`.
 
 `Contributing` heisst hier einfach:
 
+- du willst einen Bug melden
 - du willst einen Bug beheben
 - du willst einen Report, einen Command oder die Discovery besser machen
 - du willst einen sinnvollen Produktbeitrag leisten
 
 Du musst dafuer nicht gleich ein grosses Feature bauen.
 Auch kleine, saubere Verbesserungen sind wertvoll.
+
+## Grundsatz Fuer Externe Beitraege
+
+Externe Beitraege sind hier als Vorschlaege gedacht, nicht als direkte Aenderungen am Haupt-Repo.
+
+Das bedeutet:
+
+- du kannst Issues eroeffnen
+- du kannst Bugs melden
+- du kannst Vorschlaege machen
+- du kannst lokal oder in einem Fork Aenderungen bauen
+- du kannst diese Aenderungen als Pull Request einreichen
+
+Du kannst ohne Schreibrechte nicht direkt an diesem Repo schreiben.
+Die Entscheidung, was ins Haupt-Repo uebernommen wird, liegt beim Maintainer.
+
+## Was "Maintainer-Entscheidung" hier bedeutet
+
+Der Maintainer prueft eingereichte Aenderungen und entscheidet:
+
+- ob eine Aenderung zum Produkt passt
+- ob sie inhaltlich richtig ist
+- ob sie in Umfang und Stil passt
+- ob sie jetzt, spaeter oder gar nicht uebernommen wird
+
+Ein Pull Request ist also ein Vorschlag, keine automatische Aenderung am Projekt.
 
 ## Wichtige Erwartung
 
