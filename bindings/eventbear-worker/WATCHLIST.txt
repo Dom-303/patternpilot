@@ -1,2 +1,0 @@
-# GitHub repo URLs fuer spaetere Watchlist-Intakes
-https://github.com/oc/openevents

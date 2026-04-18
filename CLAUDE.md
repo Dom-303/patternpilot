@@ -10,17 +10,17 @@ Diese Datei ist der knappe Einstiegspunkt fuer Claude Code in `patternpilot`.
 @docs/foundation/MISSION_VISION.md
 @docs/system/REPO_INTELLIGENCE_SYSTEM.md
 
-Wenn projektbezogen gearbeitet wird, zusaetzlich:
+Wenn projektbezogen gearbeitet wird, zusaetzlich die Dateien des aktiven Zielprojekts lesen:
 
-@projects/eventbear-worker/PROJECT_CONTEXT.md
-@projects/eventbear-worker/PROJECT_BINDING.md
+- `projects/<project>/PROJECT_CONTEXT.md`
+- `bindings/<project>/PROJECT_BINDING.json`
 
 ## Rolle von Patternpilot
 
 - Intake von externen Repos strukturieren
 - Muster und Risiken verdichten
 - Entscheidungen fuer Zielprojekte vorbereiten
-- keine Produktionslogik fuer EventBaer ersetzen
+- keine Produktionslogik eines Zielprojekts ersetzen
 
 ## Arbeitsstil
 

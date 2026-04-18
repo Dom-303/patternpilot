@@ -4,7 +4,7 @@
 
 Diese Datei definiert die kanonischen `build_vs_borrow`-Werte.
 
-Die Spalte beschreibt, wie EventBär die relevante Fähigkeit grundsätzlich behandeln sollte:
+Die Spalte beschreibt, wie ein Zielprojekt die relevante Faehigkeit grundsaetzlich behandeln sollte:
 
 - selbst besitzen
 - externes Muster adaptieren
@@ -17,7 +17,7 @@ Die Spalte beschreibt, wie EventBär die relevante Fähigkeit grundsätzlich beh
 ## Erlaubte Werte
 
 ### `build_core`
-EventBär sollte diese Fähigkeit als Kern selbst besitzen.
+Das Zielprojekt sollte diese Faehigkeit als Kern selbst besitzen.
 
 ### `adapt_pattern`
 Die Grundidee ist wertvoll, aber nur in angepasster Form sinnvoll.
@@ -42,7 +42,7 @@ Für:
 - candidate-first-Kern
 - quality gate
 - review/reject/governance
-- lokale EventBär-Wahrheit
+- lokale Produkt-Wahrheit
 
 ### `adapt_pattern`
 Für:
@@ -78,4 +78,4 @@ Pro Repo wird genau ein Wert gesetzt.
 
 Frage:
 
-**Soll EventBär diese Fähigkeit selbst besitzen, anpassen, optional nutzen, nur beobachten oder bewusst nicht als Kernabhängigkeit behandeln?**
+**Soll das Zielprojekt diese Faehigkeit selbst besitzen, anpassen, optional nutzen, nur beobachten oder bewusst nicht als Kernabhaengigkeit behandeln?**

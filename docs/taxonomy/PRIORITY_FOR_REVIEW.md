@@ -27,7 +27,7 @@ Nur beobachten, noch kein vertiefter Review nötig.
 ## Entscheidungslogik
 
 ### `now`
-- hohe EventBär-Relevanz
+- hohe Projekt-Relevanz
 - klares Muster
 - konkrete potenzielle Folge
 - zeitnah entscheidungsrelevant

@@ -78,6 +78,11 @@ export function runGettingStarted(rootDir, config) {
   console.log(`Patternpilot arbeitet immer auf ein Zielprojekt hin.`);
   console.log(`Du bindest zuerst ein eigenes Repo an und nutzt danach Intake, Watchlist und Review fuer dieses Ziel.`);
   console.log(``);
+  console.log(`- einfache_doku: docs/foundation/GETTING_STARTED.md`);
+  console.log(`- technische_doku: docs/foundation/ADVANCED_GUIDE.md`);
+  console.log(`- oeffentlich_vs_lokal: docs/foundation/PUBLIC_VS_LOCAL.md`);
+  console.log(`- fiktives_beispiel: examples/demo-city-guide/README.md`);
+  console.log(``);
 
   console.log(`## Frischer Start`);
   console.log(`1. Repository installieren und Abhaengigkeiten laden`);

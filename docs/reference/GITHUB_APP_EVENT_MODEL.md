@@ -202,7 +202,7 @@ npm run github:app-webhook-route -- \
   --file deployment/github-app/examples/repository_dispatch.patternpilot_on_demand.json \
   --github-event repository_dispatch \
   --webhook-secret patternpilot-dev-secret \
-  --project eventbear-worker \
+  --project my-project \
   --dry-run
 ```
 
@@ -212,6 +212,6 @@ npm run github:app-webhook-dispatch -- \
   --file deployment/github-app/examples/repository_dispatch.patternpilot_on_demand.json \
   --github-event repository_dispatch \
   --webhook-secret patternpilot-dev-secret \
-  --project eventbear-worker \
+  --project my-project \
   --dry-run
 ```

@@ -1,0 +1,36 @@
+{
+  "capabilities": [
+    {
+      "id": "ingestion_and_adapters",
+      "label": "ingestion and adapters",
+      "signals": ["scraper", "crawler", "feed", "connector"]
+    },
+    {
+      "id": "quality_and_governance",
+      "label": "quality and governance",
+      "signals": ["review", "validation", "approval", "audit"]
+    }
+  ],
+  "layerMappings": {
+    "source_intake": {
+      "fit_bias": 16,
+      "worker_areas": ["lib/intake", "app/sources"],
+      "next_step": "Check whether the repo suggests a reusable intake or adapter pattern."
+    },
+    "ui_discovery_surface": {
+      "fit_bias": 10,
+      "worker_areas": ["app/ui", "docs/product"],
+      "next_step": "Review whether this belongs in a separate delivery surface."
+    }
+  },
+  "gapMappings": {
+    "source_systems_and_families": {
+      "fit_bias": 14,
+      "suggested_next_step": "Compare it against the current source-family direction."
+    },
+    "distribution_surfaces": {
+      "fit_bias": 10,
+      "suggested_next_step": "Treat it as a distribution signal layered on top of the core."
+    }
+  }
+}

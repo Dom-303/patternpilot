@@ -15,7 +15,7 @@ npm run automation:dispatch
 Oder fuer einen einzelnen Projekt-Loop:
 
 ```bash
-npm run automation:run -- --project eventbear-worker --automation-job eventbear-worker-apply --promotion-mode apply
+npm run automation:run -- --project my-project --automation-job my-project-apply --promotion-mode apply
 ```
 
 Und fuer reine Scheduler-Entscheidungen ohne Run:
@@ -29,7 +29,7 @@ Fuer Alerts und manuelle Entsperrung:
 ```bash
 npm run automation:alerts
 npm run automation:alert-deliver -- --target command --target-hook patternpilot-alert-hook --hook-markdown-file state/automation_alert_digest.md
-npm run patternpilot -- automation-job-clear --automation-job eventbear-worker-apply --notes "manual resume after fix"
+npm run patternpilot -- automation-job-clear --automation-job my-project-apply --notes "manual resume after fix"
 ```
 
 Wenn ein externer Scheduler wirklich den Gesamtfluss steuern soll, ist die Reihenfolge jetzt:
@@ -125,7 +125,7 @@ Wenn ein Job in `blocked_manual` oder einem unerwuenschten Backoff haengen bleib
 Fuer bestehende Queue-Eintraege gibt es jetzt einen separaten Refresh-Pfad:
 
 ```bash
-npm run re-evaluate -- --project eventbear-worker --stale-only --dry-run
+npm run re-evaluate -- --project my-project --stale-only --dry-run
 ```
 
 Damit werden stale oder fallback Decision-Felder neu berechnet und der `## Decision Signals`-Block in bestehenden Intake-Dossiers mitgezogen.

@@ -28,7 +28,7 @@ Die Zielvision ist:
 - Patternpilot erzeugt daraus auch menschenfreundliche HTML-Reports statt nur Rohdaten und Markdown
 - daraus entstehen echte Produkt- und Architekturbewegung statt Link-Sammlungen
 
-Langfristig soll `patternpilot` nicht nur fuer EventBaer funktionieren, sondern fuer mehrere Produkt- und Infra-Projekte.
+Langfristig soll `patternpilot` fuer mehrere Produkt-, Daten- und Infra-Projekte funktionieren.
 
 ---
 

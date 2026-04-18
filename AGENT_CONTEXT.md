@@ -4,7 +4,7 @@
 
 Diese Datei ist der operative Startkontext fuer Agenten, die in `patternpilot` arbeiten.
 
-`patternpilot` ist kein Bookmark-Ablageort und kein zweites EventBaer-Worker-Repo.
+`patternpilot` ist kein Bookmark-Ablageort und kein zweites Zielprojekt-Repo.
 Es ist die Intelligence- und Entscheidungs-Schicht zwischen externen GitHub-Funden und konkreten Konsequenzen fuer ein Zielprojekt.
 
 ---

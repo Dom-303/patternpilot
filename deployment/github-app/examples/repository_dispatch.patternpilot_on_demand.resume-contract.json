@@ -5,7 +5,7 @@
   "deliveryId": "delivery-repository-dispatch-001",
   "eventKey": "repository_dispatch.patternpilot_on_demand",
   "repository": "Dom-303/patternpilot",
-  "selectedProjectKey": "eventbear-worker",
+  "selectedProjectKey": "demo-city-guide",
   "routeStatus": "dispatchable",
   "dispatchStatus": "ready_to_execute",
   "contractStatus": "dispatch_ready_resume_contract",
@@ -21,7 +21,7 @@
       "order": 1,
       "commandName": "on-demand",
       "executionClass": "analysis_run",
-      "shellCommand": "\"npm\" \"run\" \"analyze\" \"--\" \"--project\" \"eventbear-worker\" \"https://github.com/oc/openevents\" \"https://github.com/citybureau/city-scrapers\"",
+      "shellCommand": "\"npm\" \"run\" \"analyze\" \"--\" \"--project\" \"demo-city-guide\" \"https://github.com/example/example-events\" \"https://github.com/example/example-venues\"",
       "forceRequired": true,
       "cwd": "."
     }

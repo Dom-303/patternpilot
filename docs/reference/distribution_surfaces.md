@@ -2,73 +2,41 @@
 
 ## Zweck
 
-Diese Datei sammelt und strukturiert mögliche Verteil- und Produktflächen für EventBär.
+Diese Datei sammelt moegliche Ausspielflaechen fuer ein Zielprojekt.
 
-Sie beantwortet nicht primär, wie Daten gewonnen werden, sondern:
+Sie beantwortet nicht, wie Daten gewonnen werden, sondern:
 
-- wie EventBär-Daten ausgespielt werden können
-- in welchen Formaten EventBär nutzbar werden kann
-- welche Oberflächen für Nutzer, Partner, Locations, Veranstalter oder Drittseiten sinnvoll sein könnten
-- welche Distributionsmuster in externen Produkten bereits sichtbar sind
+- wie Ergebnisse ausgespielt werden koennen
+- in welchen Formaten ein Zielprojekt fuer Nutzer oder Partner nutzbar wird
+- welche Oberflaechen ausserhalb des Kerns sinnvoll sein koennen
 
----
+## Typische Flaechen
 
-## Distributionsflächen
+### API
+Strukturierte Daten fuer Frontends, Partner oder Integrationen.
 
-### 1. API
-Strukturierte Datenbereitstellung für Frontends, Partner oder Drittseiten.
+### Website oder Discovery Surface
+Eine sichtbare Nutzeroberflaeche.
 
-### 2. Website / Discovery Frontend
-Klassische Event-Entdeckungsoberfläche.
+### Widget oder Embed
+Einbettbare Module fuer fremde Seiten.
 
-### 3. Widget / Embed
-Einbettbare Event-Module für fremde Seiten.
+### CMS-Plugin
+Direkte Integration in Systeme wie WordPress.
 
-### 4. WordPress Plugin
-Direkte Integration in WordPress-Websites.
+### Feed / iCal / ICS
+Standardisierte Exportflaechen.
 
-### 5. Kalender-Feed / iCal / ICS
-Standardisierte Event-Feeds.
-
-### 6. White-Label-Modul
-Betreibbare Lösung für Städte, Regionen oder Partner.
-
-### 7. Venue-/Organizer-Oberfläche
-Spezifische Oberfläche für Veranstalter oder Spielstätten.
-
-### 8. Backoffice / Moderation
-Interne Oberfläche zur Review, Korrektur und Qualitätssteuerung.
-
-### 9. Newsletter / Digest / Push-Flächen
-Kuratierte oder automatisierte Event-Ausspielung.
-
----
+### Backoffice / Moderation
+Interne Review- und Steuerungsoberflaechen.
 
 ## Bewertungslogik
 
-Jede Fläche sollte später entlang dieser Fragen bewertet werden:
+Jede Flaeche sollte spaeter mindestens entlang dieser Fragen bewertet werden:
 
 - Nutzerwert
 - Umsetzbarkeit
-- Verteilhebel
+- Distributionshebel
 - Datenfit
-- Monetarisierungspotenzial
-- Moat-Wirkung
-
----
-
-## Erste Lesart aus externen Repos
-
-- `compiled-mcr-events` stärkt die Surface-Logik von Website + JSON + iCal.
-- `wp-event-aggregator` stärkt WordPress als Partnerfläche.
-- `Meetable` stärkt Event-Discovery-Frontend-Denken.
-- `google-maps-scraper` zeigt, dass mehrere Oberflächen denselben Datenkern aufwerten können.
-
----
-
-## Offene Fragen
-
-- Welche Fläche ist für EventBär der erste echte Hebel?
-- Welche Fläche hilft am meisten bei Reichweite?
-- Welche Fläche ist später am stärksten für Monetarisierung?
-- Welche Fläche verlangt zuerst nur gute Daten und noch keine große UI?
+- Betriebsaufwand
+- strategischer Hebel

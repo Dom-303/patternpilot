@@ -184,7 +184,13 @@ const COMMANDS_ALLOWED_WITHOUT_PROJECT = new Set([
   "discover-workspace",
   "product-readiness",
   "setup-checklist",
-  "list-projects"
+  "list-projects",
+  "automation-jobs",
+  "automation-alerts",
+  "automation-alert-deliver",
+  "automation-dispatch",
+  "automation-dispatch-history",
+  "automation-reviews"
 ]);
 
 function buildCommandHandlers(envFiles) {

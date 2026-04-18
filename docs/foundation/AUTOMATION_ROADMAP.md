@@ -25,7 +25,7 @@ Nutzen:
 
 - keine losen Links mehr
 - jeder Fund bekommt sofort eine klare Arbeitsform
-- EventBaer-Bezug ist ab dem ersten Schritt sichtbar
+- Zielprojekt-Bezug ist ab dem ersten Schritt sichtbar
 
 Ergaenzung zum aktuellen Stand:
 
@@ -107,7 +107,7 @@ Was dazu kommt:
 
 Nutzen:
 
-- Patternpilot wird zu einem wiederverwendbaren Meta-System statt zu einer Einmal-Loesung fuer EventBaer
+- Patternpilot wird zu einem wiederverwendbaren Meta-System statt zu einer Einmal-Loesung fuer ein einzelnes Projekt
 
 ---
 

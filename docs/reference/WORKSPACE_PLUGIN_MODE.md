@@ -36,7 +36,7 @@ npm run automation:run -- --all-projects --promotion-mode prepared --dry-run
 
 ## Warum das wichtig ist
 
-- Patternpilot bleibt nicht an EventBaer haengen
+- Patternpilot bleibt nicht an einem einzelnen Zielprojekt haengen
 - neue Zielprojekte koennen ohne manuelles Nachziehen der Struktur starten
 - die Betriebslogik bleibt fuer jedes Repo gleich
 - spaetere GitHub-App- oder Watchlist-Automatisierung bekommt eine saubere Basis

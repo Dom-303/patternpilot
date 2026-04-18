@@ -265,12 +265,12 @@ Pflichtspalten:
 - `strengths`
 - `weaknesses`
 - `risks`
-- `learning_for_eventbaer`
+- `learning_for_project`
 - `possible_implication`
-- `eventbaer_gap_area`
+- `project_gap_area`
 - `build_vs_borrow`
 - `priority_for_review`
-- `eventbaer_relevance`
+- `project_relevance`
 - `decision`
 - `notes`
 
@@ -278,7 +278,7 @@ Pflichtspalten:
 
 ## Projektfähigkeit
 
-`patternpilot` ist nicht nur für EventBär gedacht.
+`patternpilot` ist nicht nur fuer ein einzelnes Zielprojekt gedacht.
 
 Es soll so aufgebaut sein, dass mehrere Projekte später sauber nebeneinander analysiert werden können.
 
@@ -430,14 +430,14 @@ Für den Start besteht `patternpilot` aus:
 
 - Kernlogik-Dateien im Root
 - Seed-Landkarte und Learnings
-- Projektkontext für `eventbear-worker`
+- Projektkontext fuer `projects/<project>/PROJECT_CONTEXT.md`
 - Prompt-Dateien für Agentenarbeit
 
 ---
 
 ## Langfristige Richtung
 
-Langfristig kann `patternpilot` über EventBär hinauswachsen.
+Langfristig kann `patternpilot` ueber einen einzelnen Dogfood-Fall hinauswachsen.
 
 Mögliche spätere Entwicklungsrichtungen:
 
@@ -448,4 +448,4 @@ Mögliche spätere Entwicklungsrichtungen:
 
 Heute gilt:
 
-**Patternpilot dient zuerst dazu, EventBär durch systematische externe Lern- und Entscheidungskraft besser zu machen.**
+**Patternpilot dient dazu, Zielprojekte durch systematische externe Lern- und Entscheidungskraft besser zu machen.**

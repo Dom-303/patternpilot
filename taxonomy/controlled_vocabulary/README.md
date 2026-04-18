@@ -7,6 +7,6 @@ Sie gehoeren bewusst nicht in den Repo-Root, weil sie Referenzdaten fuer Einordn
 Aktuell:
 
 - `controlled_vocabulary_pattern_families.csv`
-- `controlled_vocabulary_eventbaer_gap_areas.csv`
+- `controlled_vocabulary_project_gap_areas.csv`
 - `controlled_vocabulary_build_vs_borrow.csv`
 - `controlled_vocabulary_priority_for_review.csv`

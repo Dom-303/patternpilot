@@ -1,0 +1,40 @@
+{
+  "projectKey": "demo-city-guide",
+  "projectLabel": "Demo City Guide",
+  "projectRoot": "../demo-city-guide",
+  "readBeforeAnalysis": [
+    "README.md",
+    "docs/ARCHITECTURE.md",
+    "docs/DATA_MODEL.md"
+  ],
+  "referenceDirectories": [
+    "app",
+    "lib",
+    "docs",
+    "data"
+  ],
+  "discoveryHints": [
+    "events",
+    "calendar",
+    "venues",
+    "city guide",
+    "feed"
+  ],
+  "analysisQuestions": [
+    "Welche Schicht des Zielprojekts wird durch dieses Repo beruehrt?",
+    "Welche Luecke, Staerkung oder Spannung zeigt sich?",
+    "Ist das eher build_core, adapt_pattern, borrow_optional, observe_only oder avoid_as_core_dependency?",
+    "Welche konkrete Folgearbeit ergibt sich daraus fuer das Zielprojekt?"
+  ],
+  "targetCapabilities": [
+    "ingestion and adapters",
+    "data model and semantics",
+    "quality and governance",
+    "distribution and surfaces"
+  ],
+  "guardrails": [
+    "patternpilot bleibt Analyse- und Entscheidungsschicht",
+    "externe Repos nie blind als Kernarchitektur uebernehmen",
+    "Distribution und Kernlogik bewusst getrennt halten"
+  ]
+}

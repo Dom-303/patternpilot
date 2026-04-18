@@ -1,7 +1,7 @@
 {
   "action": "patternpilot_on_demand",
   "client_payload": {
-    "project": "eventbear-worker",
+    "project": "demo-city-guide",
     "urls": [
       "https://github.com/oc/openevents",
       "https://github.com/citybureau/city-scrapers"

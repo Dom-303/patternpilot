@@ -15,7 +15,7 @@ Die Discovery-Schicht arbeitet bewusst heuristikbasiert:
 - verbleibende Treffer voranreichern, klassifizieren und gegen das Zielprojekt abgleichen
 - daraus einen Discovery-Score und eine Disposition ableiten
 
-Die Suchschaerfe ist dabei bewusst **projektkonfigurierbar** und nicht fest auf EventBaer zugeschnitten.
+Die Suchschaerfe ist dabei bewusst **projektkonfigurierbar** und nicht auf ein einzelnes Dogfood-Projekt zugeschnitten.
 
 ## Inputs
 
@@ -86,17 +86,17 @@ Damit bleibt `patternpilot` als Produktkern generisch, waehrend einzelne Zielpro
 Nur Discovery-Plan und Kandidaten:
 
 ```bash
-npm run discover:github -- --project eventbear-worker --limit 8 --dry-run
+npm run discover:github -- --project my-project --limit 8 --dry-run
 ```
 
 Discovery plus direkte Intake-Uebergabe:
 
 ```bash
-npm run patternpilot -- discover --project eventbear-worker --intake
+npm run patternpilot -- discover --project my-project --intake
 ```
 
 Discovery plus Watchlist-Aktualisierung:
 
 ```bash
-npm run patternpilot -- discover --project eventbear-worker --append-watchlist
+npm run patternpilot -- discover --project my-project --append-watchlist
 ```

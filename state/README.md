@@ -17,3 +17,4 @@ Faustregel:
 
 - Persistente Arbeitsdaten duerfen bewusst versioniert werden, wenn sie Teil der Produktwahrheit sein sollen.
 - Laufzeit-Snapshots, Dispatch-Historien, Alert-Digests und letzte CLI-Kontexte sollten nicht nach GitHub.
+- In einem oeffentlichen Einzel-Repo gilt praktisch: committed = oeffentlich, ignoriert oder untracked = lokal.

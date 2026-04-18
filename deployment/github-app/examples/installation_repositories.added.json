@@ -10,8 +10,8 @@
   "repositories_added": [
     {
       "id": 1,
-      "name": "eventbear-worker",
-      "full_name": "Dom-303/eventbear-worker",
+      "name": "demo-city-guide",
+      "full_name": "example-org/demo-city-guide",
       "private": false,
       "default_branch": "main",
       "visibility": "public",
@@ -34,8 +34,8 @@
   "repositories": [
     {
       "id": 1,
-      "name": "eventbear-worker",
-      "full_name": "Dom-303/eventbear-worker",
+      "name": "demo-city-guide",
+      "full_name": "example-org/demo-city-guide",
       "private": false,
       "default_branch": "main",
       "visibility": "public",

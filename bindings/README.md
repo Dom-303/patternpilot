@@ -1,26 +1,38 @@
 # Bindings
 
-## Zweck
-
 `bindings/` enthaelt die technische Zielrepo-Anbindung von `patternpilot`.
 
-Hier liegt, was das Produkt ueber ein externes Zielrepo wissen und konfigurieren muss, damit Discovery, Review und Policy korrekt auf dieses Zielsystem ausgerichtet werden.
+Hier liegt, was das Produkt ueber ein Zielprojekt wissen muss:
 
-## Typischer Inhalt pro Zielprojekt
+- welche Dateien zuerst gelesen werden sollen
+- welche Verzeichnisse relevant sind
+- welche Fragen beantwortet werden sollen
+- welche Discovery- und Policy-Schaerfe gelten soll
 
-- `PROJECT_BINDING.md`
+## Typischer Inhalt
+
 - `PROJECT_BINDING.json`
 - `ALIGNMENT_RULES.json`
 - `DISCOVERY_POLICY.json`
 - `WATCHLIST.txt`
 
-## Abgrenzung zu `projects/`
+## Abgrenzung
 
-`bindings/<project>/` ist die technische und maschinennahe Zieldefinition.
+- `bindings/<project>/` = technische Zieldefinition
+- `projects/<project>/` = lesbarer Arbeits- und Ergebnisraum
 
-`projects/<project>/` ist der lesbare Arbeits- und Ergebnisraum, in dem Patternpilot seine projektbezogenen Artefakte ablegt.
+## Frischer Produktzustand
 
-Kurz:
+Bei einer frischen Installation kann `bindings/` leer sein.
 
-- `bindings/` sagt Patternpilot, wie es ein Zielprojekt lesen soll
-- `projects/` zeigt, was Patternpilot fuer dieses Zielprojekt erzeugt hat
+Neue Bindings entstehen erst, wenn du ein Zielprojekt verbindest:
+
+```bash
+npm run bootstrap -- --project my-project --target ../my-project --label "My Project"
+```
+
+## Beispiel
+
+Ein rein fiktives Referenzbeispiel liegt unter:
+
+[examples/demo-city-guide/README.md](/home/domi/eventbaer/dev/patternpilot/examples/demo-city-guide/README.md:1)

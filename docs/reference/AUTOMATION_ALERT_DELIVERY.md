@@ -26,22 +26,22 @@ Der Alert-Payload hat aktuell diese Form:
     "status": "operator_attention_required",
     "deliveryPriority": "urgent",
     "signals": ["operator_review_open", "high_severity_alert"],
-    "promotedJobs": ["eventbear-worker-apply"],
+    "promotedJobs": ["my-project-apply"],
     "summary": "1 open operator review requires deliberate follow-up.",
     "nextAction": "Acknowledge the latch deliberately before unattended dispatch resumes."
   },
   "nextJob": {
-    "name": "eventbear-worker-apply",
+    "name": "my-project-apply",
     "status": "ready",
     "reason": "interval_elapsed",
-    "command": "npm run automation:run -- --project eventbear-worker ..."
+    "command": "npm run automation:run -- --project my-project ..."
   },
   "alerts": [
     {
       "severity": "high",
       "category": "blocked_manual",
-      "jobName": "eventbear-worker-apply",
-      "message": "eventbear-worker-apply is blocked for manual intervention.",
+      "jobName": "my-project-apply",
+      "message": "my-project-apply is blocked for manual intervention.",
       "nextAction": "Inspect the last failure, then clear the job state once the underlying issue is fixed."
     }
   ],

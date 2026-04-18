@@ -1,19 +1,22 @@
 # Getting Started
 
-## Fuer Wen
+## Fuer wen das ist
 
-Diese Anleitung ist fuer einen frischen Nutzer gedacht, der `patternpilot` lokal installiert und noch kein Zielprojekt angebunden hat.
+Diese Anleitung ist fuer Menschen, die `patternpilot` einfach erstmal zum Laufen bringen wollen.
 
-Du brauchst dafuer nicht zuerst EventBaer zu verstehen.
+Du musst dafuer kein Entwickler sein.
+Du musst auch nicht zuerst die ganze Architektur verstehen.
 
-## Kernidee
+## Das Einzige, was du zuerst wissen musst
 
-`patternpilot` ist kein allgemeiner Bookmark-Sammler.
+`patternpilot` arbeitet immer fuer ein eigenes Zielprojekt.
 
-Es arbeitet immer fuer ein eigenes Zielprojekt.
-Deshalb ist der erste echte Schritt nie ein GitHub-Scan, sondern immer die Bindung an dein eigenes Repo.
+Darum ist der erste echte Schritt:
 
-## Schnellster Start
+- nicht direkt GitHub scannen
+- sondern zuerst dein eigenes Repo anbinden
+
+## Der schnellste sinnvolle Start
 
 ```bash
 npm install
@@ -22,63 +25,48 @@ npm run bootstrap -- --project my-project --target ../my-project --label "My Pro
 npm run intake -- --project my-project https://github.com/example/repo
 ```
 
-## Was Die Schritte tun
+## Was diese vier Schritte tun
 
-### 1. Installation
+### 1. `npm install`
 
-`npm install`
+Laedt die lokale CLI und alles, was sie braucht.
 
-Laedt die lokale CLI und ihre Abhaengigkeiten.
+### 2. `npm run doctor -- --offline`
 
-### 2. Lokaler Check
+Prueft den lokalen Zustand.
 
-`npm run doctor -- --offline`
+Du siehst danach:
 
-Zeigt:
+- ob `patternpilot` sauber installiert ist
+- ob schon Projekte verbunden sind
+- ob spaeter GitHub-Zugang noch fehlt
 
-- ob die lokale Struktur grundsaetzlich stimmt
-- welche Projekte schon gebunden sind
-- wie die GitHub-Auth-Lage aussieht
+### 3. `npm run bootstrap -- --project my-project --target ../my-project --label "My Project"`
 
-### 3. Eigenes Zielprojekt anbinden
+Verbindet dein eigenes Repo mit `patternpilot`.
 
-`npm run bootstrap -- --project my-project --target ../my-project --label "My Project"`
-
-Das erzeugt zuerst eine lokale Konfigurationsdatei und danach zwei verschiedene Dinge:
-
-- `patternpilot.config.local.json`
+Dabei entstehen zwei klar getrennte Orte:
 
 - `bindings/my-project/`
+  Das ist die technische Projektanbindung.
 - `projects/my-project/`
+  Das ist der lesbare Arbeits- und Ergebnisraum.
 
-`bindings/my-project/` ist die technische Zieldefinition:
+### 4. `npm run intake -- --project my-project https://github.com/example/repo`
 
-- `PROJECT_BINDING.json`
-- `ALIGNMENT_RULES.json`
-- `DISCOVERY_POLICY.json`
-- `WATCHLIST.txt`
+Legt einen ersten GitHub-Fund sauber an.
 
-`projects/my-project/` ist der Arbeits- und Ergebnisraum:
+Danach schreibt `patternpilot` unter anderem:
 
-- `PROJECT_CONTEXT.md`
-- `intake/`
-- `promotions/`
-- `reviews/`
-- `reports/`
+- in `state/repo_intake_queue.csv`
+- nach `projects/my-project/intake/`
+- nach `runs/my-project/`
 
-### 4. Erstes Repo intaken
+## Wenn du lieber mit mehreren Repos startest
 
-`npm run intake -- --project my-project https://github.com/example/repo`
+Dann arbeite mit einer Watchlist:
 
-Danach schreibt Patternpilot:
-
-- einen Queue-Eintrag nach `state/repo_intake_queue.csv`
-- ein Intake-Dossier nach `projects/my-project/intake/`
-- ein Laufprotokoll nach `runs/my-project/`
-
-## Wenn du lieber mit einer Watchlist startest
-
-1. URLs in `bindings/my-project/WATCHLIST.txt` eintragen
+1. Repos in `bindings/my-project/WATCHLIST.txt` eintragen
 2. Dann:
 
 ```bash
@@ -91,12 +79,23 @@ npm run sync:watchlist -- --project my-project
 npm run review:watchlist -- --project my-project --dry-run
 ```
 
-## Gefuehrter CLI-Einstieg
+## Wenn du erst einmal nur verstehen willst, wie das aussieht
 
-Wenn du die Schritte nicht aus der Doku lesen willst:
+Es gibt ein bewusst fiktives Beispiel unter:
 
-```bash
-npm run getting-started
-```
+[examples/demo-city-guide/README.md](/home/domi/eventbaer/dev/patternpilot/examples/demo-city-guide/README.md:1)
 
-Dieser Command zeigt die kuerzeste sinnvolle Reihenfolge direkt aus der CLI.
+Dieses Beispiel ist nur zur Orientierung da.
+Es ist kein reales Kundenprojekt und kein aktiver Default.
+
+## Wenn du mehr Technik willst
+
+Dann geh weiter zu:
+
+[ADVANCED_GUIDE.md](/home/domi/eventbaer/dev/patternpilot/docs/foundation/ADVANCED_GUIDE.md:1)
+
+## Wenn du wissen willst, was oeffentlich wird
+
+Dann lies als Naechstes:
+
+[PUBLIC_VS_LOCAL.md](/home/domi/eventbaer/dev/patternpilot/docs/foundation/PUBLIC_VS_LOCAL.md:1)

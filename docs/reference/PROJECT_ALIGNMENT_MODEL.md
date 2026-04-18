@@ -14,10 +14,10 @@ Stage 3 bedeutet:
 
 Jedes Zielprojekt kann eigene Alignment-Regeln mitbringen.
 
-Bei EventBaer passiert das ueber:
+Bei einem Zielprojekt passiert das ueber:
 
-- `bindings/eventbear-worker/PROJECT_BINDING.json`
-- `bindings/eventbear-worker/ALIGNMENT_RULES.json`
+- `bindings/<project>/PROJECT_BINDING.json`
+- `bindings/<project>/ALIGNMENT_RULES.json`
 
 ## Was Stage 3 erzeugt
 
@@ -45,7 +45,7 @@ eher
 
 ## Langfristige Richtung
 
-Das Alignment-Modell ist bewusst projektgebunden, aber nicht EventBaer-exklusiv.
+Das Alignment-Modell ist bewusst projektgebunden und produktneutral.
 
 Die Struktur soll spaeter fuer weitere Projekte wiederverwendbar sein:
 

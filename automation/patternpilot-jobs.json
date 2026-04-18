@@ -7,15 +7,6 @@
       "intervalMinutes": 240,
       "command": "npm run automation:run -- --all-projects --automation-job all-project-watchlists --promotion-mode prepared --automation-continue-on-project-error --automation-lock-timeout-minutes 180",
       "description": "Sync all configured project watchlists, keep running across project failures, and prepare promotion packets."
-    },
-    {
-      "name": "eventbear-worker-apply",
-      "scope": "project",
-      "projectKey": "eventbear-worker",
-      "priority": 100,
-      "intervalMinutes": 120,
-      "command": "npm run automation:run -- --project eventbear-worker --automation-job eventbear-worker-apply --promotion-mode apply --automation-re-evaluate-limit 20 --automation-lock-timeout-minutes 180",
-      "description": "Run the full intake, re-evaluate and promotion pipeline for EventBaer Worker."
     }
   ]
 }

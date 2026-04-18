@@ -110,7 +110,7 @@ export async function runPromote(rootDir, config, options) {
         sectionKey: "learning-candidates",
         sectionTitle: "Patternpilot Candidate Learnings",
         blockKey: promotion.repo.slug,
-        blockContent: renderLearningBlock(promotion, queueEntry),
+        blockContent: renderLearningBlock(promotion, queueEntry, binding),
         dryRun: options.dryRun
       });
       await upsertManagedMarkdownBlock({
