@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
+  <title id="title">Patternpilot onboarding map</title>
+  <desc id="desc">A simple four-step onboarding map for new Patternpilot users.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .card { fill: #ffffff; stroke: #d7dee7; stroke-width: 2; }
+      .title { font: 700 30px Arial, sans-serif; fill: #17324d; }
+      .stepTitle { font: 700 20px Arial, sans-serif; fill: #17324d; }
+      .stepText { font: 400 16px Arial, sans-serif; fill: #4d5e70; }
+      .num { font: 700 20px Arial, sans-serif; fill: #205f3c; }
+      .numBg { fill: #ddf1e4; }
+      .arrow { stroke: #89a1b6; stroke-width: 3; fill: none; marker-end: url(#marker); }
+    </style>
+    <marker id="marker" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#89a1b6"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="360" rx="28" class="bg"/>
+  <text x="70" y="64" class="title">Der einfachste Start</text>
+
+  <rect x="60" y="120" width="240" height="150" rx="22" class="card"/>
+  <circle cx="100" cy="158" r="20" class="numBg"/>
+  <text x="100" y="165" text-anchor="middle" class="num">1</text>
+  <text x="130" y="165" class="stepTitle">Installieren</text>
+  <text x="90" y="205" class="stepText">npm install</text>
+  <text x="90" y="230" class="stepText">doctor --offline</text>
+
+  <rect x="340" y="120" width="240" height="150" rx="22" class="card"/>
+  <circle cx="380" cy="158" r="20" class="numBg"/>
+  <text x="380" y="165" text-anchor="middle" class="num">2</text>
+  <text x="410" y="165" class="stepTitle">Projekt binden</text>
+  <text x="370" y="205" class="stepText">bootstrap</text>
+  <text x="370" y="230" class="stepText">target + label setzen</text>
+
+  <rect x="620" y="120" width="240" height="150" rx="22" class="card"/>
+  <circle cx="660" cy="158" r="20" class="numBg"/>
+  <text x="660" y="165" text-anchor="middle" class="num">3</text>
+  <text x="690" y="165" class="stepTitle">Ersten Fund anlegen</text>
+  <text x="650" y="205" class="stepText">intake oder watchlist</text>
+  <text x="650" y="230" class="stepText">danach review</text>
+
+  <rect x="900" y="120" width="240" height="150" rx="22" class="card"/>
+  <circle cx="940" cy="158" r="20" class="numBg"/>
+  <text x="940" y="165" text-anchor="middle" class="num">4</text>
+  <text x="970" y="165" class="stepTitle">Naechsten Schritt lesen</text>
+  <text x="930" y="205" class="stepText">product-readiness</text>
+  <text x="930" y="230" class="stepText">oder control</text>
+
+  <path d="M300 195 H340" class="arrow"/>
+  <path d="M580 195 H620" class="arrow"/>
+  <path d="M860 195 H900" class="arrow"/>
+</svg>

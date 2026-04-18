@@ -1,5 +1,9 @@
 # Advanced Guide
 
+<p align="center">
+  <img src="../../assets/workspace-map.svg" alt="Patternpilot workspace map" width="860">
+</p>
+
 ## Zweck
 
 Diese Anleitung ist fuer Nutzer, die `patternpilot` nicht nur starten, sondern bewusst betreiben wollen.
@@ -140,3 +144,9 @@ Die richtige Reihenfolge ist:
 Wenn du die Struktur erst anschauen willst, ohne ein echtes Projekt zu verbinden:
 
 [examples/demo-city-guide/README.md](../../examples/demo-city-guide/README.md)
+
+## 9. Ehrlicher Produktstatus
+
+Wenn du wissen willst, was bereits `v1`-nah ist und was noch auf der Zielgeraden liegt:
+
+[V1_STATUS.md](V1_STATUS.md)

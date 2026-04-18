@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" viewBox="0 0 1200 420" role="img" aria-labelledby="title desc">
+  <title id="title">Patternpilot workflow overview</title>
+  <desc id="desc">A simple five-step overview of how Patternpilot connects your project, inspects external repositories, reviews them, and turns them into decisions.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f6f8fb"/>
+      <stop offset="100%" stop-color="#eef5f1"/>
+    </linearGradient>
+    <style>
+      .title { font: 700 34px Arial, sans-serif; fill: #112233; }
+      .subtitle { font: 400 18px Arial, sans-serif; fill: #425466; }
+      .step { fill: #ffffff; stroke: #cad5df; stroke-width: 2; }
+      .stepTitle { font: 700 21px Arial, sans-serif; fill: #17324d; }
+      .stepText { font: 400 16px Arial, sans-serif; fill: #425466; }
+      .pill { fill: #d8efe1; }
+      .pillText { font: 700 14px Arial, sans-serif; fill: #205f3c; }
+      .arrow { stroke: #7b8b9c; stroke-width: 3; fill: none; marker-end: url(#marker); }
+    </style>
+    <marker id="marker" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7b8b9c"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="420" rx="28" fill="url(#bg)"/>
+  <text x="70" y="72" class="title">Patternpilot in 5 Schritten</text>
+  <text x="70" y="104" class="subtitle">Von deinem Projektkontext zu klaren Repo-Entscheidungen.</text>
+
+  <rect x="60" y="150" width="190" height="180" rx="22" class="step"/>
+  <rect x="80" y="168" width="68" height="28" rx="14" class="pill"/>
+  <text x="114" y="187" text-anchor="middle" class="pillText">1 START</text>
+  <text x="80" y="228" class="stepTitle">Bootstrap</text>
+  <text x="80" y="258" class="stepText">Verbinde dein</text>
+  <text x="80" y="281" class="stepText">Zielrepo mit</text>
+  <text x="80" y="304" class="stepText">Patternpilot.</text>
+
+  <rect x="285" y="150" width="190" height="180" rx="22" class="step"/>
+  <rect x="305" y="168" width="68" height="28" rx="14" class="pill"/>
+  <text x="339" y="187" text-anchor="middle" class="pillText">2 INPUT</text>
+  <text x="305" y="228" class="stepTitle">Intake</text>
+  <text x="305" y="258" class="stepText">Einzelrepos oder</text>
+  <text x="305" y="281" class="stepText">eine Watchlist</text>
+  <text x="305" y="304" class="stepText">landen sauber im Flow.</text>
+
+  <rect x="510" y="150" width="190" height="180" rx="22" class="step"/>
+  <rect x="530" y="168" width="76" height="28" rx="14" class="pill"/>
+  <text x="568" y="187" text-anchor="middle" class="pillText">3 REVIEW</text>
+  <text x="530" y="228" class="stepTitle">Bewerten</text>
+  <text x="530" y="258" class="stepText">Patternpilot fragt:</text>
+  <text x="530" y="281" class="stepText">relevant, beobachten</text>
+  <text x="530" y="304" class="stepText">oder bewusst lassen?</text>
+
+  <rect x="735" y="150" width="190" height="180" rx="22" class="step"/>
+  <rect x="755" y="168" width="94" height="28" rx="14" class="pill"/>
+  <text x="802" y="187" text-anchor="middle" class="pillText">4 OUTPUT</text>
+  <text x="755" y="228" class="stepTitle">Ergebnisse</text>
+  <text x="755" y="258" class="stepText">Reviews, Reports</text>
+  <text x="755" y="281" class="stepText">und Promotions</text>
+  <text x="755" y="304" class="stepText">werden lesbar abgelegt.</text>
+
+  <rect x="960" y="150" width="180" height="180" rx="22" class="step"/>
+  <rect x="980" y="168" width="84" height="28" rx="14" class="pill"/>
+  <text x="1022" y="187" text-anchor="middle" class="pillText">5 NEXT</text>
+  <text x="980" y="228" class="stepTitle">Naechster Schritt</text>
+  <text x="980" y="258" class="stepText">Readiness und</text>
+  <text x="980" y="281" class="stepText">Control sagen dir,</text>
+  <text x="980" y="304" class="stepText">was jetzt dran ist.</text>
+
+  <path d="M250 240 H285" class="arrow"/>
+  <path d="M475 240 H510" class="arrow"/>
+  <path d="M700 240 H735" class="arrow"/>
+  <path d="M925 240 H960" class="arrow"/>
+</svg>

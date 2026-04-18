@@ -1,5 +1,9 @@
 # Getting Started
 
+<p align="center">
+  <img src="../../assets/onboarding-map.svg" alt="Patternpilot onboarding map" width="860">
+</p>
+
 ## Fuer wen das ist
 
 Diese Anleitung ist fuer Menschen, die `patternpilot` einfach erstmal zum Laufen bringen wollen.
@@ -114,6 +118,12 @@ Es ist kein reales Kundenprojekt und kein aktiver Default.
 Dann geh weiter zu:
 
 [ADVANCED_GUIDE.md](ADVANCED_GUIDE.md)
+
+## Wenn du die allereinfachste Fassung willst
+
+Dann nimm:
+
+[SIMPLE_GUIDE.md](SIMPLE_GUIDE.md)
 
 ## Wenn du wissen willst, was oeffentlich wird
 

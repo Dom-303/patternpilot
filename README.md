@@ -14,6 +14,10 @@ Es hilft dir, externe GitHub-Repositories nicht nur zu sammeln, sondern im Konte
 
 ## Quick View
 
+<p align="center">
+  <img src="assets/workflow-overview.svg" alt="Patternpilot workflow overview" width="860">
+</p>
+
 ### Was Patternpilot macht
 
 - bindet dein eigenes Zielrepo als Bezugspunkt an
@@ -114,6 +118,8 @@ Wichtig:
 
 Es gibt jetzt zwei Einstiegsebenen:
 
+- Sehr einfach und in klarer Sprache:
+  [SIMPLE_GUIDE.md](docs/foundation/SIMPLE_GUIDE.md)
 - Einfach und kurz:
   [GETTING_STARTED.md](docs/foundation/GETTING_STARTED.md)
 - Technischer und ausfuehrlicher:
@@ -124,6 +130,8 @@ Es gibt jetzt zwei Einstiegsebenen:
   [GITHUB_TOKEN_SETUP.md](docs/reference/GITHUB_TOKEN_SETUP.md)
 - Release-Disziplin:
   [RELEASE_CHECKLIST.md](docs/foundation/RELEASE_CHECKLIST.md)
+- Ehrlicher Produktstatus:
+  [V1_STATUS.md](docs/foundation/V1_STATUS.md)
 
 Wenn du lieber direkt in der CLI gefuehrt werden willst:
 
@@ -149,6 +157,12 @@ npm run getting-started
 `patternpilot` bewertet fremde Repos nie abstrakt, sondern immer relativ zu einem Zielprojekt.
 
 Darum ist der erste echte Schritt fast nie `discover`, sondern fast immer `bootstrap` oder `init:project`.
+
+## Workspace auf einen Blick
+
+<p align="center">
+  <img src="assets/workspace-map.svg" alt="Patternpilot workspace map" width="860">
+</p>
 
 ## Fuer fortgeschrittene Nutzer
 
