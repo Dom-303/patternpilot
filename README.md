@@ -16,6 +16,7 @@ Es hilft dir, externe GitHub-Repositories nicht nur zu sammeln, sondern im Konte
 
 - Lizenz: [Apache-2.0](LICENSE)
 - Changelog: [CHANGELOG.md](CHANGELOG.md)
+- Release Notes: [RELEASE_NOTES_v0.1.0.md](docs/foundation/RELEASE_NOTES_v0.1.0.md)
 - Freigabeform: [OPEN_SOURCE_RELEASE.md](docs/foundation/OPEN_SOURCE_RELEASE.md)
 - Mitmachen: [CONTRIBUTING.md](CONTRIBUTING.md)
 - Release-Check: [RELEASE_CHECKLIST.md](docs/foundation/RELEASE_CHECKLIST.md)
