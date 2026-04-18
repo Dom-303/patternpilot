@@ -29,13 +29,18 @@ export async function runShowProject(rootDir, config, options) {
   const projectKey = options.project || config.defaultProject;
   const { project, binding, bindingPath } = await loadProjectBinding(rootDir, config, projectKey);
   const projectRoot = path.resolve(rootDir, project.projectRoot);
+  const workspaceRoot = project.projectContextFile
+    ? path.resolve(rootDir, path.dirname(project.projectContextFile))
+    : path.join(rootDir, "projects", projectKey);
 
   console.log(`# Patternpilot Project Binding`);
   console.log(``);
   console.log(`- project: ${projectKey}`);
   console.log(`- label: ${binding.projectLabel ?? project.label}`);
   console.log(`- project_root: ${projectRoot}`);
+  console.log(`- workspace_root: ${workspaceRoot}`);
   console.log(`- binding_file: ${path.relative(rootDir, bindingPath)}`);
+  console.log(`- context_file: ${project.projectContextFile ?? "-"}`);
   console.log(`- alignment_rules: ${binding.alignmentRulesFile ?? project.alignmentRulesFile ?? "-"}`);
   console.log(`- discovery_policy: ${binding.discoveryPolicyFile ?? project.discoveryPolicyFile ?? "-"}`);
   console.log(`- watchlist_file: ${project.watchlistFile ?? "-"}`);

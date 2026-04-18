@@ -21,16 +21,16 @@ Die Suchschaerfe ist dabei bewusst **projektkonfigurierbar** und nicht fest auf 
 
 Die Discovery-Linse speist sich aus:
 
-- `PROJECT_BINDING.json`
-- `ALIGNMENT_RULES.json`
+- `bindings/<project>/PROJECT_BINDING.json`
+- `bindings/<project>/ALIGNMENT_RULES.json`
 - Referenzdateien aus `readBeforeAnalysis`
 - Verzeichnisstruktur aus `referenceDirectories`
 - optionalen `discoveryHints`
-- optionaler `discoveryStrategy` in `PROJECT_BINDING.json`
+- optionaler `discoveryStrategy` in `bindings/<project>/PROJECT_BINDING.json`
 - bereits bekannten Repos in:
   - `knowledge/repo_landkarte.csv`
   - `state/repo_intake_queue.csv`
-  - `WATCHLIST.txt`
+  - `bindings/<project>/WATCHLIST.txt`
 
 ## Warum erst ohne LLM
 
@@ -66,7 +66,7 @@ Sie ist bewusst nicht die finale Entscheidung, sondern nur die naechste sinnvoll
 
 ## Projektkonfiguration
 
-Pro Zielprojekt kann `PROJECT_BINDING.json` die Discovery-Suche enger oder breiter setzen, zum Beispiel:
+Pro Zielprojekt kann `bindings/<project>/PROJECT_BINDING.json` die Discovery-Suche enger oder breiter setzen, zum Beispiel:
 
 ```json
 {

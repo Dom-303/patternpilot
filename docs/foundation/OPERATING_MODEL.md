@@ -13,9 +13,9 @@ Dieses Dokument beschreibt, wie `patternpilot` von einem reinen Denkmodell zu ei
 `patternpilot` arbeitet nie komplett abstrakt.
 Es bindet sich bewusst an ein Zielprojekt ueber:
 
+- `bindings/<project>/PROJECT_BINDING.md`
+- `bindings/<project>/PROJECT_BINDING.json`
 - `projects/<project>/PROJECT_CONTEXT.md`
-- `projects/<project>/PROJECT_BINDING.md`
-- `projects/<project>/PROJECT_BINDING.json`
 
 Damit wird festgelegt:
 
@@ -23,6 +23,13 @@ Damit wird festgelegt:
 - welche Dateien zuerst gelesen werden sollen
 - welche Verzeichnisse relevant sind
 - welche Fragen Patternpilot beantworten soll
+
+Wichtig fuer die Produktlogik:
+
+- `bindings/` enthaelt die technische Zielrepo-Anbindung
+- `projects/` ist der lesbare Arbeits- und Ergebnisraum fuer gebundene Zielrepos, nicht der Produktkern von `patternpilot`
+- neue Unterordner unter `projects/<project>/` koennen lokal per `init:project` entstehen
+- ein mitgelieferter Fall wie `bindings/eventbear-worker/` plus `projects/eventbear-worker/` ist ein Dogfood-Setup, kein Beweis fuer harte Produktkopplung
 
 ### 2. Intake statt Direktbewertung
 
@@ -70,7 +77,7 @@ Jeder Fund muss am Ende auf mindestens eine dieser Formen hinauslaufen:
 
 Der erste Motor in diesem Repo ist die CLI:
 
-`npm run intake -- --project eventbear-worker <github-url>`
+`npm run intake -- --project <project> <github-url>`
 
 Sie macht heute schon:
 
@@ -85,6 +92,12 @@ Sie macht bewusst noch nicht:
 - GitHub remote crawlen
 - Repo-Inhalte automatisch tief analysieren
 - kuratierte Entscheidungen vollautomatisch finalisieren
+
+Ein frisches Zielprojekt entsteht zuerst ueber:
+
+`npm run init:project -- --project sample-worker --target ../sample-worker --label "Sample Worker"`
+
+Danach ist `projects/sample-worker/` Teil des lokalen Patternpilot-Workspace.
 
 ---
 

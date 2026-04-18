@@ -85,6 +85,6 @@ Fuer neue GitHub-Funde ist `eventbear-worker` aktuell das Default-Zielprojekt vo
 Das bedeutet:
 
 - neue GitHub-Links koennen direkt fuer dieses Projekt als Intake angelegt werden
-- die projektbezogene Bindung liegt in `PROJECT_BINDING.md` und `PROJECT_BINDING.json`
+- die technische projektbezogene Bindung liegt in `../bindings/eventbear-worker/PROJECT_BINDING.md` und `../bindings/eventbear-worker/PROJECT_BINDING.json`
 - kuratierte Uebernahme in Landkarte, Learnings und Entscheidungen erfolgt erst nach Review
 - GitHub-Metadaten und README-Kontext koennen bereits im Intake automatisch angereichert werden

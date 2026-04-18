@@ -13,7 +13,7 @@ Die datierten Unterordner unter `calibration/` sind erzeugte Laufartefakte fuer 
 ## Aktueller Stand
 
 - Phase im Masterplan: `Phase 1 — Real Discovery Calibration`
-- Discovery-Policy-Datei: `projects/eventbear-worker/DISCOVERY_POLICY.json`
+- Discovery-Policy-Datei: `bindings/eventbear-worker/DISCOVERY_POLICY.json`
 - verfuegbare Kalibrierungs-Commands:
   - `npm run policy:audit -- --project eventbear-worker --dry-run`
   - `npm run policy:review -- --project eventbear-worker`
@@ -77,7 +77,7 @@ Das bedeutet:
 5. mit `policy-handoff` die `newly_visible` Kandidaten direkt in den normalen On-Demand-Review-Pfad schicken
 6. mit `policy-curate` die besten Handoff-Kandidaten fuer Promotion, Learnings und Decisions vorsortieren
 7. vorhandene Discovery-Artefakte mit `policy-review`, `policy-calibrate`, `policy-compare` und `policy-pack` gegen den aktuellen Policy-Stand pruefen
-8. danach `DISCOVERY_POLICY.json` bewusst enger oder weicher ziehen
+8. danach `bindings/eventbear-worker/DISCOVERY_POLICY.json` bewusst enger oder weicher ziehen
 
 ## Kalibrierungsregel
 

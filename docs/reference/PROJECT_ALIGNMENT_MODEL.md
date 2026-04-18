@@ -16,8 +16,8 @@ Jedes Zielprojekt kann eigene Alignment-Regeln mitbringen.
 
 Bei EventBaer passiert das ueber:
 
-- `projects/eventbear-worker/PROJECT_BINDING.json`
-- `projects/eventbear-worker/ALIGNMENT_RULES.json`
+- `bindings/eventbear-worker/PROJECT_BINDING.json`
+- `bindings/eventbear-worker/ALIGNMENT_RULES.json`
 
 ## Was Stage 3 erzeugt
 

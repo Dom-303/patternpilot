@@ -28,14 +28,15 @@ Der Fokus liegt nicht auf losem Sammeln, sondern auf einem klaren Arbeitsprinzip
 
 `patternpilot` ist aktuell:
 
+- ein eigenstaendiges lokales Produkt fuer Repo- und Produkt-Intelligence
 - ein strategischer Arbeitsraum
-- ein Repo- und Produkt-Intelligence-Layer
-- eine Entscheidungshilfe für EventBär
-- die Keimzelle eines möglichen späteren eigenständigen Produkts
+- ein Repo- und Produkt-Intelligence-Layer mit lokalem Workspace-Modell
+- ein System, das mehrere Zielrepos ueber Projekt-Bindings tragen kann
+- ein Dogfood-Setup mit `eventbear-worker` als erstem gebuendelten Pilotprojekt
 
 `patternpilot` ist aktuell nicht:
 
-- ein eigenständiges Produktionssystem
+- ein gehosteter Multi-Tenant-Dienst
 - ein zweiter Worker
 - ein Code-Spielplatz
 - ein lose gefülltes Bookmark-Archiv
@@ -72,6 +73,28 @@ Wichtig fuer die Produktperspektive:
 - projektnahe Discovery-Schaerfe lebt in `PROJECT_BINDING.json`
 - Policy-Blocker und Praeferenzen leben in `DISCOVERY_POLICY.json`
 - der Produktkern soll mehrere Zielrepos tragen, ohne EventBaer-Wissen fest einzucodieren
+- das heute eingecheckte `eventbear-worker`-Binding ist ein gebuendelter Dogfood-Workspace, nicht die Produktidentitaet von Patternpilot
+
+---
+
+## Workspace-Modell
+
+`patternpilot` trennt bewusst zwischen Produktkern und Zielprojekt-Workspace:
+
+- der Produktkern lebt in `lib/`, `scripts/`, `automation/`, `deployment/` und `docs/`
+- technische Zielrepo-Bindungen leben unter `bindings/<project>/`
+- gebundene Zielrepos leben unter `projects/<project>/`
+- `projects/<project>/` ist bewusst der lesbare Arbeits- und Ergebnisraum
+- jedes Projekt unter `projects/` beschreibt ein externes Zielsystem, nicht Patternpilot selbst
+- neue Projektordner entstehen ueber `npm run init:project -- --project <key> --target <repo-pfad>`
+
+Wichtig fuer die aktuelle Repo-Form:
+
+- `bindings/eventbear-worker/` ist die technische Dogfood-Bindung
+- `projects/eventbear-worker/` ist der zugehoerige Arbeits- und Ergebnisraum
+- ein frisches Setup kann mit leerem oder minimalem `projects/`-Verzeichnis starten
+- `patternpilot.config.json` in diesem Repo ist die aktive Dogfood-Konfiguration fuer die lokale Entwicklung
+- fuer eine neue Installation ist [patternpilot.config.example.json](/home/domi/eventbaer/dev/patternpilot/patternpilot.config.example.json:1) der bessere Startpunkt
 
 ---
 
@@ -81,6 +104,9 @@ Patternpilot ist nicht mehr nur ein Dokumentations-Seed.
 
 Es hat jetzt einen lokalen Motor plus Workspace-Modus:
 
+Die folgenden Beispiele nutzen das aktuell mitgelieferte Dogfood-Projekt `eventbear-worker`.
+Fuer eine frische Installation legst du zuerst dein eigenes Projektbinding mit `init:project` an.
+
 - `npm run analyze -- --project eventbear-worker <github-url>`
 - `npm run run-plan -- --project eventbear-worker`
 - `npm run run-drift -- --project eventbear-worker`
@@ -88,8 +114,8 @@ Es hat jetzt einen lokalen Motor plus Workspace-Modus:
 - `npm run discover:import -- --project eventbear-worker --file projects/eventbear-worker/calibration/discovery-candidates.example.json --dry-run`
 - `npm run policy:audit -- --project eventbear-worker --dry-run`
 - `npm run policy:calibrate -- --project eventbear-worker`
-- `npm run policy:compare -- --project eventbear-worker --policy-file projects/eventbear-worker/DISCOVERY_POLICY.next.json`
-- `npm run policy:pack -- --project eventbear-worker --policy-file projects/eventbear-worker/DISCOVERY_POLICY.next.json`
+- `npm run policy:compare -- --project eventbear-worker --policy-file bindings/eventbear-worker/DISCOVERY_POLICY.next.json`
+- `npm run policy:pack -- --project eventbear-worker --policy-file bindings/eventbear-worker/DISCOVERY_POLICY.next.json`
 - `npm run policy:apply -- --project eventbear-worker --workbench-dir projects/eventbear-worker/calibration/workbench/<id>`
 - `npm run policy:review -- --project eventbear-worker`
 - `npm run policy:suggest -- --project eventbear-worker`
@@ -428,7 +454,7 @@ Das erzeugt eine projektweite Zusammenfassung ueber gespeicherte Discovery-Runs 
 ### Aktuelle Policy gegen alternative JSON-Datei vergleichen
 
 ```bash
-npm run policy:compare -- --project eventbear-worker --policy-file projects/eventbear-worker/DISCOVERY_POLICY.next.json
+npm run policy:compare -- --project eventbear-worker --policy-file bindings/eventbear-worker/DISCOVERY_POLICY.next.json
 ```
 
 Das vergleicht den aktuellen Projekt-Policy-Stand mit einer alternativen JSON-Datei gegen dieselben gespeicherten Discovery-Runs und zeigt, wie sich `audit_flagged`, `enforce_hidden` und `preferred_hits` veraendern wuerden.
@@ -436,7 +462,7 @@ Das vergleicht den aktuellen Projekt-Policy-Stand mit einer alternativen JSON-Da
 ### Kalibrierungspaket fuer ein Projekt schreiben
 
 ```bash
-npm run policy:pack -- --project eventbear-worker --policy-file projects/eventbear-worker/DISCOVERY_POLICY.next.json
+npm run policy:pack -- --project eventbear-worker --policy-file bindings/eventbear-worker/DISCOVERY_POLICY.next.json
 ```
 
 Das schreibt unter `projects/<project>/calibration/packets/<packet-id>/` einen gebuendelten Arbeitsstand mit aktuellem Policy-Snapshot, Mehrlauf-Kalibrierung, optionalem Policy-Vergleich und einer kompakten `summary.md`.
@@ -780,14 +806,18 @@ npm run intake -- --project eventbear-worker --skip-enrich https://github.com/Ci
 
 ### Projektkontext
 
-- `projects/eventbear-worker/PROJECT_CONTEXT.md`
-- `projects/eventbear-worker/PROJECT_BINDING.md`
-- `projects/eventbear-worker/PROJECT_BINDING.json`
-- `projects/eventbear-worker/ALIGNMENT_RULES.json`
-- `projects/eventbear-worker/project_notes.md`
-- `projects/eventbear-worker/WATCHLIST.txt`
-- `projects/eventbear-worker/intake/`
-- `projects/eventbear-worker/promotions/`
+- `bindings/README.md`
+- `bindings/<project>/PROJECT_BINDING.md`
+- `bindings/<project>/PROJECT_BINDING.json`
+- `bindings/<project>/ALIGNMENT_RULES.json`
+- `bindings/<project>/DISCOVERY_POLICY.json`
+- `bindings/<project>/WATCHLIST.txt`
+- `projects/README.md`
+- `projects/<project>/PROJECT_CONTEXT.md`
+- `projects/<project>/README.md`
+- `projects/<project>/intake/`
+- `projects/<project>/promotions/`
+- `projects/eventbear-worker/` als aktuell gebuendelter Arbeitsraum fuer den Dogfood-Fall
 
 ### Motor
 
@@ -829,9 +859,9 @@ Das bedeutet:
 
 ## Langfristige Richtung
 
-`patternpilot` kann sich später zu einem eigenständigen Produkt entwickeln, das Menschen oder Teams hilft, vorhandenes Wissen aus GitHub, Web, Tools und Produktmustern gezielt zu analysieren, zu strukturieren und für eigene Vorhaben nutzbar zu machen.
+`patternpilot` ist bereits als eigenstaendiges lokales Produkt angelegt und kann sich weiter zu einem staerker installierbaren oder servicefaehigen System entwickeln, das Menschen oder Teams hilft, vorhandenes Wissen aus GitHub, Web, Tools und Produktmustern gezielt zu analysieren, zu strukturieren und fuer eigene Vorhaben nutzbar zu machen.
 
-Aktuell dient es zuerst EventBaer.
+Im aktuellen Repo dient `eventbear-worker` als erster gebuendelter Dogfood-Pilot, nicht als harte Produktgrenze.
 
 ---
 
