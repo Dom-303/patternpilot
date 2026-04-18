@@ -26,6 +26,7 @@ const COMMANDS = [
   { name: "run-governance", description: "Evaluate whether the next project run is manual-only, limited unattended, or fully unattended-ready", handlerKey: "runGovernance" },
   { name: "run-requalify", description: "Inspect whether a latched manual requalification can be cleared after stable follow-up loops", handlerKey: "runRequalify" },
   { name: "product-readiness", description: "Evaluate whether Patternpilot is ready for v1-style local product operation", handlerKey: "runProductReadiness" },
+  { name: "validate-cohort", description: "Run the broad foreign-project validation cohort through bootstrap, watchlist, review, readiness and governance", handlerKey: "runValidateCohort" },
   { name: "policy-apply", description: "Apply a proposed policy file back to the project with history snapshots", handlerKey: "runPolicyApply" },
   { name: "automation-dispatch", description: "Run the next ready automation job or a selected one", handlerKey: "runAutomationDispatch" },
   { name: "automation-dispatch-history", description: "Show persisted automation dispatch decisions, reroutes and blocks", handlerKey: "runAutomationDispatchHistory" },
@@ -161,6 +162,7 @@ const HELP_EXAMPLES = [
   "npm run patternpilot -- review-watchlist --project my-project --dry-run",
   "npm run patternpilot -- policy-control --project my-project",
   "npm run patternpilot -- product-readiness",
+  "npm run validate:cohort",
   "npm run patternpilot -- on-demand --project my-project --analysis-profile architecture",
   "npm run patternpilot -- automation-jobs",
   "npm run patternpilot -- automation-alerts",
@@ -214,6 +216,7 @@ function categorizeCommand(command) {
     || command.name.startsWith("run-")
     || command.name.startsWith("automation-")
     || command.name === "product-readiness"
+    || command.name === "validate-cohort"
   ) {
     return "Operations";
   }

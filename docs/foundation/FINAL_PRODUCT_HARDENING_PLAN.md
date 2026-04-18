@@ -28,7 +28,8 @@ Nicht gemeint ist:
 - Phase 1: im Kern abgeschlossen
 - Phase 2: im Kern abgeschlossen
 - Phase 3: im Kern abgeschlossen
-- Naechster Fokus: Phase 4 `Breite Fremdprojekt-Validierung`
+- Phase 4: im Kern abgeschlossen
+- Naechster Fokus: Phase 5 `Finaler Kern-Closeout`
 
 ## Zielbild
 
@@ -270,6 +271,8 @@ Exit:
 Exit:
 
 - breiter Realitaetsbeleg fuer den Kern
+- Referenzlauf abgeschlossen: `14` Repos, `0 failed`, `0 needs_fix`
+- Referenzdoku: `docs/foundation/PHASE4_VALIDATION_CLOSEOUT.md`
 
 ## Phase 5 — Finaler Kern-Closeout
 

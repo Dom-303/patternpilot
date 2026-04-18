@@ -6,7 +6,8 @@
 
 Der groesste Teil der eigentlichen Produktarbeit ist erledigt.
 Der wichtigste Fremdprojekt-Beweis ist inzwischen erbracht.
-Offen ist vor allem noch die letzte Launch-Disziplin.
+Die breite Fremdprojekt-Welle ist inzwischen ebenfalls erbracht.
+Offen ist jetzt vor allem noch der finale Kern-Closeout.
 
 ## Was bereits stark steht
 
@@ -19,12 +20,16 @@ Offen ist vor allem noch die letzte Launch-Disziplin.
 - neutrale Beispieloberflaeche statt realer EventBaer-Defaults
 - Release-Checkliste und Smoke-Pfad
 - erfolgreicher authentifizierter Fremdprojekt-Pilot in einem frischen Temp-Workspace
+- abgeschlossene breite Kohortenvalidierung ueber `14` oeffentliche Fremdprojekte
 
 ## Was in der Zielgeraden liegt
 
-- letzte Launch-Entscheidungen wie Release-Tag, Changelog und Freigabeform
-- optional weitere Oberflaechenpolitur, wenn sie echten Nutzwert bringt
-- eine bewusste finale Freigabeentscheidung auf Basis von Readiness und Closeout
+- der finale Kern-Closeout aus Phase 5
+- bewusste Einsortierung der verbleibenden Restpunkte:
+  - fixen
+  - dokumentieren
+  - akzeptieren
+- spaetere Launch- oder Kommunikationsarbeit nur noch als Nachlauf, nicht mehr als Produktblocker
 
 ## Was nicht mehr der Hauptblocker ist
 
@@ -50,6 +55,10 @@ Genau dieser Nachweis ist jetzt erbracht.
 Wenn du den kompakten Beleg lesen willst:
 
 [V1_CLOSEOUT.md](V1_CLOSEOUT.md)
+
+Wenn du den breiten Fremdprojekt-Beleg lesen willst:
+
+[PHASE4_VALIDATION_CLOSEOUT.md](PHASE4_VALIDATION_CLOSEOUT.md)
 
 Wenn du die Automation-Produktgrenze lesen willst:
 

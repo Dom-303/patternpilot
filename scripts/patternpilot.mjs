@@ -171,6 +171,7 @@ import {
 } from "./commands/policy-curation.mjs";
 import { runPromote } from "./commands/promotion.mjs";
 import { runProductReadiness } from "./commands/product-readiness.mjs";
+import { runValidateCohort } from "./commands/validation-cohort.mjs";
 
 function printHelp() {
   console.log(renderPatternpilotHelp());
@@ -191,7 +192,8 @@ const COMMANDS_ALLOWED_WITHOUT_PROJECT = new Set([
   "automation-alert-deliver",
   "automation-dispatch",
   "automation-dispatch-history",
-  "automation-reviews"
+  "automation-reviews",
+  "validate-cohort"
 ]);
 
 function buildCommandHandlers(envFiles) {
@@ -205,6 +207,7 @@ function buildCommandHandlers(envFiles) {
     runGovernance,
     runRequalify,
     runProductReadiness,
+    runValidateCohort,
     runGettingStarted,
     runDoctor: (rootDir, config, options) => runDoctor(rootDir, config, options, envFiles),
     runGithubAppEventPreview,

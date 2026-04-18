@@ -22,6 +22,7 @@ Es hilft dir, externe GitHub-Repositories nicht nur zu sammeln, sondern im Konte
 - Release-Check: [RELEASE_CHECKLIST.md](docs/foundation/RELEASE_CHECKLIST.md)
 - Release-Kommunikation: [RELEASE_COMMUNICATION.md](docs/foundation/RELEASE_COMMUNICATION.md)
 - `v1`-Closeout: [V1_CLOSEOUT.md](docs/foundation/V1_CLOSEOUT.md)
+- Phase-4-Validierung: [PHASE4_VALIDATION_CLOSEOUT.md](docs/foundation/PHASE4_VALIDATION_CLOSEOUT.md)
 - finale Kernhaertung: [FINAL_PRODUCT_HARDENING_PLAN.md](docs/foundation/FINAL_PRODUCT_HARDENING_PLAN.md)
 
 ## Quick View
@@ -166,6 +167,8 @@ npm run getting-started
   Arbeitet die Watchlist fuer ein Projekt ab.
 - `npm run review:watchlist -- --project my-project --dry-run`
   Verdichtet Watchlist-Funde zu einem Review.
+- `npm run validate:cohort`
+  Faellt die breite Fremdprojekt-Welle ueber die eingebaute Referenzkohorte.
 - `npm run patternpilot -- product-readiness`
   Zeigt, wie nah dein lokaler Setup an einem belastbaren Betriebszustand ist.
 
