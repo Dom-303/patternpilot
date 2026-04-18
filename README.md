@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/logo-horizontal.png" alt="Patternpilot logo" width="420">
+</p>
+
 # Patternpilot
 
 `patternpilot` ist ein lokales Produkt fuer Repo-Intelligence.
@@ -7,6 +11,64 @@ Es hilft dir, externe GitHub-Repositories nicht nur zu sammeln, sondern im Konte
 - Was ist wirklich relevant?
 - Was ist nur interessant?
 - Was solltest du uebernehmen, beobachten oder bewusst nicht uebernehmen?
+
+## Quick View
+
+### Was Patternpilot macht
+
+- bindet dein eigenes Zielrepo als Bezugspunkt an
+- sammelt externe GitHub-Repos nicht blind, sondern bewertet sie relativ zu deinem Projekt
+- fuehrt von Intake ueber Review bis zu kuratierten Learnings und Entscheidungen
+- trennt bewusst zwischen Produktcode, lokalem Laufzeit-Zustand und projektbezogenen Ergebnissen
+
+### Was du dafuer brauchst
+
+- lokal: `npm install`
+- fuer den ersten Test: kein GitHub-Login zwingend noetig
+- fuer stabile echte GitHub-Laeufe: ein GitHub-Konto und ein fine-grained Token in `.env.local`
+- spaeter optional: eine GitHub App fuer tiefere Automation
+
+### Was du danach bekommst
+
+- `bindings/<project>/` fuer die technische Projektanbindung
+- `projects/<project>/` fuer lesbare Intake-, Review- und Report-Artefakte
+- `runs/<project>/` fuer nachvollziehbare Laufhistorie
+- `state/` fuer lokalen Betriebszustand
+
+### Schnellster echter Einstieg
+
+```bash
+npm install
+npm run init:env
+npm run setup:checklist
+npm run doctor
+npm run bootstrap -- --project my-project --target ../my-project --label "My Project"
+npm run intake -- --project my-project https://github.com/example/repo
+```
+
+## Wie Patternpilot arbeitet
+
+```mermaid
+flowchart LR
+    A[Dein Zielrepo] --> B[bootstrap]
+    B --> C[bindings/project]
+    B --> D[projects/project]
+    E[GitHub Repo oder Watchlist] --> F[intake]
+    C --> F
+    D --> G[review]
+    F --> G
+    G --> H[promote oder observe]
+    H --> I[knowledge und decisions]
+    G --> J[product-readiness]
+    J --> K[naechster klarer Schritt]
+```
+
+## Was Patternpilot ausmacht
+
+- Es bewertet Repos immer relativ zu einem Zielprojekt, nicht abstrakt.
+- Es fuehrt den Nutzer vom ersten Setup bis zum naechsten sinnvollen Schritt.
+- Es trennt kuratierte Produktwahrheit bewusst von lokalen Runtime-Artefakten.
+- Es ist lokal nutzbar, aber vorbereitet fuer spaetere GitHub-Automation.
 
 ## Der kuerzeste Einstieg
 
