@@ -26,6 +26,7 @@ Es hilft dir, externe GitHub-Repositories nicht nur zu sammeln, sondern im Konte
 - finaler Kern-Closeout: [FINAL_CORE_CLOSEOUT.md](docs/foundation/FINAL_CORE_CLOSEOUT.md)
 - akzeptierte Grenzen: [ACCEPTED_LIMITS.md](docs/foundation/ACCEPTED_LIMITS.md)
 - Discovery-Exzellenz-Plan: [DISCOVERY_EXCELLENCE_PLAN.md](docs/foundation/DISCOVERY_EXCELLENCE_PLAN.md)
+- Discovery D4 Closeout: [DISCOVERY_D4_CLOSEOUT.md](docs/foundation/DISCOVERY_D4_CLOSEOUT.md)
 
 ## Quick View
 
@@ -169,6 +170,8 @@ Es gibt jetzt zwei Einstiegsebenen:
   [ACCEPTED_LIMITS.md](docs/foundation/ACCEPTED_LIMITS.md)
 - Nächster Such-/Discovery-Ausbau:
   [DISCOVERY_EXCELLENCE_PLAN.md](docs/foundation/DISCOVERY_EXCELLENCE_PLAN.md)
+- Bereits abgeschlossener Feedback-Loop-Ausbau:
+  [DISCOVERY_D4_CLOSEOUT.md](docs/foundation/DISCOVERY_D4_CLOSEOUT.md)
 
 Wenn du lieber direkt in der CLI gefuehrt werden willst:
 

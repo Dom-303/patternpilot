@@ -65,12 +65,23 @@ describe("discovery run-level engine fields", () => {
       risks: []
     };
 
-    const score = scoreDiscoveryCandidate(candidate, ["calendar", "connector", "validation"]);
+    const score = scoreDiscoveryCandidate(
+      candidate,
+      ["calendar", "connector", "validation"],
+      {
+        hasSignals: true,
+        preferredSignals: ["source_systems_and_families", "source_first", "broad"],
+        avoidSignals: ["frontend_and_surface_design"],
+        preferredTerms: ["calendar", "validation"],
+        avoidTerms: ["template"]
+      }
+    );
     const reasoning = buildDiscoveryReasoning(candidate, ["calendar", "connector", "validation"]);
 
     assert.ok(score > 60);
     assert.equal(candidate.discoveryEvidence.grade, "strong");
     assert.equal(candidate.discoveryClass, "fit_candidate");
+    assert.match(reasoning.join(" "), /Feedback-loop positives/i);
     assert.match(reasoning.join(" "), /Evidence grade is strong/i);
     assert.match(reasoning.join(" "), /Candidate class: fit candidate/i);
   });

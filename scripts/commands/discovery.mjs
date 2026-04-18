@@ -38,6 +38,10 @@ import {
   computeRulesFingerprint,
   deriveDisposition
 } from "../../lib/classification/evaluation.mjs";
+import {
+  loadDiscoveryFeedback,
+  writeDiscoveryFeedbackSnapshot
+} from "../../lib/discovery/feedback.mjs";
 import { refreshContext } from "../shared/runtime-helpers.mjs";
 
 function buildIntakeCommandGuidance(projectKey, items = []) {
@@ -201,6 +205,13 @@ export async function runIntake(rootDir, config, options) {
       pushed_at: enrichment.repo?.pushedAt ?? "",
       archived: enrichment.repo?.archived ? "yes" : "no",
       homepage: enrichment.repo?.homepage ?? "",
+      discovery_score: preloadedCandidate ? String(preloadedCandidate.discoveryScore ?? "") : "",
+      discovery_class: preloadedCandidate?.discoveryClass ?? "",
+      discovery_evidence_grade: preloadedCandidate?.discoveryEvidence?.grade ?? "",
+      discovery_query_labels: preloadedCandidate?.queryLabels?.join(",") ?? "",
+      discovery_query_families: preloadedCandidate?.queryFamilies?.join(",") ?? "",
+      discovery_feedback_positive: preloadedCandidate?.discoveryFeedbackMatch?.positiveSignals?.join(",") ?? "",
+      discovery_feedback_negative: preloadedCandidate?.discoveryFeedbackMatch?.negativeSignals?.join(",") ?? "",
       category_guess: guess.category,
       pattern_family_guess: guess.patternFamily,
       main_layer_guess: guess.mainLayer,
@@ -339,6 +350,7 @@ export async function runDiscover(rootDir, config, options) {
   const alignmentRules = await loadProjectAlignmentRules(rootDir, project, binding);
   const discoveryPolicy = await loadProjectDiscoveryPolicy(rootDir, project, binding);
   const projectProfile = await loadProjectProfile(rootDir, project, binding, alignmentRules);
+  const discoveryFeedback = await loadDiscoveryFeedback(rootDir, config, projectKey);
   const createdAt = new Date().toISOString();
   const runId = createRunId(new Date(createdAt));
   const discovery = await discoverGithubCandidates(
@@ -350,7 +362,8 @@ export async function runDiscover(rootDir, config, options) {
     projectProfile,
     {
       ...options,
-      discoveryPolicy
+      discoveryPolicy,
+      discoveryFeedback
     }
   );
   const summary = renderDiscoverySummary({
@@ -381,6 +394,30 @@ export async function runDiscover(rootDir, config, options) {
       : "- none",
     ""
   ].join("\n");
+  const feedbackSummaryMarkdown = [
+    "# Discovery Feedback Snapshot",
+    "",
+    `- project: ${projectKey}`,
+    `- created_at: ${createdAt}`,
+    `- positive_rows: ${discoveryFeedback.totals?.positive ?? 0}`,
+    `- negative_rows: ${discoveryFeedback.totals?.negative ?? 0}`,
+    `- observe_rows: ${discoveryFeedback.totals?.observe ?? 0}`,
+    `- pending_rows: ${discoveryFeedback.totals?.pending ?? 0}`,
+    `- feedback_strength: ${discoveryFeedback.feedbackStrength ?? 0}`,
+    "",
+    "## Preferred Terms",
+    "",
+    (discoveryFeedback.preferredTerms?.length ?? 0) > 0
+      ? discoveryFeedback.preferredTerms.map((item) => `- ${item}`).join("\n")
+      : "- none",
+    "",
+    "## Avoid Terms",
+    "",
+    (discoveryFeedback.avoidTerms?.length ?? 0) > 0
+      ? discoveryFeedback.avoidTerms.map((item) => `- ${item}`).join("\n")
+      : "- none",
+    ""
+  ].join("\n");
   const htmlReport = renderDiscoveryHtmlReport({
     projectKey,
     createdAt,
@@ -408,7 +445,8 @@ export async function runDiscover(rootDir, config, options) {
     appendWatchlist: options.appendWatchlist,
     reportView: options.reportView,
     htmlReportPath: projectReportRelativePath,
-    discovery
+    discovery,
+    discoveryFeedback
   };
   const runDir = await writeRunArtifacts({
     rootDir,
@@ -423,6 +461,10 @@ export async function runDiscover(rootDir, config, options) {
       {
         name: "policy-calibration.md",
         content: policyCalibrationMarkdown
+      },
+      {
+        name: "discovery-feedback.md",
+        content: feedbackSummaryMarkdown
       }
     ]
   });
@@ -444,10 +486,17 @@ export async function runDiscover(rootDir, config, options) {
     reportKind: "discovery",
     dryRun: options.dryRun
   });
+  const feedbackSnapshot = await writeDiscoveryFeedbackSnapshot(
+    rootDir,
+    projectKey,
+    discoveryFeedback,
+    options.dryRun
+  );
 
   console.log(summary);
   console.log(`Run directory: ${path.relative(rootDir, runDir)}`);
   console.log(`Policy calibration: ${path.relative(rootDir, path.join(runDir, "policy-calibration.md"))}${options.dryRun ? " (dry-run not written)" : ""}`);
+  console.log(`Discovery feedback: ${path.relative(rootDir, feedbackSnapshot.markdownPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
   console.log(`HTML report: ${projectReportRelativePath}`);
   console.log(`Browser link: ${path.relative(rootDir, reportPointers.browserLinkPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
   console.log(`Latest report metadata: ${path.relative(rootDir, reportPointers.latestReportPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
@@ -512,6 +561,7 @@ export async function runDiscoverImport(rootDir, config, options) {
   const alignmentRules = await loadProjectAlignmentRules(rootDir, project, binding);
   const discoveryPolicy = await loadProjectDiscoveryPolicy(rootDir, project, binding);
   const projectProfile = await loadProjectProfile(rootDir, project, binding, alignmentRules);
+  const discoveryFeedback = await loadDiscoveryFeedback(rootDir, config, projectKey);
   const createdAt = new Date().toISOString();
   const runId = createRunId(new Date(createdAt));
   const dateStr = createdAt.slice(0, 10);
@@ -527,7 +577,8 @@ export async function runDiscoverImport(rootDir, config, options) {
     importPayload,
     {
       ...options,
-      discoveryPolicy
+      discoveryPolicy,
+      discoveryFeedback
     }
   );
   const summary = renderDiscoverySummary({
@@ -560,6 +611,30 @@ export async function runDiscoverImport(rootDir, config, options) {
       : "- none",
     ""
   ].join("\n");
+  const feedbackSummaryMarkdown = [
+    "# Discovery Feedback Snapshot",
+    "",
+    `- project: ${projectKey}`,
+    `- created_at: ${createdAt}`,
+    `- imported: yes`,
+    `- positive_rows: ${discoveryFeedback.totals?.positive ?? 0}`,
+    `- negative_rows: ${discoveryFeedback.totals?.negative ?? 0}`,
+    `- observe_rows: ${discoveryFeedback.totals?.observe ?? 0}`,
+    `- pending_rows: ${discoveryFeedback.totals?.pending ?? 0}`,
+    "",
+    "## Preferred Terms",
+    "",
+    (discoveryFeedback.preferredTerms?.length ?? 0) > 0
+      ? discoveryFeedback.preferredTerms.map((item) => `- ${item}`).join("\n")
+      : "- none",
+    "",
+    "## Avoid Terms",
+    "",
+    (discoveryFeedback.avoidTerms?.length ?? 0) > 0
+      ? discoveryFeedback.avoidTerms.map((item) => `- ${item}`).join("\n")
+      : "- none",
+    ""
+  ].join("\n");
   const htmlReport = renderDiscoveryHtmlReport({
     projectKey,
     createdAt,
@@ -585,7 +660,8 @@ export async function runDiscoverImport(rootDir, config, options) {
     importPath: options.file,
     reportView: options.reportView,
     htmlReportPath: projectReportRelativePath,
-    discovery
+    discovery,
+    discoveryFeedback
   };
   const runDir = await writeRunArtifacts({
     rootDir,
@@ -600,6 +676,10 @@ export async function runDiscoverImport(rootDir, config, options) {
       {
         name: "policy-calibration.md",
         content: policyCalibrationMarkdown
+      },
+      {
+        name: "discovery-feedback.md",
+        content: feedbackSummaryMarkdown
       }
     ]
   });
@@ -621,10 +701,17 @@ export async function runDiscoverImport(rootDir, config, options) {
     reportKind: "discovery",
     dryRun: options.dryRun
   });
+  const feedbackSnapshot = await writeDiscoveryFeedbackSnapshot(
+    rootDir,
+    projectKey,
+    discoveryFeedback,
+    options.dryRun
+  );
 
   console.log(summary);
   console.log(`Run directory: ${path.relative(rootDir, runDir)}`);
   console.log(`Policy calibration: ${path.relative(rootDir, path.join(runDir, "policy-calibration.md"))}${options.dryRun ? " (dry-run not written)" : ""}`);
+  console.log(`Discovery feedback: ${path.relative(rootDir, feedbackSnapshot.markdownPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
   console.log(`HTML report: ${projectReportRelativePath}`);
   console.log(`Browser link: ${path.relative(rootDir, reportPointers.browserLinkPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
   console.log(`Latest report metadata: ${path.relative(rootDir, reportPointers.latestReportPath)}${options.dryRun ? " (dry-run not written)" : ""}`);

@@ -174,4 +174,47 @@ describe("buildDiscoveryPlan", () => {
     assert.match(dependencyPlan.query, /airtable|rss|ingest|review/);
     assert.ok(plan.inferredArchetypes.length >= 1);
   });
+
+  test("feeds preferred and avoided discovery terms back into planning", () => {
+    const binding = {
+      projectKey: "sample-project",
+      projectLabel: "Sample Project",
+      discoveryHints: ["calendar", "connector"]
+    };
+
+    const plan = buildDiscoveryPlan(binding, { capabilities: [] }, {
+      corpus: "",
+      discoverySignals: ["calendar", "connector"],
+      manifestSignals: {
+        packageNames: [],
+        descriptions: [],
+        keywords: ["calendar"],
+        dependencySignals: [],
+        scriptSignals: []
+      },
+      architectureSignals: {
+        directorySignals: ["connectors"],
+        extensionHints: ["ts"]
+      }
+    }, {
+      discoveryProfile: "focused",
+      discoveryFeedback: {
+        hasSignals: true,
+        preferredTerms: ["governance", "review"],
+        avoidTerms: ["frontend", "template"],
+        queryFamilyOutcomes: [
+          { value: "architecture", positive: 2, negative: 0, observe: 0, score: 6 }
+        ]
+      }
+    });
+
+    const broadPlan = plan.plans.find((item) => item.id === "broad-project-scan");
+    const strongestPlan = plan.plans.find((item) => item.family !== "broad");
+
+    assert.ok(broadPlan);
+    assert.ok(strongestPlan);
+    assert.match(broadPlan.query, /governance|review/);
+    assert.match(broadPlan.query, /-frontend|-template/);
+    assert.equal(plan.discoveryFeedback.preferredTerms[0], "governance");
+  });
 });

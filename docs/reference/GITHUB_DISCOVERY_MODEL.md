@@ -66,6 +66,40 @@ Zusaetzlich traegt jeder Kandidat jetzt:
 
 Dadurch wird klarer, welche Treffer wirklich oben stehen sollten und welche eher nur Kontext oder Risiko liefern.
 
+## Feedback Loop
+
+Discovery beruecksichtigt jetzt nicht mehr nur statische Projektmerkmale, sondern auch echten lokalen Verlauf.
+
+Die Rueckkopplung kommt aus `state/repo_intake_queue.csv` und unterscheidet dabei:
+
+- positive Signale
+  - zum Beispiel `promoted` oder `promotion_status=applied`
+- negative Signale
+  - zum Beispiel `review_disposition=skip` oder `decision_guess=ignore`
+- Beobachtungssignale
+  - zum Beispiel `review_disposition=observe_only`
+
+Daraus baut Discovery pro Projekt:
+
+- `preferredTerms`
+- `avoidTerms`
+- `preferredSignals`
+- `avoidSignals`
+- `queryFamilyOutcomes`
+- `feedbackStrength`
+
+Diese Signale werden genutzt fuer:
+
+- staerkere Query-Anker aus bewaehrten Begriffen
+- bewusstere negative Suchterme gegen bisher schlechte Richtungen
+- Priorisierung einzelner Query-Familien
+- zusaetzliche Score- und Reasoning-Signale im Kandidatenranking
+
+Die Snapshot-Artefakte dazu landen lokal unter:
+
+- `state/discovery_feedback/<project>.json`
+- `state/discovery_feedback/<project>.md`
+
 ## Inputs
 
 Die Discovery-Linse speist sich aus:
@@ -82,6 +116,9 @@ Die Discovery-Linse speist sich aus:
   - Dateinamen und Erweiterungen in Referenzverzeichnissen
 - optionalen `discoveryHints`
 - optionaler `discoveryStrategy` in `bindings/<project>/PROJECT_BINDING.json`
+- lokalem Discovery-Feedback aus:
+  - `state/repo_intake_queue.csv`
+  - `state/discovery_feedback/<project>.json`
 - bereits bekannten Repos in:
   - `knowledge/repo_landkarte.csv`
   - `state/repo_intake_queue.csv`
