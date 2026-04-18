@@ -36,6 +36,7 @@ test("buildPolicyControlReview prioritizes chain refresh when newer upstream art
   });
 
   assert.equal(review.overallStatus, "chain_refresh_recommended");
+  assert.equal(review.operatingPosture, "chain_blocked");
   assert.match(review.topBlocker, /Latest handoff still points to cycle cycle-1/i);
   assert.equal(
     review.nextCommand,
@@ -125,6 +126,7 @@ test("buildPolicyControlReview follows the most recent downstream apply step whe
   });
 
   assert.equal(review.overallStatus, "followup_with_care");
+  assert.equal(review.operatingPosture, "careful_followup");
   assert.equal(review.currentStageKey, "apply");
   assert.match(review.topBlocker, /observe_only path/i);
   assert.equal(
@@ -166,6 +168,8 @@ test("renderPolicyControlSummary renders the compact operator view", () => {
   });
 
   assert.match(markdown, /overall_status: followup_ready/);
+  assert.match(markdown, /operating_posture: clear_followup/);
+  assert.match(markdown, /operator_mode: guided_followup/);
   assert.match(markdown, /current_stage: apply/);
   assert.match(markdown, /cycle :: handoff_ready/);
   assert.match(markdown, /apply :: applied/);

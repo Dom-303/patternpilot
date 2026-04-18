@@ -26,7 +26,8 @@ Nicht gemeint ist:
 
 - Stand: `2026-04-18`
 - Phase 1: im Kern abgeschlossen
-- Naechster Fokus: Phase 2 `Automation- und Governance-Haertung`
+- Phase 2: im Kern abgeschlossen
+- Naechster Fokus: Phase 3 `Randfall- und Fehlerhaertung`
 
 ## Zielbild
 

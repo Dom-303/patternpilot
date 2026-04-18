@@ -48,6 +48,7 @@ test("buildProjectRunGovernance requires baseline for projects without a run his
 
   assert.equal(governance.status, "baseline_required");
   assert.equal(governance.autoDispatchAllowed, false);
+  assert.equal(governance.operatingPosture, "manual_only");
 });
 
 test("buildProjectRunGovernance blocks unattended apply when drift needs attention", () => {
@@ -94,6 +95,7 @@ test("buildProjectRunGovernance allows limited unattended continuation when queu
   assert.equal(governance.status, "limited_unattended");
   assert.equal(governance.autoDispatchAllowed, true);
   assert.equal(governance.autoApplyAllowed, false);
+  assert.equal(governance.operatingPosture, "guarded_unattended");
   assert.ok(governance.blockedPhases.includes("promote"));
 });
 
@@ -113,6 +115,7 @@ test("buildProjectRunGovernance marks stable maintenance runs as unattended-read
   assert.equal(governance.status, "unattended_ready");
   assert.equal(governance.autoDispatchAllowed, true);
   assert.equal(governance.autoApplyAllowed, true);
+  assert.equal(governance.operatingPosture, "unattended_ready");
 
   const markdown = renderProjectRunGovernanceSummary({
     projectKey: "sample-project",
@@ -120,6 +123,8 @@ test("buildProjectRunGovernance marks stable maintenance runs as unattended-read
     governance
   });
   assert.match(markdown, /auto_dispatch_allowed: yes/);
+  assert.match(markdown, /operating_posture: unattended_ready/);
+  assert.match(markdown, /operator_mode: unattended_allowed/);
   assert.match(markdown, /recommended_promotion_mode:/);
 });
 

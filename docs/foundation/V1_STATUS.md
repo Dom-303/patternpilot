@@ -11,6 +11,7 @@ Offen ist vor allem noch die letzte Launch-Disziplin.
 ## Was bereits stark steht
 
 - Produktkern fuer Intake, Review, Watchlist und Readiness
+- klar eingehegte Automation als optionale Betriebsoberflaeche statt implizitem Pflichtkern
 - klare Trennung zwischen `bindings/`, `projects/`, `runs/` und `state/`
 - oeffentliche Produktoberflaeche ohne aktive Kunden- oder Dogfood-Defaults
 - einfacher Einstieg mit `getting-started`, `bootstrap` und `setup:checklist`
@@ -49,6 +50,10 @@ Genau dieser Nachweis ist jetzt erbracht.
 Wenn du den kompakten Beleg lesen willst:
 
 [V1_CLOSEOUT.md](V1_CLOSEOUT.md)
+
+Wenn du die Automation-Produktgrenze lesen willst:
+
+[AUTOMATION_OPERATING_MODE.md](AUTOMATION_OPERATING_MODE.md)
 
 Wenn du die naechste Abschlussphase lesen willst:
 

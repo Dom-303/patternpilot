@@ -85,6 +85,7 @@ flowchart LR
 - Es fuehrt den Nutzer vom ersten Setup bis zum naechsten sinnvollen Schritt.
 - Es trennt kuratierte Produktwahrheit bewusst von lokalen Runtime-Artefakten.
 - Es ist lokal nutzbar, aber vorbereitet fuer spaetere GitHub-Automation.
+- Automation ist bewusst eine optionale Betriebsoberflaeche, nicht der Pflichtkern.
 
 ## Der kuerzeste Einstieg
 
@@ -142,6 +143,8 @@ Es gibt jetzt zwei Einstiegsebenen:
   [GITHUB_TOKEN_SETUP.md](docs/reference/GITHUB_TOKEN_SETUP.md)
 - Release-Disziplin:
   [RELEASE_CHECKLIST.md](docs/foundation/RELEASE_CHECKLIST.md)
+- Automation-Betriebsgrenze:
+  [AUTOMATION_OPERATING_MODE.md](docs/foundation/AUTOMATION_OPERATING_MODE.md)
 - Ehrlicher Produktstatus:
   [V1_STATUS.md](docs/foundation/V1_STATUS.md)
 - Kompakter `v1`-Closeout:

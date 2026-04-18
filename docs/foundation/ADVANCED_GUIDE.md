@@ -132,6 +132,10 @@ Wichtig:
 
 Diese Pfade sind optional.
 
+Die klare Produktgrenze dazu steht hier:
+
+[AUTOMATION_OPERATING_MODE.md](AUTOMATION_OPERATING_MODE.md)
+
 Die richtige Reihenfolge ist:
 
 1. Erst lokales Onboarding sauber

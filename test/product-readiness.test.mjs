@@ -56,6 +56,7 @@ test("buildPatternpilotProductReadinessReview returns ready_with_followups for h
   assert.equal(review.releaseDecision, "go_with_followups");
   assert.equal(review.counts.fail, 0);
   assert.ok(review.counts.followup >= 1);
+  assert.equal(review.automationMode, "guarded_automation");
   assert.equal(review.projects[0].overallStatus, "ready_with_followups");
   assert.match(review.nextAction ?? "", /run-stability/i);
 });
@@ -116,6 +117,52 @@ test("buildPatternpilotProductReadinessReview blocks fresh installs without any 
   assert.equal(review.overallStatus, "not_ready");
   assert.equal(review.releaseDecision, "hold");
   assert.match(review.nextAction ?? "", /bootstrap/);
+  assert.equal(review.automationMode, "core_only");
+});
+
+test("buildPatternpilotProductReadinessReview does not fail a healthy local core just because automation is unconfigured", () => {
+  const review = buildPatternpilotProductReadinessReview({
+    generatedAt: "2026-04-18T10:00:00.000Z",
+    auth: {
+      tokenPresent: true,
+      authSource: "PATTERNPILOT_GITHUB_TOKEN"
+    },
+    githubApi: {
+      networkStatus: "ok"
+    },
+    alertDelivery: {
+      configured: false,
+      targetCount: 0
+    },
+    automation: {
+      jobsConfigured: 0,
+      attentionStatus: "routine",
+      deliveryPriority: "routine"
+    },
+    projects: [
+      {
+        projectKey: "sample-project",
+        label: "Sample Project",
+        watchlistCount: 3,
+        governanceStatus: "unattended_ready",
+        governanceNextAction: null,
+        policyControlStatus: "followup_ready",
+        policyControlNextCommand: "npm run patternpilot -- re-evaluate --project sample-project --stale-only",
+        jobName: null,
+        jobStatus: "unconfigured",
+        jobReason: "No automation job is configured for this project.",
+        alertCount: 0,
+        highAlertCount: 0,
+        recentCompletedCommands: []
+      }
+    ]
+  });
+
+  assert.equal(review.overallStatus, "ready_for_v1");
+  assert.equal(review.releaseDecision, "go");
+  assert.equal(review.automationMode, "core_only");
+  assert.equal(review.globalChecks.find((check) => check.key === "automation_jobs")?.status, "pass");
+  assert.equal(review.globalChecks.find((check) => check.key === "alert_delivery")?.status, "pass");
 });
 
 test("buildPatternpilotProductReadinessReview suppresses freshly completed next actions and advances to the next follow-up", () => {

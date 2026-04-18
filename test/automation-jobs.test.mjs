@@ -737,7 +737,11 @@ describe("automation jobs summary", () => {
       ]
     });
 
+    assert.match(rendered, /automation_mode: operator_attention_required/);
+    assert.match(rendered, /operator_mode: manual_attention/);
     assert.match(rendered, /policy_control=followup_with_care/);
+    assert.match(rendered, /governance_posture=manual_only/);
+    assert.match(rendered, /policy_posture=careful_followup/);
     assert.match(rendered, /policy_stage=apply/);
     assert.match(rendered, /operator_review=open/);
     assert.match(rendered, /dispatch_gate=operator_ack_required/);
