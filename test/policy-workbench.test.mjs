@@ -13,6 +13,12 @@ test("buildPolicyWorkbench creates candidate rows with focus hints", () => {
         gapAreaCanonical: "source_systems_and_families",
         enrichment: { repo: { topics: ["events"], license: "MIT" } },
         projectAlignment: { fitBand: "high", fitScore: 82 },
+        discoveryEvidence: {
+          sourceFamilyHits: 2,
+          publicEventIntakeHits: 1,
+          governanceHits: 0,
+          normalizationHits: 1
+        },
         discoveryDisposition: "intake_now"
       },
       {

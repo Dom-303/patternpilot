@@ -1,0 +1,260 @@
+{
+  "schemaVersion": 1,
+  "projectKey": "eventbear-worker",
+  "reportKind": "discovery",
+  "command": "discover-import",
+  "createdAt": "2026-04-20T00:14:26.349Z",
+  "runId": "2026-04-20T00-14-26-349Z",
+  "reportPath": "projects/eventbear-worker/reports/patternpilot-report-eventbear-worker-2026-04-20-imported.html",
+  "handoff": {
+    "schemaVersion": 2,
+    "handoffType": "patternpilot_agent_brief",
+    "reportType": "discovery",
+    "projectKey": "eventbear-worker",
+    "runConfidence": "medium",
+    "runConfidenceReason": "3 high-fit candidates, capability diversity 25%",
+    "mission": [
+      "Arbeite nur im Kontext von eventbear-worker und leite keine generischen Entscheidungen ohne Bezug zum Zielprojekt ab.",
+      "Beginne mit citybureau/city-scrapers als staerkstem Ausgangspunkt dieses Berichts.",
+      "citybureau/city-scrapers: mittlerer Wert, mittlerer Aufwand, beobachten oder zurueckstellen",
+      "Vertrauen in den Lauf: mittel. Unsichere Stellen vor Veraenderungen manuell pruefen."
+    ],
+    "deliverable": [
+      "Pruefe die priorisierten Repos zuerst gegen das Zielprojekt statt sie isoliert zu bewerten.",
+      "Liefere fuer die staerksten Kandidaten jeweils Schichtwert, Uebertragungswert, Hauptrisiko und naechsten sinnvollen Schritt.",
+      "Beende mit einer klaren Intake-, Review- oder Beobachtungs-Empfehlung pro Kandidat."
+    ],
+    "targetRepoContext": {
+      "projectKey": "eventbear-worker",
+      "projectLabel": "Eventbaer Worker",
+      "projectRoot": "../eventbaer/dev/eventbear-worker",
+      "firstReadFiles": [
+        "AGENT_CONTEXT.md",
+        "README.md",
+        "WORKER_CONTRACT.md",
+        "WORKER_FLOW.md",
+        "docs/SOURCE_MASTERLIST_POLICY.md",
+        "package.json"
+      ],
+      "missingConfiguredFiles": [],
+      "referenceDirectories": [
+        "lib",
+        "scripts",
+        "docs",
+        "sources",
+        "templates"
+      ],
+      "extractedCapabilities": [
+        "ingestion",
+        "data_model",
+        "quality_governance",
+        "distribution"
+      ],
+      "targetCapabilities": [
+        "ingestion and adapters",
+        "data model and semantics",
+        "quality and governance",
+        "distribution and surfaces"
+      ],
+      "analysisQuestions": [
+        "Welche Schicht im Zielrepo wird durch das externe Repo beleuchtet?",
+        "Welche Luecke, Staerkung oder Spannungsflaeche zeigt sich?",
+        "Ist das eher build_core, adapt_pattern, borrow_optional, observe_only oder avoid_as_core_dependency?",
+        "Welche konkrete Folgearbeit sollte fuer das Zielprojekt entstehen?"
+      ],
+      "guardrails": [
+        "patternpilot bleibt Analyse- und Entscheidungsschicht, nicht Produktionslogik",
+        "externe Repos nie blind als Kernarchitektur uebernehmen",
+        "Distribution-, Surface- und Core-Logik bewusst getrennt halten"
+      ]
+    },
+    "summary": {
+      "profile": "standard",
+      "scanned": 3,
+      "candidateCount": 3,
+      "queryCount": 1,
+      "cohortCount": 3,
+      "policyMode": "audit",
+      "blockedCandidates": 0,
+      "newDiscoveryCount": 2,
+      "baselineAnchorCount": 1,
+      "codingReadyCount": 1,
+      "researchMode": "zielgerichtete Pruefung mit moeglichem Prototyp",
+      "prototypeReadyRepos": [
+        "citybureau/city-scrapers"
+      ],
+      "codingStarterAvailable": true,
+      "codingStarterCount": 3
+    },
+    "guardrails": [
+      "Profil: Standard",
+      "Regelmodus: sichtbar pruefen",
+      "Vom Regelwerk markiert: 0",
+      "Suchfehler: 0",
+      "Projekt-Guardrail: patternpilot bleibt Analyse- und Entscheidungsschicht, nicht Produktionslogik",
+      "Projekt-Guardrail: externe Repos nie blind als Kernarchitektur uebernehmen",
+      "Projekt-Guardrail: Distribution-, Surface- und Core-Logik bewusst getrennt halten"
+    ],
+    "uncertainties": [],
+    "repos": [
+      {
+        "repo": "citybureau/city-scrapers",
+        "url": "https://github.com/citybureau/city-scrapers",
+        "disposition": "intake_now",
+        "fitBand": "high",
+        "discoveryScore": 73,
+        "mainLayer": "source_intake",
+        "matchedCapabilities": [
+          "ingestion"
+        ],
+        "whyRelevant": "Treffer in Discovery-Linsen: Curated seed priority cohort.",
+        "evidence": "solid (33)",
+        "recommendedTargetAreas": [
+          "sources",
+          "lib",
+          "scripts",
+          "docs"
+        ],
+        "workMode": "gezielter Vergleich mit kleinem Prototyp moeglich",
+        "prototypeReady": true,
+        "transferablePattern": "Review and adapt the pattern into the target-project Architektur, not as direct Abhaengigkeit.",
+        "strengths": "Civic scraper family for public information and municipal-style source intake patterns. | Themen: civic, scraper, adapter, source-family, open-data | Wahrscheinlich bald entscheidungsrelevant fuer Eventbaer Worker",
+        "risks": "anfaellig bei Plattformaenderungen",
+        "nextStep": "mittlerer Wert, mittlerer Aufwand, beobachten oder zurueckstellen"
+      },
+      {
+        "repo": "City-Bureau/city-scrapers-events",
+        "url": "https://github.com/City-Bureau/city-scrapers-events",
+        "disposition": "review_queue",
+        "fitBand": "high",
+        "discoveryScore": 81,
+        "mainLayer": "location_place_enrichment",
+        "matchedCapabilities": [
+          "ingestion"
+        ],
+        "whyRelevant": "Treffer in Discovery-Linsen: Curated seed priority cohort.",
+        "evidence": "strong (51)",
+        "recommendedTargetAreas": [
+          "sources",
+          "lib",
+          "scripts",
+          "docs"
+        ],
+        "workMode": "Research zuerst, Code erst nach Vergleich mit Zielrepo",
+        "prototypeReady": false,
+        "transferablePattern": "Treat as optional supporting layer, not as system core.",
+        "strengths": "Statische Site mit einem Kalender aus gescrapten Eventdaten der City-Scrapers-Projekte. | Sprachen: JavaScript, CSS, HTML | Wahrscheinlich bald entscheidungsrelevant fuer Eventbaer Worker",
+        "risks": "anfaellig bei Plattformaenderungen",
+        "nextStep": "mittlerer Wert, mittlerer Aufwand, beobachten oder zurueckstellen"
+      },
+      {
+        "repo": "j-e-d/agenda-lumiton",
+        "url": "https://github.com/j-e-d/agenda-lumiton",
+        "disposition": "review_queue",
+        "fitBand": "high",
+        "discoveryScore": 100,
+        "mainLayer": "access_fetch",
+        "matchedCapabilities": [],
+        "whyRelevant": "Treffer in Discovery-Linsen: Curated seed reference cohort.",
+        "evidence": "strong (37)",
+        "recommendedTargetAreas": [
+          "lib",
+          "scripts",
+          "docs",
+          "sources"
+        ],
+        "workMode": "Research zuerst, Code erst nach Vergleich mit Zielrepo",
+        "prototypeReady": false,
+        "transferablePattern": "Review and adapt the pattern into the target-project Architektur, not as direct Abhaengigkeit.",
+        "strengths": "Automatisierter Scraper fuer die Lumiton-Agenda, der ICS- und CSV-Kalender erzeugt. | Themen: calendar, cine, github-scraper, vicente-lopez | Sprachen: Python",
+        "risks": "anfaellig bei Plattformaenderungen",
+        "nextStep": "mittlerer Wert, mittlerer Aufwand, beobachten oder zurueckstellen"
+      }
+    ],
+    "codingStarter": {
+      "primary": {
+        "repo": "citybureau/city-scrapers",
+        "starterMode": "compare_then_prototype",
+        "starterLabel": "Primaerer Prototyp",
+        "implementationGoal": "citybureau/city-scrapers zuerst strukturell mit dem Zielrepo vergleichen und danach nur einen kleinen Prototyp fuer die Kernschicht bauen, nicht die Fremdarchitektur uebernehmen.",
+        "firstSlice": "Pruefe in sources, lib, scripts, docs, wie citybureau/city-scrapers die Schicht Quellaufnahme loest, und skizziere danach einen minimalen Adapter- oder Intake-Prototyp fuer genau diese Stelle.",
+        "targetAreas": [
+          "sources",
+          "lib",
+          "scripts",
+          "docs"
+        ],
+        "compareChecklist": [
+          "Welche konkrete Schicht aus citybureau/city-scrapers ist fuer eventbear-worker wirklich uebertragbar?",
+          "Welche Teile gehoeren nur zur Fremdplattform und duerfen nicht in die Zielarchitektur wandern?",
+          "Welche kleinste sinnvolle Folgearbeit im Zielrepo beweist den Mustergewinn, ohne schon Produktionslogik zu ersetzen?"
+        ],
+        "stopIf": [
+          "das Muster nur ueber UI-, Dashboard- oder Surface-Code wirkt",
+          "kein sauberer Bezug auf Quellenaufnahme, Adapter oder Normalisierung sichtbar bleibt",
+          "die Folgearbeit nur durch direkte Uebernahme grosser Fremdlogik sinnvoll waere"
+        ],
+        "matchedCapabilities": [
+          "Aufnahme"
+        ]
+      },
+      "secondary": [
+        {
+          "repo": "City-Bureau/city-scrapers-events",
+          "starterMode": "support_prototype",
+          "starterLabel": "Unterstuetzender Prototyp",
+          "implementationGoal": "City-Bureau/city-scrapers-events nicht als Kern uebernehmen, sondern als unterstuetzendes Vergleichsmuster fuer eine angrenzende Schicht nutzen.",
+          "firstSlice": "Pruefe in sources, lib, scripts, docs, ob City-Bureau/city-scrapers-events fuer Orts- und Platzanreicherung ein kleines Support-Muster liefert, das den Kern ergaenzt statt ersetzt.",
+          "targetAreas": [
+            "sources",
+            "lib",
+            "scripts",
+            "docs"
+          ],
+          "compareChecklist": [
+            "Welche konkrete Schicht aus City-Bureau/city-scrapers-events ist fuer eventbear-worker wirklich uebertragbar?",
+            "Welche Teile gehoeren nur zur Fremdplattform und duerfen nicht in die Zielarchitektur wandern?",
+            "Welche kleinste sinnvolle Folgearbeit im Zielrepo beweist den Mustergewinn, ohne schon Produktionslogik zu ersetzen?"
+          ],
+          "stopIf": [
+            "das Muster nur ueber UI-, Dashboard- oder Surface-Code wirkt",
+            "kein sauberer Bezug auf Quellenaufnahme, Adapter oder Normalisierung sichtbar bleibt",
+            "die Folgearbeit nur durch direkte Uebernahme grosser Fremdlogik sinnvoll waere"
+          ],
+          "matchedCapabilities": [
+            "Aufnahme"
+          ]
+        },
+        {
+          "repo": "j-e-d/agenda-lumiton",
+          "starterMode": "support_prototype",
+          "starterLabel": "Unterstuetzender Prototyp",
+          "implementationGoal": "j-e-d/agenda-lumiton nicht als Kern uebernehmen, sondern als unterstuetzendes Vergleichsmuster fuer eine angrenzende Schicht nutzen.",
+          "firstSlice": "Pruefe in lib, scripts, docs, sources, ob j-e-d/agenda-lumiton fuer Zugriff und Abruf ein kleines Support-Muster liefert, das den Kern ergaenzt statt ersetzt.",
+          "targetAreas": [
+            "lib",
+            "scripts",
+            "docs",
+            "sources"
+          ],
+          "compareChecklist": [
+            "Welche konkrete Schicht aus j-e-d/agenda-lumiton ist fuer eventbear-worker wirklich uebertragbar?",
+            "Welche Teile gehoeren nur zur Fremdplattform und duerfen nicht in die Zielarchitektur wandern?",
+            "Welche kleinste sinnvolle Folgearbeit im Zielrepo beweist den Mustergewinn, ohne schon Produktionslogik zu ersetzen?"
+          ],
+          "stopIf": [
+            "das Muster nur ueber UI-, Dashboard- oder Surface-Code wirkt",
+            "kein sauberer Bezug auf Quellenaufnahme, Adapter oder Normalisierung sichtbar bleibt",
+            "die Folgearbeit nur durch direkte Uebernahme grosser Fremdlogik sinnvoll waere"
+          ],
+          "matchedCapabilities": []
+        }
+      ]
+    },
+    "nextSteps": [
+      "citybureau/city-scrapers: mittlerer Wert, mittlerer Aufwand, beobachten oder zurueckstellen",
+      "City-Bureau/city-scrapers-events: mittlerer Wert, mittlerer Aufwand, beobachten oder zurueckstellen",
+      "j-e-d/agenda-lumiton: mittlerer Wert, mittlerer Aufwand, beobachten oder zurueckstellen"
+    ]
+  }
+}

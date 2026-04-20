@@ -1,0 +1,41 @@
+{
+  "projectKey": "eventbear-worker",
+  "version": 1,
+  "intent": "Provide curated discovery seeds so EventBear discovery starts from repo-near civic/public-event/source-family signals before broad GitHub text search dominates.",
+  "priorityRepos": [
+    {
+      "repo": "City-Bureau/city-scrapers-events",
+      "description": "Static site with a calendar of scraped civic and public events from City Scrapers projects.",
+      "topics": ["public-event", "civic", "scraper", "calendar", "open-data"],
+      "why": "Strong public-event intake and civic source-family signal."
+    },
+    {
+      "repo": "citybureau/city-scrapers",
+      "description": "Civic scraper family for public information and municipal-style source intake patterns.",
+      "topics": ["civic", "scraper", "adapter", "source-family", "open-data"],
+      "why": "Strong adapter-family and source-family baseline."
+    }
+  ],
+  "referenceRepos": [
+    {
+      "repo": "j-e-d/agenda-lumiton",
+      "description": "Agenda scraper signal that may be useful for audit and comparison, but should not dominate the top list.",
+      "topics": ["agenda", "scraper", "calendar", "boundary-signal"],
+      "why": "Boundary repo for agenda-style intake patterns."
+    }
+  ],
+  "negativeRepos": [
+    {
+      "repo": "abangafdhu/ionic-framework",
+      "description": "Framework/UI noise example.",
+      "topics": ["framework", "ui", "noise"],
+      "why": "Framework and UI noise, not worker-core relevant."
+    },
+    {
+      "repo": "ManojKumarPatnaik/Major-project-list",
+      "description": "Generic project list noise example.",
+      "topics": ["list", "tutorial", "noise"],
+      "why": "Generic list-style repo that should not rank as a target-relevant discovery hit."
+    }
+  ]
+}

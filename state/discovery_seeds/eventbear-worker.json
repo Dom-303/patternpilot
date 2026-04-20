@@ -1,0 +1,11 @@
+{
+  "projectKey": "eventbear-worker",
+  "version": 1,
+  "generatedAt": "2026-04-20T00:14:26.349Z",
+  "intent": "Learned discovery seed memory for Eventbaer Worker from queue and promotion history.",
+  "priorityRepos": [],
+  "priorityCohorts": [],
+  "referenceRepos": [],
+  "referenceCohorts": [],
+  "negativeRepos": []
+}

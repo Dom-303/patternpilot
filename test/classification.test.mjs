@@ -232,11 +232,17 @@ describe("deriveDisposition", () => {
 
   for (const [effortBand, valueBand, expected] of matrixCases) {
     test(`matrix ${effortBand}/${valueBand} -> ${expected}`, () => {
-      const out = deriveDisposition({ effortBand, valueBand }, [], "high");
+      const out = deriveDisposition({ effortBand, valueBand }, [], "medium");
       assert.equal(out.disposition, expected);
       assert.equal(out.dispositionReason, `matrix:effort_${effortBand}_value_${valueBand}`);
     });
   }
+
+  test("high-fit medium-value candidates get the review override before the matrix", () => {
+    const out = deriveDisposition({ effortBand: "low", valueBand: "medium" }, [], "high");
+    assert.equal(out.disposition, "review_queue");
+    assert.equal(out.dispositionReason, "override:high_fit_medium_value");
+  });
 
   test("archived_repo overrides matrix output", () => {
     const out = deriveDisposition({ effortBand: "low", valueBand: "high" }, ["archived_repo"], "high");

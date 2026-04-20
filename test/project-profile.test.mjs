@@ -69,3 +69,61 @@ test("loadProjectProfile extracts manifest, dependency and architecture signals"
   assert.ok(profile.architectureSignals.extensionHints.includes("ts"));
   assert.ok(profile.capabilitiesPresent.includes("ingestion"));
 });
+
+test("loadProjectProfile prefers binding.projectRoot over stale config projectRoot", async () => {
+  const rootDir = await makeTempRoot();
+  const staleProjectRoot = path.join(rootDir, "stale-project");
+  const actualProjectRoot = path.join(rootDir, "actual-project");
+  await fs.mkdir(staleProjectRoot, { recursive: true });
+  await fs.mkdir(path.join(actualProjectRoot, "sources"), { recursive: true });
+
+  await fs.writeFile(
+    path.join(actualProjectRoot, "README.md"),
+    "# Actual Project\n\nThis worker handles event source intake and governance.\n",
+    "utf8"
+  );
+  await fs.writeFile(
+    path.join(actualProjectRoot, "package.json"),
+    `${JSON.stringify({
+      name: "@demo/eventbear-worker",
+      description: "Public event intake worker",
+      keywords: ["event", "intake", "worker"],
+      dependencies: {
+        playwright: "^1.0.0"
+      }
+    }, null, 2)}\n`,
+    "utf8"
+  );
+  await fs.writeFile(
+    path.join(actualProjectRoot, "sources", "city-events-adapter.ts"),
+    "export {};\n",
+    "utf8"
+  );
+
+  const project = {
+    projectRoot: "./stale-project"
+  };
+  const binding = {
+    projectKey: "eventbear-worker",
+    projectRoot: "./actual-project",
+    readBeforeAnalysis: ["README.md", "package.json"],
+    referenceDirectories: ["sources"]
+  };
+  const alignmentRules = {
+    capabilities: [
+      {
+        id: "ingestion",
+        signals: ["event", "intake", "adapter"]
+      }
+    ]
+  };
+
+  const profile = await loadProjectProfile(rootDir, project, binding, alignmentRules);
+
+  assert.equal(profile.projectRoot, actualProjectRoot);
+  assert.deepEqual(profile.contextSources.missingFiles, []);
+  assert.ok(profile.referenceFiles.every((item) => item.exists));
+  assert.match(profile.corpus, /city-events-adapter\.ts/i);
+  assert.ok(profile.architectureSignals.extensionHints.includes("ts"));
+  assert.ok(profile.capabilitiesPresent.includes("ingestion"));
+});

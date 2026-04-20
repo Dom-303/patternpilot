@@ -210,6 +210,12 @@ describe("evaluateDiscoveryCandidatePolicy", () => {
       projectAlignment: {
         fitBand: "high",
         fitScore: 90
+      },
+      discoveryEvidence: {
+        sourceFamilyHits: 2,
+        publicEventIntakeHits: 1,
+        governanceHits: 0,
+        normalizationHits: 1
       }
     });
     const policy = {

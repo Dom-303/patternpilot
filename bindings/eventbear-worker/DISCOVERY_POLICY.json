@@ -1,0 +1,157 @@
+{
+  "projectKey": "eventbear-worker",
+  "blockedOwners": [],
+  "blockedRepoPatterns": [],
+  "blockedTopics": [
+    "algo-trading",
+    "cybersecurity",
+    "forex",
+    "security",
+    "ionic",
+    "nextjs",
+    "react",
+    "tailwindcss",
+    "dashboard",
+    "homepage",
+    "startpage"
+  ],
+  "blockedPatternFamilies": [],
+  "blockedMainLayers": [],
+  "blockedGapAreas": [],
+  "blockedLicenseCategories": [],
+  "blockedLicenses": [],
+  "blockedHomepageHosts": [],
+  "blockedSignalPatterns": [
+    "facebook page",
+    "facebook pages",
+    "forex",
+    "investing.com",
+    "major project list",
+    "threat intelligence",
+    "startpage",
+    "student gui"
+  ],
+  "blockedRiskFlags": [],
+  "minStars": 0,
+  "minProjectFitScore": 35,
+  "allowDispositions": [
+    "intake_now",
+    "review_queue"
+  ],
+  "requirePositiveCohortForDispositions": [
+    "intake_now",
+    "review_queue"
+  ],
+  "allowGapAreas": [],
+  "allowCapabilitiesAny": [],
+  "preferredPatternFamilies": [],
+  "preferredMainLayers": [
+    "access_fetch",
+    "source_intake",
+    "parsing_extraction",
+    "location_place_enrichment"
+  ],
+  "preferredSignalPatterns": [
+    "open data",
+    "public event",
+    "municipal",
+    "civic",
+    "community calendar",
+    "agenda",
+    "review workflow",
+    "validation",
+    "governance",
+    "dedupe",
+    "masterlist",
+    "newline-delimited json",
+    "ndjson",
+    "csv",
+    "schema",
+    "normalize",
+    "adapter family"
+  ],
+  "preferredTopics": [
+    "open-data",
+    "civic-tech",
+    "government",
+    "agenda",
+    "meetings",
+    "playwright"
+  ],
+  "preferredGapAreas": [
+    "source_systems_and_families",
+    "connector_families",
+    "risk_and_dependency_awareness"
+  ],
+  "preferredCapabilities": [
+    "ingestion",
+    "data_model",
+    "quality_governance"
+  ],
+  "positiveSignalCohorts": [
+    {
+      "id": "source-family-core",
+      "anyMainLayers": [
+        "access_fetch",
+        "source_intake",
+        "parsing_extraction",
+        "location_place_enrichment"
+      ],
+      "anyGapAreas": [
+        "source_systems_and_families",
+        "connector_families"
+      ],
+      "minSourceFamilyHits": 2,
+      "minProjectBindingScore": 32
+    },
+    {
+      "id": "public-event-normalization",
+      "anySignalPatterns": [
+        "public event",
+        "municipal",
+        "civic",
+        "agenda",
+        "open data"
+      ],
+      "minPublicEventIntakeHits": 1,
+      "minNormalizationHits": 1,
+      "minProjectBindingScore": 36
+    },
+    {
+      "id": "civic-source-family",
+      "anyMainLayers": [
+        "access_fetch",
+        "source_intake",
+        "parsing_extraction"
+      ],
+      "anySignalPatterns": [
+        "municipal",
+        "civic",
+        "agenda",
+        "public event",
+        "open data"
+      ],
+      "minSourceFamilyHits": 2,
+      "minPublicEventIntakeHits": 1,
+      "minProjectBindingScore": 40
+    },
+    {
+      "id": "grounded-governance",
+      "anyGapAreas": [
+        "source_systems_and_families",
+        "connector_families",
+        "risk_and_dependency_awareness"
+      ],
+      "anySignalPatterns": [
+        "review workflow",
+        "governance",
+        "validation",
+        "dedupe"
+      ],
+      "minGovernanceHits": 1,
+      "minSourceFamilyHits": 1,
+      "minNormalizationHits": 1,
+      "minProjectBindingScore": 34
+    }
+  ]
+}

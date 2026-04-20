@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "projectKey": "eventbear-worker",
+  "reportKind": "review",
+  "command": "on-demand",
+  "createdAt": "2026-04-18T23:05:35.485Z",
+  "runId": "2026-04-18T23-05-35-485Z",
+  "reportPath": "projects/eventbear-worker/reports/patternpilot-report-eventbear-worker-2026-04-18-on-demand.html",
+  "handoff": {
+    "reportType": "review",
+    "projectKey": "eventbear-worker",
+    "reviewScope": "selected_urls",
+    "runConfidence": "medium",
+    "context": {
+      "mainLayer": "source_intake",
+      "gapArea": "source_systems_and_families",
+      "capability": "ingestion"
+    },
+    "topRepos": [
+      {
+        "repo": "calcom/cal.com",
+        "url": "https://github.com/calcom/cal.com",
+        "fitBand": "high",
+        "mainLayer": "source_intake",
+        "gapArea": "source_systems_and_families",
+        "nextStep": "Vergleiche das Repo mit der Quellsystem-Architektur des Zielprojekts."
+      },
+      {
+        "repo": "city-bureau/city-scrapers",
+        "url": "https://github.com/city-bureau/city-scrapers",
+        "fitBand": "high",
+        "mainLayer": "source_intake",
+        "gapArea": "source_systems_and_families",
+        "nextStep": "Vergleiche das Repo mit der Quellsystem-Architektur des Zielprojekts."
+      },
+      {
+        "repo": "gethomepage/homepage",
+        "url": "https://github.com/gethomepage/homepage",
+        "fitBand": "medium",
+        "mainLayer": "export_feed_api",
+        "gapArea": "distribution_surfaces",
+        "nextStep": "Lies dieses Repo als Oberflaechen- oder Verteilungssignal, das auf dem Kern aufsetzt."
+      }
+    ]
+  }
+}

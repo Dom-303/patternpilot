@@ -1,0 +1,199 @@
+{
+  "projectKey": "eventbear-worker",
+  "generatedAt": "2026-04-20T00:14:26.348Z",
+  "totals": {
+    "positive": 2,
+    "negative": 1,
+    "observe": 2,
+    "pending": 0
+  },
+  "feedbackStrength": 0.5833333333333334,
+  "preferredTerms": [
+    "civic",
+    "location"
+  ],
+  "avoidTerms": [
+    "scrape",
+    "standardize",
+    "share",
+    "public",
+    "meeting",
+    "from",
+    "government",
+    "website",
+    "city",
+    "ingestion"
+  ],
+  "preferredSignals": [
+    "export_feed_api",
+    "location_intelligence",
+    "quality_governance",
+    "open-data"
+  ],
+  "avoidSignals": [
+    "local_source_infra_framework",
+    "source_intake",
+    "source_systems_and_families",
+    "ingestion",
+    "distribution"
+  ],
+  "learnedCohorts": {
+    "positive": [
+      {
+        "repoRef": "citybureau/city-scrapers",
+        "outcome": "positive",
+        "fitScore": 95,
+        "discoveryScore": 0,
+        "parts": [
+          "civic"
+        ],
+        "signals": [],
+        "matchedGroundingTerms": [
+          "civic"
+        ],
+        "matchedGroundingSignals": [],
+        "groundingScore": 1,
+        "cohortCoreScore": 1,
+        "cohortSupportScore": 0,
+        "cohortExcludedScore": 0
+      },
+      {
+        "repoRef": "oc/openevents",
+        "outcome": "positive",
+        "fitScore": 14,
+        "discoveryScore": 0,
+        "parts": [
+          "location"
+        ],
+        "signals": [
+          "location_intelligence"
+        ],
+        "matchedGroundingTerms": [
+          "location"
+        ],
+        "matchedGroundingSignals": [
+          "location_intelligence"
+        ],
+        "groundingScore": 3,
+        "cohortCoreScore": 2,
+        "cohortSupportScore": 0,
+        "cohortExcludedScore": 0
+      }
+    ],
+    "negative": [
+      {
+        "repoRef": "city-bureau/city-scrapers",
+        "outcome": "negative",
+        "fitScore": 75,
+        "discoveryScore": 0,
+        "parts": [
+          "scrape",
+          "standardize",
+          "share",
+          "public",
+          "meeting",
+          "from",
+          "government",
+          "website",
+          "city",
+          "ingestion"
+        ],
+        "signals": [
+          "local_source_infra_framework",
+          "source_intake",
+          "source_systems_and_families",
+          "ingestion",
+          "distribution"
+        ],
+        "matchedGroundingTerms": [],
+        "matchedGroundingSignals": [],
+        "groundingScore": 0,
+        "cohortCoreScore": 2,
+        "cohortSupportScore": 0,
+        "cohortExcludedScore": 1
+      }
+    ],
+    "observe": [
+      {
+        "repoRef": "calcom/cal.com",
+        "outcome": "observe",
+        "fitScore": 83,
+        "discoveryScore": 0,
+        "parts": [
+          "ingestion",
+          "governance"
+        ],
+        "signals": [
+          "ingestion",
+          "quality_governance"
+        ],
+        "matchedGroundingTerms": [
+          "ingestion",
+          "governance"
+        ],
+        "matchedGroundingSignals": [
+          "ingestion",
+          "quality_governance"
+        ],
+        "groundingScore": 6,
+        "cohortCoreScore": 0,
+        "cohortSupportScore": 2,
+        "cohortExcludedScore": 0
+      },
+      {
+        "repoRef": "gethomepage/homepage",
+        "outcome": "observe",
+        "fitScore": 63,
+        "discoveryScore": 0,
+        "parts": [
+          "ingestion",
+          "feed"
+        ],
+        "signals": [
+          "export_feed_api",
+          "ingestion"
+        ],
+        "matchedGroundingTerms": [
+          "ingestion",
+          "feed"
+        ],
+        "matchedGroundingSignals": [
+          "export_feed_api",
+          "ingestion"
+        ],
+        "groundingScore": 6,
+        "cohortCoreScore": 0,
+        "cohortSupportScore": 0,
+        "cohortExcludedScore": 1
+      }
+    ],
+    "positiveParts": [
+      "civic",
+      "location"
+    ],
+    "negativeParts": [
+      "scrape",
+      "standardize",
+      "share",
+      "public",
+      "meeting",
+      "from",
+      "government",
+      "website",
+      "city",
+      "ingestion"
+    ],
+    "positiveSignals": [
+      "location_intelligence"
+    ],
+    "negativeSignals": [
+      "local_source_infra_framework",
+      "source_intake",
+      "source_systems_and_families",
+      "ingestion",
+      "distribution"
+    ]
+  },
+  "queryFamilyOutcomes": [],
+  "hasSignals": true
+}

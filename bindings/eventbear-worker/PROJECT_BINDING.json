@@ -1,0 +1,135 @@
+{
+  "projectKey": "eventbear-worker",
+  "projectLabel": "Eventbaer Worker",
+  "projectRoot": "../eventbaer/dev/eventbear-worker",
+  "readBeforeAnalysis": [
+    "AGENT_CONTEXT.md",
+    "README.md",
+    "WORKER_CONTRACT.md",
+    "WORKER_FLOW.md",
+    "docs/SOURCE_MASTERLIST_POLICY.md",
+    "package.json"
+  ],
+  "referenceDirectories": [
+    "lib",
+    "scripts",
+    "docs",
+    "sources",
+    "templates"
+  ],
+  "discoveryHints": [
+    "municipal event scraper",
+    "civic calendar data",
+    "adapter family review",
+    "event feed parser",
+    "source audit dedupe",
+    "playwright crawler extraction",
+    "location event normalization",
+    "calendar scraper"
+  ],
+  "discoveryStrategy": {
+    "broadAnchorCount": 1,
+    "broadSignalCount": 1,
+    "broadMaxTerms": 4,
+    "signalLaneAnchorCount": 1,
+    "signalLaneSignalCount": 2,
+    "signalLaneMaxTerms": 4,
+    "signalLaneLimit": 4,
+    "archetypeAnchorCount": 1,
+    "archetypeSignalCount": 2,
+    "archetypeMaxTerms": 4,
+    "architectureAnchorCount": 1,
+    "architectureSignalCount": 2,
+    "architectureMaxTerms": 4,
+    "dependencyAnchorCount": 1,
+    "dependencySignalCount": 2,
+    "dependencyMaxTerms": 4,
+    "capabilityAnchorCount": 1,
+    "capabilitySignalCount": 2,
+    "capabilityMaxTerms": 4,
+    "manualAnchorCount": 1,
+    "manualMaxTerms": 4,
+    "negativeTermCount": 3,
+    "architectureGroundingMinScore": 5,
+    "dependencyGroundingMinScore": 6,
+    "capabilityGroundingMinScore": 5,
+    "prioritySignalLaneIds": [
+      "public_event_intake",
+      "adapter_family",
+      "normalization_schema"
+    ],
+    "seedSignalSources": [
+      "discoveryHints",
+      "targetCapabilities",
+      "analysisQuestions"
+    ],
+    "preferredQueryFamilies": [
+      "signal_lane",
+      "architecture",
+      "capability",
+      "archetype",
+      "dependency",
+      "broad"
+    ],
+    "seedRepoFields": [
+      "fullName",
+      "name",
+      "description",
+      "topics"
+    ],
+    "minSeedSignalHits": 3,
+    "minStrongSeedSignalHits": 2,
+    "defaultStrongSignals": [
+      "api",
+      "adapter",
+      "audit",
+      "civic",
+      "municipal",
+      "public",
+      "normalize",
+      "schema",
+      "validation",
+      "connector",
+      "crawler",
+      "dedupe",
+      "export",
+      "feed",
+      "masterlist",
+      "plugin",
+      "playwright",
+      "review"
+    ],
+    "defaultNegativeTerms": [
+      "awesome",
+      "boilerplate",
+      "starter",
+      "template",
+      "tutorial"
+    ]
+  },
+  "discoveryWorkflow": {
+    "defaultPolicyMode": "audit"
+  },
+  "discoveryBenchmarkFile": "bindings/eventbear-worker/DISCOVERY_BENCHMARK.json",
+  "discoverySeedsFile": "bindings/eventbear-worker/DISCOVERY_SEEDS.json",
+  "discoveryCohortsFile": "bindings/eventbear-worker/DISCOVERY_COHORTS.json",
+  "alignmentRulesFile": "bindings/eventbear-worker/ALIGNMENT_RULES.json",
+  "discoveryPolicyFile": "bindings/eventbear-worker/DISCOVERY_POLICY.json",
+  "analysisQuestions": [
+    "Welche Schicht im Zielrepo wird durch das externe Repo beleuchtet?",
+    "Welche Luecke, Staerkung oder Spannungsflaeche zeigt sich?",
+    "Ist das eher build_core, adapt_pattern, borrow_optional, observe_only oder avoid_as_core_dependency?",
+    "Welche konkrete Folgearbeit sollte fuer das Zielprojekt entstehen?"
+  ],
+  "targetCapabilities": [
+    "ingestion and adapters",
+    "data model and semantics",
+    "quality and governance",
+    "distribution and surfaces"
+  ],
+  "guardrails": [
+    "patternpilot bleibt Analyse- und Entscheidungsschicht, nicht Produktionslogik",
+    "externe Repos nie blind als Kernarchitektur uebernehmen",
+    "Distribution-, Surface- und Core-Logik bewusst getrennt halten"
+  ]
+}

@@ -18,14 +18,26 @@ test("buildDiscoveryPolicyComparisonReport captures changed policy impact", () =
               discoveryDisposition: "intake_now",
               projectAlignment: { fitScore: 45, matchedCapabilities: ["source_first"] },
               guess: { patternFamily: "place_data_infrastructure", mainLayer: "source_intake", gapArea: "source_systems_and_families" },
-              enrichment: { repo: { topics: ["events"], homepage: "https://example.com" } }
+              enrichment: { repo: { topics: ["events"], homepage: "https://example.com" } },
+              discoveryEvidence: {
+                sourceFamilyHits: 2,
+                publicEventIntakeHits: 1,
+                governanceHits: 0,
+                normalizationHits: 1
+              }
             },
             {
               full_name: "beta/project",
               discoveryDisposition: "intake_now",
               projectAlignment: { fitScore: 38, matchedCapabilities: ["evidence_acquisition"] },
               guess: { patternFamily: "portal_fed_by_many_scrapers", mainLayer: "parsing_extraction", gapArea: "adapter_handoff_contracts" },
-              enrichment: { repo: { topics: ["calendar"], homepage: "https://example.com" } }
+              enrichment: { repo: { topics: ["calendar"], homepage: "https://example.com" } },
+              discoveryEvidence: {
+                sourceFamilyHits: 2,
+                publicEventIntakeHits: 1,
+                governanceHits: 0,
+                normalizationHits: 1
+              }
             }
           ]
         }

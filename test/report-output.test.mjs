@@ -48,9 +48,16 @@ describe("writeLatestReportPointers", () => {
         command: "on-demand",
         reportKind: "review",
         agentHandoffPayload: {
+          schemaVersion: 2,
+          handoffType: "patternpilot_agent_brief",
           reportType: "review",
           projectKey: "demo",
-          topRepos: [
+          mission: ["Arbeite nur im Zielprojektkontext."],
+          targetRepoContext: {
+            projectRoot: "../demo",
+            firstReadFiles: ["README.md"]
+          },
+          repos: [
             {
               repo: "acme/demo",
               fitBand: "high",
@@ -75,7 +82,10 @@ describe("writeLatestReportPointers", () => {
       assert.equal(agentHandoff.projectKey, "demo");
       assert.equal(agentHandoff.reportKind, "review");
       assert.equal(agentHandoff.reportPath, "projects/demo/reports/patternpilot-report-demo-2026-04-14-on-demand.html");
-      assert.deepEqual(agentHandoff.handoff.topRepos, [
+      assert.equal(agentHandoff.handoff.schemaVersion, 2);
+      assert.equal(agentHandoff.handoff.handoffType, "patternpilot_agent_brief");
+      assert.equal(agentHandoff.handoff.targetRepoContext.projectRoot, "../demo");
+      assert.deepEqual(agentHandoff.handoff.repos, [
         {
           repo: "acme/demo",
           fitBand: "high",

@@ -314,8 +314,12 @@ describe("review html scope rendering", () => {
     assert.match(html, /Naechster Schritt/);
     assert.match(html, /Relevanz/);
     assert.match(html, /KI Coding Agents/);
+    assert.match(html, /Lieferziel/);
     assert.match(html, /Wichtiger Kontext/);
     assert.match(html, /Offene Unsicherheiten/);
+    assert.match(html, /"handoffType":\s*"patternpilot_agent_brief"/);
+    assert.match(html, /"targetRepoContext":/);
+    assert.match(html, /"projectRoot":\s*"\.\.\/eventbear-worker"|"\.\.\/sample-project"|projectRoot/);
   });
 });
 
@@ -332,13 +336,34 @@ describe("discovery html policy rendering", () => {
         plan: { plans: [] },
         searchErrors: [],
         rawCandidateCount: 5,
-        candidates: [makeCandidate({
-          repo: { owner: "acme", name: "demo", normalizedRepoUrl: "https://github.com/acme/demo" },
-          guess: { mainLayer: "source_intake" },
-          queryLabels: ["Broad project scan"],
-          reasoning: ["seed match"],
-          landkarteCandidate: { possible_implication: "adapt", strengths: "clear source model", risks: "needs_review" }
-        })],
+        candidates: [
+          makeCandidate({
+            repo: { owner: "acme", name: "demo", normalizedRepoUrl: "https://github.com/acme/demo" },
+            prototypeReadiness: { ready: true, blockers: [] },
+            discoveryDisposition: "intake_now",
+            guess: { mainLayer: "source_intake" },
+            queryLabels: ["Broad project scan"],
+            reasoning: ["seed match"],
+            landkarteCandidate: { possible_implication: "adapt", strengths: "clear source model", risks: "needs_review" }
+          }),
+          makeCandidate({
+            full_name: "acme/support",
+            repo: { owner: "acme", name: "support", normalizedRepoUrl: "https://github.com/acme/support" },
+            prototypeReadiness: { ready: false, blockers: ["binding_not_strong_enough"] },
+            discoveryDisposition: "review_queue",
+            guess: { mainLayer: "source_intake" },
+            projectAlignment: {
+              fitBand: "high",
+              fitScore: 76,
+              matchedCapabilities: ["source_intake", "normalization_schema"],
+              suggestedNextStep: "Vergleiche das Repo mit dem Zieladapter."
+            },
+            discoveryEvidence: { sourceFamilyHits: 3, normalizationHits: 2, grade: "strong", score: 44 },
+            queryLabels: ["Public-event intake signals"],
+            reasoning: ["support pattern"],
+            landkarteCandidate: { possible_implication: "compare", strengths: "useful support pattern", risks: "manual_review" }
+          })
+        ],
         policySummary: {
           enabled: true,
           mode: "audit",
@@ -375,7 +400,22 @@ describe("discovery html policy rendering", () => {
     assert.match(html, /drop\/demo: blocked_signal_pattern/);
     assert.match(html, /Roh gefunden/);
     assert.match(html, /KI Coding Agents/);
+    assert.match(html, /Lieferziel/);
     assert.match(html, /id="patternpilot-agent-payload"/);
+    assert.match(html, /"handoffType":\s*"patternpilot_agent_brief"/);
+    assert.match(html, /"targetRepoContext":/);
+    assert.match(html, /"codingReadyCount":\s*1/);
+    assert.match(html, /"codingStarterCount":\s*2/);
+    assert.match(html, /"prototypeReadyRepos":\s*\[/);
+    assert.match(html, /Coding Starter/);
+    assert.match(html, /"codingStarterAvailable":\s*true/);
+    assert.match(html, /"codingStarter":/);
+    assert.match(html, /"primary":/);
+    assert.match(html, /"secondary":\s*\[/);
+    assert.match(html, /Primaerer Pfad/);
+    assert.match(html, /Sekundaere Vergleichspfade/);
+    assert.match(html, /Primaerer Prototyp/);
+    assert.match(html, /Unterstuetzender Prototyp/);
   });
 });
 
@@ -438,6 +478,23 @@ describe("on-demand run html rendering", () => {
             }
           ],
           nextSteps: ["Open the review report and compare deeply."],
+          projectProfile: {
+            contextSources: {
+              loadedFiles: ["README.md", "WORKER_FLOW.md"],
+              missingFiles: [],
+              scannedDirectories: []
+            },
+            capabilitiesPresent: ["ingestion"]
+          },
+          binding: {
+            projectLabel: "Sample Project",
+            projectRoot: "../sample-project",
+            readBeforeAnalysis: ["README.md"],
+            referenceDirectories: ["lib", "docs"],
+            targetCapabilities: ["ingestion and adapters"],
+            analysisQuestions: ["Welche Schicht wird gestaerkt?"],
+            guardrails: ["Keine generischen Entscheidungen."]
+          },
           reportSchemaVersion: 2,
           runConfidence: "medium",
           runConfidenceReason: "balanced signals",
@@ -471,11 +528,52 @@ describe("on-demand run html rendering", () => {
     assert.match(html, /Browser-Link/);
     assert.match(html, /Beobachtungsliste aufgenommen werden soll|Oeffne zuerst den Review-Bericht/);
     assert.match(html, /KI Coding Agents/);
+    assert.match(html, /Lieferziel/);
     assert.match(html, /Wichtiger Kontext/);
     assert.match(html, /Offene Unsicherheiten/);
     assert.match(html, /Agent Hand-Off oeffnen/);
     assert.match(html, /Agent Hand-Off herunterladen/);
     assert.match(html, /id="patternpilot-agent-payload"/);
     assert.match(html, /"reportType":\s*"on_demand"/);
+    assert.match(html, /"handoffType":\s*"patternpilot_agent_brief"/);
+    assert.match(html, /"targetRepoContext":/);
+    assert.match(html, /"\.\.\/sample-project"/);
+  });
+
+  test("keeps info-modal key normalization escaped in generated html", () => {
+    const html = renderOnDemandRunHtmlReport({
+      runId: "2026-04-14T18-30-00-000Z",
+      projectKey: "sample-project",
+      createdAt: "2026-04-14T18:30:00.000Z",
+      sourceMode: "explicit_urls",
+      explicitUrls: [],
+      effectiveUrls: [],
+      appendWatchlist: false,
+      dryRun: false,
+      intakeRun: { items: [] },
+      reEvaluateRun: { updates: [] },
+      reviewRun: {
+        review: {
+          analysisProfile: { id: "architecture" },
+          reviewScope: "selected_urls",
+          inputUrlCount: 0,
+          watchlistCount: 0,
+          selectedUrls: [],
+          items: [],
+          topItems: [],
+          nextSteps: [],
+          reportSchemaVersion: 2,
+          runConfidence: "medium",
+          runConfidenceReason: "balanced signals",
+          itemsDataStateSummary: { complete: 0, fallback: 0, stale: 0 }
+        }
+      },
+      promoteRun: null,
+      artifacts: {},
+      nextActions: []
+    });
+
+    assert.match(html, /replace\(\/\\s\+\/g, " "\)/);
+    assert.match(html, /Hier stehen die staerksten Warnsignale aus dem aktuellen Vergleich/);
   });
 });

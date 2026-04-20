@@ -84,8 +84,8 @@ describe("reevaluateQueueRow", () => {
   test("rebuilds decision fields and queue update payload", () => {
     const result = reevaluateQueueRow(makeQueueRow(), makeFakeAlignmentRules());
 
-    assert.equal(result.decisionFields.reviewDisposition, "review_queue");
-    assert.equal(result.queueUpdate.review_disposition, "review_queue");
+    assert.equal(result.decisionFields.reviewDisposition, "intake_now");
+    assert.equal(result.queueUpdate.review_disposition, "intake_now");
     assert.equal(result.queueUpdate.rules_fingerprint.length, 12);
     assert.notEqual(result.queueUpdate.decision_summary, "");
   });
@@ -129,9 +129,9 @@ describe("reEvaluateQueueEntries", () => {
 
       assert.equal(updates.length, 1);
       assert.equal(updates[0].intakeDocResult.status, "updated");
-      assert.equal(updatedRow.review_disposition, "review_queue");
+      assert.equal(updatedRow.review_disposition, "intake_now");
       assert.notEqual(updatedRow.rules_fingerprint, "");
-      assert.ok(intakeContent.includes("- review_disposition: review_queue"));
+      assert.ok(intakeContent.includes("- review_disposition: intake_now"));
       assert.ok(!intakeContent.includes("- effort: unknown"));
     } finally {
       workspace.cleanup();

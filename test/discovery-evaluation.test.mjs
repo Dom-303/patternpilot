@@ -1,54 +1,95 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import {
-  buildDiscoveryEvaluation,
-  renderDiscoveryEvaluationSummary,
-  buildDiscoveryEvaluationReport
-} from "../lib/validation/discovery-evaluation.mjs";
+import { buildDiscoveryEvaluation } from "../lib/validation/discovery-evaluation.mjs";
 
-test("buildDiscoveryEvaluation ranks best and noisy discovery families from queue outcomes", () => {
+test("buildDiscoveryEvaluation reports benchmark positives, negatives and boundary balance per run", () => {
+  const benchmark = {
+    projectKey: "eventbear-worker",
+    positiveRepos: [
+      { repo: "City-Bureau/city-scrapers-events", why: "Good public-event intake signal." }
+    ],
+    negativeRepos: [
+      { repo: "ManojKumarPatnaik/Major-project-list", why: "Generic list repo." }
+    ],
+    boundaryRepos: [
+      { repo: "j-e-d/agenda-lumiton", why: "Boundary repo." }
+    ]
+  };
   const manifests = [
     {
-      runId: "run-1",
-      projectKey: "sample-project",
-      createdAt: "2026-04-18T10:00:00.000Z",
-      manifestPath: "/tmp/run-1/manifest.json",
+      runId: "2026-04-19T20-42-28-240Z",
+      projectKey: "eventbear-worker",
+      createdAt: "2026-04-19T20:42:28.240Z",
+      manifestPath: "D:/patternpilot/runs/eventbear-worker/2026-04-19T20-42-28-240Z/manifest.json",
       discovery: {
         plan: {
           plans: [
-            { label: "Architecture and layer patterns", family: "architecture" },
-            { label: "Broad project scan", family: "broad" }
+            { family: "signal_lane" }
           ]
         },
-        scanned: 20,
-        rawCandidateCount: 4,
+        scanned: 12,
+        rawCandidateCount: 6,
         evaluatedCandidates: [
           {
-            discoveryScore: 88,
+            repo: {
+              fullName: "City-Bureau/city-scrapers-events"
+            },
+            discoveryScore: 84,
             discoveryClass: "fit_candidate",
             discoveryDisposition: "review_queue",
-            queryLabels: ["Architecture and layer patterns"],
-            queryFamilies: ["architecture"],
-            projectAlignment: { fitScore: 84, fitBand: "high" }
+            projectAlignment: {
+              fitScore: 78,
+              fitBand: "high"
+            },
+            queryFamilies: ["signal_lane"],
+            queryLabels: ["Public-event intake signals"]
           },
           {
-            discoveryScore: 32,
+            repo: {
+              fullName: "ManojKumarPatnaik/Major-project-list"
+            },
+            discoveryScore: 69,
             discoveryClass: "risk_signal",
             discoveryDisposition: "observe_only",
-            queryLabels: ["Broad project scan"],
-            queryFamilies: ["broad"],
-            projectAlignment: { fitScore: 30, fitBand: "low" }
+            projectAlignment: {
+              fitScore: 32,
+              fitBand: "low"
+            },
+            queryFamilies: ["capability"],
+            queryLabels: ["Broad project scan"]
+          },
+          {
+            repo: {
+              fullName: "j-e-d/agenda-lumiton"
+            },
+            discoveryScore: 73,
+            discoveryClass: "boundary_signal",
+            discoveryDisposition: "review_queue",
+            projectAlignment: {
+              fitScore: 61,
+              fitBand: "medium"
+            },
+            queryFamilies: ["signal_lane"],
+            queryLabels: ["Agenda signal"]
           }
         ],
         candidates: [
           {
-            discoveryScore: 88,
-            discoveryClass: "fit_candidate",
-            discoveryDisposition: "review_queue",
-            queryLabels: ["Architecture and layer patterns"],
-            queryFamilies: ["architecture"],
-            projectAlignment: { fitScore: 84, fitBand: "high" }
+            repo: {
+              fullName: "City-Bureau/city-scrapers-events"
+            },
+            alreadyKnown: true
+          },
+          {
+            repo: {
+              fullName: "j-e-d/agenda-lumiton"
+            }
+          },
+          {
+            repo: {
+              fullName: "ManojKumarPatnaik/Major-project-list"
+            }
           }
         ]
       }
@@ -56,84 +97,32 @@ test("buildDiscoveryEvaluation ranks best and noisy discovery families from queu
   ];
   const queueRows = [
     {
-      project_key: "sample-project",
+      project_key: "eventbear-worker",
+      discovery_query_families: "signal_lane",
+      discovery_query_labels: "Public-event intake signals",
       status: "promoted",
       promotion_status: "applied",
       review_disposition: "review_queue",
-      decision_guess: "adapt",
-      discovery_query_families: "architecture,broad",
-      discovery_query_labels: "Architecture and layer patterns,Broad project scan",
-      discovery_score: "88",
-      project_fit_score: "84",
-      discovery_class: "fit_candidate"
-    },
-    {
-      project_key: "sample-project",
-      status: "pending_review",
-      promotion_status: "",
-      review_disposition: "skip",
-      decision_guess: "ignore",
-      discovery_query_families: "broad",
-      discovery_query_labels: "Broad project scan",
-      discovery_score: "32",
-      project_fit_score: "28",
-      discovery_class: "risk_signal"
-    },
-    {
-      project_key: "sample-project",
-      status: "pending_review",
-      promotion_status: "",
-      review_disposition: "observe_only",
-      decision_guess: "observe",
-      discovery_query_families: "dependency",
-      discovery_query_labels: "Dependency and tooling neighbors",
-      discovery_score: "57",
-      project_fit_score: "51",
-      discovery_class: "research_signal"
+      decision_guess: "adapt"
     }
   ];
 
   const evaluation = buildDiscoveryEvaluation({
-    projectKey: "sample-project",
+    projectKey: "eventbear-worker",
     manifests,
-    queueRows
+    queueRows,
+    benchmark
   });
 
-  assert.equal(evaluation.runCount, 1);
-  assert.equal(evaluation.totals.promoted, 1);
-  assert.equal(evaluation.totals.negative, 1);
-  assert.equal(evaluation.bestFamilies[0].value, "architecture");
-  assert.equal(evaluation.noisyFamilies[0].value, "broad");
-  assert.equal(evaluation.runSummaries[0].bestFamily?.value, "architecture");
-  assert.equal(evaluation.runSummaries[0].noisyFamily?.value, "broad");
-  assert.match(evaluation.recommendations.join(" "), /architecture|broad/);
-});
-
-test("renderDiscoveryEvaluationSummary and report surface query family outcomes", () => {
-  const evaluation = buildDiscoveryEvaluation({
-    projectKey: "sample-project",
-    manifests: [],
-    queueRows: [
-      {
-        project_key: "sample-project",
-        status: "promotion_prepared",
-        promotion_status: "prepared",
-        review_disposition: "review_queue",
-        decision_guess: "adapt",
-        discovery_query_families: "capability",
-        discovery_query_labels: "quality and governance",
-        discovery_score: "70",
-        project_fit_score: "68",
-        discovery_class: "fit_candidate"
-      }
-    ]
-  });
-
-  const summary = renderDiscoveryEvaluationSummary(evaluation);
-  const report = buildDiscoveryEvaluationReport(evaluation, "/tmp");
-
-  assert.match(summary, /Best Query Families/i);
-  assert.match(summary, /quality and governance/i);
-  assert.equal(report.bestFamilies[0].value, "capability");
-  assert.equal(report.bestLabels[0].value, "quality and governance");
+  assert.equal(evaluation.benchmark.runCount, 1);
+  assert.equal(evaluation.benchmark.runsWithVisiblePositiveHit, 1);
+  assert.equal(evaluation.benchmark.runsWithVisibleNovelPositiveHit, 0);
+  assert.equal(evaluation.benchmark.runsWithVisibleNegativeLeak, 1);
+  assert.equal(evaluation.benchmark.latestRun.visible.positive.hits, 1);
+  assert.equal(evaluation.benchmark.latestRun.novelVisible.positive.hits, 0);
+  assert.equal(evaluation.benchmark.latestRun.baselineVisible.positive.hits, 1);
+  assert.equal(evaluation.benchmark.latestRun.visible.positive.earliestRank, 1);
+  assert.equal(evaluation.benchmark.latestRun.visible.negative.earliestRank, 3);
+  assert.equal(evaluation.benchmark.latestRun.visible.boundary.earliestRank, 2);
+  assert.ok(evaluation.recommendations.some((item) => item.includes("Benchmark negatives still leak")));
 });

@@ -1,0 +1,44 @@
+{
+  "projectKey": "eventbear-worker",
+  "version": 1,
+  "intent": "Calibrate discovery quality against explicit positive, negative and boundary examples before tightening ranking or policy defaults further.",
+  "evaluationQuestions": [
+    "Landen civic/public-event/source-family Repos sichtbar vor generischen framework- oder dashboard-Treffern?",
+    "Werden offene Event-Intake-, Adapter- und Normalization-Muster bevorzugt statt bloßer Kalender- oder UI-Ähnlichkeit?",
+    "Bleiben Grenzfälle sichtbar genug für Audit, ohne die eigentliche Topliste zu dominieren?"
+  ],
+  "positiveRepos": [
+    {
+      "repo": "City-Bureau/city-scrapers-events",
+      "why": "Public-event intake plus scraper-family signal with civic/open-data relevance."
+    },
+    {
+      "repo": "citybureau/city-scrapers",
+      "why": "Source-family and civic scraping baseline for adapter and intake patterns."
+    }
+  ],
+  "negativeRepos": [
+    {
+      "repo": "abangafdhu/ionic-framework",
+      "why": "Framework/UI noise and not target-relevant for EventBear worker core."
+    },
+    {
+      "repo": "duniamay/installing-ionic-framework",
+      "why": "Tutorial/framework noise with no meaningful public-event or source-family grounding."
+    },
+    {
+      "repo": "ManojKumarPatnaik/Major-project-list",
+      "why": "Generic list-style repo that should never rank as a top EventBear discovery hit."
+    }
+  ],
+  "boundaryRepos": [
+    {
+      "repo": "j-e-d/agenda-lumiton",
+      "why": "Potentially useful agenda/scraper signal, but not clearly civic-source-family enough to become the default top hit."
+    },
+    {
+      "repo": "sportclimbing/ifsc-calendar",
+      "why": "Calendar/event-like but vertical-specific and should stay below stronger civic/public-event infra signals."
+    }
+  ]
+}

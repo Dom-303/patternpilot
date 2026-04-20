@@ -17,6 +17,9 @@ import {
   indexPreloadedCandidates,
   loadProjectAlignmentRules,
   loadProjectBinding,
+  loadProjectDiscoveryBenchmark,
+  loadProjectDiscoverySeeds,
+  mergeDiscoverySeedPacks,
   loadProjectDiscoveryPolicy,
   loadProjectProfile,
   loadQueueEntries,
@@ -40,8 +43,10 @@ import {
   deriveDisposition
 } from "../../lib/classification/evaluation.mjs";
 import {
+  buildDiscoverySeedMemory,
   loadDiscoveryFeedback,
-  writeDiscoveryFeedbackSnapshot
+  writeDiscoveryFeedbackSnapshot,
+  writeDiscoverySeedMemorySnapshot
 } from "../../lib/discovery/feedback.mjs";
 import { refreshContext } from "../shared/runtime-helpers.mjs";
 
@@ -348,10 +353,23 @@ export async function runDiscover(rootDir, config, options) {
   const projectKey = options.project || config.defaultProject;
   const commandName = options.commandName ?? "discover";
   const { project, binding } = await loadProjectBinding(rootDir, config, projectKey);
+  const resolvedDiscoveryPolicyMode =
+    options.discoveryPolicyMode
+    ?? binding.discoveryWorkflow?.defaultPolicyMode
+    ?? "enforce";
   const alignmentRules = await loadProjectAlignmentRules(rootDir, project, binding);
   const discoveryPolicy = await loadProjectDiscoveryPolicy(rootDir, project, binding);
+  const discoveryBenchmark = await loadProjectDiscoveryBenchmark(rootDir, project, binding);
+  let discoverySeeds = await loadProjectDiscoverySeeds(rootDir, project, binding);
   const projectProfile = await loadProjectProfile(rootDir, project, binding, alignmentRules);
-  const discoveryFeedback = await loadDiscoveryFeedback(rootDir, config, projectKey);
+  const discoveryFeedback = await loadDiscoveryFeedback(rootDir, config, projectKey, {
+    binding,
+    projectProfile,
+    discoveryPolicy,
+    discoveryBenchmark
+  });
+  const learnedDiscoverySeeds = buildDiscoverySeedMemory(projectKey, discoveryFeedback, { binding });
+  discoverySeeds = mergeDiscoverySeedPacks(discoverySeeds, learnedDiscoverySeeds);
   const createdAt = new Date().toISOString();
   const runId = createRunId(new Date(createdAt));
   const discovery = await discoverGithubCandidates(
@@ -363,8 +381,11 @@ export async function runDiscover(rootDir, config, options) {
     projectProfile,
     {
       ...options,
+      discoveryPolicyMode: resolvedDiscoveryPolicyMode,
       discoveryPolicy,
-      discoveryFeedback
+      discoveryFeedback,
+      discoveryBenchmark,
+      discoverySeeds
     }
   );
   const summary = renderDiscoverySummary({
@@ -447,7 +468,9 @@ export async function runDiscover(rootDir, config, options) {
     reportView: options.reportView,
     htmlReportPath: projectReportRelativePath,
     discovery,
-    discoveryFeedback
+    discoveryFeedback,
+    discoveryBenchmark,
+    discoverySeeds
   };
   const runDir = await writeRunArtifacts({
     rootDir,
@@ -487,7 +510,9 @@ export async function runDiscover(rootDir, config, options) {
     reportKind: "discovery",
     agentHandoffPayload: buildDiscoveryAgentView({
       projectKey,
-      discovery
+      discovery,
+      projectProfile,
+      binding
     }).payload,
     dryRun: options.dryRun
   });
@@ -497,11 +522,18 @@ export async function runDiscover(rootDir, config, options) {
     discoveryFeedback,
     options.dryRun
   );
+  const seedMemorySnapshot = await writeDiscoverySeedMemorySnapshot(
+    rootDir,
+    projectKey,
+    learnedDiscoverySeeds,
+    options.dryRun
+  );
 
   console.log(summary);
   console.log(`Run directory: ${path.relative(rootDir, runDir)}`);
   console.log(`Policy calibration: ${path.relative(rootDir, path.join(runDir, "policy-calibration.md"))}${options.dryRun ? " (dry-run not written)" : ""}`);
   console.log(`Discovery feedback: ${path.relative(rootDir, feedbackSnapshot.markdownPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
+  console.log(`Discovery seed memory: ${path.relative(rootDir, seedMemorySnapshot.markdownPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
   console.log(`HTML report: ${projectReportRelativePath}`);
   console.log(`Browser link: ${path.relative(rootDir, reportPointers.browserLinkPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
   console.log(`Latest report metadata: ${path.relative(rootDir, reportPointers.latestReportPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
@@ -564,10 +596,23 @@ export async function runDiscoverImport(rootDir, config, options) {
     throw new Error("discover-import requires --file <candidate-json>.");
   }
   const { project, binding } = await loadProjectBinding(rootDir, config, projectKey);
+  const resolvedDiscoveryPolicyMode =
+    options.discoveryPolicyMode
+    ?? binding.discoveryWorkflow?.defaultPolicyMode
+    ?? "enforce";
   const alignmentRules = await loadProjectAlignmentRules(rootDir, project, binding);
   const discoveryPolicy = await loadProjectDiscoveryPolicy(rootDir, project, binding);
+  const discoveryBenchmark = await loadProjectDiscoveryBenchmark(rootDir, project, binding);
+  let discoverySeeds = await loadProjectDiscoverySeeds(rootDir, project, binding);
   const projectProfile = await loadProjectProfile(rootDir, project, binding, alignmentRules);
-  const discoveryFeedback = await loadDiscoveryFeedback(rootDir, config, projectKey);
+  const discoveryFeedback = await loadDiscoveryFeedback(rootDir, config, projectKey, {
+    binding,
+    projectProfile,
+    discoveryPolicy,
+    discoveryBenchmark
+  });
+  const learnedDiscoverySeeds = buildDiscoverySeedMemory(projectKey, discoveryFeedback, { binding });
+  discoverySeeds = mergeDiscoverySeedPacks(discoverySeeds, learnedDiscoverySeeds);
   const createdAt = new Date().toISOString();
   const runId = createRunId(new Date(createdAt));
   const dateStr = createdAt.slice(0, 10);
@@ -583,8 +628,11 @@ export async function runDiscoverImport(rootDir, config, options) {
     importPayload,
     {
       ...options,
+      discoveryPolicyMode: resolvedDiscoveryPolicyMode,
       discoveryPolicy,
-      discoveryFeedback
+      discoveryFeedback,
+      discoveryBenchmark,
+      discoverySeeds
     }
   );
   const summary = renderDiscoverySummary({
@@ -667,7 +715,9 @@ export async function runDiscoverImport(rootDir, config, options) {
     reportView: options.reportView,
     htmlReportPath: projectReportRelativePath,
     discovery,
-    discoveryFeedback
+    discoveryFeedback,
+    discoveryBenchmark,
+    discoverySeeds
   };
   const runDir = await writeRunArtifacts({
     rootDir,
@@ -707,7 +757,9 @@ export async function runDiscoverImport(rootDir, config, options) {
     reportKind: "discovery",
     agentHandoffPayload: buildDiscoveryAgentView({
       projectKey,
-      discovery
+      discovery,
+      projectProfile,
+      binding
     }).payload,
     dryRun: options.dryRun
   });
@@ -717,11 +769,18 @@ export async function runDiscoverImport(rootDir, config, options) {
     discoveryFeedback,
     options.dryRun
   );
+  const seedMemorySnapshot = await writeDiscoverySeedMemorySnapshot(
+    rootDir,
+    projectKey,
+    learnedDiscoverySeeds,
+    options.dryRun
+  );
 
   console.log(summary);
   console.log(`Run directory: ${path.relative(rootDir, runDir)}`);
   console.log(`Policy calibration: ${path.relative(rootDir, path.join(runDir, "policy-calibration.md"))}${options.dryRun ? " (dry-run not written)" : ""}`);
   console.log(`Discovery feedback: ${path.relative(rootDir, feedbackSnapshot.markdownPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
+  console.log(`Discovery seed memory: ${path.relative(rootDir, seedMemorySnapshot.markdownPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
   console.log(`HTML report: ${projectReportRelativePath}`);
   console.log(`Browser link: ${path.relative(rootDir, reportPointers.browserLinkPath)}${options.dryRun ? " (dry-run not written)" : ""}`);
   console.log(`Latest report metadata: ${path.relative(rootDir, reportPointers.latestReportPath)}${options.dryRun ? " (dry-run not written)" : ""}`);

@@ -1,7 +1,9 @@
 import path from "node:path";
 import {
   createRunId,
-  loadQueueEntries
+  loadQueueEntries,
+  loadProjectBinding,
+  loadProjectDiscoveryBenchmark
 } from "../../lib/index.mjs";
 import {
   loadDiscoveryRunManifests,
@@ -50,6 +52,11 @@ export async function runDiscoveryEvaluate(rootDir, config, options) {
   const projectKey = options.allProjects ? null : (options.project || config.defaultProject);
   const createdAt = new Date().toISOString();
   const runId = createRunId(new Date(createdAt));
+  let benchmark = null;
+  if (projectKey) {
+    const { project, binding } = await loadProjectBinding(rootDir, config, projectKey);
+    benchmark = await loadProjectDiscoveryBenchmark(rootDir, project, binding);
+  }
   const manifests = await loadDiscoveryRunManifests(rootDir, config, {
     projectKey,
     runId: options.runId,
@@ -59,7 +66,8 @@ export async function runDiscoveryEvaluate(rootDir, config, options) {
   const evaluation = buildDiscoveryEvaluation({
     projectKey,
     manifests,
-    queueRows
+    queueRows,
+    benchmark
   });
   const summary = renderDiscoveryEvaluationSummary(evaluation);
   const report = buildDiscoveryEvaluationReport(evaluation, rootDir);

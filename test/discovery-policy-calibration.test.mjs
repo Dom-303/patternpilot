@@ -26,6 +26,12 @@ describe("buildDiscoveryPolicyCalibrationReport", () => {
                 guess: { patternFamily: "local_source_infra_framework", mainLayer: "source_intake", gapArea: "source_systems_and_families" },
                 enrichment: { repo: { topics: ["events"], license: "MIT", homepage: "" }, readme: { excerpt: "" } },
                 projectAlignment: { fitScore: 82, matchedCapabilities: ["source_first"] },
+                discoveryEvidence: {
+                  sourceFamilyHits: 2,
+                  publicEventIntakeHits: 1,
+                  governanceHits: 0,
+                  normalizationHits: 1
+                },
                 discoveryDisposition: "review_queue",
                 risks: []
               },

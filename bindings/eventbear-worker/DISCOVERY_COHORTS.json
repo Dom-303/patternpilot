@@ -1,0 +1,39 @@
+{
+  "projectKey": "eventbear-worker",
+  "version": 1,
+  "intent": "Project-specific cohort packs for repo-near discovery families. These cohorts should widen discovery around strong EventBear-adjacent families instead of relying only on free-text search.",
+  "priorityCohorts": [
+    {
+      "id": "civic-source-family",
+      "label": "Civic source families",
+      "owners": ["city-bureau", "citybureau"],
+      "repoRefs": ["City-Bureau/city-scrapers-events", "citybureau/city-scrapers"],
+      "signals": ["civic", "municipal", "public-event", "open-data", "scraper", "source-family", "adapter"],
+      "boundarySignals": ["agenda", "calendar", "community"],
+      "antiSignals": ["framework", "landing", "template"],
+      "why": "Strong civic/public-event/source-family cluster for EventBear-like intake and adapter patterns."
+    },
+    {
+      "id": "agenda-normalization",
+      "label": "Agenda normalization",
+      "owners": ["j-e-d"],
+      "repoRefs": ["j-e-d/agenda-lumiton"],
+      "signals": ["agenda", "calendar", "normalize", "schema", "export", "csv"],
+      "boundarySignals": ["public-event", "scraper", "feed"],
+      "antiSignals": ["dashboard", "homepage", "frontend"],
+      "why": "Useful agenda-style extraction and normalization cohort, but secondary to civic source families."
+    }
+  ],
+  "referenceCohorts": [
+    {
+      "id": "open-events-location",
+      "label": "Open events and location context",
+      "owners": ["oc"],
+      "repoRefs": ["oc/openevents"],
+      "signals": ["open-events", "location", "place", "event", "feed"],
+      "boundarySignals": ["map", "venue", "calendar"],
+      "antiSignals": ["framework", "tutorial"],
+      "why": "Reference cohort for location/event context and downstream open-event structures."
+    }
+  ]
+}
