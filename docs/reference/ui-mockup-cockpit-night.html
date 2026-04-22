@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Pattern Pilot — Cockpit Night (Variante B, dark)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0e131f;
+      --bg-card: #1c2338;
+      --bg-card-alt: #232b45;
+      --ink: #f1f3f9;
+      --ink-soft: #aeb4c3;
+      --ink-muted: #727891;
+      --rule: #323a56;
+      --rule-soft: #262c44;
+      --neon-magenta: #ff3d97;
+      --neon-pink: #ff7ab0;
+      --neon-orange: #ff9a48;
+      --neon-green: #66e87a;
+      --neon-purple: #a97aff;
+      --neon-cyan: #5de5ed;
+
+      --card-bg: #ffffff;
+      --card-bg-alt: #f6f7fb;
+      --card-ink: #0e131f;
+      --card-ink-soft: #3f465e;
+      --card-ink-muted: #7a819a;
+      --card-rule: #e3e6ef;
+      --card-rule-soft: #eef0f7;
+      --card-green: #1e8a33;
+      --card-orange: #c24d00;
+      --card-purple: #5b35c4;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 40px; }
+    body {
+      margin: 0;
+      font-family: 'IBM Plex Sans', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      position: relative;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 12% 22%, rgba(255,255,255,0.5), transparent),
+        radial-gradient(1px 1px at 78% 8%, rgba(255,255,255,0.35), transparent),
+        radial-gradient(1px 1px at 48% 68%, rgba(255,255,255,0.3), transparent),
+        radial-gradient(1px 1px at 8% 82%, rgba(255,255,255,0.42), transparent),
+        radial-gradient(1px 1px at 92% 76%, rgba(255,255,255,0.32), transparent),
+        radial-gradient(1px 1px at 32% 8%, rgba(255,255,255,0.28), transparent),
+        radial-gradient(1.5px 1.5px at 62% 34%, rgba(169,122,255,0.55), transparent),
+        radial-gradient(1.5px 1.5px at 24% 58%, rgba(93,229,237,0.4), transparent),
+        radial-gradient(2px 2px at 85% 45%, rgba(255,61,151,0.35), transparent);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .shell {
+      display: grid;
+      grid-template-columns: 252px minmax(0, 1fr);
+      gap: 64px;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 40px 40px 96px 24px;
+      position: relative;
+      z-index: 2;
+    }
+    .wrap { min-width: 0; }
+    @media (max-width: 960px) {
+      .shell { grid-template-columns: 1fr; gap: 24px; padding: 24px 20px 80px; }
+      .sidenav { display: none; }
+    }
+
+    .sidenav {
+      position: sticky;
+      top: 32px;
+      align-self: start;
+      max-height: calc(100vh - 64px);
+      overflow-y: auto;
+    }
+    .sidenav-logo-link {
+      display: inline-block;
+      margin: 80px 0 56px 12px;
+      border-radius: 12px;
+      transition: transform 0.2s, filter 0.2s;
+      cursor: pointer;
+    }
+    .sidenav-logo-link:hover { transform: translateY(-2px); filter: brightness(1.1); }
+    .sidenav-logo {
+      display: block;
+      width: 72px; height: 72px;
+    }
+    .sidenav-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--ink-muted);
+      padding-left: 18px;
+      margin-bottom: 14px;
+      font-weight: 600;
+    }
+    .sidenav-list {
+      list-style: none;
+      padding: 0; margin: 0;
+      border-left: 1px solid var(--rule);
+    }
+    .sidenav-list a {
+      display: flex; align-items: center; gap: 14px;
+      padding: 12px 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px; letter-spacing: 0.1em;
+      color: var(--ink-soft);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      margin-left: -1px;
+      transition: color 0.2s, background 0.2s, border-color 0.2s;
+      text-transform: uppercase;
+      line-height: 1.3;
+    }
+    .sidenav-list a .n {
+      font-size: 10.5px;
+      color: var(--ink-muted);
+      letter-spacing: 0.12em;
+      transition: color 0.2s;
+    }
+    .sidenav-list a:hover {
+      color: var(--ink);
+      background: rgba(255,61,151,0.05);
+    }
+    .sidenav-list a:hover .n { color: var(--ink-soft); }
+    .sidenav-list a.active {
+      color: var(--neon-magenta);
+      border-left-color: var(--neon-magenta);
+      background: rgba(255,61,151,0.07);
+      box-shadow: inset 0 0 20px rgba(255,61,151,0.05);
+    }
+    .sidenav-list a.active .n { color: var(--neon-magenta); }
+
+    .topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink-muted);
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 56px;
+    }
+    .topbar .left { display: flex; gap: 22px; align-items: center; }
+    .topbar .dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--neon-green); box-shadow: 0 0 12px var(--neon-green); vertical-align: middle; margin-right: 8px; }
+
+    .hero { text-align: center; padding: 80px 0 32px; position: relative; }
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(60px, 9vw, 108px);
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+      margin: 0 0 20px;
+      color: var(--ink);
+      text-transform: uppercase;
+    }
+    .hero h1 .pilot {
+      display: inline-block;
+      background: linear-gradient(120deg, var(--neon-magenta) 0%, var(--neon-pink) 30%, var(--neon-orange) 65%, var(--neon-green) 100%);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero .slogan {
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 17px; line-height: 1.55;
+      color: var(--ink-soft);
+      max-width: 560px;
+      margin: 0 auto;
+      font-weight: 400;
+    }
+
+    .section-break {
+      position: relative;
+      width: 240px;
+      height: 1px;
+      margin: 96px auto 72px;
+      background: linear-gradient(90deg, transparent, var(--rule) 30%, var(--rule) 70%, transparent);
+    }
+    .section-break::before {
+      content: '';
+      position: absolute; left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--neon-magenta);
+      box-shadow: 0 0 14px rgba(255,61,151,0.8), 0 0 30px rgba(255,61,151,0.35);
+    }
+
+    .content-intro {
+      text-align: center;
+      margin: 16px auto 84px;
+      max-width: 760px;
+      padding: 0 20px;
+    }
+    .content-intro .eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase;
+      font-weight: 600;
+      color: var(--neon-magenta);
+      margin-bottom: 32px;
+      display: inline-flex; align-items: center; gap: 14px;
+      text-shadow: 0 0 24px rgba(255,61,151,0.35);
+    }
+    .content-intro .eyebrow::before,
+    .content-intro .eyebrow::after {
+      content: '';
+      width: 26px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--neon-magenta), transparent);
+      opacity: 0.55;
+    }
+    .content-intro .subject {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: clamp(30px, 4vw, 50px);
+      line-height: 1.12;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      margin: 0 0 18px;
+      text-transform: none;
+      word-break: break-word;
+    }
+    .content-intro .subject-id {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      color: var(--ink-muted);
+      margin-bottom: 36px;
+      word-break: break-all;
+    }
+    .content-intro .meta {
+      display: inline-flex; gap: 14px; align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink-soft);
+      padding-top: 28px;
+      border-top: 1px solid var(--rule-soft);
+    }
+    .content-intro .meta .sep { color: var(--ink-muted); }
+    .content-intro .meta .accent { color: var(--neon-orange); }
+
+    .preview {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      column-gap: 16px; row-gap: 20px;
+      margin-bottom: 72px;
+    }
+    .stat {
+      background: var(--card-bg);
+      border: 1px solid var(--card-rule);
+      border-radius: 10px; padding: 26px 24px;
+      position: relative; overflow: hidden;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+    }
+    .stat::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--neon-magenta), var(--neon-pink));
+    }
+    .stat:nth-child(2)::before { background: linear-gradient(90deg, var(--neon-purple), var(--neon-magenta)); }
+    .stat:nth-child(3)::before { background: linear-gradient(90deg, var(--neon-orange), var(--neon-magenta)); }
+    .stat:nth-child(4)::before { background: linear-gradient(90deg, var(--neon-green), var(--neon-cyan)); }
+    .stat:nth-child(5)::before { background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple)); }
+    .stat:nth-child(6)::before { background: linear-gradient(90deg, var(--neon-green), var(--neon-orange)); }
+    .stat .k { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--card-ink-muted); margin-bottom: 10px; font-weight: 600; }
+    .stat .v { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 48px; line-height: 1; letter-spacing: -0.03em; color: var(--card-ink); }
+    .stat .trend { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--card-green); margin-top: 10px; letter-spacing: 0.04em; font-weight: 500; }
+    .stat .trend.warn { color: var(--card-orange); }
+    .stat.meta .v {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      font-size: 18px;
+      letter-spacing: -0.005em;
+      line-height: 1.25;
+      word-break: break-word;
+    }
+    .stat.meta .trend { color: var(--card-ink-muted); }
+
+    .section-preview {
+      background: var(--card-bg);
+      border: 1px solid var(--card-rule);
+      border-radius: 12px;
+      padding: 0;
+      box-shadow: 0 18px 56px rgba(0,0,0,0.4);
+      color: var(--card-ink);
+      position: relative;
+      overflow: hidden;
+      counter-reset: row-counter;
+    }
+    .section-preview::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--neon-magenta), var(--neon-orange));
+    }
+    #cluster.section-preview::before { background: linear-gradient(90deg, var(--neon-magenta), var(--neon-pink)); }
+    #achsen.section-preview::before { background: linear-gradient(90deg, var(--neon-purple), var(--neon-magenta)); }
+    #entscheidungen.section-preview::before { background: linear-gradient(90deg, var(--neon-orange), var(--neon-magenta)); }
+    #lauf.section-preview::before { background: linear-gradient(90deg, var(--neon-green), var(--neon-cyan)); }
+
+    .section-head {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 20px; flex-wrap: wrap;
+      padding: 28px 36px 22px;
+      border-bottom: 1px solid var(--card-rule);
+      background: linear-gradient(180deg, #f8f9fc, #ffffff);
+    }
+    .section-head .title { display: flex; flex-direction: column; gap: 6px; }
+    .section-preview h2 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700; text-transform: uppercase;
+      font-size: 22px; letter-spacing: -0.01em;
+      margin: 0; color: var(--card-ink);
+      display: inline-flex; align-items: center; gap: 12px;
+    }
+    .section-preview h2 .marker {
+      display: inline-block;
+      width: 10px; height: 10px;
+      background: var(--neon-magenta);
+      box-shadow: 0 0 12px rgba(255,61,151,0.55);
+      border-radius: 2px;
+    }
+    #achsen .marker { background: var(--neon-purple); box-shadow: 0 0 12px rgba(169,122,255,0.5); }
+    #entscheidungen .marker { background: var(--neon-orange); box-shadow: 0 0 12px rgba(255,154,72,0.5); }
+    #lauf .marker { background: var(--neon-green); box-shadow: 0 0 12px rgba(102,232,122,0.5); }
+
+    .section-preview .sub {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--card-ink-muted);
+      margin: 0;
+    }
+    .section-head .count-chip {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--card-ink-soft);
+      padding: 6px 12px;
+      background: var(--card-rule-soft);
+      border: 1px solid var(--card-rule);
+      border-radius: 5px;
+      font-weight: 700;
+    }
+    .head-actions { display: inline-flex; align-items: center; gap: 12px; flex-shrink: 0; }
+    .info-btn, .dark-info-btn {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      border: 1px solid var(--card-rule);
+      background: transparent;
+      color: var(--card-ink-muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-style: italic;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 1;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center; justify-content: center;
+      padding: 0;
+      transition: color 0.2s, border-color 0.2s, background 0.2s, transform 0.2s;
+      flex-shrink: 0;
+    }
+    .dark-info-btn {
+      border-color: var(--rule);
+      color: var(--ink-muted);
+    }
+    .info-btn:hover, .dark-info-btn:hover {
+      border-color: var(--neon-magenta);
+      color: var(--neon-magenta);
+      background: rgba(255,61,151,0.08);
+      transform: scale(1.06);
+    }
+    /* Info-source panels kept in DOM as content source for modal; never visually shown */
+    [data-info-panel] { display: none; }
+
+    .info-modal {
+      border: 1px solid var(--rule);
+      border-radius: 14px;
+      padding: 0;
+      background: var(--bg-card);
+      color: var(--ink-soft);
+      max-width: 540px;
+      width: calc(100% - 48px);
+      margin: auto;
+      box-shadow: 0 30px 90px rgba(0,0,0,0.75), 0 0 0 1px rgba(255,61,151,0.08);
+    }
+    .info-modal::backdrop {
+      background: rgba(4, 6, 14, 0.72);
+      backdrop-filter: blur(6px);
+    }
+    .info-modal[open] { animation: modalPop 0.22s cubic-bezier(0.4, 0, 0.2, 1); }
+    @keyframes modalPop {
+      from { opacity: 0; transform: translateY(8px) scale(0.98); }
+      to   { opacity: 1; transform: translateY(0)   scale(1); }
+    }
+    .info-modal .modal-head {
+      display: flex; justify-content: space-between; align-items: center; gap: 20px;
+      padding: 22px 28px;
+      border-bottom: 1px solid var(--rule);
+      background: linear-gradient(180deg, rgba(255,61,151,0.05), transparent);
+    }
+    .info-modal .modal-head h3 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700; text-transform: uppercase;
+      font-size: 18px; color: var(--ink); margin: 0;
+      display: inline-flex; align-items: center; gap: 12px;
+      letter-spacing: 0.005em;
+    }
+    .info-modal .modal-head h3::before {
+      content: '';
+      width: 8px; height: 8px;
+      background: var(--neon-magenta);
+      box-shadow: 0 0 12px rgba(255,61,151,0.6);
+      border-radius: 2px;
+    }
+    .info-modal .modal-close {
+      width: 32px; height: 32px;
+      border: 1px solid var(--rule);
+      background: transparent;
+      color: var(--ink-muted);
+      font-size: 20px;
+      cursor: pointer;
+      border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      padding: 0; line-height: 1; font-family: inherit;
+    }
+    .info-modal .modal-close:hover {
+      border-color: var(--neon-magenta);
+      color: var(--neon-magenta);
+      background: rgba(255,61,151,0.08);
+    }
+    .info-modal .modal-body {
+      padding: 24px 28px 28px;
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--ink-soft);
+    }
+    .info-modal .modal-body p { margin: 0 0 12px; }
+    .info-modal .modal-body p:last-child { margin-bottom: 0; }
+    .info-modal .modal-body strong { color: var(--ink); font-weight: 600; }
+    .info-modal .modal-body em { color: var(--neon-magenta); font-style: normal; font-weight: 500; }
+    .section-body { padding: 4px 0 8px; }
+
+    .repo-row {
+      display: grid;
+      grid-template-columns: 32px 1fr auto auto;
+      gap: 20px; align-items: center;
+      padding: 18px 36px;
+      border-top: 1px solid var(--card-rule-soft);
+      counter-increment: row-counter;
+      position: relative;
+    }
+    .repo-row:nth-child(even) { background: #f9fafc; }
+    .repo-row:first-of-type { border-top: none; }
+    .repo-row::before {
+      content: counter(row-counter, decimal-leading-zero);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; letter-spacing: 0.08em;
+      color: var(--card-ink-muted);
+      font-weight: 600;
+    }
+    .repo-row .name {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      font-size: 14.5px;
+      color: var(--card-ink);
+      letter-spacing: -0.005em;
+    }
+    a.name {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.15s;
+    }
+    a.name::after {
+      content: '↗';
+      font-size: 11px;
+      color: var(--card-ink-muted);
+      transition: color 0.15s, transform 0.15s;
+    }
+    a.name:hover { color: var(--neon-magenta); }
+    a.name:hover::after { color: var(--neon-magenta); transform: translate(1px, -1px); }
+    .repo-row .meta { font-size: 12px; color: var(--card-ink-muted); margin-top: 5px; line-height: 1.45; }
+    .repo-row .badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 6px 11px; border-radius: 4px;
+      font-weight: 700;
+      display: inline-flex; align-items: center; gap: 7px;
+    }
+    .repo-row .badge::before {
+      content: '';
+      width: 6px; height: 6px; border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 8px currentColor;
+    }
+    .badge.adopt { background: rgba(30, 138, 51, 0.1); color: var(--card-green); border: 1px solid rgba(30, 138, 51, 0.3); }
+    .badge.adapt { background: rgba(194, 77, 0, 0.1); color: var(--card-orange); border: 1px solid rgba(194, 77, 0, 0.3); }
+    .badge.observe { background: rgba(91, 53, 196, 0.1); color: var(--card-purple); border: 1px solid rgba(91, 53, 196, 0.3); }
+    .score-cell {
+      display: flex; flex-direction: column; align-items: flex-end;
+      padding-left: 20px;
+      border-left: 1px solid var(--card-rule-soft);
+      min-width: 76px;
+    }
+    .score-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--card-ink-muted);
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    .score {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 28px;
+      line-height: 1;
+      letter-spacing: -0.025em;
+      color: var(--card-ink);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .section-preview + .section-preview { margin-top: 56px; }
+
+    .group { margin-bottom: 72px; }
+    .group-head {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 20px;
+      padding-bottom: 18px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--rule-soft);
+    }
+    .group-head h3 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700; text-transform: uppercase;
+      font-size: 18px; letter-spacing: 0.005em;
+      margin: 0;
+      color: var(--ink);
+      display: inline-flex; align-items: center; gap: 14px;
+    }
+    .group-head h3::before {
+      content: '';
+      display: inline-block;
+      width: 8px; height: 8px;
+      background: var(--neon-green);
+      box-shadow: 0 0 12px rgba(102,232,122,0.55);
+      border-radius: 2px;
+    }
+    .content-intro .intro-actions {
+      margin-top: 24px;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+
+    .axis-row {
+      display: grid;
+      grid-template-columns: 32px 160px 1fr 72px 70px;
+      gap: 20px; align-items: center;
+      padding: 16px 36px;
+      border-top: 1px solid var(--card-rule-soft);
+      counter-increment: row-counter;
+    }
+    .axis-row:nth-child(even) { background: #f9fafc; }
+    .axis-row:first-of-type { border-top: none; }
+    .axis-row::before {
+      content: counter(row-counter, decimal-leading-zero);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; letter-spacing: 0.08em;
+      color: var(--card-ink-muted);
+      font-weight: 600;
+    }
+    .axis-label { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--card-ink); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+    .axis-track {
+      height: 8px; background: var(--card-rule); border-radius: 4px; position: relative;
+      background-image: linear-gradient(90deg, var(--card-rule-soft) 1px, transparent 1px);
+      background-size: 10% 100%;
+    }
+    .axis-fill {
+      position: absolute; left: 0; top: 0; bottom: 0;
+      background: linear-gradient(90deg, var(--neon-magenta), var(--neon-orange));
+      border-radius: 4px;
+    }
+    .axis-fill::after {
+      content: '';
+      position: absolute; right: -3px; top: 50%;
+      transform: translateY(-50%);
+      width: 10px; height: 10px;
+      background: #fff;
+      border: 2px solid var(--neon-orange);
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(255,154,72,0.55);
+    }
+    .axis-percent { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 18px; color: var(--card-ink); letter-spacing: -0.02em; text-align: right; }
+    .axis-value { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--card-ink-soft); text-align: right; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      margin: 6px 36px 20px;
+      gap: 1px;
+      background: var(--card-rule-soft);
+      border: 1px solid var(--card-rule-soft);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .meta-grid > div {
+      padding: 18px 22px;
+      background: var(--card-bg);
+      position: relative;
+    }
+    .meta-grid > div::before {
+      content: '';
+      position: absolute; left: 0; top: 22px; bottom: 22px;
+      width: 2px;
+      background: var(--neon-green);
+      opacity: 0.55;
+      border-radius: 2px;
+    }
+    .meta-grid .k {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--card-ink-muted);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .meta-grid .v {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--card-ink);
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <nav class="sidenav">
+      <a href="#top" class="sidenav-logo-link" aria-label="Zum Seitenanfang">
+        <img src="../../assets/logo-icon.png" alt="Pattern Pilot" class="sidenav-logo">
+      </a>
+      <div class="sidenav-eyebrow">Inhalt</div>
+      <ul class="sidenav-list">
+        <li><a href="#problem" class="active"><span class="n">01</span>Problem-Landkarte</a></li>
+        <li><a href="#uebersicht"><span class="n">02</span>Übersicht</a></li>
+        <li><a href="#cluster"><span class="n">03</span>Cluster</a></li>
+        <li><a href="#achsen"><span class="n">04</span>Achsen-View</a></li>
+        <li><a href="#entscheidungen"><span class="n">05</span>Entscheidungen</a></li>
+        <li><a href="#lauf"><span class="n">06</span>Lauf-Info</a></li>
+      </ul>
+    </nav>
+    <main class="wrap" id="top">
+    <section class="hero">
+      <h1>Pattern<br><span class="pilot">Pilot</span></h1>
+      <p class="slogan">Die Intelligenz-Schicht zwischen externen Repos und konkreten Entscheidungen für dein Zielprojekt.</p>
+
+    </section>
+
+    <div class="section-break"></div>
+
+    <section class="content-intro" id="problem" data-nav-section>
+      <div class="eyebrow">Problem-Landkarte</div>
+      <h2 class="subject">Event-Deduplication über<br>heterogene Quellen</h2>
+      <div class="subject-id">event-deduplication-across-heterogenous-sources</div>
+      <div class="meta">
+        <span>12 Kandidaten</span>
+        <span class="sep">·</span>
+        <span>3 Cluster</span>
+        <span class="sep">·</span>
+        <span class="accent">1 divergent</span>
+      </div>
+      <div class="intro-actions">
+        <button class="dark-info-btn" aria-label="Was ist eine Problem-Landkarte?" aria-expanded="false" data-info-trigger="problem">i</button>
+      </div>
+      <div class="info-panel" hidden data-info-panel="problem">
+        <p>Die <strong>Problem-Landkarte</strong> bündelt einen Lauf rund um eine konkrete Frage an das Zielprojekt. Aus dem Problem-Slug erzeugt Pattern Pilot Discovery-Queries, bewertet die Fundstücke, gruppiert sie zu Clustern und liest das Ergebnis gegen den Projektkontext. Ziel ist nicht Repo-Sammlung, sondern verwertbare Entscheidungen — <em>adopt, adapt, observe</em> — mit klarer Rückbindung ans Projekt.</p>
+      </div>
+    </section>
+
+    <section class="group" id="uebersicht" data-nav-section>
+      <div class="group-head">
+        <h3>Übersicht</h3>
+        <button class="dark-info-btn" aria-label="Was zeigt die Übersicht?" aria-expanded="false" data-info-trigger="uebersicht">i</button>
+      </div>
+      <div class="info-panel" hidden data-info-panel="uebersicht">
+        <p>Die <strong>Übersicht</strong> bündelt die Kennzahlen dieses Laufs in einem Blick. Oben die Ergebnis-Zahlen aus Discovery und Clustering, unten die Lauf-Metadaten — Datum, Ziel-Projekt und Discovery-Profil. Damit lässt sich jeder Report-Start sofort einordnen, auch ohne Scrollen.</p>
+      </div>
+    <div class="preview">
+      <div class="stat">
+        <div class="k">Kandidaten</div>
+        <div class="v">12</div>
+        <div class="trend">+4 gegenüber Vorlauf</div>
+      </div>
+      <div class="stat">
+        <div class="k">Cluster</div>
+        <div class="v">3</div>
+        <div class="trend">stabil</div>
+      </div>
+      <div class="stat">
+        <div class="k">Eigenbau / Übernahme</div>
+        <div class="v">2 : 9</div>
+        <div class="trend warn">Übernahme-Anteil niedrig</div>
+      </div>
+      <div class="stat meta">
+        <div class="k">Lauf-Datum</div>
+        <div class="v">22. Apr 2026</div>
+        <div class="trend">19:41 · 2026-04-22</div>
+      </div>
+      <div class="stat meta">
+        <div class="k">Ziel-Repo</div>
+        <div class="v">eventbear-worker</div>
+        <div class="trend">Projekt-Kontext aktiv</div>
+      </div>
+      <div class="stat meta">
+        <div class="k">Profil</div>
+        <div class="v">balanced</div>
+        <div class="trend">V1 · standard</div>
+      </div>
+    </div>
+    </section>
+
+    <div class="section-preview" id="cluster" data-nav-section>
+      <div class="section-head">
+        <div class="title">
+          <h2><span class="marker"></span>Cluster — Record-Linkage-Bibliotheken</h2>
+          <div class="sub">Musterfamilie · python record linkage</div>
+        </div>
+        <div class="head-actions">
+          <span class="count-chip">5 Repos</span>
+          <button class="info-btn" aria-label="Was ist ein Cluster?" aria-expanded="false" data-info-trigger="cluster">i</button>
+        </div>
+      </div>
+      <div class="info-panel" hidden data-info-panel="cluster">
+        <p>Ein <strong>Cluster</strong> fasst Kandidaten-Repos mit sehr ähnlichem Muster oder Vokabular zu einer Gruppe. Je enger die Gruppe, desto klarer der gemeinsame Lösungsansatz. Ziel ist, <em>Build-vs-Borrow</em>-Entscheidungen auf Cluster-Ebene statt pro Einzel-Repo zu führen. Jedes Cluster gruppiert sich um eine erkennbare Musterfamilie — hier Record-Linkage-Bibliotheken in Python.</p>
+      </div>
+      <div class="section-body">
+        <div class="repo-row">
+          <div>
+            <a class="name" href="https://github.com/AI-team-UoA/pyJedAI" target="_blank" rel="noopener noreferrer">pyJedAI</a>
+            <div class="meta">Universelles Entity-Resolution-Toolkit · 1,2k Sterne · aktiv</div>
+          </div>
+          <span class="badge adopt">Übernehmen</span>
+          <div class="score-cell">
+            <div class="score-label">Score</div>
+            <div class="score">8,4</div>
+          </div>
+        </div>
+        <div class="repo-row">
+          <div>
+            <a class="name" href="https://github.com/example/goldenmatch" target="_blank" rel="noopener noreferrer">goldenmatch</a>
+            <div class="meta">Probabilistisches Record-Linkage · 380 Sterne · aktiv</div>
+          </div>
+          <span class="badge adapt">Adaptieren</span>
+          <div class="score-cell">
+            <div class="score-label">Score</div>
+            <div class="score">7,1</div>
+          </div>
+        </div>
+        <div class="repo-row">
+          <div>
+            <a class="name" href="https://github.com/example/trade-record-linker" target="_blank" rel="noopener noreferrer">trade-record-linker</a>
+            <div class="meta">Domänenspezifischer Matcher · 95 Sterne · gepflegt</div>
+          </div>
+          <span class="badge observe">Beobachten</span>
+          <div class="score-cell">
+            <div class="score-label">Score</div>
+            <div class="score">5,8</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-preview" id="achsen" data-nav-section>
+      <div class="section-head">
+        <div class="title">
+          <h2><span class="marker"></span>Achsen-View</h2>
+          <div class="sub">axis-positions · 3 von 3 gematched</div>
+        </div>
+        <div class="head-actions">
+          <span class="count-chip">3 Achsen</span>
+          <button class="info-btn" aria-label="Was ist die Achsen-View?" aria-expanded="false" data-info-trigger="achsen">i</button>
+        </div>
+      </div>
+      <div class="info-panel" hidden data-info-panel="achsen">
+        <p>Die <strong>Achsen-View</strong> zeigt, wo dieses Problem im Lösungsraum liegt — über Dimensionen wie <em>Latenz</em> (Realtime vs. Batch), <em>Datenmodell</em> (relational, graph, document) und <em>Distribution</em> (Library, Service, SaaS). Der Balken zeigt die aggregierte Position aller gefundenen Repos auf jeder Achse. Viele gematchte Achsen sprechen für ein gut definiertes Problemfeld.</p>
+      </div>
+      <div class="section-body">
+        <div class="axis-row">
+          <div class="axis-label">Latenz</div>
+          <div class="axis-track"><div class="axis-fill" style="width: 72%;"></div></div>
+          <div class="axis-percent">72%</div>
+          <div class="axis-value">Batch</div>
+        </div>
+        <div class="axis-row">
+          <div class="axis-label">Datenmodell</div>
+          <div class="axis-track"><div class="axis-fill" style="width: 58%;"></div></div>
+          <div class="axis-percent">58%</div>
+          <div class="axis-value">relational</div>
+        </div>
+        <div class="axis-row">
+          <div class="axis-label">Distribution</div>
+          <div class="axis-track"><div class="axis-fill" style="width: 34%;"></div></div>
+          <div class="axis-percent">34%</div>
+          <div class="axis-value">Library</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-preview" id="entscheidungen" data-nav-section>
+      <div class="section-head">
+        <div class="title">
+          <h2><span class="marker"></span>Entscheidungen</h2>
+          <div class="sub">2 Empfehlungen · 1 offen</div>
+        </div>
+        <div class="head-actions">
+          <span class="count-chip">3 Einträge</span>
+          <button class="info-btn" aria-label="Wie werden Entscheidungen gebildet?" aria-expanded="false" data-info-trigger="entscheidungen">i</button>
+        </div>
+      </div>
+      <div class="info-panel" hidden data-info-panel="entscheidungen">
+        <p>Die <strong>Entscheidungen</strong> sind die konkreten Handlungs-Empfehlungen aus diesem Lauf: Was soll <em>übernommen</em>, <em>adaptiert</em> oder nur <em>beobachtet</em> werden? Jede Zeile ist an Quellen im Cluster-Bereich rückgebunden und landet später im Decisions-Log des Zielprojekts. So wird aus Repo-Analyse konkrete Projekt-Wirkung.</p>
+      </div>
+      <div class="section-body">
+        <div class="repo-row">
+          <div>
+            <div class="name">Record-Linkage-Stack übernehmen</div>
+            <div class="meta">pyJedAI als Basis · Adapter für 40-Spalten-Schema eigenbauen</div>
+          </div>
+          <span class="badge adopt">Übernehmen</span>
+          <div class="score-cell">
+            <div class="score-label">Score</div>
+            <div class="score">8,2</div>
+          </div>
+        </div>
+        <div class="repo-row">
+          <div>
+            <div class="name">Blocking-Strategie aus goldenmatch adaptieren</div>
+            <div class="meta">Sorted-Neighborhood auf Event-Titel plus Datums-Fenster</div>
+          </div>
+          <span class="badge adapt">Adaptieren</span>
+          <div class="score-cell">
+            <div class="score-label">Score</div>
+            <div class="score">7,0</div>
+          </div>
+        </div>
+        <div class="repo-row">
+          <div>
+            <div class="name">trade-record-linker — nicht übernehmen</div>
+            <div class="meta">Zu domänenfremd · weiter beobachten, aber kein direkter Fit</div>
+          </div>
+          <span class="badge observe">Beobachten</span>
+          <div class="score-cell">
+            <div class="score-label">Score</div>
+            <div class="score">5,5</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-preview" id="lauf" data-nav-section>
+      <div class="section-head">
+        <div class="title">
+          <h2><span class="marker"></span>Lauf-Info</h2>
+          <div class="sub">eventbear-worker · balanced profile</div>
+        </div>
+        <div class="head-actions">
+          <span class="count-chip">6 Felder</span>
+          <button class="info-btn" aria-label="Was ist Lauf-Info?" aria-expanded="false" data-info-trigger="lauf">i</button>
+        </div>
+      </div>
+      <div class="info-panel" hidden data-info-panel="lauf">
+        <p>Die <strong>Lauf-Info</strong> hält die Metadaten dieses Report-Laufs fest: Lauf-ID, Discovery-Profil, Quelle und Token-Budget. Sie dient als <em>Audit-Trail</em> und macht jeden Lauf reproduzierbar — bei Nachfragen, Re-Runs oder späterem Vergleich zwischen Profilen.</p>
+      </div>
+      <div class="section-body">
+        <div class="meta-grid">
+        <div>
+          <div class="k">Lauf-ID</div>
+          <div class="v">2026-04-22T19-41</div>
+        </div>
+        <div>
+          <div class="k">Profil</div>
+          <div class="v">balanced · standard</div>
+        </div>
+        <div>
+          <div class="k">Repos gescannt</div>
+          <div class="v">48</div>
+        </div>
+        <div>
+          <div class="k">Dauer</div>
+          <div class="v">2 min 14 s</div>
+        </div>
+        <div>
+          <div class="k">Token-Budget</div>
+          <div class="v">LLM-Aug. aus</div>
+        </div>
+        <div>
+          <div class="k">Quelle</div>
+          <div class="v">GitHub Search API</div>
+        </div>
+        </div>
+      </div>
+    </div>
+    </main>
+  </div>
+
+  <dialog class="info-modal" id="info-modal" aria-labelledby="info-modal-title">
+    <div class="modal-head">
+      <h3 id="info-modal-title">Info</h3>
+      <button class="modal-close" aria-label="Schließen">×</button>
+    </div>
+    <div class="modal-body" id="info-modal-body"></div>
+  </dialog>
+
+  <script>
+    (() => {
+      // Sidebar scroll-tracking
+      const links = document.querySelectorAll('.sidenav-list a');
+      const sections = document.querySelectorAll('[data-nav-section]');
+      const setActive = (id) => {
+        links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + id));
+      };
+      const observer = new IntersectionObserver((entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        }
+      }, { rootMargin: '-30% 0px -60% 0px' });
+      sections.forEach(s => observer.observe(s));
+
+      // Logo click → scroll to top
+      const logoLink = document.querySelector('.sidenav-logo-link');
+      if (logoLink) {
+        logoLink.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+
+      // Info-button → modal
+      const modal = document.getElementById('info-modal');
+      const modalTitle = document.getElementById('info-modal-title');
+      const modalBody = document.getElementById('info-modal-body');
+      const modalClose = modal.querySelector('.modal-close');
+      const titles = {
+        problem: 'Problem-Landkarte',
+        uebersicht: 'Übersicht',
+        cluster: 'Cluster',
+        achsen: 'Achsen-View',
+        entscheidungen: 'Entscheidungen',
+        lauf: 'Lauf-Info'
+      };
+      document.querySelectorAll('[data-info-trigger]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-info-trigger');
+          const panel = document.querySelector(`[data-info-panel="${id}"]`);
+          if (!panel) return;
+          modalTitle.textContent = titles[id] || 'Info';
+          // Safe DOM clone instead of innerHTML — copies author-controlled markup only
+          modalBody.replaceChildren(...Array.from(panel.cloneNode(true).children));
+          if (typeof modal.showModal === 'function') modal.showModal();
+          else modal.setAttribute('open', '');
+        });
+      });
+      modalClose.addEventListener('click', () => modal.close());
+      modal.addEventListener('click', (e) => {
+        const rect = modal.getBoundingClientRect();
+        const inside = e.clientX >= rect.left && e.clientX <= rect.right
+                    && e.clientY >= rect.top && e.clientY <= rect.bottom;
+        if (!inside) modal.close();
+      });
+    })();
+  </script>
+</body>
+</html>
