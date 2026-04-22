@@ -1,6 +1,11 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
+async function bindingExists(rootDir, projectKey) {
+  const p = path.join(rootDir, "bindings", projectKey, "PROJECT_BINDING.json");
+  return fs.stat(p).then(() => true).catch(() => false);
+}
+
 async function readProblemDirs(rootDir) {
   const entries = [];
   const projectsDir = path.join(rootDir, "projects");
@@ -42,13 +47,19 @@ export async function runProblemList(rootDir, config, options) {
     const json = await loadProblemJson(entry.dir);
     if (!json) continue;
     if (status !== "all" && json.status !== status) continue;
+    let marker = "";
+    if (entry.project) {
+      const exists = await bindingExists(rootDir, entry.project);
+      if (!exists) marker = "project_binding_missing";
+    }
     rows.push({
       project: json.project ?? "(standalone)",
       slug: json.slug,
       status: json.status,
       title: json.title,
       latest: json.latest_landscape ?? "-",
-      last_result: json.last_explore_result ?? "-"
+      last_result: json.last_explore_result ?? "-",
+      marker
     });
   }
 
@@ -57,8 +68,8 @@ export async function runProblemList(rootDir, config, options) {
     return;
   }
 
-  console.log(`${"project".padEnd(20)} ${"slug".padEnd(26)} ${"status".padEnd(9)} ${"latest".padEnd(34)} title`);
+  console.log(`${"project".padEnd(20)} ${"slug".padEnd(26)} ${"status".padEnd(9)} ${"latest".padEnd(34)} ${"title".padEnd(40)} marker`);
   for (const r of rows) {
-    console.log(`${r.project.padEnd(20)} ${r.slug.padEnd(26)} ${r.status.padEnd(9)} ${r.latest.padEnd(34)} ${r.title}`);
+    console.log(`${r.project.padEnd(20)} ${r.slug.padEnd(26)} ${r.status.padEnd(9)} ${r.latest.padEnd(34)} ${r.title.padEnd(40)} ${r.marker}`);
   }
 }

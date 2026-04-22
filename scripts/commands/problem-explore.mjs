@@ -101,6 +101,17 @@ export async function runProblemExplore(rootDir, config, options) {
     return;
   }
 
+  if (project) {
+    const bindingPath = path.join(rootDir, "bindings", project, "PROJECT_BINDING.json");
+    const exists = await fs.stat(bindingPath).then(() => true).catch(() => false);
+    if (!exists) {
+      console.error(`Project binding missing at ${bindingPath}.`);
+      console.error("Either run bootstrap to restore the binding, or convert the problem to standalone by removing the 'project' field in its frontmatter and moving the directory to state/standalone-problems/.");
+      process.exitCode = 2;
+      return;
+    }
+  }
+
   await refreshProblemJson({ rootDir, projectKey: project, slug });
   const problem = await readProblem({ rootDir, projectKey: project, slug });
 
