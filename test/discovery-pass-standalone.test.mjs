@@ -85,3 +85,61 @@ test("runDiscoveryPass continues on single-phrase failure", async () => {
     ["good-one", "good-two"]
   );
 });
+
+test("runDiscoveryPass returns flat repo shape with enrichment fields nulled", async () => {
+  const fakeSearchFn = async () => ({
+    items: [
+      {
+        normalizedRepoUrl: "https://github.com/foo/bar",
+        owner: "foo",
+        name: "bar",
+        description: "desc",
+        language: "TypeScript",
+        topics: ["perf", "lists"]
+      }
+    ]
+  });
+
+  const { repos } = await runDiscoveryPass({
+    config: {},
+    projectKey: "eventbear-worker",
+    queries: ["anything"],
+    searchFn: fakeSearchFn
+  });
+
+  assert.equal(repos.length, 1);
+  const repo = repos[0];
+  assert.equal(repo.id, "https://github.com/foo/bar");
+  assert.equal(repo.url, "https://github.com/foo/bar");
+  assert.equal(repo.owner, "foo");
+  assert.equal(repo.name, "bar");
+  assert.equal(repo.description, "desc");
+  assert.equal(repo.language, "TypeScript");
+  assert.deepEqual(repo.topics, ["perf", "lists"]);
+  assert.equal(repo.readme, null, "no README enrichment in standalone path");
+  assert.equal(repo.license, null, "no license enrichment in standalone path");
+  assert.deepEqual(repo.dependencies, [], "no dependencies enrichment in standalone path");
+});
+
+test("runDiscoveryPass returns projectKey error when missing", async () => {
+  const { repos, error } = await runDiscoveryPass({
+    config: {},
+    queries: ["anything"],
+    searchFn: async () => ({ items: [] })
+  });
+  assert.deepEqual(repos, []);
+  assert.match(error, /projectKey required/);
+});
+
+test("runDiscoveryPass returns empty repos on empty queries", async () => {
+  let called = false;
+  const { repos, error } = await runDiscoveryPass({
+    config: {},
+    projectKey: "eventbear-worker",
+    queries: [],
+    searchFn: async () => { called = true; return { items: [] }; }
+  });
+  assert.deepEqual(repos, []);
+  assert.equal(error, undefined);
+  assert.equal(called, false, "no search calls for empty queries");
+});
