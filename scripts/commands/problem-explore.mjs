@@ -1,5 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import { buildGenerateFn } from "../shared/llm-provider.mjs";
 import { buildLandscape } from "../../lib/clustering/landscape.mjs";
 import { extractRepoKeywords } from "../../lib/clustering/keywords.mjs";
 import { refreshProblemJson, readProblem, updateProblemPointer } from "../../lib/problem/store.mjs";
@@ -177,6 +178,20 @@ export async function runProblemExplore(rootDir, config, options) {
 
   await fs.writeFile(path.join(landscapeDir, "landscape.json"), `${JSON.stringify(output, null, 2)}\n`);
 
+  // Optionally augment with LLM
+  let llmAugmentation = null;
+  if (options.withLlm) {
+    const { augmentLandscape } = await import("../../lib/brief/llm.mjs");
+    const generate = await buildGenerateFn(config);
+    llmAugmentation = await augmentLandscape({
+      landscape: { clusters: landscape.clusters },
+      cacheDir: landscapeDir,
+      generate
+    });
+    output.llm_augmentation = llmAugmentation;
+    await fs.writeFile(path.join(landscapeDir, "landscape.json"), `${JSON.stringify(output, null, 2)}\n`);
+  }
+
   // Write brief.md
   const { buildHeuristicBrief } = await import("../../lib/brief/heuristic.mjs");
   const topRepoByCluster = {};
@@ -187,7 +202,7 @@ export async function runProblemExplore(rootDir, config, options) {
       topRepoByCluster[cluster.label] = top.url ?? top.html_url ?? top.id;
     }
   }
-  const briefMd = buildHeuristicBrief({ problem, landscape: output, topRepoByCluster });
+  const briefMd = buildHeuristicBrief({ problem, landscape: output, topRepoByCluster, llmAugmentation });
   await fs.writeFile(path.join(landscapeDir, "brief.md"), briefMd);
 
   // Write landscape.html

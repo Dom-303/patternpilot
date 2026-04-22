@@ -4,6 +4,7 @@ import path from "node:path";
 import { readProblem } from "../../lib/problem/store.mjs";
 import { resolveLandscapeDir } from "../../lib/problem/paths.mjs";
 import { buildHeuristicBrief } from "../../lib/brief/heuristic.mjs";
+import { buildGenerateFn } from "../shared/llm-provider.mjs";
 
 export async function runProblemBrief(rootDir, config, options) {
   const slug = options.urls[0] ?? null;
@@ -33,7 +34,18 @@ export async function runProblemBrief(rootDir, config, options) {
     topRepoByCluster[c.label] = c.member_ids?.[0] ?? null;
   }
 
-  const markdown = buildHeuristicBrief({ problem, landscape, topRepoByCluster });
+  let llmAugmentation = null;
+  if (options.withLlm) {
+    const { augmentLandscape } = await import("../../lib/brief/llm.mjs");
+    const generate = await buildGenerateFn(config);
+    llmAugmentation = await augmentLandscape({
+      landscape: { clusters: landscape.clusters },
+      cacheDir: landscapeDir,
+      generate
+    });
+  }
+
+  const markdown = buildHeuristicBrief({ problem, landscape, topRepoByCluster, llmAugmentation });
   await fs.writeFile(path.join(landscapeDir, "brief.md"), markdown);
   console.log(`Brief rewritten at ${landscapeDir}/brief.md`);
 }
