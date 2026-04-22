@@ -68,8 +68,9 @@ async function loadCandidateRepos({ rootDir, config, projectKey, slug, problem, 
   const techTags = problem.derived.tech_tags ?? [];
   const scored = filtered.map((repo) => {
     const pFit = computeProblemFit(repo, problemTokens);
-    const boosted = applySoftBoost({ ...repo, score: 0 }, techTags);
-    const score = combinedScore({ problemFit: pFit, standalone: true }) + (boosted.score - 0);
+    // applySoftBoost adds its boost to an existing score; start from 0 to extract just the boost.
+    const boostOnly = applySoftBoost({ ...repo, score: 0 }, techTags).score;
+    const score = combinedScore({ problemFit: pFit, standalone: true }) + boostOnly;
     return { ...repo, problemFit: pFit, score };
   });
 
