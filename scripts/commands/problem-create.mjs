@@ -39,5 +39,12 @@ export async function runProblemCreate(rootDir, config, options) {
   await writeProblem({ rootDir, projectKey: project, slug, markdown });
 
   console.log(`Created problem at ${path.join(dir, "problem.md")}`);
-  console.log("Edit the markdown, then run: npm run patternpilot -- problem-refresh " + slug);
+  console.log("");
+  console.log("Next steps:");
+  console.log("  1. Open sharpen-prompt.md in the same directory and copy its content into your LLM (ChatGPT / Claude / Gemini).");
+  console.log("  2. Describe the problem in your own words where the placeholder asks.");
+  console.log("  3. Replace the content of problem.md with the LLM's structured response.");
+  console.log(`  4. Run: npm run patternpilot -- problem-refresh ${slug}`);
+  console.log("");
+  console.log("If you prefer to write problem.md manually, you can skip the LLM step — problem-refresh will still run the deterministic heuristic layer.");
 }
