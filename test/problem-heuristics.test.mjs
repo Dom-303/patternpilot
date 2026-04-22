@@ -6,7 +6,8 @@ import {
   lintGenericPhrases,
   lintSingleWords,
   lintLongPhrases,
-  lintDuplicates
+  lintDuplicates,
+  applyHeuristics
 } from "../lib/problem/heuristics.mjs";
 
 describe("expandTechAliases", () => {
@@ -135,5 +136,56 @@ describe("lintDuplicates", () => {
   test("handles whitespace-only-difference duplicates", () => {
     const warnings = lintDuplicates(["foo", "  foo  "]);
     assert.equal(warnings.length, 1);
+  });
+});
+
+describe("applyHeuristics", () => {
+  test("expands tech_tags and normalizes search_terms", () => {
+    const { derived, warnings } = applyHeuristics({
+      query_seeds: ["foo", "FOO", "  bar  "],
+      tech_tags: ["nodejs"],
+      constraint_tags: ["opensource"],
+      approach_signature: ["self-healing"]
+    });
+
+    assert.deepEqual(derived.query_seeds, ["foo", "bar"]);
+    assert.ok(derived.tech_tags.includes("nodejs"));
+    assert.ok(derived.tech_tags.some((t) => t.toLowerCase() === "node"));
+    assert.ok(derived.tech_tags.some((t) => t.toLowerCase() === "node.js"));
+    assert.deepEqual(derived.constraint_tags, ["opensource"]);
+    assert.deepEqual(derived.approach_signature, ["self-healing"]);
+
+    assert.ok(warnings.some((w) => w.toLowerCase().includes("duplicate")));
+  });
+
+  test("handles missing fields gracefully", () => {
+    const { derived, warnings } = applyHeuristics({});
+    assert.deepEqual(derived.query_seeds, []);
+    assert.deepEqual(derived.tech_tags, []);
+    assert.deepEqual(derived.constraint_tags, []);
+    assert.deepEqual(derived.approach_signature, []);
+    assert.deepEqual(warnings, []);
+  });
+
+  test("emits all four lint categories when applicable", () => {
+    const { warnings } = applyHeuristics({
+      query_seeds: [
+        "web scraper",
+        "scraper",
+        "one two three four five six",
+        "foo",
+        "FOO"
+      ]
+    });
+    assert.ok(warnings.some((w) => w.toLowerCase().includes("generic")));
+    assert.ok(warnings.some((w) => w.toLowerCase().includes("single word")));
+    assert.ok(warnings.some((w) => w.match(/\d+\s*words/)));
+    assert.ok(warnings.some((w) => w.toLowerCase().includes("duplicate")));
+  });
+
+  test("accepts undefined input without throwing", () => {
+    const { derived, warnings } = applyHeuristics();
+    assert.deepEqual(derived.query_seeds, []);
+    assert.deepEqual(warnings, []);
   });
 });
