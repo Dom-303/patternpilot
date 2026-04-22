@@ -176,6 +176,7 @@
     "problem:list": "node scripts/patternpilot.mjs problem-list",
     "problem:resolve": "node scripts/patternpilot.mjs problem-resolve",
     "problem:archive": "node scripts/patternpilot.mjs problem-archive",
-    "problem:explore": "node scripts/patternpilot.mjs problem-explore"
+    "problem:explore": "node scripts/patternpilot.mjs problem-explore",
+    "problem:brief": "node scripts/patternpilot.mjs problem-brief"
   }
 }
