@@ -1,0 +1,11 @@
+{
+  "groups": [
+    ["nodejs", "node", "node.js"],
+    ["typescript", "ts"],
+    ["javascript", "js"],
+    ["python", "py"],
+    ["kubernetes", "k8s"],
+    ["postgres", "postgresql"],
+    ["golang", "go"]
+  ]
+}
