@@ -1,0 +1,13 @@
+label,pattern_family,main_layer,relation,member_count,signature_contrast
+date+description+ical,unknown,unknown,divergent,1,date|description|ical
+blob+file+file-upload,unknown,unknown,divergent,1,blob|file-upload|form
+ai-summaries+docker+dockerfile,unknown,unknown,divergent,1,ai-summaries|docker|dockerfile
+checks+cli+crawl,unknown,unknown,divergent,1,checks|cli|crawl
+automatic+column+creation,unknown,unknown,divergent,1,automatic|column|creation
+analytics+built+consolidates,unknown,unknown,divergent,1,analytics|built|consolidates
+adts+avalonia+design,unknown,unknown,divergent,1,adts|avalonia|design
+acroform+ai-automation+backend,unknown,unknown,divergent,1,acroform|ai-automation|backend
+data+entity+extraction,unknown,unknown,divergent,1,entity|extraction|financial
+6003+6037+clash,unknown,unknown,divergent,1,6003|6037|clash
+beaugunderson+branch+codecov,unknown,unknown,divergent,1,beaugunderson|branch|codecov
+api+json+python,unknown,unknown,divergent,1,api|rpc|soap

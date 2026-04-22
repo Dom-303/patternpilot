@@ -1,0 +1,13 @@
+label,pattern_family,main_layer,relation,member_count,signature_contrast
+ai-scraping+align+automation,unknown,unknown,divergent,1,align|center|com
+120+accessibility+ai-testing,unknown,unknown,divergent,1,120|accessibility|ai-testing
+api+architecture+aws-backed,unknown,unknown,divergent,1,architecture|aws-backed|ci-circleci
+actually+ai-scraping+automation,unknown,unknown,divergent,1,actually|built|crawling-rust
+ai-assisted+also+automation,unknown,unknown,divergent,1,ai-assisted|also|designed
+automatically+claude+crawler,unknown,unknown,divergent,1,automatically|css|detects
+api+app+autoload,unknown,unknown,divergent,1,app|autoload|awesome
+adaptive+crypto+economics,unknown,unknown,adjacent,1,crypto|economics|jax
+2025+accepted+adaptive,unknown,unknown,adjacent,1,2025|accepted|contains
+based+induction+variance,unknown,unknown,divergent,1,induction|variance|wrapper
+based+builds+data,unknown,unknown,divergent,1,builds|difference|extracting
+ai-agent+android+automation,unknown,unknown,adjacent,1,ai-agent|android|command-framework
