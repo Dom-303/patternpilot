@@ -153,7 +153,8 @@ const COMMANDS = [
   { name: "problem-refresh", description: "Re-derive problem.json from problem.md", handlerKey: "runProblemRefresh" },
   { name: "problem-list", description: "List problem artifacts across projects and standalone", handlerKey: "runProblemList" },
   { name: "problem-resolve", description: "Mark a problem as resolved and optionally write a resolution note", handlerKey: "runProblemResolve" },
-  { name: "problem-archive", description: "Mark a problem as archived", handlerKey: "runProblemArchive" }
+  { name: "problem-archive", description: "Mark a problem as archived", handlerKey: "runProblemArchive" },
+  { name: "problem-explore", description: "Explore candidate repos and write a landscape.json for a problem", handlerKey: "runProblemExplore" }
 ];
 
 const COMMAND_MAP = new Map(COMMANDS.map((command) => [command.name, command]));

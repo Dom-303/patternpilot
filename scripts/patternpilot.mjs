@@ -179,6 +179,7 @@ import { runProblemRefresh } from "./commands/problem-refresh.mjs";
 import { runProblemList } from "./commands/problem-list.mjs";
 import { runProblemResolve } from "./commands/problem-resolve.mjs";
 import { runProblemArchive } from "./commands/problem-archive.mjs";
+import { runProblemExplore } from "./commands/problem-explore.mjs";
 
 function printHelp() {
   console.log(renderPatternpilotHelp());
@@ -206,7 +207,8 @@ const COMMANDS_ALLOWED_WITHOUT_PROJECT = new Set([
   "problem-refresh",
   "problem-list",
   "problem-resolve",
-  "problem-archive"
+  "problem-archive",
+  "problem-explore"
 ]);
 
 function buildCommandHandlers(envFiles) {
@@ -369,7 +371,8 @@ function buildCommandHandlers(envFiles) {
     runProblemRefresh,
     runProblemList,
     runProblemResolve,
-    runProblemArchive
+    runProblemArchive,
+    runProblemExplore
   };
 }
 
