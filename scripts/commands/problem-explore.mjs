@@ -23,15 +23,13 @@ async function loadCandidateRepos({ rootDir, config, projectKey, slug, problem, 
   const depth = options.depth ?? "standard";
   const profile = resolveDiscoveryProfile(depth);
   const totalBudget = profile.limit;
-  const standalone = !projectKey;
-  const split = splitBudget({ totalBudget, standalone });
+  const split = splitBudget({ totalBudget, standalone: true });
 
   const problemQueries = buildProblemQueryFamily({
     seeds: problem.derived.query_seeds ?? [],
     budget: split.problem
   });
 
-  // TODO: add cross-family queries when project seeds are loaded
   const queries = problemQueries;
 
   if (queries.length === 0) {
@@ -39,12 +37,9 @@ async function loadCandidateRepos({ rootDir, config, projectKey, slug, problem, 
   }
 
   const passResult = await runDiscoveryPass({
-    rootDir,
     config,
     projectKey,
-    queries,
-    depth,
-    standalone
+    queries
   });
 
   if (passResult.error) {
