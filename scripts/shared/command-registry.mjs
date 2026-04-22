@@ -150,7 +150,8 @@ const COMMANDS = [
   { name: "automation-job-ack", description: "Acknowledge a latched dispatch escalation for a named automation job", handlerKey: "runAutomationJobAck" },
   { name: "automation-job-clear", description: "Clear scheduler state for a named automation job", handlerKey: "runAutomationJobClear" },
   { name: "problem-create", description: "Create a new problem artifact (project-bound or standalone)", handlerKey: "runProblemCreate" },
-  { name: "problem-refresh", description: "Re-derive problem.json from problem.md", handlerKey: "runProblemRefresh" }
+  { name: "problem-refresh", description: "Re-derive problem.json from problem.md", handlerKey: "runProblemRefresh" },
+  { name: "problem-list", description: "List problem artifacts across projects and standalone", handlerKey: "runProblemList" }
 ];
 
 const COMMAND_MAP = new Map(COMMANDS.map((command) => [command.name, command]));
