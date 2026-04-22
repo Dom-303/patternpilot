@@ -177,6 +177,32 @@ export async function runProblemExplore(rootDir, config, options) {
 
   await fs.writeFile(path.join(landscapeDir, "landscape.json"), `${JSON.stringify(output, null, 2)}\n`);
 
+  // Write brief.md
+  const { buildHeuristicBrief } = await import("../../lib/brief/heuristic.mjs");
+  const topRepoByCluster = {};
+  for (const cluster of landscape.clusters) {
+    if (cluster.members.length > 0) {
+      // members are the raw repos with .url/.html_url; pick the first
+      const top = cluster.members[0];
+      topRepoByCluster[cluster.label] = top.url ?? top.html_url ?? top.id;
+    }
+  }
+  const briefMd = buildHeuristicBrief({ problem, landscape: output, topRepoByCluster });
+  await fs.writeFile(path.join(landscapeDir, "brief.md"), briefMd);
+
+  // Write landscape.html
+  const { renderLandscapeHtml } = await import("../../lib/landscape/html-report.mjs");
+  const html = renderLandscapeHtml({ problem, landscape: output, runId });
+  await fs.writeFile(path.join(landscapeDir, "landscape.html"), html);
+
+  // Write clusters.csv
+  const csvLines = ["label,pattern_family,main_layer,relation,member_count,signature_contrast"];
+  for (const c of output.clusters) {
+    const contrast = (c.signature_contrast ?? []).join("|");
+    csvLines.push(`${c.label},${c.pattern_family ?? ""},${c.main_layer ?? ""},${c.relation},${c.member_ids.length},${contrast}`);
+  }
+  await fs.writeFile(path.join(landscapeDir, "clusters.csv"), `${csvLines.join("\n")}\n`);
+
   await updateProblemPointer({
     rootDir,
     projectKey: project,
