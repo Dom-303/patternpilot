@@ -54,20 +54,21 @@ selectWithDiversity → landscape clustering → brief
 
 **`lib/discovery/search.mjs`** — export `searchGithubRepositories` so `pass.mjs` can call it directly. The function already accepts a minimal `plan` shape (`query`, `minSearchResults`) and handles fallback sequences and retries internally.
 
-**`lib/discovery/pass.mjs`** — replace the "standalone_not_supported" error with a real implementation:
+**`lib/discovery/pass.mjs`** — drop the old cohort-injection path and the `standalone` parameter entirely. `problem:explore` is the only caller, and it always uses this path. The simplified `runDiscoveryPass` does:
 
+- Require `projectKey`; error early if missing (ranking needs project context).
 - For each phrase in `queries`, construct a minimal plan `{ query: phrase, minSearchResults: 1 }` and call `searchGithubRepositories(config, plan, { perPage })`.
-- Aggregate `items[]` across all phrases into a single `Map` keyed by `normalizedRepoUrl` for dedupe.
-- Track which phrase(s) surfaced each repo (`repo.__matchedPhrases`) — useful for future ranking weight but not required in this pass.
-- Normalize each collected item into the flat repo shape already expected downstream (same fields as the existing non-standalone branch).
-- No README / license enrichment (same as today — `skipEnrich: true` equivalent).
-- On API errors for a single phrase, log and continue with the remaining phrases. An empty-phrase result is not fatal.
+- Aggregate `items[]` across all phrases into a single `Map` keyed by `normalizedRepoUrl` for dedupe (first occurrence wins).
+- Normalize each collected item into the flat repo shape already expected downstream (same fields as before: `id`, `url`, `owner`, `name`, `description`, `language`, `topics`, `readme`, `license`, `dependencies`).
+- No README / license enrichment (same as today — equivalent to today's `skipEnrich: true`).
+- On API errors for a single phrase, log at warn level and continue with remaining phrases. A single empty or failed phrase is not fatal.
 
-**`scripts/commands/problem-explore.mjs`** — adjust the `standalone` resolution:
+**`scripts/commands/problem-explore.mjs`** — simplify the standalone handling:
 
-- Currently: `standalone = !projectKey` → standalone means "no project at all".
-- New: `standalone` is the problem-mode search contract itself, regardless of `projectKey`. `projectKey` stays required for ranking / clustering inputs.
-- Concretely: always pass `standalone: true` to both `splitBudget` and `runDiscoveryPass` for problem-mode. The `projectKey` still flows through for ranking/clustering.
+- Drop the `standalone = !projectKey` line. `problem:explore` always uses the problem-first search contract.
+- Call `splitBudget({ totalBudget, standalone: true })` unconditionally so the full budget goes to problem phrases.
+- Call `runDiscoveryPass` without a `standalone` argument.
+- `projectKey` is still required (enforced earlier in the command flow, and re-enforced by `runDiscoveryPass`).
 
 **`lib/discovery/problem-queries.mjs`** — no changes. `buildProblemQueryFamily` and `splitBudget` already work for this flow.
 
@@ -89,7 +90,7 @@ GitHub Search API rate limit is 30/min authenticated. A single `problem:explore`
 
 ### Dedupe
 
-Dedupe by `normalizedRepoUrl` across all phrase searches. First occurrence wins; subsequent duplicates are discarded but their phrase is appended to `__matchedPhrases` on the kept entry. This gives the ranking layer optional signal ("this repo matched 3 phrases"), even if the initial ranking implementation ignores it.
+Dedupe by `normalizedRepoUrl` across all phrase searches. First occurrence wins; subsequent duplicates are discarded. No tracking of which phrase(s) surfaced which repo — that is out of scope for this spec (see follow-ups).
 
 ## Error handling
 
@@ -110,9 +111,9 @@ Mock `searchGithubRepositories` to record calls and return controlled responses.
 4. **Phrase-failure resilience:** when one phrase throws, the remaining phrases still execute and contribute to the result.
 5. **Flat repo shape:** every returned item has the required fields (`id`, `url`, `owner`, `name`, `description`, `language`, `topics`, `readme`, `license`, `dependencies`).
 
-### Regression test: real-problem candidate check
+### Regression test: query-shape assertion (counter-test to OQ-009)
 
-One integration-style test that uses a real minimal problem fixture (hand-crafted, committed) and the real `runDiscoveryPass` (mocking only the HTTP layer). Assert that the queries reaching the HTTP mock are the verbatim problem phrases from the fixture. This is the direct counter-test to the OQ-009 drift.
+One integration-style test that drives `runDiscoveryPass` with a fixed 3-phrase input (e.g. `["virtualized list", "react window", "infinite scroll"]`) while mocking the HTTP layer. Assert exactly three requests were made, and for each request the `q=` search parameter equals the corresponding phrase verbatim (no project anchor tokens, no additional content terms). This is the direct regression guard against the OQ-009 drift: if anyone later reintroduces contamination, this test fails.
 
 ### Existing tests
 
@@ -129,10 +130,11 @@ No existing test should break. The `test/discovery-shared.test.mjs` "reserves a 
 
 After implementation:
 
-1. Clear any stale `.pp-cache` discovery entries keyed under the old cohort-injection path.
-2. Run `problem:explore` against the existing `eventbear-worker` problems and verify the captured queries are verbatim problem phrases.
-3. Spot-check at least one real run's candidate list: it should contain repos from diverse domains, with ranking reflecting project context (not the query).
-4. Update `OPEN_QUESTION.md`: mark OQ-009 as `settled_now` in the handoff notes, remove from active questions.
+1. Run `problem:explore` against an existing `eventbear-worker` problem and verify via logs that the queries hitting GitHub are verbatim problem phrases (no project anchor).
+2. Spot-check the candidate list: it should contain repos from diverse domains, with the ranking layer reflecting project context rather than the query.
+3. Update `OPEN_QUESTION.md`: mark OQ-009 as `settled_now` in the handoff notes, remove from active questions.
+
+No cache invalidation is needed — query strings change structurally, so new entries do not collide with stale ones.
 
 ## Follow-ups tracked as open questions
 
