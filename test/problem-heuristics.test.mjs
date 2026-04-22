@@ -2,7 +2,11 @@ import { describe, test } from "node:test";
 import assert from "node:assert/strict";
 import {
   expandTechAliases,
-  normalizeSearchTerms
+  normalizeSearchTerms,
+  lintGenericPhrases,
+  lintSingleWords,
+  lintLongPhrases,
+  lintDuplicates
 } from "../lib/problem/heuristics.mjs";
 
 describe("expandTechAliases", () => {
@@ -59,5 +63,77 @@ describe("normalizeSearchTerms", () => {
 
   test("handles missing input", () => {
     assert.deepEqual(normalizeSearchTerms(undefined), []);
+  });
+});
+
+describe("lintGenericPhrases", () => {
+  test("flags known generic phrases", () => {
+    const warnings = lintGenericPhrases(["web scraper", "self-healing scraper"]);
+    assert.equal(warnings.length, 1);
+    assert.ok(warnings[0].includes("web scraper"));
+    assert.ok(warnings[0].toLowerCase().includes("generic"));
+  });
+
+  test("case-insensitive match", () => {
+    const warnings = lintGenericPhrases(["WEB SCRAPER"]);
+    assert.equal(warnings.length, 1);
+  });
+
+  test("returns empty for clean input", () => {
+    assert.deepEqual(lintGenericPhrases(["schema inference crawler"]), []);
+  });
+
+  test("handles missing input", () => {
+    assert.deepEqual(lintGenericPhrases(undefined), []);
+  });
+});
+
+describe("lintSingleWords", () => {
+  test("flags single-word phrases", () => {
+    const warnings = lintSingleWords(["scraper", "self-healing scraper"]);
+    assert.equal(warnings.length, 1);
+    assert.ok(warnings[0].includes("scraper"));
+    assert.ok(warnings[0].toLowerCase().includes("single word"));
+  });
+
+  test("handles extra whitespace", () => {
+    assert.equal(lintSingleWords(["  scraper  "]).length, 1);
+  });
+
+  test("does not flag multi-word", () => {
+    assert.deepEqual(lintSingleWords(["self-healing scraper"]), []);
+  });
+});
+
+describe("lintLongPhrases", () => {
+  test("flags phrases with more than 5 whitespace-separated tokens", () => {
+    const warnings = lintLongPhrases(["one two three four five six"]);
+    assert.equal(warnings.length, 1);
+    assert.ok(warnings[0].match(/\d+\s*words/));
+  });
+
+  test("does not flag exactly 5 words (boundary)", () => {
+    assert.deepEqual(lintLongPhrases(["one two three four five"]), []);
+  });
+
+  test("does not flag short phrases", () => {
+    assert.deepEqual(lintLongPhrases(["two words", "three word phrase"]), []);
+  });
+});
+
+describe("lintDuplicates", () => {
+  test("flags case-insensitive duplicates", () => {
+    const warnings = lintDuplicates(["foo", "FOO"]);
+    assert.equal(warnings.length, 1);
+    assert.ok(warnings[0].toLowerCase().includes("duplicate"));
+  });
+
+  test("returns empty for unique list", () => {
+    assert.deepEqual(lintDuplicates(["foo", "bar"]), []);
+  });
+
+  test("handles whitespace-only-difference duplicates", () => {
+    const warnings = lintDuplicates(["foo", "  foo  "]);
+    assert.equal(warnings.length, 1);
   });
 });
