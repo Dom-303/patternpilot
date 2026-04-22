@@ -39,6 +39,21 @@ test("buildHeuristicBrief renders markdown with landscape signals and next step"
   assert.match(markdown, /npm run intake/);
 });
 
+test("buildHeuristicBrief inserts LLM narrative when augmentation provided", () => {
+  const problem = { slug: "x", title: "T", project: "app", fields: { description: "D" }, derived: { constraint_tags: [] } };
+  const landscape = {
+    run_id: "r",
+    clusters: [{ key: "c1", label: "virt", relation: "near_current_approach", signature_contrast: [], member_ids: ["a"], pattern_family: "v" }],
+    relation_counts: { near_current_approach: 1, adjacent: 0, divergent: 0 },
+    landscape_signal: "ok"
+  };
+  const aug = { c1: { narrative: "Clever narrative here.", strengths_weaknesses_raw: "STRENGTHS:\n- s1" } };
+  const md = buildHeuristicBrief({ problem, landscape, topRepoByCluster: {}, llmAugmentation: aug });
+  assert.match(md, /Clever narrative here\./);
+  assert.match(md, /KI-Ergänzung/);
+  assert.match(md, /llm_augmentation: true/);
+});
+
 test("buildHeuristicBrief shortens description to 200 chars for the 1-sentence header", () => {
   const longText = "x".repeat(500);
   const brief = buildHeuristicBrief({
