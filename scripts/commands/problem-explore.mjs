@@ -4,11 +4,89 @@ import { buildLandscape } from "../../lib/clustering/landscape.mjs";
 import { extractRepoKeywords } from "../../lib/clustering/keywords.mjs";
 import { refreshProblemJson, readProblem, updateProblemPointer } from "../../lib/problem/store.mjs";
 import { resolveLandscapeDir } from "../../lib/problem/paths.mjs";
+import { resolveDiscoveryProfile } from "../../lib/constants.mjs";
+import {
+  buildProblemQueryFamily,
+  splitBudget
+} from "../../lib/discovery/problem-queries.mjs";
+import { applyHardConstraints, applySoftBoost } from "../../lib/discovery/problem-constraints.mjs";
+import { problemFit as computeProblemFit, combinedScore } from "../../lib/discovery/problem-ranking.mjs";
+import { selectWithDiversity } from "../../lib/discovery/problem-diversity.mjs";
+import { runDiscoveryPass } from "../../lib/discovery/pass.mjs";
 
-async function loadCandidateRepos({ rootDir, projectKey, slug, skipDiscovery }) {
-  if (skipDiscovery) return [];
-  // Task 26 will wire real discovery here
-  return [];
+async function loadCandidateRepos({ rootDir, config, projectKey, slug, problem, skipDiscovery, options }) {
+  if (skipDiscovery) {
+    return { repos: [], note: "skip_discovery" };
+  }
+
+  const depth = options.depth ?? "standard";
+  const profile = resolveDiscoveryProfile(depth);
+  const totalBudget = profile.limit;
+  const standalone = !projectKey;
+  const split = splitBudget({ totalBudget, standalone });
+
+  const problemQueries = buildProblemQueryFamily({
+    seeds: problem.derived.query_seeds ?? [],
+    budget: split.problem
+  });
+
+  // TODO: add cross-family queries when project seeds are loaded
+  const queries = problemQueries;
+
+  if (queries.length === 0) {
+    return { repos: [], note: "problem_query_family: empty(reason: no_seeds)" };
+  }
+
+  const passResult = await runDiscoveryPass({
+    rootDir,
+    config,
+    projectKey,
+    queries,
+    depth,
+    standalone
+  });
+
+  if (passResult.error) {
+    console.warn(`[problem:explore] discovery pass warning: ${passResult.error}`);
+    return { repos: [], note: passResult.error };
+  }
+
+  const rawRepos = passResult.repos ?? [];
+
+  // Attach keywords to each repo so the primitives can consume them
+  const withKeywords = rawRepos.map((repo) => ({
+    ...repo,
+    keywords: extractRepoKeywords(repo)
+  }));
+
+  // Apply hard constraints (e.g. license filters)
+  const filtered = applyHardConstraints(withKeywords, problem.derived.constraint_tags ?? []);
+
+  // Score each filtered repo
+  const problemTokens = problem.derived.query_seeds ?? [];
+  const techTags = problem.derived.tech_tags ?? [];
+  const scored = filtered.map((repo) => {
+    const pFit = computeProblemFit(repo, problemTokens);
+    const boosted = applySoftBoost({ ...repo, score: 0 }, techTags);
+    const score = combinedScore({ problemFit: pFit, standalone: true }) + (boosted.score - 0);
+    return { ...repo, problemFit: pFit, score };
+  });
+
+  const windowSize = Math.min(20, totalBudget);
+  const selection = selectWithDiversity({
+    repos: scored,
+    signature: problem.derived.approach_signature ?? [],
+    windowSize,
+    divergenceThreshold: 0.3,
+    minProblemFit: 0.4
+  });
+
+  return {
+    repos: selection.selected,
+    selectedByScore: selection.selectedByScore,
+    selectedByDivergence: selection.selectedByDivergence,
+    diversity_gap: selection.diversity_gap
+  };
 }
 
 export async function runProblemExplore(rootDir, config, options) {
@@ -25,7 +103,16 @@ export async function runProblemExplore(rootDir, config, options) {
   await refreshProblemJson({ rootDir, projectKey: project, slug });
   const problem = await readProblem({ rootDir, projectKey: project, slug });
 
-  const rawRepos = await loadCandidateRepos({ rootDir, projectKey: project, slug, skipDiscovery });
+  const discoveryResult = await loadCandidateRepos({
+    rootDir,
+    config,
+    projectKey: project,
+    slug,
+    problem,
+    skipDiscovery,
+    options
+  });
+  const rawRepos = discoveryResult.repos ?? [];
 
   if (rawRepos.length === 0) {
     await updateProblemPointer({ rootDir, projectKey: project, slug, lastExploreResult: "no_candidates" });
@@ -33,7 +120,12 @@ export async function runProblemExplore(rootDir, config, options) {
     return;
   }
 
-  const reposWithKeywords = rawRepos.map((repo) => ({ ...repo, keywords: extractRepoKeywords(repo) }));
+  // repos from loadCandidateRepos already carry keywords; re-extract for the
+  // skipDiscovery path where rawRepos may come from external callers without them.
+  const reposWithKeywords = rawRepos.map((repo) => ({
+    ...repo,
+    keywords: repo.keywords instanceof Set ? repo.keywords : extractRepoKeywords(repo)
+  }));
 
   const landscape = buildLandscape({
     repos: reposWithKeywords,
@@ -74,7 +166,13 @@ export async function runProblemExplore(rootDir, config, options) {
       return counts;
     })(),
     landscape_signal: landscape.landscape_signal ?? null,
-    axis_view: landscape.axis_view ?? null
+    axis_view: landscape.axis_view ?? null,
+    selection: {
+      by_score: discoveryResult.selectedByScore ?? null,
+      by_divergence: discoveryResult.selectedByDivergence ?? null,
+      diversity_gap: discoveryResult.diversity_gap ?? null,
+      note: discoveryResult.note ?? null
+    }
   };
 
   await fs.writeFile(path.join(landscapeDir, "landscape.json"), `${JSON.stringify(output, null, 2)}\n`);
