@@ -32,8 +32,107 @@ describe("buildBrowserLinkTarget", () => {
   });
 });
 
+describe("pushBrowserLink", () => {
+  test("writes structured markdown + sidecar state on first entry", async () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "patternpilot-browser-link-"));
+    const browserLinkPath = path.join(rootDir, "browser-link");
+    try {
+      await pushBrowserLink(browserLinkPath, {
+        section: "problem-explore",
+        key: "virt-list",
+        label: "virt-list",
+        href: "\\\\wsl.localhost\\Ubuntu-24.04\\a\\landscape.html"
+      });
+      const md = fs.readFileSync(browserLinkPath, "utf8");
+      assert.ok(md.startsWith("# Pattern Pilot — Browser Links"));
+      assert.ok(md.includes("## Problem-Mode Landscapes"));
+      assert.ok(md.includes("**virt-list**"));
+      assert.ok(md.includes("\\\\wsl.localhost\\Ubuntu-24.04\\a\\landscape.html"));
+
+      const state = JSON.parse(fs.readFileSync(`${browserLinkPath}.state.json`, "utf8"));
+      assert.ok(state.sections["problem-explore"]["virt-list"].href.includes("landscape.html"));
+    } finally {
+      fs.rmSync(rootDir, { recursive: true, force: true });
+    }
+  });
+
+  test("upsert replaces the entry for the same (section, key) instead of appending", async () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "patternpilot-browser-link-"));
+    const browserLinkPath = path.join(rootDir, "browser-link");
+    try {
+      await pushBrowserLink(browserLinkPath, {
+        section: "problem-explore",
+        key: "p1",
+        href: "HREF_V1"
+      });
+      await pushBrowserLink(browserLinkPath, {
+        section: "problem-explore",
+        key: "p1",
+        href: "HREF_V2"
+      });
+      const md = fs.readFileSync(browserLinkPath, "utf8");
+      assert.ok(md.includes("HREF_V2"), "new href appears");
+      assert.ok(!md.includes("HREF_V1"), "old href is replaced, not retained");
+
+      const state = JSON.parse(fs.readFileSync(`${browserLinkPath}.state.json`, "utf8"));
+      const entries = state.sections["problem-explore"];
+      assert.equal(Object.keys(entries).length, 1, "still one entry under key p1");
+      assert.equal(entries.p1.href, "HREF_V2");
+    } finally {
+      fs.rmSync(rootDir, { recursive: true, force: true });
+    }
+  });
+
+  test("groups multiple entries across sections with stable alphabetical order", async () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "patternpilot-browser-link-"));
+    const browserLinkPath = path.join(rootDir, "browser-link");
+    try {
+      await pushBrowserLink(browserLinkPath, {
+        section: "problem-explore",
+        key: "zebra-problem",
+        href: "HREF_Z"
+      });
+      await pushBrowserLink(browserLinkPath, {
+        section: "problem-explore",
+        key: "alpha-problem",
+        href: "HREF_A"
+      });
+      await pushBrowserLink(browserLinkPath, {
+        section: "review",
+        key: "latest",
+        label: "Latest review",
+        href: "HREF_REVIEW"
+      });
+      const md = fs.readFileSync(browserLinkPath, "utf8");
+
+      const landscapesIdx = md.indexOf("## Problem-Mode Landscapes");
+      const reviewsIdx = md.indexOf("## Latest Review Reports");
+      assert.ok(landscapesIdx >= 0 && reviewsIdx >= 0, "both sections rendered");
+
+      // alpha before zebra inside the problem-explore section
+      const alphaIdx = md.indexOf("alpha-problem");
+      const zebraIdx = md.indexOf("zebra-problem");
+      assert.ok(alphaIdx >= 0 && zebraIdx > alphaIdx, "entries sorted alphabetically");
+    } finally {
+      fs.rmSync(rootDir, { recursive: true, force: true });
+    }
+  });
+
+  test("rejects malformed entries", async () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "patternpilot-browser-link-"));
+    const browserLinkPath = path.join(rootDir, "browser-link");
+    try {
+      await assert.rejects(() => pushBrowserLink(browserLinkPath, "plain-string"));
+      await assert.rejects(() => pushBrowserLink(browserLinkPath, { section: "x", key: "y" }));
+      await assert.rejects(() => pushBrowserLink(browserLinkPath, { section: "", key: "y", href: "H" }));
+    } finally {
+      fs.rmSync(rootDir, { recursive: true, force: true });
+    }
+  });
+});
+
 describe("writeLatestReportPointers", () => {
-  test("writes browser-link, latest-report metadata, and agent handoff artifacts", async () => {
+  test("writes browser-link (structured md), latest-report metadata, and agent handoff artifacts", async () => {
     const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "patternpilot-report-output-"));
     const reportPath = path.join(rootDir, "projects/demo/reports/patternpilot-report-demo-2026-04-14-on-demand.html");
     fs.mkdirSync(path.dirname(reportPath), { recursive: true });
@@ -69,11 +168,15 @@ describe("writeLatestReportPointers", () => {
         dryRun: false
       });
 
-      const browserLinkContent = fs.readFileSync(out.browserLinkPath, "utf8").trim();
+      const browserLinkContent = fs.readFileSync(out.browserLinkPath, "utf8");
+      assert.ok(browserLinkContent.startsWith("# Pattern Pilot — Browser Links"));
+      assert.ok(browserLinkContent.includes("## Latest Review Reports"));
+      assert.ok(browserLinkContent.includes("**Latest review**"));
+      assert.ok(browserLinkContent.includes(out.browserLink));
+
       const latestReport = JSON.parse(fs.readFileSync(out.latestReportPath, "utf8"));
       const agentHandoff = JSON.parse(fs.readFileSync(out.agentHandoffPath, "utf8"));
 
-      assert.equal(browserLinkContent, out.browserLink);
       assert.equal(latestReport.projectKey, "demo");
       assert.equal(latestReport.command, "on-demand");
       assert.equal(latestReport.reportKind, "review");
@@ -93,37 +196,6 @@ describe("writeLatestReportPointers", () => {
           nextStep: "Gezielt pruefen."
         }
       ]);
-    } finally {
-      fs.rmSync(rootDir, { recursive: true, force: true });
-    }
-  });
-});
-
-describe("pushBrowserLink", () => {
-  test("creates file on first call, prepends on second, dedupes and caps", async () => {
-    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "patternpilot-browser-link-"));
-    const browserLinkPath = path.join(rootDir, "browser-link");
-
-    try {
-      await pushBrowserLink(browserLinkPath, "LINK_A");
-      assert.equal(fs.readFileSync(browserLinkPath, "utf8"), "LINK_A\n");
-
-      await pushBrowserLink(browserLinkPath, "LINK_B");
-      assert.equal(fs.readFileSync(browserLinkPath, "utf8"), "LINK_B\nLINK_A\n", "newest on top");
-
-      await pushBrowserLink(browserLinkPath, "LINK_A");
-      assert.equal(
-        fs.readFileSync(browserLinkPath, "utf8"),
-        "LINK_A\nLINK_B\n",
-        "repeat move-to-top, no duplicate"
-      );
-
-      for (let i = 0; i < 25; i += 1) {
-        await pushBrowserLink(browserLinkPath, `LINK_${i}`, { maxLines: 5 });
-      }
-      const lines = fs.readFileSync(browserLinkPath, "utf8").trim().split("\n");
-      assert.equal(lines.length, 5, "cap holds");
-      assert.equal(lines[0], "LINK_24", "newest first");
     } finally {
       fs.rmSync(rootDir, { recursive: true, force: true });
     }

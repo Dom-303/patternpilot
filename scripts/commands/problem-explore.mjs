@@ -229,7 +229,12 @@ export async function runProblemExplore(rootDir, config, options) {
       await fs.mkdir(reportRoot, { recursive: true });
       await pushBrowserLink(
         path.join(reportRoot, "browser-link"),
-        buildBrowserLinkTarget(path.resolve(landscapeHtmlPath))
+        {
+          section: "problem-explore",
+          key: slug,
+          label: slug,
+          href: buildBrowserLinkTarget(path.resolve(landscapeHtmlPath))
+        }
       );
     } catch (error) {
       console.warn(`[problem-explore] could not update browser-link: ${error.message}`);
