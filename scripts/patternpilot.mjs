@@ -177,6 +177,8 @@ import { runDiscoveryEvaluate } from "./commands/discovery-evaluation.mjs";
 import { runProblemCreate } from "./commands/problem-create.mjs";
 import { runProblemRefresh } from "./commands/problem-refresh.mjs";
 import { runProblemList } from "./commands/problem-list.mjs";
+import { runProblemResolve } from "./commands/problem-resolve.mjs";
+import { runProblemArchive } from "./commands/problem-archive.mjs";
 
 function printHelp() {
   console.log(renderPatternpilotHelp());
@@ -202,7 +204,9 @@ const COMMANDS_ALLOWED_WITHOUT_PROJECT = new Set([
   "discover-evaluate",
   "problem-create",
   "problem-refresh",
-  "problem-list"
+  "problem-list",
+  "problem-resolve",
+  "problem-archive"
 ]);
 
 function buildCommandHandlers(envFiles) {
@@ -363,7 +367,9 @@ function buildCommandHandlers(envFiles) {
     runPromote,
     runProblemCreate,
     runProblemRefresh,
-    runProblemList
+    runProblemList,
+    runProblemResolve,
+    runProblemArchive
   };
 }
 
