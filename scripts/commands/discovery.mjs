@@ -49,6 +49,7 @@ import {
   writeDiscoverySeedMemorySnapshot
 } from "../../lib/discovery/feedback.mjs";
 import { refreshContext } from "../shared/runtime-helpers.mjs";
+import { addProblemBackref } from "../../lib/problem/intake-backref.mjs";
 
 function buildIntakeCommandGuidance(projectKey, items = []) {
   const commands = buildGoldenPathCommands(projectKey);
@@ -250,7 +251,7 @@ export async function runIntake(rootDir, config, options) {
       await upsertQueueEntry(rootDir, config, queueEntry);
     }
 
-    const intakeDoc = renderIntakeDoc({
+    let intakeDoc = renderIntakeDoc({
       repo,
       guess,
       enrichment,
@@ -264,6 +265,9 @@ export async function runIntake(rootDir, config, options) {
       notes: options.notes,
       candidate: decisionFields
     });
+    if (options.problem) {
+      intakeDoc = addProblemBackref(intakeDoc, options.problem);
+    }
     const docWrite = await writeIntakeDoc({
       intakeDocPath,
       content: intakeDoc,

@@ -645,4 +645,43 @@ describe("buildDiscoveryPlan", () => {
       false
     );
   });
+
+  test("reserves a slot for injected priorityCohort queries even at focused budget", () => {
+    const binding = {
+      projectKey: "sample-project",
+      projectLabel: "Sample Project",
+      discoveryHints: ["events", "calendar", "scraper", "venue", "connector"]
+    };
+    const alignmentRules = {
+      capabilities: [
+        { id: "source_first", label: "source-first", signals: ["source systems", "connector"] },
+        { id: "candidate_first", label: "candidate-first", signals: ["candidate", "listing"] },
+        { id: "evidence_acquisition", label: "evidence acquisition", signals: ["scraper", "crawler"] },
+        { id: "quality_governance", label: "quality and governance", signals: ["quality", "review"] },
+        { id: "location_intelligence", label: "location intelligence", signals: ["venue", "location"] },
+        { id: "distribution_surfaces", label: "distribution surfaces", signals: ["feed", "plugin"] }
+      ]
+    };
+
+    const plan = buildDiscoveryPlan(binding, alignmentRules, { corpus: "" }, {
+      discoveryProfile: "focused",
+      discoverySeeds: {
+        priorityCohorts: [
+          {
+            id: "problem-mode-queries",
+            label: "Problem discovery",
+            signals: ["virtualized list", "react window", "infinite scroll"],
+            boundarySignals: [],
+            why: "problem:explore injected query seeds"
+          }
+        ]
+      }
+    });
+
+    const cohortPlan = plan.plans.find((item) => item.id === "seed-cohort-problem-mode-queries");
+    assert.ok(
+      cohortPlan,
+      `expected seed-cohort-problem-mode-queries in plans, got: ${plan.plans.map((p) => p.id).join(", ")}`
+    );
+  });
 });

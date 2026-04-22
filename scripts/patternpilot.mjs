@@ -174,6 +174,13 @@ import { runPromote } from "./commands/promotion.mjs";
 import { runProductReadiness } from "./commands/product-readiness.mjs";
 import { runValidateCohort } from "./commands/validation-cohort.mjs";
 import { runDiscoveryEvaluate } from "./commands/discovery-evaluation.mjs";
+import { runProblemCreate } from "./commands/problem-create.mjs";
+import { runProblemRefresh } from "./commands/problem-refresh.mjs";
+import { runProblemList } from "./commands/problem-list.mjs";
+import { runProblemResolve } from "./commands/problem-resolve.mjs";
+import { runProblemArchive } from "./commands/problem-archive.mjs";
+import { runProblemExplore } from "./commands/problem-explore.mjs";
+import { runProblemBrief } from "./commands/problem-brief.mjs";
 
 function printHelp() {
   console.log(renderPatternpilotHelp());
@@ -196,7 +203,14 @@ const COMMANDS_ALLOWED_WITHOUT_PROJECT = new Set([
   "automation-dispatch-history",
   "automation-reviews",
   "validate-cohort",
-  "discover-evaluate"
+  "discover-evaluate",
+  "problem-create",
+  "problem-refresh",
+  "problem-list",
+  "problem-resolve",
+  "problem-archive",
+  "problem-explore",
+  "problem-brief"
 ]);
 
 function buildCommandHandlers(envFiles) {
@@ -354,7 +368,14 @@ function buildCommandHandlers(envFiles) {
     runSyncAllWatchlists,
     printProjectList,
     runShowProject,
-    runPromote
+    runPromote,
+    runProblemCreate,
+    runProblemRefresh,
+    runProblemList,
+    runProblemResolve,
+    runProblemArchive,
+    runProblemExplore,
+    runProblemBrief
   };
 }
 

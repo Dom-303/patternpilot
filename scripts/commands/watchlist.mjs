@@ -28,6 +28,8 @@ import {
 import { computeRulesFingerprint } from "../../lib/classification/evaluation.mjs";
 import { refreshContext } from "../shared/runtime-helpers.mjs";
 import { runIntake } from "./discovery.mjs";
+import { readProblem } from "../../lib/problem/store.mjs";
+import { applySoftBoost } from "../../lib/discovery/problem-constraints.mjs";
 
 function buildReviewReportPath(rootDir, binding, review, outputSlug) {
   const reportFilename = outputSlug
@@ -119,6 +121,26 @@ export async function runReviewWatchlist(rootDir, config, options) {
     projectProfile,
     options
   );
+
+  let problemForFilter = null;
+  if (options.problem) {
+    try {
+      problemForFilter = await readProblem({ rootDir, projectKey: binding.projectKey, slug: options.problem });
+    } catch {
+      // problem artifact not found — skip soft boost, continue normally
+    }
+  }
+  if (problemForFilter) {
+    const techTags = problemForFilter.derived?.tech_tags ?? [];
+    for (let idx = 0; idx < review.items.length; idx++) {
+      review.items[idx] = applySoftBoost(review.items[idx], techTags);
+    }
+    review.items.sort((left, right) => right.reviewScore - left.reviewScore);
+    review.problemSlug = options.problem;
+  } else if (options.problem) {
+    review.problemSlug = options.problem;
+  }
+
   const createdAt = review.createdAt;
   const runId = createRunId(new Date(createdAt));
   const report = buildWatchlistReviewReport(review);
@@ -179,6 +201,9 @@ export async function runReviewWatchlist(rootDir, config, options) {
   });
 
   console.log(report);
+  if (review.problemSlug) {
+    console.log(`Problem context: ${review.problemSlug}`);
+  }
   console.log(`Run directory: ${path.relative(rootDir, runDir)}`);
   console.log(`Review report: ${reportRelativePath}`);
   console.log(`HTML report: ${htmlReportRelativePath}`);

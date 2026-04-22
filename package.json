@@ -170,6 +170,13 @@
     "sync:watchlist": "node scripts/patternpilot.mjs sync-watchlist",
     "promote": "node scripts/patternpilot.mjs promote",
     "show:project": "node scripts/patternpilot.mjs show-project",
-    "list:projects": "node scripts/patternpilot.mjs list-projects"
+    "list:projects": "node scripts/patternpilot.mjs list-projects",
+    "problem:create": "node scripts/patternpilot.mjs problem-create",
+    "problem:refresh": "node scripts/patternpilot.mjs problem-refresh",
+    "problem:list": "node scripts/patternpilot.mjs problem-list",
+    "problem:resolve": "node scripts/patternpilot.mjs problem-resolve",
+    "problem:archive": "node scripts/patternpilot.mjs problem-archive",
+    "problem:explore": "node scripts/patternpilot.mjs problem-explore",
+    "problem:brief": "node scripts/patternpilot.mjs problem-brief"
   }
 }

@@ -1,0 +1,15 @@
+{
+  "virtualization": ["virtualisation", "windowing"],
+  "pagination": ["paging"],
+  "infinite-scroll": ["infinite-scrolling", "endless-scroll"],
+  "fuzzy-match": ["approximate-match", "fuzzy-matching"],
+  "hydration": ["hydrate"],
+  "memoization": ["memoisation", "memoize"],
+  "debounce": ["debouncing"],
+  "throttle": ["throttling"],
+  "lazy-load": ["lazy-loading", "deferred-load"],
+  "server-side-rendering": ["ssr"],
+  "client-side-rendering": ["csr"],
+  "dedupe": ["deduplication", "deduplicate"],
+  "rate-limit": ["rate-limiting", "throttling"]
+}

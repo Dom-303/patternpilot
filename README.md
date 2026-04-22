@@ -176,6 +176,12 @@ Wichtig:
   Faellt die breite Fremdprojekt-Welle ueber die eingebaute Referenzkohorte.
 - `npm run patternpilot -- product-readiness`
   Zeigt, wie nah dein lokaler Setup an einem belastbaren Betriebszustand ist.
+- `npm run problem:create -- --project my-project --title "..."`
+  Legt ein problem.md-Artefakt an. Ohne `--project` als standalone-Problem unter `state/standalone-problems/`.
+- `npm run problem:explore -- <slug>`
+  Startet den Kettenlauf: targeted discovery -> clustering -> Solution Landscape + Brief.
+- `npm run problem:list`
+  Listet alle aktiven Probleme mit letzter Landscape-Referenz.
 
 
 ## Fuer Fortgeschrittene Nutzer
