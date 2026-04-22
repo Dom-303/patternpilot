@@ -174,6 +174,7 @@ import { runPromote } from "./commands/promotion.mjs";
 import { runProductReadiness } from "./commands/product-readiness.mjs";
 import { runValidateCohort } from "./commands/validation-cohort.mjs";
 import { runDiscoveryEvaluate } from "./commands/discovery-evaluation.mjs";
+import { runProblemCreate } from "./commands/problem-create.mjs";
 
 function printHelp() {
   console.log(renderPatternpilotHelp());
@@ -196,7 +197,8 @@ const COMMANDS_ALLOWED_WITHOUT_PROJECT = new Set([
   "automation-dispatch-history",
   "automation-reviews",
   "validate-cohort",
-  "discover-evaluate"
+  "discover-evaluate",
+  "problem-create"
 ]);
 
 function buildCommandHandlers(envFiles) {
@@ -354,7 +356,8 @@ function buildCommandHandlers(envFiles) {
     runSyncAllWatchlists,
     printProjectList,
     runShowProject,
-    runPromote
+    runPromote,
+    runProblemCreate
   };
 }
 

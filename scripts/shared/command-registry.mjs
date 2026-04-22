@@ -148,7 +148,8 @@ const COMMANDS = [
   { name: "show-project", description: "Show the binding and reference context for a project", handlerKey: "runShowProject" },
   { name: "automation-alerts", description: "Show blocked/backoff automation jobs and recommended next action", handlerKey: "runAutomationAlerts" },
   { name: "automation-job-ack", description: "Acknowledge a latched dispatch escalation for a named automation job", handlerKey: "runAutomationJobAck" },
-  { name: "automation-job-clear", description: "Clear scheduler state for a named automation job", handlerKey: "runAutomationJobClear" }
+  { name: "automation-job-clear", description: "Clear scheduler state for a named automation job", handlerKey: "runAutomationJobClear" },
+  { name: "problem-create", description: "Create a new problem artifact (project-bound or standalone)", handlerKey: "runProblemCreate" }
 ];
 
 const COMMAND_MAP = new Map(COMMANDS.map((command) => [command.name, command]));

@@ -170,6 +170,7 @@
     "sync:watchlist": "node scripts/patternpilot.mjs sync-watchlist",
     "promote": "node scripts/patternpilot.mjs promote",
     "show:project": "node scripts/patternpilot.mjs show-project",
-    "list:projects": "node scripts/patternpilot.mjs list-projects"
+    "list:projects": "node scripts/patternpilot.mjs list-projects",
+    "problem:create": "node scripts/patternpilot.mjs problem-create"
   }
 }
