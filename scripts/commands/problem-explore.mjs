@@ -215,7 +215,26 @@ export async function runProblemExplore(rootDir, config, options) {
   // Write landscape.html
   const { renderLandscapeHtml } = await import("../../lib/landscape/html-report.mjs");
   const html = renderLandscapeHtml({ problem, landscape: output, runId });
-  await fs.writeFile(path.join(landscapeDir, "landscape.html"), html);
+  const landscapeHtmlPath = path.join(landscapeDir, "landscape.html");
+  await fs.writeFile(landscapeHtmlPath, html);
+
+  if (project) {
+    const {
+      buildBrowserLinkTarget,
+      pushBrowserLink,
+      resolveProjectReportRoot
+    } = await import("../../lib/report-output.mjs");
+    const reportRoot = resolveProjectReportRoot(rootDir, project);
+    try {
+      await fs.mkdir(reportRoot, { recursive: true });
+      await pushBrowserLink(
+        path.join(reportRoot, "browser-link"),
+        buildBrowserLinkTarget(path.resolve(landscapeHtmlPath))
+      );
+    } catch (error) {
+      console.warn(`[problem-explore] could not update browser-link: ${error.message}`);
+    }
+  }
 
   // Write clusters.csv
   const csvLines = ["label,pattern_family,main_layer,relation,member_count,signature_contrast"];

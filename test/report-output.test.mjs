@@ -6,6 +6,7 @@ import os from "node:os";
 
 import {
   buildBrowserLinkTarget,
+  pushBrowserLink,
   writeLatestReportPointers
 } from "../lib/report-output.mjs";
 
@@ -92,6 +93,37 @@ describe("writeLatestReportPointers", () => {
           nextStep: "Gezielt pruefen."
         }
       ]);
+    } finally {
+      fs.rmSync(rootDir, { recursive: true, force: true });
+    }
+  });
+});
+
+describe("pushBrowserLink", () => {
+  test("creates file on first call, prepends on second, dedupes and caps", async () => {
+    const rootDir = fs.mkdtempSync(path.join(os.tmpdir(), "patternpilot-browser-link-"));
+    const browserLinkPath = path.join(rootDir, "browser-link");
+
+    try {
+      await pushBrowserLink(browserLinkPath, "LINK_A");
+      assert.equal(fs.readFileSync(browserLinkPath, "utf8"), "LINK_A\n");
+
+      await pushBrowserLink(browserLinkPath, "LINK_B");
+      assert.equal(fs.readFileSync(browserLinkPath, "utf8"), "LINK_B\nLINK_A\n", "newest on top");
+
+      await pushBrowserLink(browserLinkPath, "LINK_A");
+      assert.equal(
+        fs.readFileSync(browserLinkPath, "utf8"),
+        "LINK_A\nLINK_B\n",
+        "repeat move-to-top, no duplicate"
+      );
+
+      for (let i = 0; i < 25; i += 1) {
+        await pushBrowserLink(browserLinkPath, `LINK_${i}`, { maxLines: 5 });
+      }
+      const lines = fs.readFileSync(browserLinkPath, "utf8").trim().split("\n");
+      assert.equal(lines.length, 5, "cap holds");
+      assert.equal(lines[0], "LINK_24", "newest first");
     } finally {
       fs.rmSync(rootDir, { recursive: true, force: true });
     }
