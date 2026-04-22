@@ -58,3 +58,30 @@ test("runDiscoveryPass dedupes repos surfacing via multiple phrases", async () =
     "https://github.com/foo/qux"
   ], "each repo appears exactly once");
 });
+
+test("runDiscoveryPass continues on single-phrase failure", async () => {
+  const fakeSearchFn = async (_config, plan) => {
+    if (plan.query === "flaky phrase") {
+      throw new Error("rate_limited");
+    }
+    return {
+      items: [
+        { normalizedRepoUrl: `https://github.com/ok/${plan.query.replace(/\s+/g, "-")}`, owner: "ok", name: plan.query.replace(/\s+/g, "-"), description: null, language: null, topics: [] }
+      ]
+    };
+  };
+
+  const { repos, error } = await runDiscoveryPass({
+    config: {},
+    projectKey: "eventbear-worker",
+    queries: ["good one", "flaky phrase", "good two"],
+    searchFn: fakeSearchFn
+  });
+
+  assert.equal(error, undefined, "single-phrase failure is not fatal");
+  assert.equal(repos.length, 2, "two surviving phrases produced two repos");
+  assert.deepEqual(
+    repos.map((repo) => repo.name).sort(),
+    ["good-one", "good-two"]
+  );
+});
