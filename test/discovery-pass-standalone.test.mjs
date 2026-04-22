@@ -2,6 +2,8 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { runDiscoveryPass } from "../lib/discovery/pass.mjs";
 
+const noopEnrichFn = async () => ({});
+
 test("runDiscoveryPass issues one verbatim search per problem phrase", async () => {
   const calls = [];
   const fakeSearchFn = async (_config, plan) => {
@@ -13,7 +15,8 @@ test("runDiscoveryPass issues one verbatim search per problem phrase", async () 
     config: {},
     projectKey: "eventbear-worker",
     queries: ["virtualized list", "react window", "infinite scroll"],
-    searchFn: fakeSearchFn
+    searchFn: fakeSearchFn,
+    enrichFn: noopEnrichFn
   });
 
   assert.equal(result.error, undefined, "no error expected");
@@ -48,7 +51,8 @@ test("runDiscoveryPass dedupes repos surfacing via multiple phrases", async () =
     config: {},
     projectKey: "eventbear-worker",
     queries: ["virtualized list", "react window"],
-    searchFn: fakeSearchFn
+    searchFn: fakeSearchFn,
+    enrichFn: noopEnrichFn
   });
 
   const urls = repos.map((repo) => repo.url).sort();
@@ -75,7 +79,8 @@ test("runDiscoveryPass continues on single-phrase failure", async () => {
     config: {},
     projectKey: "eventbear-worker",
     queries: ["good one", "flaky phrase", "good two"],
-    searchFn: fakeSearchFn
+    searchFn: fakeSearchFn,
+    enrichFn: noopEnrichFn
   });
 
   assert.equal(error, undefined, "single-phrase failure is not fatal");
@@ -104,7 +109,8 @@ test("runDiscoveryPass returns flat repo shape with enrichment fields nulled", a
     config: {},
     projectKey: "eventbear-worker",
     queries: ["anything"],
-    searchFn: fakeSearchFn
+    searchFn: fakeSearchFn,
+    enrichFn: noopEnrichFn
   });
 
   assert.equal(repos.length, 1);
@@ -125,7 +131,8 @@ test("runDiscoveryPass returns projectKey error when missing", async () => {
   const { repos, error } = await runDiscoveryPass({
     config: {},
     queries: ["anything"],
-    searchFn: async () => ({ items: [] })
+    searchFn: async () => ({ items: [] }),
+    enrichFn: noopEnrichFn
   });
   assert.deepEqual(repos, []);
   assert.match(error, /projectKey required/);
@@ -137,7 +144,8 @@ test("runDiscoveryPass returns empty repos on empty queries", async () => {
     config: {},
     projectKey: "eventbear-worker",
     queries: [],
-    searchFn: async () => { called = true; return { items: [] }; }
+    searchFn: async () => { called = true; return { items: [] }; },
+    enrichFn: noopEnrichFn
   });
   assert.deepEqual(repos, []);
   assert.equal(error, undefined);
