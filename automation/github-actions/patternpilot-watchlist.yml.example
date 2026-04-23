@@ -23,6 +23,6 @@ jobs:
           PATTERNPILOT_GITHUB_TOKEN: ${{ secrets.PATTERNPILOT_GITHUB_TOKEN }}
         run: npm run automation:dispatch
 
-      - name: Show automation alerts
+      - name: Publish automation alerts to GitHub summary
         if: always()
-        run: npm run automation:alerts
+        run: npm run automation:alerts -- --target github-summary

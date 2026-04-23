@@ -111,6 +111,17 @@ Die Hook-Referenz liegt unter:
 
 - `automation/hooks/README.md`
 - `docs/reference/AUTOMATION_ALERT_DELIVERY.md`
+- `docs/reference/AUTOMATION_FAILURE_RECOVERY_POLICY.md`
+
+Fuer GitHub Actions ist der MVP-Kanal jetzt bewusst:
+
+- `GITHUB_STEP_SUMMARY`
+
+Beispiel:
+
+```bash
+npm run automation:alerts -- --target github-summary
+```
 
 ## Manual Resume
 
@@ -119,6 +130,14 @@ Wenn ein Job in `blocked_manual` oder einem unerwuenschten Backoff haengen bleib
 - `automation-alerts` zeigt die betroffenen Jobs
 - `automation-job-clear --automation-job <name>` entfernt Block-/Backoff-Zustand
 - danach ist der Job ueber `automation-jobs` wieder als `ready` sichtbar
+
+Retrybare Fehler mit freigegebenem Auto-Resume brauchen dagegen keinen manuellen Clear:
+
+- `scheduler_lock` -> Cooldown und spaeter wieder `ready`
+- `rate_limit` / `429` -> Cooldown und spaeter wieder `ready`
+- `network_transient` -> Cooldown und spaeter wieder `ready`
+
+Auth- oder Projektfehler bleiben bewusst hart und landen in `blocked_manual`.
 
 ## Maintenance
 

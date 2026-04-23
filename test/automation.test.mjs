@@ -414,6 +414,7 @@ describe("automation ops helpers", () => {
 
     assert.equal(transient.retryable, true);
     assert.equal(transient.category, "rate_limit");
+    assert.equal(transient.recommendedDelayMinutes, 15);
     assert.equal(config.retryable, false);
     assert.equal(config.category, "project_config");
   });

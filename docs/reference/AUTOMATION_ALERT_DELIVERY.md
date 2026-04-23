@@ -14,6 +14,10 @@ Ohne explizite `automationAlertTargets` kann Patternpilot ausserdem ein eingebau
 
 - `automationAlertPreset: "local-operator"`
 
+Fuer GitHub Actions gibt es ausserdem ein schlankes Preset fuer den ersten Live-Kanal:
+
+- `automationAlertPreset: "github-actions-summary"`
+
 ## Payload Contract
 
 Der Alert-Payload hat aktuell diese Form:
@@ -105,6 +109,23 @@ Das baut intern ein lokales Command auf Basis von:
 }
 ```
 
+## GitHub Actions Summary Preset
+
+Wenn Alerts direkt in die sichtbare GitHub-Actions-Run-Zusammenfassung geschrieben werden sollen:
+
+```json
+{
+  "automationAlertPreset": "github-actions-summary",
+  "automationAlertTargets": []
+}
+```
+
+Oder ad hoc per CLI:
+
+```bash
+npm run automation:alerts -- --target github-summary
+```
+
 ## Delivery Priorisierung
 
 Targets koennen optional auf die berechnete `attention` reagieren:
@@ -134,3 +155,7 @@ Der Adapter bleibt produktneutral:
 - spaeter weiter nutzbar fuer GitHub App, Webhooks oder andere Kanaele
 
 So bleibt der Kern stabil, waehrend sich die Aussenkante schrittweise erweitern laesst.
+
+Die Failure-Recovery-Regeln fuer Backoff, Auto-Resume und Manual-Clear stehen unter:
+
+- [AUTOMATION_FAILURE_RECOVERY_POLICY.md](./AUTOMATION_FAILURE_RECOVERY_POLICY.md)

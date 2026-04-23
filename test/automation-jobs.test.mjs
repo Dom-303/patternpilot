@@ -177,6 +177,43 @@ describe("updateAutomationJobState", () => {
     assert.equal(updated.jobs["sample-project-apply"].operatorAckCategory, "repeated_governance_block");
     assert.equal(updated.jobs["sample-project-apply"].operatorAckSourceStatus, "governance_escalated");
   });
+
+  test("holds retryable failures manually when auto-resume is not allowed", () => {
+    const initial = {
+      schemaVersion: 1,
+      updatedAt: null,
+      jobs: {}
+    };
+
+    const failed = updateAutomationJobState(initial, {
+      jobName: "first-run-watchlist",
+      runId: "run-1",
+      createdAt: "2026-04-23T08:00:00.000Z",
+      counts: { failed: 1, completed: 0, completed_with_blocks: 0 },
+      failures: [
+        {
+          projectKey: "sample-project",
+          phase: "discover",
+          error: "GitHub API timed out",
+          retryable: true,
+          recommendedDelayMinutes: 15,
+          resumeRecommendation: {
+            strategy: "manual_resume_after_retryable_failure",
+            autoResumeAllowed: false,
+            nextAction: "Inspect discover manually before retrying the first run."
+          }
+        }
+      ]
+    });
+
+    assert.equal(failed.jobs["first-run-watchlist"].blockedManual, true);
+    assert.equal(failed.jobs["first-run-watchlist"].retryable, false);
+    assert.equal(failed.jobs["first-run-watchlist"].autoResumeAllowed, false);
+    assert.equal(failed.jobs["first-run-watchlist"].recommendedDelayMinutes, null);
+    assert.equal(failed.jobs["first-run-watchlist"].nextRetryAt, null);
+    assert.equal(failed.jobs["first-run-watchlist"].failureRecoveryMode, "manual_clear_required");
+    assert.equal(failed.jobs["first-run-watchlist"].resumeRecommendation.strategy, "manual_resume_after_retryable_failure");
+  });
 });
 
 describe("evaluateAutomationJobs", () => {
@@ -248,6 +285,32 @@ describe("evaluateAutomationJobs", () => {
 });
 
 describe("automation alerting and clear flows", () => {
+  test("emits a scheduled auto-resume alert for retryable backoff jobs", () => {
+    const alerts = buildAutomationAlerts([
+      {
+        name: "backoff-job",
+        status: "backoff",
+        jobState: {
+          lastRunAt: "2026-04-23T08:00:00.000Z",
+          nextRetryAt: "2026-04-23T08:15:00.000Z",
+          autoResumeAllowed: true,
+          resumeRecommendation: {
+            strategy: "retry_after_backoff",
+            nextAction: "Allow discover to retry after backoff."
+          }
+        }
+      }
+    ], {
+      now: new Date("2026-04-23T08:05:00.000Z")
+    });
+
+    assert.equal(alerts.length, 1);
+    assert.equal(alerts[0].category, "retry_backoff_scheduled");
+    assert.equal(alerts[0].severity, "low");
+    assert.match(alerts[0].message, /auto-resume after cooldown/i);
+    assert.match(alerts[0].message, /2026-04-23T08:15:00.000Z/);
+  });
+
   test("builds alerts for blocked and repeated retryable failures", () => {
     const evaluations = [
       {
@@ -290,12 +353,13 @@ describe("automation alerting and clear flows", () => {
       retryFailureThreshold: 2
     });
 
-    assert.equal(alerts.length, 5);
+    assert.equal(alerts.length, 6);
     assert.equal(alerts[0].category, "blocked_manual");
     assert.equal(alerts[1].category, "blocked_requalify");
     assert.equal(alerts[2].category, "extended_backoff");
     assert.equal(alerts[3].category, "repeated_retryable_failures");
     assert.equal(alerts[4].category, "drift_attention");
+    assert.equal(alerts[5].category, "retry_backoff_scheduled");
   });
 
   test("clears blocked or backoff job state for manual resume", () => {

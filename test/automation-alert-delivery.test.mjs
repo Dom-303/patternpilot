@@ -34,6 +34,17 @@ test("resolveAutomationAlertTargets expands the built-in local-operator preset",
   assert.deepEqual(targets[2].attentionSignalsAny, ["operator_review_open", "operator_attention_alert"]);
 });
 
+test("resolveAutomationAlertTargets expands the built-in github-actions-summary preset", () => {
+  const targets = resolveAutomationAlertTargets("/tmp/patternpilot", {
+    automationAlertPreset: "github-actions-summary",
+    automationAlertTargets: []
+  }, {});
+
+  assert.equal(targets.length, 1);
+  assert.equal(targets[0].type, "github-summary");
+  assert.equal(targets[0].name, "github-actions-summary");
+});
+
 test("deliverAutomationAlertPayload writes markdown to a configured file target", async () => {
   const rootDir = await fs.mkdtemp(path.join(os.tmpdir(), "patternpilot-alert-delivery-"));
   const payload = {
