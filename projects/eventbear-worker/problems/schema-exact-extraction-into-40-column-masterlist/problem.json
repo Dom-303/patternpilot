@@ -4,8 +4,8 @@
   "status": "active",
   "project": "eventbear-worker",
   "created_at": "2026-04-22",
-  "updated_at": "2026-04-22",
-  "latest_landscape": "landscape/2026-04-22T19-33-10-284Z",
+  "updated_at": "2026-04-23",
+  "latest_landscape": "landscape/2026-04-23T21-55-19-453Z",
   "last_explore_result": "ok",
   "fields": {
     "description": "Nach Crawling/Parsing heterogener Event-Quellen landen extrahierte Felder in einer Masterlist mit ~40 Spalten (title, description, start_at, end_at, street, city, venue, organizer, category, price, ...). Heute werden Felder oft falsch zugeordnet: Adresse landet in venue, Datum bleibt String, Kategorien sind nicht kanonisiert. Jede neue Quelle erzwingt manuelles Column-Mapping-Debugging. Gesucht werden Patterns für deterministisches Field-Mapping von heterogenen Inputs auf ein kanonisches Wide-Schema.",
@@ -72,13 +72,7 @@
       "ical rrule parser",
       "structured data extractor",
       "address parsing library",
-      "csv schema matcher",
-      "schema",
-      "exact",
-      "extraction",
-      "into",
-      "column",
-      "masterlist"
+      "csv schema matcher"
     ],
     "tech_tags": [
       "nodejs",

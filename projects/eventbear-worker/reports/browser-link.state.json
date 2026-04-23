@@ -1,28 +1,28 @@
 {
-  "updated_at": "2026-04-22T19:41:42.431Z",
+  "updated_at": "2026-04-23T21:55:26.545Z",
   "sections": {
     "problem-explore": {
       "self-healing-adaptive-source-intake": {
         "label": "self-healing-adaptive-source-intake",
-        "href": "\\\\wsl.localhost\\Ubuntu-24.04\\home\\domi\\eventbaer\\dev\\patternpilot\\projects\\eventbear-worker\\problems\\self-healing-adaptive-source-intake\\landscape\\2026-04-22T19-32-52-605Z\\landscape.html",
-        "updated_at": "2026-04-22T19:41:42.417Z"
+        "href": "\\\\wsl.localhost\\Ubuntu-24.04\\home\\domi\\eventbaer\\dev\\patternpilot\\projects\\eventbear-worker\\problems\\self-healing-adaptive-source-intake\\landscape\\2026-04-23T21-55-26-514Z\\landscape.html",
+        "updated_at": "2026-04-23T21:55:26.545Z"
       },
       "schema-exact-extraction-into-40-column-masterlist": {
         "label": "schema-exact-extraction-into-40-column-masterlist",
-        "href": "\\\\wsl.localhost\\Ubuntu-24.04\\home\\domi\\eventbaer\\dev\\patternpilot\\projects\\eventbear-worker\\problems\\schema-exact-extraction-into-40-column-masterlist\\landscape\\2026-04-22T19-33-10-284Z\\landscape.html",
-        "updated_at": "2026-04-22T19:41:42.419Z"
+        "href": "\\\\wsl.localhost\\Ubuntu-24.04\\home\\domi\\eventbaer\\dev\\patternpilot\\projects\\eventbear-worker\\problems\\schema-exact-extraction-into-40-column-masterlist\\landscape\\2026-04-23T21-55-19-453Z\\landscape.html",
+        "updated_at": "2026-04-23T21:55:19.486Z"
       },
       "event-deduplication-across-heterogenous-sources": {
         "label": "event-deduplication-across-heterogenous-sources",
-        "href": "\\\\wsl.localhost\\Ubuntu-24.04\\home\\domi\\eventbaer\\dev\\patternpilot\\projects\\eventbear-worker\\problems\\event-deduplication-across-heterogenous-sources\\landscape\\2026-04-22T19-33-17-008Z\\landscape.html",
-        "updated_at": "2026-04-22T19:41:42.429Z"
+        "href": "\\\\wsl.localhost\\Ubuntu-24.04\\home\\domi\\eventbaer\\dev\\patternpilot\\projects\\eventbear-worker\\problems\\event-deduplication-across-heterogenous-sources\\landscape\\2026-04-23T21-55-11-550Z\\landscape.html",
+        "updated_at": "2026-04-23T21:55:11.593Z"
       }
     },
     "review": {
       "latest": {
         "label": "Latest review",
-        "href": "\\\\wsl.localhost\\Ubuntu-24.04\\home\\domi\\eventbaer\\dev\\patternpilot\\projects\\eventbear-worker\\reports\\patternpilot-report-eventbear-worker-2026-04-22.html",
-        "updated_at": "2026-04-22T19:41:42.431Z"
+        "href": "\\\\wsl.localhost\\Ubuntu-24.04\\home\\domi\\eventbaer\\dev\\patternpilot\\projects\\eventbear-worker\\reports\\patternpilot-report-eventbear-worker-2026-04-23.html",
+        "updated_at": "2026-04-23T21:21:14.725Z"
       }
     }
   }

@@ -1,28 +1,27 @@
 {
   "schemaVersion": 1,
   "projectKey": "eventbear-worker",
-  "reportKind": "discovery",
-  "command": "policy-audit",
-  "createdAt": "2026-04-22T15:52:25.061Z",
-  "runId": "2026-04-22T15-52-25-061Z",
-  "reportPath": "projects/eventbear-worker/reports/patternpilot-report-eventbear-worker-2026-04-22.html",
+  "reportKind": "review",
+  "command": "review-watchlist",
+  "createdAt": "2026-04-23T21:21:14.700Z",
+  "runId": "2026-04-23T21-21-14-700Z",
+  "reportPath": "projects/eventbear-worker/reports/patternpilot-report-eventbear-worker-2026-04-23.html",
   "handoff": {
     "schemaVersion": 2,
     "handoffType": "patternpilot_agent_brief",
-    "reportType": "discovery",
+    "reportType": "review",
     "projectKey": "eventbear-worker",
-    "runConfidence": "medium",
-    "runConfidenceReason": "3 high-fit candidates, capability diversity 25%",
+    "runConfidence": "low",
+    "runConfidenceReason": "Only 0 candidate(s) evaluated - too few to draw a pattern",
     "mission": [
       "Arbeite nur im Kontext von eventbear-worker und leite keine generischen Entscheidungen ohne Bezug zum Zielprojekt ab.",
-      "Beginne mit citybureau/city-scrapers als staerkstem Ausgangspunkt dieses Berichts.",
-      "citybureau/city-scrapers: mittlerer Wert, mittlerer Aufwand, beobachten oder zurueckstellen",
-      "Vertrauen in den Lauf: mittel. Unsichere Stellen vor Veraenderungen manuell pruefen."
+      "Die Discovery kann fuer offene Bereiche erweitert werden: Aufnahme und Adapter, Datenmodell und Semantik, quality and governance, Ausspielung und Oberflaechen.",
+      "Vertrauen in den Lauf: niedrig. Unsichere Stellen vor Veraenderungen manuell pruefen."
     ],
     "deliverable": [
-      "Pruefe die priorisierten Repos zuerst gegen das Zielprojekt statt sie isoliert zu bewerten.",
-      "Liefere fuer die staerksten Kandidaten jeweils Schichtwert, Uebertragungswert, Hauptrisiko und naechsten sinnvollen Schritt.",
-      "Beende mit einer klaren Intake-, Review- oder Beobachtungs-Empfehlung pro Kandidat."
+      "Vergleiche die priorisierten Repos explizit mit dem Zielrepo und nicht nur untereinander.",
+      "Liefere pro Repo uebertragbares Muster, Hauptgrenze, betroffene Zielrepo-Bereiche und eine konkrete Folgeempfehlung.",
+      "Schliesse mit einer priorisierten Build-vs-Borrow-Einschaetzung fuer das Zielprojekt ab."
     ],
     "targetRepoContext": {
       "projectKey": "eventbear-worker",
@@ -71,192 +70,30 @@
       ]
     },
     "summary": {
-      "profile": "standard",
-      "scanned": 0,
-      "candidateCount": 3,
-      "queryCount": 7,
-      "cohortCount": 3,
-      "policyMode": "audit",
-      "blockedCandidates": 0,
-      "newDiscoveryCount": 2,
-      "baselineAnchorCount": 1,
-      "codingReadyCount": 1,
-      "researchMode": "zielgerichtete Pruefung mit moeglichem Prototyp",
-      "prototypeReadyRepos": [
-        "citybureau/city-scrapers"
-      ],
-      "codingStarterAvailable": true,
-      "codingStarterCount": 3
+      "reviewScope": "watchlist",
+      "candidateCount": 0,
+      "visibleTopCount": 0,
+      "missingIntakeCount": 0,
+      "context": {
+        "mainLayer": null,
+        "gapArea": null,
+        "capability": null
+      }
     },
     "guardrails": [
-      "Profil: Standard",
-      "Regelmodus: sichtbar pruefen",
-      "Vom Regelwerk markiert: 0",
-      "Suchfehler: 0",
+      "Review-Umfang: Beobachtungsliste",
+      "Fehlendes Intake: 0",
+      "Vertrauen in den Lauf: niedrig",
+      "Top-Eintraege im Bericht: 0",
       "Projekt-Guardrail: patternpilot bleibt Analyse- und Entscheidungsschicht, nicht Produktionslogik",
       "Projekt-Guardrail: externe Repos nie blind als Kernarchitektur uebernehmen",
       "Projekt-Guardrail: Distribution-, Surface- und Core-Logik bewusst getrennt halten"
     ],
     "uncertainties": [],
-    "repos": [
-      {
-        "repo": "citybureau/city-scrapers",
-        "url": "https://github.com/citybureau/city-scrapers",
-        "disposition": "intake_now",
-        "fitBand": "high",
-        "discoveryScore": 80,
-        "mainLayer": "source_intake",
-        "matchedCapabilities": [
-          "ingestion"
-        ],
-        "whyRelevant": "Treffer in Discovery-Linsen: Curated seed priority cohort.",
-        "evidence": "strong (53)",
-        "recommendedTargetAreas": [
-          "sources",
-          "lib",
-          "scripts",
-          "docs"
-        ],
-        "workMode": "gezielter Vergleich mit kleinem Prototyp moeglich",
-        "prototypeReady": true,
-        "transferablePattern": "Review and adapt the pattern into the target-project Architektur, not as direct Abhaengigkeit.",
-        "strengths": "Civic scraper family for public information and municipal-style source intake patterns. | Themen: civic, scraper, adapter, source-family, open-data | Wahrscheinlich bald entscheidungsrelevant fuer Eventbaer Worker",
-        "risks": "anfaellig bei Plattformaenderungen",
-        "nextStep": "mittlerer Wert, mittlerer Aufwand, beobachten oder zurueckstellen"
-      },
-      {
-        "repo": "City-Bureau/city-scrapers-events",
-        "url": "https://github.com/City-Bureau/city-scrapers-events",
-        "disposition": "review_queue",
-        "fitBand": "high",
-        "discoveryScore": 82,
-        "mainLayer": "location_place_enrichment",
-        "matchedCapabilities": [
-          "ingestion"
-        ],
-        "whyRelevant": "Treffer in Discovery-Linsen: Curated seed priority cohort.",
-        "evidence": "strong (54)",
-        "recommendedTargetAreas": [
-          "sources",
-          "lib",
-          "scripts",
-          "docs"
-        ],
-        "workMode": "Research zuerst, Code erst nach Vergleich mit Zielrepo",
-        "prototypeReady": false,
-        "transferablePattern": "Treat as optional supporting layer, not as system core.",
-        "strengths": "Statische Site mit einem Kalender aus gescrapten Eventdaten der City-Scrapers-Projekte. | Sprachen: JavaScript, CSS, HTML | Wahrscheinlich bald entscheidungsrelevant fuer Eventbaer Worker",
-        "risks": "anfaellig bei Plattformaenderungen",
-        "nextStep": "mittlerer Wert, mittlerer Aufwand, beobachten oder zurueckstellen"
-      },
-      {
-        "repo": "j-e-d/agenda-lumiton",
-        "url": "https://github.com/j-e-d/agenda-lumiton",
-        "disposition": "review_queue",
-        "fitBand": "high",
-        "discoveryScore": 100,
-        "mainLayer": "access_fetch",
-        "matchedCapabilities": [],
-        "whyRelevant": "Treffer in Discovery-Linsen: Curated seed reference cohort.",
-        "evidence": "strong (60)",
-        "recommendedTargetAreas": [
-          "lib",
-          "scripts",
-          "docs",
-          "sources"
-        ],
-        "workMode": "Research zuerst, Code erst nach Vergleich mit Zielrepo",
-        "prototypeReady": false,
-        "transferablePattern": "Review and adapt the pattern into the target-project Architektur, not as direct Abhaengigkeit.",
-        "strengths": "Automatisierter Scraper fuer die Lumiton-Agenda, der ICS- und CSV-Kalender erzeugt. | Themen: calendar, cine, github-scraper, vicente-lopez | Sprachen: Python",
-        "risks": "anfaellig bei Plattformaenderungen",
-        "nextStep": "mittlerer Wert, mittlerer Aufwand, beobachten oder zurueckstellen"
-      }
-    ],
-    "codingStarter": {
-      "primary": {
-        "repo": "citybureau/city-scrapers",
-        "starterMode": "compare_then_prototype",
-        "starterLabel": "Primaerer Prototyp",
-        "implementationGoal": "citybureau/city-scrapers zuerst strukturell mit dem Zielrepo vergleichen und danach nur einen kleinen Prototyp fuer die Kernschicht bauen, nicht die Fremdarchitektur uebernehmen.",
-        "firstSlice": "Pruefe in sources, lib, scripts, docs, wie citybureau/city-scrapers die Schicht Quellaufnahme loest, und skizziere danach einen minimalen Adapter- oder Intake-Prototyp fuer genau diese Stelle.",
-        "targetAreas": [
-          "sources",
-          "lib",
-          "scripts",
-          "docs"
-        ],
-        "compareChecklist": [
-          "Welche konkrete Schicht aus citybureau/city-scrapers ist fuer eventbear-worker wirklich uebertragbar?",
-          "Welche Teile gehoeren nur zur Fremdplattform und duerfen nicht in die Zielarchitektur wandern?",
-          "Welche kleinste sinnvolle Folgearbeit im Zielrepo beweist den Mustergewinn, ohne schon Produktionslogik zu ersetzen?"
-        ],
-        "stopIf": [
-          "das Muster nur ueber UI-, Dashboard- oder Surface-Code wirkt",
-          "kein sauberer Bezug auf Quellenaufnahme, Adapter oder Normalisierung sichtbar bleibt",
-          "die Folgearbeit nur durch direkte Uebernahme grosser Fremdlogik sinnvoll waere"
-        ],
-        "matchedCapabilities": [
-          "Aufnahme"
-        ]
-      },
-      "secondary": [
-        {
-          "repo": "City-Bureau/city-scrapers-events",
-          "starterMode": "support_prototype",
-          "starterLabel": "Unterstuetzender Prototyp",
-          "implementationGoal": "City-Bureau/city-scrapers-events nicht als Kern uebernehmen, sondern als unterstuetzendes Vergleichsmuster fuer eine angrenzende Schicht nutzen.",
-          "firstSlice": "Pruefe in sources, lib, scripts, docs, ob City-Bureau/city-scrapers-events fuer Orts- und Platzanreicherung ein kleines Support-Muster liefert, das den Kern ergaenzt statt ersetzt.",
-          "targetAreas": [
-            "sources",
-            "lib",
-            "scripts",
-            "docs"
-          ],
-          "compareChecklist": [
-            "Welche konkrete Schicht aus City-Bureau/city-scrapers-events ist fuer eventbear-worker wirklich uebertragbar?",
-            "Welche Teile gehoeren nur zur Fremdplattform und duerfen nicht in die Zielarchitektur wandern?",
-            "Welche kleinste sinnvolle Folgearbeit im Zielrepo beweist den Mustergewinn, ohne schon Produktionslogik zu ersetzen?"
-          ],
-          "stopIf": [
-            "das Muster nur ueber UI-, Dashboard- oder Surface-Code wirkt",
-            "kein sauberer Bezug auf Quellenaufnahme, Adapter oder Normalisierung sichtbar bleibt",
-            "die Folgearbeit nur durch direkte Uebernahme grosser Fremdlogik sinnvoll waere"
-          ],
-          "matchedCapabilities": [
-            "Aufnahme"
-          ]
-        },
-        {
-          "repo": "j-e-d/agenda-lumiton",
-          "starterMode": "support_prototype",
-          "starterLabel": "Unterstuetzender Prototyp",
-          "implementationGoal": "j-e-d/agenda-lumiton nicht als Kern uebernehmen, sondern als unterstuetzendes Vergleichsmuster fuer eine angrenzende Schicht nutzen.",
-          "firstSlice": "Pruefe in lib, scripts, docs, sources, ob j-e-d/agenda-lumiton fuer Zugriff und Abruf ein kleines Support-Muster liefert, das den Kern ergaenzt statt ersetzt.",
-          "targetAreas": [
-            "lib",
-            "scripts",
-            "docs",
-            "sources"
-          ],
-          "compareChecklist": [
-            "Welche konkrete Schicht aus j-e-d/agenda-lumiton ist fuer eventbear-worker wirklich uebertragbar?",
-            "Welche Teile gehoeren nur zur Fremdplattform und duerfen nicht in die Zielarchitektur wandern?",
-            "Welche kleinste sinnvolle Folgearbeit im Zielrepo beweist den Mustergewinn, ohne schon Produktionslogik zu ersetzen?"
-          ],
-          "stopIf": [
-            "das Muster nur ueber UI-, Dashboard- oder Surface-Code wirkt",
-            "kein sauberer Bezug auf Quellenaufnahme, Adapter oder Normalisierung sichtbar bleibt",
-            "die Folgearbeit nur durch direkte Uebernahme grosser Fremdlogik sinnvoll waere"
-          ],
-          "matchedCapabilities": []
-        }
-      ]
-    },
+    "repos": [],
+    "codingStarter": null,
     "nextSteps": [
-      "citybureau/city-scrapers: mittlerer Wert, mittlerer Aufwand, beobachten oder zurueckstellen",
-      "City-Bureau/city-scrapers-events: mittlerer Wert, mittlerer Aufwand, beobachten oder zurueckstellen",
-      "j-e-d/agenda-lumiton: mittlerer Wert, mittlerer Aufwand, beobachten oder zurueckstellen"
+      "Die Discovery kann fuer offene Bereiche erweitert werden: Aufnahme und Adapter, Datenmodell und Semantik, quality and governance, Ausspielung und Oberflaechen."
     ]
   }
 }

@@ -1,0 +1,664 @@
+{
+  "run_id": "2026-04-23T21-50-28-759Z",
+  "problem": "event-deduplication-across-heterogenous-sources",
+  "project": "eventbear-worker",
+  "generated_at": "2026-04-23T21:50:28.760Z",
+  "clusters": [
+    {
+      "key": "unknown|unknown",
+      "label": "dedupe+deduplication+python",
+      "pattern_family": "unknown",
+      "main_layer": "unknown",
+      "relation": "adjacent",
+      "signature_contrast": [
+        "python",
+        "dedupe",
+        "deduplication"
+      ],
+      "has_suggested_members": false,
+      "member_ids": [
+        "https://github.com/benzsevern/goldenmatch",
+        "https://github.com/AI-team-UoA/privJedAI",
+        "https://github.com/ShahinHasanov90/trade-record-linker",
+        "https://github.com/selmamehdi48/Arabic-Latin-Full-Name-Match",
+        "https://github.com/benzsevern/dqbench",
+        "https://github.com/pradhankukiran/entity-resolution-engine",
+        "https://github.com/AI-team-UoA/pyJedAI",
+        "https://github.com/dylantmoore/splink_stata",
+        "https://github.com/rapidfuzz/RapidFuzz",
+        "https://github.com/Tox1469/string-similarity",
+        "https://github.com/kszongic/jaro-winkler-cli",
+        "https://github.com/Anuar-boop/string-distance",
+        "https://github.com/utkuilbas/splink-linkage",
+        "https://github.com/BarneyLawrence/Sessions-Splink",
+        "https://github.com/VictorAut/liken",
+        "https://github.com/GOPAD-Datasus/JOSIF-Linkage",
+        "https://github.com/ajwinters/crosswalk",
+        "https://github.com/skate3665/Linkage",
+        "https://github.com/vincemarinelli/record_linkage",
+        "https://github.com/Medlhnin/Dedupe-Interactive-UI"
+      ]
+    }
+  ],
+  "outliers": [],
+  "relation_counts": {
+    "near_current_approach": 0,
+    "adjacent": 1,
+    "divergent": 0
+  },
+  "landscape_signal": "single_cluster_collapse",
+  "axis_view": {
+    "axes": [
+      {
+        "label": "matching_strategy: string-similarity ↔ rule-based ↔ ML-embedding",
+        "members": [
+          {
+            "id": "https://github.com/selmamehdi48/Arabic-Latin-Full-Name-Match",
+            "url": "https://github.com/selmamehdi48/Arabic-Latin-Full-Name-Match",
+            "owner": "selmamehdi48",
+            "name": "Arabic-Latin-Full-Name-Match",
+            "description": "A production-ready Python library for cross-script fuzzy name matching between Arabic and Latin (French/English) romanised Algerian names. Built for deduplication, record linkage, and identity resolution in Algerian administrative datasets.",
+            "language": "Python",
+            "topics": [
+              "arabic",
+              "latin",
+              "matching",
+              "name-matching"
+            ],
+            "readme": "Algerian Name Matcher\n\nA production-ready Python library for **cross-script fuzzy name matching** between Arabic and Latin (French/English) romanised Algerian names. Built for deduplication, record linkage, and identity resolution in Algerian administrative datasets.\n\n---\n\nThe Problem\n\nAlgerian names exist in two competing scripts with no standardised transliteration:\n\n| Arabic | Latin (French) | Latin (English) |\n|---|---|---|\n| عبد الرحمن بوزيد | Bouzid Abderrahmane | Abderrezak Bouzid |\n| هدى بن عيسى | Benaissa Houda | Houda Benaissa |\n| زين الدين مخلوفي | Zinedine Makhloufi | Zineddine Makhloufi |\n\nOff-the-shelf fuzzy matchers fail on these because they treat names as bags of characters, letting a shared surname rescue a completely wrong first name — a **collision**.\n\n---\n\nHow It Works\n\nNormalisation Pipeline\n\nEvery name, regardless of script, passes through the same pipeline and emerges as a single phonetic Latin form before scoring:\n\n \n\nScoring Algorithm\n\n \n\nProtected by two guards:\n\n**Consonant-skeleton gate** — vowels are stripped from both sides before the worst-case bidirectional match is checked. hdy and houda both reduce to hd, so the gate passes correctly even though the raw strings look very different.\n\n**Asymmetry penalty** — if the two names have different word counts after normalisation, the score is scaled down proportionally.\n\n---\n\nInstallation\n\n \n\n> camel-tools requires its data files on first use:\n>  \n\n---\n\nQuick Start\n\n \n\nSingle pair comparison\n\n \n\nNormalise a name\n\n \n\nBulk search — find best match in a database\n\n \n\n---\n\nFastAPI Integration\n\n \n\n---\n\nPu...",
+            "license": null,
+            "dependencies": [],
+            "keywords": {},
+            "problemFit": 0,
+            "score": 0.05
+          },
+          {
+            "id": "https://github.com/rapidfuzz/RapidFuzz",
+            "url": "https://github.com/rapidfuzz/RapidFuzz",
+            "owner": "rapidfuzz",
+            "name": "RapidFuzz",
+            "description": "Rapid fuzzy string matching in Python using various string metrics",
+            "language": "Python",
+            "topics": [
+              "cpp",
+              "levenshtein",
+              "levenshtein-distance",
+              "python",
+              "string-comparison",
+              "string-matching",
+              "string-similarity"
+            ],
+            "readme": "<h1 align=\"center\">\n<img src=\"https://raw.githubusercontent.com/rapidfuzz/RapidFuzz/main/docs/img/RapidFuzz.svg?sanitize=true\" alt=\"RapidFuzz\" width=\"400\">\n</h1>\n<h4 align=\"center\">Rapid fuzzy string matching in Python and C++ using the Levenshtein Distance</h4>\n\n<p align=\"center\">\n  <a href=\"https://github.com/rapidfuzz/RapidFuzz/actions\">\n    <img src=\"https://github.com/rapidfuzz/RapidFuzz/workflows/Test%20Build/badge.svg\"\n         alt=\"Continuous Integration\">\n  </a>\n  <a href=\"https://pypi.org/project/rapidfuzz/\">\n    <img src=\"https://img.shields.io/pypi/v/rapidfuzz\"\n         alt=\"PyPI package version\">\n  </a>\n  <a href=\"https://anaconda.org/conda-forge/rapidfuzz\">\n    <img src=\"https://img.shields.io/conda/vn/conda-forge/rapidfuzz.svg\"\n         alt=\"Conda Version\">\n  </a>\n  <a href=\"https://www.python.org\">\n    <img src=\"https://img.shields.io/pypi/pyversions/rapidfuzz\"\n         alt=\"Python versions\">\n  </a><br/>\n  <a href=\"https://rapidfuzz.github.io/RapidFuzz\">\n    <img src=\"https://img.shields.io/badge/-documentation-blue\"\n         alt=\"Documentation\">\n  </a>\n  <a href=\"https://codecov.io/gh/rapidfuzz/RapidFuzz\">\n    <img src=\"https://codecov.io/gh/rapidfuzz/RapidFuzz/branch/main/graph/badge.svg?token=1IJLT65K8B\"\n         alt=\"Code Coverage\">\n  </a>\n  <a href=\"https://github.com/rapidfuzz/RapidFuzz/blob/main/LICENSE\">\n    <img src=\"https://img.shields.io/github/license/rapidfuzz/rapidfuzz\"\n         alt=\"GitHub license\">\n  </a>\n</p>\n\n<p align=\"center\">\n  <a href=\"#description\">Description</a> •\n  <a href=\"#installation\">Installation</a> •\n  <a href=\"#usage\">Usage</...",
+            "license": null,
+            "dependencies": [],
+            "keywords": {},
+            "problemFit": 0,
+            "score": 0.05
+          },
+          {
+            "id": "https://github.com/Tox1469/string-similarity",
+            "url": "https://github.com/Tox1469/string-similarity",
+            "owner": "Tox1469",
+            "name": "string-similarity",
+            "description": "Metricas de similaridade (Levenshtein, Jaro-Winkler, Dice)",
+            "language": "TypeScript",
+            "topics": [
+              "jaro-winkler",
+              "levenshtein",
+              "similarity",
+              "typescript"
+            ],
+            "readme": "---\n\nstring-similarity\n\nAlgoritmos de similaridade de strings: Levenshtein, Jaro-Winkler e coeficiente de Dice (bigrams).\n\nInstalação\n\n \n\nUso\n\n \n\nAPI\n\nlevenshtein(a: string, b: string): number\njaroWinkler(a: string, b: string): number\ndice(a: string, b: string): number\n\nLicença\n\nMIT",
+            "license": null,
+            "dependencies": [],
+            "keywords": {},
+            "problemFit": 0,
+            "score": 0.05
+          },
+          {
+            "id": "https://github.com/kszongic/jaro-winkler-cli",
+            "url": "https://github.com/kszongic/jaro-winkler-cli",
+            "owner": "kszongic",
+            "name": "jaro-winkler-cli",
+            "description": "Calculate Jaro-Winkler string similarity from the terminal.",
+            "language": "JavaScript",
+            "topics": [
+              "cli",
+              "jaro-winkler",
+              "nlp",
+              "nodejs",
+              "string-similarity",
+              "zero-dependency"
+            ],
+            "readme": "@kszongic/jaro-winkler-cli\n\n \n \n\nCalculate **Jaro-Winkler string similarity** from the command line. Zero dependencies.\n\nThe Jaro-Winkler distance is commonly used in record linkage, deduplication, and fuzzy matching. It gives higher scores to strings that match from the beginning — great for comparing names, typos, and near-duplicates.\n\nInstall\n\n \n\nUsage\n\n \n\nOptions\n\n| Flag | Description |\n|------|-------------|\n| -p, --prefix-weight <n> | Prefix scaling factor (default: 0.1, max 0.25) |\n| -j, --jaro | Output Jaro distance only (no Winkler boost) |\n| --json | Output as JSON |\n| -h, --help | Show help |\n\nExamples\n\n \n\nHow It Works\n\n**Jaro distance** counts matching characters (within a window) and transpositions\n**Winkler modification** boosts the score for strings sharing a common prefix (up to 4 chars)\nOutput is a value between 0 (no similarity) and 1 (identical)\n\nLicense\n\nMIT © 2026 kszongic",
+            "license": null,
+            "dependencies": [],
+            "keywords": {},
+            "problemFit": 0,
+            "score": 0.05
+          },
+          {
+            "id": "https://github.com/vincemarinelli/record_linkage",
+            "url": "https://github.com/vincemarinelli/record_linkage",
+            "owner": "vincemarinelli",
+            "name": "record_linkage",
+            "description": "Exploring Record Linkage using the Python Record Linkage library",
+            "language": "Jupyter Notebook",
+            "topics": [],
+            "readme": "<center>Linking Records Between ClinicalTrials.gov and NPPES NPI Database </center>\n\nRecord Linkage refers to the task of linking records using a matching set of attributes shared by the two records. For example, we often need to match a list customers with a list of payees, or a list of patients with a list of users of a specific medication, etc. Another common example is the identification and removal of duplicate entries within a dataset. Record Linkage has also been referred to as data linkage, entity resolution, and data matching.\n\nIn the simplest case, we have a shared attribute that represents a unique identifier for the record (e.g. SSN, TIN, ISBN, etc). In this case we may assume that this identifier absolutely and completely identities the unique entity. Unfortunately, outside of the world of controlled schemas this is rarely true. More often, we need to use the full set of attributes that can be mapped between the two rows to develop a level of confidence that the two rows are the same. The attributes used to match are referred to as Quasi-Identifiers (QIDs). Each QID contributes a specific weight to the overall match probability that is proportional to the amount of information that the QID contributes. For example, a matching street address contributes a larger weight than a matching marital status because the street address has a higher cardinality / lower match probability then marital status.\n\nThis repo provides a demo of the Python Record Linkage Toolkit and applies the toolset to linking records between two publically available sets of clinical investigato...",
+            "license": null,
+            "dependencies": [],
+            "keywords": {},
+            "problemFit": 0,
+            "score": 0
+          }
+        ],
+        "status": "ok"
+      },
+      {
+        "label": "scoring_model: threshold-based ↔ weighted-composite ↔ probabilistic",
+        "members": [
+          {
+            "id": "https://github.com/dylantmoore/splink_stata",
+            "url": "https://github.com/dylantmoore/splink_stata",
+            "owner": "dylantmoore",
+            "name": "splink_stata",
+            "description": "Probabilistic record linkage for Stata. C plugin implementation of the Fellegi-Sunter model, matching the feature set of Python splink.",
+            "language": "Stata",
+            "topics": [],
+            "readme": "splink_stata\n\nProbabilistic record linkage for Stata using the Fellegi-Sunter model. A C plugin implementation matching the feature set of Python splink v4.\n\nInstallation\n\n \n\nFeatures\n\n**19 comparison methods**: Jaro-Winkler, Jaro, Levenshtein, Damerau-Levenshtein, Jaccard, exact, numeric, cosine, intersect, name, email, postcode, nameswap, dob, pctdiff, abs_date, abs_time, distance_km, custom\n**Configurable comparison levels**: variable number of thresholds per field via complevels()\n**Multiple blocking rules**: up to 4 rules with OR logic via block(), block2(), block3(), block4(), or arbitrary rules via blockrules()\n**EM parameter estimation**: joint estimation of m-probabilities, u-probabilities, and lambda\n**Term frequency adjustments**: tfadjust() for frequency-aware weighting with named TF sources\n**Cross-dataset linking**: linkvar() + linktype() for deduplication, linking, or both\n**Null handling**: neutral (default) or penalize missing values via nullweight()\n**Pairwise output**: savepairs() writes CSV with match weights, probabilities, gamma levels, and Bayes factors\n**Random u-estimation**: uestimate option for splink-style u-probability estimation from random pairs\n**Model save/load**: savemodel() and loadmodel() for JSON model persistence\n**Supervised m-estimation**: mlabel() for labeled training data\n**Round-robin EM**: roundrobin for per-blocking-rule EM training\n**Clustering**: connected components (default) or best-link via clustermethod()\n**Cluster thresholding**: separate clusterthreshold() for cluster formation vs pair scoring\n**Salting**: salt() for bloc...",
+            "license": null,
+            "dependencies": [],
+            "keywords": {},
+            "problemFit": 0,
+            "score": 0.05
+          }
+        ],
+        "status": "ok"
+      },
+      {
+        "label": "human_in_loop: full-auto ↔ confidence-flagged ↔ review-queue",
+        "members": [],
+        "status": "axis_not_found_in_landscape"
+      }
+    ],
+    "unmatched": [
+      {
+        "id": "https://github.com/benzsevern/goldenmatch",
+        "url": "https://github.com/benzsevern/goldenmatch",
+        "owner": "benzsevern",
+        "name": "goldenmatch",
+        "description": "🟡 Zero-config entity resolution for Python & TypeScript. Dedupe, match, and build golden records — self-verifying auto-config, MCP/REST/A2A servers, edge-safe core, 97% F1 out of the box.",
+        "language": "Python",
+        "topics": [
+          "agent",
+          "ann-blocking",
+          "data-engineering",
+          "data-quality",
+          "deduplication",
+          "edge-runtime",
+          "entity-resolution",
+          "fuzzy-matching",
+          "llm",
+          "mcp-server",
+          "nodejs",
+          "npm",
+          "polars",
+          "pprl",
+          "privacy-preserving",
+          "python",
+          "record-linkage",
+          "survivorship",
+          "typescript",
+          "zero-config"
+        ],
+        "readme": "<!-- mcp-name: io.github.benzsevern/goldenmatch -->\n<div align=\"center\">\n\n🟡 GoldenMatch\n\n**Find duplicate records in 30 seconds. No rules to write, no models to train.**\n\n*Zero-config entity resolution for Python & TypeScript — with a self-verifying auto-config that tells you when it's unsure.*\n\n<br>\n\n<!-- Packages -->\n \n \n \n \n \n\n<!-- Quality -->\n \n \n \n \n\n<!-- Downloads -->\n \n \n \n\n<!-- Ecosystem -->\n \n \n \n \n\n</div>\n\n \n\n \n\n> **🆕 v1.5.0 (Python) · v0.3.1 (npm)** — Auto-config now runs a **preflight + postflight verification layer**. Biblio / domain-extracted schemas no longer crash under zero-config, remote-asset scorers are demoted by default (offline-safe CI), strict mode for deterministic parity runs, and every DedupeResult carries an inspectable postflight_report. See Auto-Config Verification. Built by Ben Severn.\n\n---\n\nWhy GoldenMatch?\n\n**Zero-config** — auto-detects columns, picks scorers, and runs. No training data needed\n**97.2% F1** on DBLP-ACM out of the box. DQBench ER score: 95.30\n**Privacy-preserving** — match across organizations without sharing raw data (PPRL, 92.4% F1)\n**30 MCP tools** — use from Claude Desktop, Claude Code, or any AI assistant (Smithery)\n**Production-ready** — Postgres sync, daemon mode, lineage tracking, review queues\n\nChoose your path\n\n| I want to... | Go here |\n|--------------|---------|\n| Deduplicate a CSV right now | Quick Start |\n| Use from Claude Desktop / AI assistant | MCP Server |\n| Build AI agents that deduplicate | ER Agent (A2A) |\n| Write Python code | Python API |\n| Write TypeScript / Node.js | TypeScript API |\n| Deploy to Ver...",
+        "license": null,
+        "dependencies": [],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.15000000000000002
+      },
+      {
+        "id": "https://github.com/AI-team-UoA/privJedAI",
+        "url": "https://github.com/AI-team-UoA/privJedAI",
+        "owner": "AI-team-UoA",
+        "name": "privJedAI",
+        "description": "An open-source library that leverages Python’s data science ecosystem to build powerful end-to-end Privacy Preserving Record Linkage workflows.",
+        "language": "Python",
+        "topics": [
+          "entity-matching",
+          "linkage",
+          "pprl",
+          "preserving",
+          "privacy",
+          "privacy-preserving",
+          "python",
+          "record",
+          "record-linkage"
+        ],
+        "readme": "<div align=\"center\">\n    <br>\n    <img align=\"center\" src=\"https://github.com/AI-team-UoA/privJedAI/blob/main/docs/imgs/privjedai-logo.png?raw=true\" alt=\"pyJedAI\" width=\"400\"/>\n</div>\n<br>\n<br>\n<div align=\"center\">\nAn open-source library that leverages Python’s data science ecosystem to build <br> powerful end-to-end Entity Resolution workflows.\n</div>\n\n---\n\nprivJedAI\n\n \n\n📚 Read the Official Documentation\n*Check out our Read the Docs page for publications, tutorials, and quickstart guides!*\n\n---\n\nOverview\n\nprivJedAI is a python framework, aiming to offer experts and novice users, robust and fast solutions for Privacy Preserving Record Linkage. It is builded using state-of-the-art python frameworks. privJedAI constitutes the sole open-source Link Discovery tool that is capable of exploiting the latest breakthroughs in Deep Learning and NLP techniques, which are publicly available through the Python data science ecosystem. This applies to both blocking and matching, thus ensuring high time efficiency, high scalability as well as high effectiveness, without requiring any labelled instances from the user.\n\n---\n\nKey-Features\n\nInput data-type independent. Both structured and semi-structured data can be processed.\nVarious implemented algorithms.\nEasy-to-use.\nUtilizes some of the famous and cutting-edge machine learning packages.\nOffers supervised and un-supervised ML techniques.\n\n---\n\nInstall\n\nprivJedAI has been tested on Linux OS.\n\n__PyPI__\n\nInstall the latest version of pyjedai:\n\n \nMore on PyPI.\n\n__Git__\n\nSet up locally:\n \ngo to the root directory with cd privJedAI and type:...",
+        "license": null,
+        "dependencies": [],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05
+      },
+      {
+        "id": "https://github.com/ShahinHasanov90/trade-record-linker",
+        "url": "https://github.com/ShahinHasanov90/trade-record-linker",
+        "owner": "ShahinHasanov90",
+        "name": "trade-record-linker",
+        "description": "Python record linkage library for noisy customs data. Blocking, comparators, rule-based + ML classifiers.",
+        "language": "Python",
+        "topics": [
+          "customs",
+          "deduplication",
+          "entity-resolution",
+          "jellyfish",
+          "networkx",
+          "nlp",
+          "python",
+          "record-linkage",
+          "scikit-learn",
+          "trade"
+        ],
+        "readme": "trade-record-linker\n\nA record linkage and deduplication library for customs trade data. Built for\nimporter names, addresses, and HS-coded goods descriptions that are often\ntransliterated across alphabets, abbreviated, or plain noisy.\n\nWhy\n\nCustoms feeds from multiple declarants, forwarders, and terminal operators\nproduce divergent strings for the same real-world entity. Manual stitching\ndoes not scale past a few thousand records. This library provides a\nblocking + scoring + clustering pipeline that is transparent enough for\ncustoms analysts to audit every match decision.\n\nPipeline\n\n**Blocking** reduces the O(n^2) pair space. Three blockers ship:\n   - NgramBlocker (character n-gram buckets),\n   - PhoneticBlocker (Double Metaphone on token heads),\n   - JaccardBlocker (token-set jaccard over a shingled representation).\n**Comparators** score each candidate pair field-by-field. Included:\n   Jaro-Winkler, Levenshtein ratio, set Jaccard, SoftTFIDF, numeric\n   closeness, and date closeness.\n**Classifier** reduces the per-field vector into a scalar match score.\n   The default is a rule-based weighted sum; a SupervisedClassifier\n   wraps a scikit-learn estimator for labeled-data workflows.\n**Clustering** builds a graph of pairs above threshold and collapses\n   connected components. Transitive-closure tightening applies a second\n   pass to prune chains held together by a single weak edge.\n\nInstall\n\n \n\nRequires Python 3.11+.\n\nQuickstart\n\n \n\nCLI\n\n \n\nThe CLI reads a CSV, infers a default schema (importer + address + hs_code\nif present), runs the linker, and writes a two-column cluster_id...",
+        "license": null,
+        "dependencies": [],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05
+      },
+      {
+        "id": "https://github.com/benzsevern/dqbench",
+        "url": "https://github.com/benzsevern/dqbench",
+        "owner": "benzsevern",
+        "name": "dqbench",
+        "description": "The standard benchmark for data quality tools — detection, transformation, entity resolution, and pipeline orchestration. 4 categories, 12 tiers, 161 tests.",
+        "language": "Python",
+        "topics": [
+          "benchmark",
+          "comparison",
+          "data-engineering",
+          "data-quality",
+          "data-validation",
+          "deduplication",
+          "entity-resolution",
+          "great-expectations",
+          "pandera",
+          "pipeline-benchmark",
+          "python",
+          "record-linkage",
+          "soda-core",
+          "testing"
+        ],
+        "readme": "DQBench\n\nThe standard benchmark for data quality tools — detection, transformation, entity resolution, and pipeline orchestration.\n\n \n \n \n \n \n \n \n\n> The ImageNet of data quality — standardized benchmarks for validation, transformation, entity resolution, and pipeline tools.\n\nWhy DQBench?\n\nEvery data quality tool claims to be the best. But there's no standard way to compare them. DQBench fixes that with:\n\n**Four benchmark categories** — Detect, Transform, ER, and Pipeline\n**Three difficulty tiers** — basics, realistic, and adversarial\n**Ground truth** — every planted issue is documented with affected rows\n**Fair scoring** — recall AND precision matter (no gaming by flagging everything)\n**One number** — DQBench Score (0-100) for easy comparison\n**20-line integration** — implement one method to benchmark any tool\n\nInstall\n\nThe repo now also includes an OCR Company benchmark for post-OCR company-name confidence and correction quality.\n\n \n\nQuick Start\n\n \n\nBenchmark Categories\n\n| Category | What it measures | Example tools |\n|----------|-----------------|---------------|\n| **Detect** | Find data quality issues in a dataset | GoldenCheck, Great Expectations, Pandera, Soda Core |\n| **Transform** | Clean, normalize, and repair data | GoldenFlow, dbt, pandas |\n| **ER** | Entity resolution — deduplicate and link records | GoldenMatch, Splink, Dedupe |\n| **Pipeline** | End-to-end pipeline orchestration and quality gates | GoldenPipe, Airflow, Prefect |\n| **OCR Company** | OCR company-name confidence, review, and correction quality | OCR confidence/correction tools |\n\nHead-to-Head Resul...",
+        "license": null,
+        "dependencies": [],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05
+      },
+      {
+        "id": "https://github.com/pradhankukiran/entity-resolution-engine",
+        "url": "https://github.com/pradhankukiran/entity-resolution-engine",
+        "owner": "pradhankukiran",
+        "name": "entity-resolution-engine",
+        "description": "Cross-language entity resolution engine with pluggable entity types, multi-strategy ensemble scoring, and explainable results",
+        "language": "Python",
+        "topics": [
+          "cross-language",
+          "data-matching",
+          "deduplication",
+          "entity-resolution",
+          "fastapi",
+          "fuzzy-matching",
+          "japanese",
+          "nlp",
+          "phonetic-matching",
+          "python",
+          "record-linkage",
+          "transliteration"
+        ],
+        "readme": "<p align=\"center\">\n  <h1 align=\"center\">Entity Resolution Engine</h1>\n  <p align=\"center\">\n    Cross-language entity resolution with pluggable entity types, multi-strategy ensemble scoring, and explainable results.\n  </p>\n</p>\n\n<p align=\"center\">\n  <a href=\"https://www.python.org/downloads/\"><img src=\"https://img.shields.io/badge/python-3.11+-3776AB?style=flat&logo=python&logoColor=white\" alt=\"Python 3.11+\"></a>\n  <a href=\"https://fastapi.tiangolo.com\"><img src=\"https://img.shields.io/badge/FastAPI-0.110+-009688?style=flat&logo=fastapi&logoColor=white\" alt=\"FastAPI\"></a>\n  <a href=\"https://www.sqlite.org/\"><img src=\"https://img.shields.io/badge/SQLite-async-003B57?style=flat&logo=sqlite&logoColor=white\" alt=\"SQLite\"></a>\n  <a href=\"https://pydantic.dev\"><img src=\"https://img.shields.io/badge/Pydantic-v2-E92063?style=flat&logo=pydantic&logoColor=white\" alt=\"Pydantic v2\"></a>\n  <a href=\"https://docs.astral.sh/ruff/\"><img src=\"https://img.shields.io/badge/linting-Ruff-D7FF64?style=flat&logo=ruff&logoColor=black\" alt=\"Ruff\"></a>\n  <a href=\"https://mypy-lang.org/\"><img src=\"https://img.shields.io/badge/typing-mypy-blue?style=flat\" alt=\"mypy\"></a>\n  <a href=\"https://www.docker.com/\"><img src=\"https://img.shields.io/badge/Docker-ready-2496ED?style=flat&logo=docker&logoColor=white\" alt=\"Docker\"></a>\n  <a href=\"LICENSE\"><img src=\"https://img.shields.io/badge/license-MIT-green?style=flat\" alt=\"License: MIT\"></a>\n</p>\n\n---\n\nWhat is this?\n\nA production-grade entity resolution service that determines whether two entity names refer to the same real-world thing -- even when they're writte...",
+        "license": null,
+        "dependencies": [],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05
+      },
+      {
+        "id": "https://github.com/AI-team-UoA/pyJedAI",
+        "url": "https://github.com/AI-team-UoA/pyJedAI",
+        "owner": "AI-team-UoA",
+        "name": "pyJedAI",
+        "description": "An open-source library that leverages Python’s data science ecosystem to build powerful end-to-end Entity Resolution workflows. ",
+        "language": "Python",
+        "topics": [
+          "data-disambigation",
+          "data-matching",
+          "deduplication",
+          "duplicate-detection",
+          "entity-matching",
+          "entity-resolution",
+          "fuzzy-matching",
+          "link-discovery",
+          "machine-learning",
+          "python"
+        ],
+        "readme": "<div align=\"center\">\n    <br>\n    <img align=\"center\" src=\"https://github.com/AI-team-UoA/pyJedAI/blob/main/docs/img/pyjedai.logo.drawio.png?raw=true\" alt=\"pyJedAI\" width=\"400\"/>\n</div>\n<br>\n<br>\n<div align=\"center\">\nAn open-source library that leverages Python’s data science ecosystem to build <br> powerful end-to-end Entity Resolution workflows.\n</div>\n\n---\n\nOverview\n\npyJedAI is a python framework, aiming to offer experts and novice users, robust and fast solutions for multiple types of Entity Resolution problems. It is builded using state-of-the-art python frameworks. pyJedAI constitutes the sole open-source Link Discovery tool that is capable of exploiting the latest breakthroughs in Deep Learning and NLP techniques, which are publicly available through the Python data science ecosystem. This applies to both blocking and matching, thus ensuring high time efficiency, high scalability as well as high effectiveness, without requiring any labelled instances from the user.\n\nKey-Features\n\nInput data-type independent. Both structured and semi-structured data can be processed.\nVarious implemented algorithms.\nEasy-to-use.\nUtilizes some of the famous and cutting-edge machine learning packages.\nOffers supervised and un-supervised ML techniques.\n\n__Open demos are available in:__\n\n<div align=\"center\">\n    <a href=\"https://nbviewer.org/github/AI-team-UoA/pyJedAI/blob/main/docs/tutorials/Demo.ipynb\">\n        <img align=\"center\" src=\"https://nbviewer.org/static/img/nav_logo.svg\" width=120/> \n    </a>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n    <a href=\"https://github.com/AI-team-Uo...",
+        "license": null,
+        "dependencies": [],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05
+      },
+      {
+        "id": "https://github.com/Anuar-boop/string-distance",
+        "url": "https://github.com/Anuar-boop/string-distance",
+        "owner": "Anuar-boop",
+        "name": "string-distance",
+        "description": "Python string distance/similarity CLI. Levenshtein, Hamming, Jaro-Winkler, cosine, LCS, fuzzy match, phonetic matching (Soundex, Metaphone). Zero dependencies.",
+        "language": "Python",
+        "topics": [
+          "cli",
+          "command-line-tool",
+          "deduplication",
+          "fuzzy-matching",
+          "hamming",
+          "jaro-winkler",
+          "levenshtein",
+          "metaphone",
+          "python",
+          "similarity",
+          "soundex",
+          "string-distance",
+          "zero-dependencies"
+        ],
+        "readme": "string_distance\n\nA string distance and similarity CLI tool. Zero dependencies -- pure Python 3 standard library.\n\nFeatures\n\n**Levenshtein distance** -- minimum edits (insert, delete, substitute) to transform one string into another\n**Hamming distance** -- number of positions where characters differ (equal-length strings)\n**Jaro-Winkler similarity** -- similarity score (0-1) favoring common prefixes\n**Cosine similarity** -- character n-gram based similarity\n**Longest common subsequence** -- longest sequence of characters appearing in both strings in order\n**Longest common substring** -- longest contiguous match\n**Fuzzy match score** -- combined weighted score (0-100)\n**Batch compare** -- find the closest match from a list of candidates\n**Deduplicate** -- group similar strings by threshold\n**Sort by similarity** -- rank strings by closeness to a target\n**Phonetic matching** -- Soundex and basic Metaphone codes\n**Output as JSON or table**\n**Pipe-compatible** -- works with stdin/stdout\n\nInstallation\n\nNo installation needed. Requires Python 3.7+.\n\n \n\nUsage\n\n \n\nAlgorithm Details\n\n| Algorithm | Returns | Best For |\n|-----------|---------|----------|\n| Levenshtein | Integer (edit distance) | General typo detection |\n| Hamming | Integer (bit distance) | Fixed-length codes, DNA |\n| Jaro-Winkler | Float 0-1 (similarity) | Name matching, short strings |\n| Cosine | Float 0-1 (similarity) | Document similarity |\n| LCS | String + length | Diff algorithms, patches |\n| Fuzzy | Score 0-100 | Quick \"how similar\" answer |\n| Soundex | 4-char code | English name matching |\n| Metaphone | Variable...",
+        "license": null,
+        "dependencies": [],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05
+      },
+      {
+        "id": "https://github.com/utkuilbas/splink-linkage",
+        "url": "https://github.com/utkuilbas/splink-linkage",
+        "owner": "utkuilbas",
+        "name": "splink-linkage",
+        "description": "Splink ile record linkage aracı.",
+        "language": "Python",
+        "topics": [],
+        "readme": "Splink Record Linkage Projesi\n\nBu proje, Splink kütüphanesi kullanarak kişi kayıtları üzerinde record linkage (kayıt bağlama) işlemi gerçekleştiren bir Python uygulamasıdır. DuckDB ile hızlı veri işleme ve çoklu karşılaştırma algoritmaları kullanarak duplicate kayıtları tespit eder.\n\n🚀 Özellikler\n\n**DuckDB entegrasyonu** ile hızlı veri işleme\n**Çoklu karşılaştırma algoritmaları** (Jaro-Winkler, Levenshtein)\n**Otomatik model eğitimi** ve parametre optimizasyonu\n**CSV export** desteği\n**Konfigürasyon tabanlı** esnek yapı\n\n🔧 Kurulum\n\n**Repoyu klonlayın:**\n \n\n**Sanal ortam oluşturun (önerilen):**\n \n\n**Gerekli kütüphaneleri yükleyin:**\n \n\nTemel Kullanım\n \n\nProgram otomatik olarak:\nDemo veri setini indirir (1000 kayıt)\nDuckDB veritabanını kurar\nRecord linkage işlemini gerçekleştirir\nSonuçları analiz eder\nCSV formatında raporlar oluşturur\n\nDosyalar\n**high_confidence_linkages.csv** - Yüksek güvenirlikli eşleşmeler\n**all_linkage_results.csv** - Tüm linkage sonuçları\n**linkage_database.duckdb** - DuckDB veritabanı\n\nYaygın Hatalar\n\n**Import Error**\n   - pip install -r requirements.txt komutunu tekrar çalıştırın\n   - Python versiyonunu kontrol edin (3.8+ gerekli, 3.12 altı, tercihen 3.11)\n\n📚 Kaynaklar\n\nSplink Documentation\nDuckDB Documentation",
+        "license": null,
+        "dependencies": [],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05
+      },
+      {
+        "id": "https://github.com/BarneyLawrence/Sessions-Splink",
+        "url": "https://github.com/BarneyLawrence/Sessions-Splink",
+        "owner": "BarneyLawrence",
+        "name": "Sessions-Splink",
+        "description": "Repository holding resources and presentations relating to the record linkage Python package Splink.",
+        "language": "Jupyter Notebook",
+        "topics": [],
+        "readme": "Sessions-Splink\n\nA repository holding resources and presentations relating to Record Linkage in general and the Python package Splink.\n\nResources created by Barney Lawrence and Ash Ward\n\nPast presentations are in sub folders. Latest work is at the top level.\n\nSplink v3 and v4 demos have been tested in both Microsoft Fabric and Synapse Analytics.\n\nThe ipynb files in the Festive Tech Calendar folder are exports from our Synapse notebooks, great for importing back into Synapse.\n\nThe py files are python conversions of our Synapse notebooks. Good if you want to copy and paste the code into another type of Spark (although will likely need some faffing around with to get working).\n\nVideos of past sessions:\n\nSplinking in a Winter Wonderland - Produced for Festive Tech Calendar 2023 - Lots of detail on splink v3 and statistical backing. Also hats.\nData Linkage Options: MDM vs Splink (PySpark) - Presented at SQLBits 2024 - 20 Minute session covering the differences between splink and MDM solutions.\nMastering Record Linkage With Splink - An interview format discussion with Tom Seekings at Simpson Associates.",
+        "license": null,
+        "dependencies": [],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05
+      },
+      {
+        "id": "https://github.com/VictorAut/liken",
+        "url": "https://github.com/VictorAut/liken",
+        "owner": "VictorAut",
+        "name": "liken",
+        "description": "A Python library for near deduplication and record linkage",
+        "language": "Python",
+        "topics": [],
+        "readme": "<p align=\"center\">\n<a href=\"https://pypi.python.org/pypi/liken\"><img height=\"20\" alt=\"PyPI Version\" src=\"https://img.shields.io/pypi/v/liken\"></a>\n<img alt=\"PyPI - Python Version\" src=\"https://img.shields.io/pypi/pyversions/liken\">\n<img height=\"20\" alt=\"PyPI Downloads\" src=\"https://static.pepy.tech/badge/liken\">\n<img height=\"20\" alt=\"Tests\" src=\"https://img.shields.io/github/actions/workflow/status/VictorAut/liken/python-validation.yml?label=CI\">\n<img height=\"20\" alt=\"Coverage\" src=\"https://img.shields.io/codecov/c/github/VictorAut/liken\">\n<img height=\"20\" alt=\"License\" src=\"https://img.shields.io/github/license/VictorAut/liken\">\n</p>\n\nIntroduction\n\n**Liken** is a library providing enhanced deduplication tooling for DataFrames.\n\nThe key features are:\n\nNear deduplication\nReady-to-use deduplication methods\nRecord linkage and canonicalization\nRules-based deduplication\nPandas, Polars and PySpark support\nCustomizable in pure Python\n\nA flexible API\n\nCheckout the API Documentation\n\nInstallation\n\n \n\nExample\n\n \n\nLicense\nThis project is licensed under the Apache-2.0 License. See the LICENSE file for more details.",
+        "license": null,
+        "dependencies": [],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0
+      },
+      {
+        "id": "https://github.com/GOPAD-Datasus/JOSIF-Linkage",
+        "url": "https://github.com/GOPAD-Datasus/JOSIF-Linkage",
+        "owner": "GOPAD-Datasus",
+        "name": "JOSIF-Linkage",
+        "description": "Entity Matching of healthcare records from SINASC and SIM using Record Linkage Toolkit library",
+        "language": "Python",
+        "topics": [
+          "first-project",
+          "healthcare",
+          "record-linkage"
+        ],
+        "readme": "JOSIF Record Linkage\n\nPaper\n\n>This repository is based on our paper:  \n**Proposal For Linkage Between Health Information Systems SIM And SINASC**  \nAuthors: Morsoleto, R. et al.  \nPresented and accepted at: JOSIF 2024.\n\nInstallation & Usage\n\n> [!IMPORTANT]  \n> The files `DN.parquet.gzip and DO.parquet.gzip weren't included in this repository due to their size. Both will need to be manually loaded on to the data/input` folder. \n\nPoetry was used for dependency management. To download it, visit: python-poetry.org.\n\nActivate a virtual environment and execute:\n\n \n\n \n\nLicense\nLGNU | © GOPAD 2025",
+        "license": null,
+        "dependencies": [],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0
+      },
+      {
+        "id": "https://github.com/ajwinters/crosswalk",
+        "url": "https://github.com/ajwinters/crosswalk",
+        "owner": "ajwinters",
+        "name": "crosswalk",
+        "description": "A library that performs probabilistic record linkage across non relational datasets",
+        "language": "Python",
+        "topics": [],
+        "readme": "crosswalk\nAuthored by Hyun Woo Kim, The Pennsylvania State University, 2018-2019\nA library that performs probabilistic record linkage across non relational datasets. Built for linkages between PA administrative data, but is generalizable to any data set containing first and last names and other idenitifiers.\n_____\n\nCode review Alex Winters, The Pennsylvania State University, 2020-2021  \nUpdates and Enhancements\n\nsarahs_rule Function (preprocessing.py)\nThis function was updated to identify and document biological mothers based on specific rules and merge results into the REL DataFrame.\n\n**Data Preparation**  \n   - Merges minors and majors DataFrames on referralid and filters relevant rows.\n\n**Rule-Based Identification**  \n   - **Rule 1**: Identifies mothers with specific roles and relationships.  \n   - **Rule 2**: Finds mothers based on age difference and removes duplicates.  \n   - **Rule 3**: Matches mothers using surname consistency.\n\n**Final Steps**  \n   - Combines results, analyzes overlaps with existing data, and appends new relationships to the REL DataFrame.\n\n---\n\nstandardize Function (preprocessing.py)\nRefactored to ensure consistent name formatting and validation:\n\nConverts names to uppercase and trims whitespace.  \nHandles exceptions for known patterns and weak first names.  \nRemoves records with agency-related terms or invalid names.  \nStandardizes numeric fields (ssn, suffix, mciid) and validates date consistency.\n\n---\n\npopulation_split Function (preprocessing.py)\nSplits the population into minors and adults using combined age and role conditions:\n\n**Temporary Co...",
+        "license": null,
+        "dependencies": [],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0
+      },
+      {
+        "id": "https://github.com/skate3665/Linkage",
+        "url": "https://github.com/skate3665/Linkage",
+        "owner": "skate3665",
+        "name": "Linkage",
+        "description": "Using Record Linkage library to create a UI that can perform inexact matches between data sources",
+        "language": "Python",
+        "topics": [],
+        "readme": "Linkage\nUsing Record Linkage library to create a UI that can perform inexact matches between data sources",
+        "license": null,
+        "dependencies": [],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0
+      },
+      {
+        "id": "https://github.com/Medlhnin/Dedupe-Interactive-UI",
+        "url": "https://github.com/Medlhnin/Dedupe-Interactive-UI",
+        "owner": "Medlhnin",
+        "name": "Dedupe-Interactive-UI",
+        "description": "The Dedupe Interactive UI is a user-friendly web application designed to simplify the process of entity resolution (also known as deduplication or record linkage). Built with Streamlit and powered by the Dedupe library, this tool allows users to upload datasets, identify duplicate records, and merge them seamlessly.",
+        "language": "Python",
+        "topics": [],
+        "readme": "🚀 Key Features:\n\n   📂 Effortless Data Upload – Upload CSV files seamlessly, with support for multiple encodings.\n\n   🛠️ Automatic Field Selection – All fields are pre-selected for deduplication, ensuring no critical data is missed.\n   \n   🎯 Interactive Labeling – Intuitively label record pairs as \"Match\" or \"Not a Match\" with an easy-to-use interface.\n\n   ⚙️ User-Controlled Training – Train the model on your terms—proceed only when you're ready.\n\n   📊 Duplicate Clustering – View and analyze deduplicated clusters in a structured and insightful format.",
+        "license": null,
+        "dependencies": [],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0
+      }
+    ]
+  },
+  "selection": {
+    "by_score": 10,
+    "by_divergence": 0,
+    "diversity_gap": "no_divergent_candidates_met_threshold",
+    "note": null
+  },
+  "queryPlans": [
+    {
+      "label": "Query 1",
+      "query": "record linkage library",
+      "reasons": [
+        "Trifft Approach-Signature \"record-linkage\"",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ]
+    },
+    {
+      "label": "Query 2",
+      "query": "entity resolution deduplication",
+      "reasons": [
+        "Trifft Approach-Signature \"entity-resolution\"",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ]
+    },
+    {
+      "label": "Query 3",
+      "query": "probabilistic record matching",
+      "reasons": [
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ]
+    },
+    {
+      "label": "Query 4",
+      "query": "fuzzy string matching",
+      "reasons": [
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ]
+    },
+    {
+      "label": "Query 5",
+      "query": "jaro winkler similarity",
+      "reasons": [
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ]
+    },
+    {
+      "label": "Query 6",
+      "query": "blocking key dedup",
+      "reasons": [
+        "Trifft Approach-Signature \"blocking\"",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ]
+    },
+    {
+      "label": "Query 7",
+      "query": "splink record linkage",
+      "reasons": [
+        "Trifft Approach-Signature \"record-linkage\"",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ]
+    },
+    {
+      "label": "Query 8",
+      "query": "zingg entity matching",
+      "reasons": [
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ]
+    }
+  ],
+  "agentView": {
+    "mission": [
+      "Externe Loesungsraum-Landkarte fuer \"Derselbe physische Event wird von mehreren Quellen eingesammelt — mit leicht unterschiedlichen Titeln (\"Jazz im Keller\" vs\" ins Zielprojekt eventbear-worker ueberfuehren",
+      "Keine divergenten Cluster — Landschaft liegt nahe am aktuellen Ansatz",
+      "Benachbarte Cluster (1) als Adaptions-Kandidaten auswerten"
+    ],
+    "deliverable": [
+      "Je Cluster ein Kurz-Exposé mit Key-Takeaway fuer das Zielprojekt",
+      "Pro divergentem Cluster eine klare adopt/adapt/observe/ignore-Entscheidung",
+      "Decision-Log-Eintrag(e) im Zielprojekt, die auf diese Landscape referenzieren"
+    ],
+    "priorityRepos": [
+      {
+        "repo": "benzsevern/goldenmatch",
+        "action": "Als benachbarte Referenz fuer \"dedupe+deduplication+python\" pruefen",
+        "url": "https://github.com/benzsevern/goldenmatch"
+      }
+    ],
+    "context": [
+      "Aktueller Ansatz: Simple String-Match auf Titel + Datum. Funktioniert bei ~60% der Fälle; der Rest bleibt Dublette oder wird falsch gemerged. Keine Fuzzy-Logic, keine Adress-Normalisierung im Matcher, keine Zeit-Toleranz.",
+      "Erfolgskriterium: Zwei Varianten desselben Events werden zu 1 kanonischer Entity gemerged,Zwei verschiedene Events desselben Veranstalters bleiben getrennt (keine False-Merges),Merge-Entscheidungen inspectable mit pro-Feld Begründung,Konflikt-Resolution bei Merge (welche Werte gewinnen) deterministisch",
+      "Approach-Signature: record-linkage, entity-resolution, fuzzy-matching, probabilistic-matching, blocking, similarity-scoring",
+      "Tech-Tags: nodejs, typescript, javascript, python, java, node"
+    ],
+    "guardrails": [
+      "Node.js / TypeScript Worker, Open-Source-Referenzen bevorzugt",
+      "Matching ohne zentrale ID — nur via Inhalt und Metadaten",
+      "Inspectable merge logic, keine Black-Box-Deep-Learning-Entscheidungen"
+    ],
+    "uncertainties": [
+      "Nicht-Ziel: Kein manuelles Merge-Review als Default-Flow — auto-merge bei hoher Confidence",
+      "Nicht-Ziel: Kein DB-natives Merging (Postgres extensions o.ä.) — muss in Node-Worker laufen",
+      "Nicht-Ziel: Keine ML-Model-Training-Pipeline — existierende Heuristik + Libraries"
+    ],
+    "codingStarter": {
+      "primary": {
+        "repo": "benzsevern/goldenmatch",
+        "starterLabel": "adapters/unknown|unknown-bridge.mjs",
+        "implementationGoal": "Adaptions-Skizze fuer Cluster \"dedupe+deduplication+python\" als Bruecke zum Zielprojekt",
+        "firstSlice": "Minimal-Integration: 1 Vertreter aus Cluster \"dedupe+deduplication+python\" gegen das Zielprojekt testen",
+        "targetAreas": [
+          "unknown"
+        ],
+        "starterMode": "prototype",
+        "compareChecklist": [
+          "Wie unterscheidet sich dieser benachbarte Ansatz vom aktuellen Stand?",
+          "Welche Annahmen des aktuellen Ansatzes stellt dieses Cluster in Frage?",
+          "Ist der Transfer-Aufwand in Relation zum erwarteten Gewinn vertretbar?"
+        ],
+        "stopIf": [
+          "Performance oder Qualitaet unter dem aktuellen Niveau ohne klare Perspektive",
+          "Lizenz oder Distributionsform passt nicht zum Zielprojekt"
+        ]
+      },
+      "secondary": []
+    },
+    "payload": {
+      "schemaVersion": "2",
+      "handoffType": "landscape-to-project",
+      "problemSlug": "event-deduplication-across-heterogenous-sources",
+      "project": "eventbear-worker",
+      "relationCounts": {
+        "divergent": 0,
+        "adjacent": 1,
+        "near_current_approach": 0
+      }
+    },
+    "downloadFileName": "patternpilot-landscape-handoff-event-deduplication-across-heterogenous-sources.json",
+    "references": [
+      "Query: \"record linkage library\"",
+      "Query: \"entity resolution deduplication\"",
+      "Query: \"probabilistic record matching\"",
+      "Query: \"fuzzy string matching\""
+    ]
+  },
+  "techStatus": {
+    "effectiveQueries": [
+      "record linkage library",
+      "entity resolution deduplication",
+      "probabilistic record matching",
+      "fuzzy string matching",
+      "jaro winkler similarity",
+      "blocking key dedup",
+      "splink record linkage",
+      "zingg entity matching"
+    ],
+    "missingCandidates": [
+      "Nur 1 Cluster gebildet — Kandidaten-Pool ist zu homogen; Query-Diversitaet erhoehen"
+    ],
+    "searchErrors": []
+  }
+}
