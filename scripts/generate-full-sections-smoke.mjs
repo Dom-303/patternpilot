@@ -30,7 +30,8 @@ import {
   renderOnDemandRunDriftCards,
   renderOnDemandGovernanceCards,
   renderOnDemandStabilityCards,
-  renderTabbedSection
+  renderTabbedSection,
+  renderWhatNowSection
 } from "../lib/html/sections.mjs";
 import { renderPolicySummaryCard, renderPolicyCalibrationCard, renderHtmlList, renderTopRecommendations, renderRecommendedActions } from "../lib/html/shared.mjs";
 import { renderInfoGrid } from "../lib/html/components.mjs";
@@ -169,17 +170,38 @@ const agentView = {
 
 const projectProfile = {
   contextSources: {
-    loadedFiles: ["README.md", "CLAUDE.md", "lib/extract/events.mjs", "lib/detect/source-type.mjs", "docs/extraction-pipeline.md"],
-    missingFiles: ["docs/legacy-module.md"],
+    loadedFiles: [
+      "README.md",
+      "CLAUDE.md",
+      "package.json",
+      "lib/extract/events.mjs",
+      "lib/extract/schema.mjs",
+      "lib/detect/source-type.mjs",
+      "lib/detect/routing-class.mjs",
+      "lib/normalize/dates.mjs",
+      "lib/normalize/venues.mjs",
+      "lib/dedup/heuristic.mjs",
+      "lib/io/source-intake.mjs",
+      "scripts/run-masterlists.mjs",
+      "docs/extraction-pipeline.md",
+      "docs/deduplication-strategy.md",
+      "bindings/eventbear-worker/PROJECT_BINDING.json"
+    ],
+    missingFiles: ["docs/legacy-module.md", "bindings/optional-override.json"],
     scannedDirectories: [
       { path: "lib/extract", entryCount: 18 },
       { path: "lib/detect", entryCount: 7 },
-      { path: "data/sources", entryCount: 42 }
+      { path: "lib/normalize", entryCount: 12 },
+      { path: "lib/dedup", entryCount: 5 },
+      { path: "lib/io", entryCount: 9 },
+      { path: "data/sources", entryCount: 42 },
+      { path: "scripts", entryCount: 16 },
+      { path: "bindings/eventbear-worker", entryCount: 4 }
     ],
-    declaredFiles: ["README.md", "CLAUDE.md"],
-    declaredDirectories: ["lib/extract", "lib/detect"]
+    declaredFiles: ["README.md", "CLAUDE.md", "package.json", "bindings/eventbear-worker/PROJECT_BINDING.json"],
+    declaredDirectories: ["lib/extract", "lib/detect", "lib/normalize", "lib/dedup", "lib/io"]
   },
-  capabilitiesPresent: ["source_intake", "parsing_extraction", "normalization", "dedup_heuristic"]
+  capabilitiesPresent: ["source_intake", "parsing_extraction", "normalization", "dedup_heuristic", "routing_classification", "schema_validation"]
 };
 
 const watchlistReview = {
@@ -397,14 +419,24 @@ const empfehlungenBundle = renderTabbedSection({
   ]
 });
 
+// Konsolidierte Kandidaten + Vergleichs-Repos → eine Section mit Tabs
+const kandidatenBundle = renderTabbedSection({
+  id: "kandidaten-kombiniert",
+  title: "Kandidaten",
+  sub: "Discovery + Vergleichs-Repos",
+  accent: "magenta",
+  countChip: `${candidates.length} Discovery · ${watchlistReview.topItems.length} Vergleich`,
+  tabs: [
+    { label: "Discovery-Kandidaten", body: renderDiscoveryCandidateCards(candidates, reportView) },
+    { label: "Vergleichs-Repos (Watchlist)", body: renderWatchlistTopCards(watchlistReview, reportView) }
+  ]
+});
+
 const sections = [
-  // Discovery-spezifisch
-  {
-    id: "candidates",
-    title: "Discovery-Kandidaten",
-    navLabel: "Kandidaten",
-    body: renderDiscoveryCandidateCards(candidates, reportView)
-  },
+  // Konsolidiert: Discovery-Kandidaten + Stärkste Vergleichs-Repos -> eine Tab-Section
+  { id: "kandidaten-kombiniert", title: "Kandidaten", navLabel: "Kandidaten", body: kandidatenBundle, skipSectionWrapper: true },
+
+  // Discovery-spezifisch (Kontext zur Kandidaten-Herkunft)
   {
     id: "discovery-lenses",
     title: "Discovery-Linsen",
@@ -417,14 +449,6 @@ const sections = [
   },
   // Konsolidiert: Regelwerk + Kalibrierung -> eine Tab-Section
   { id: "discovery-policy", title: "Discovery-Regelwerk", navLabel: "Regelwerk", body: discoveryPolicyBundle, skipSectionWrapper: true },
-
-  // Watchlist-Review-spezifisch
-  {
-    id: "top-compared-repositories",
-    title: "Staerkste Vergleichs-Repos",
-    navLabel: "Top Repos",
-    body: renderWatchlistTopCards(watchlistReview, reportView)
-  },
   { id: "coverage", title: "Coverage", navLabel: "Coverage", body: renderCoverageCards(coverage) },
   { id: "review-scope", title: "Review-Umfang", navLabel: "Umfang", body: renderReviewScopeCards(watchlistReview) },
   {
@@ -444,14 +468,20 @@ const sections = [
   { id: "run-plan", title: "Laufplan", navLabel: "Plan", body: renderOnDemandRunPlanCards(onDemandSummary.runPlan) },
   // Konsolidiert: Drift + Stabilitaet + Governance -> eine Tab-Section
   { id: "run-health", title: "Lauf-Gesundheit", navLabel: "Lauf-Gesundheit", body: runHealthBundle, skipSectionWrapper: true },
-  { id: "what-now", title: "Was jetzt?", navLabel: "Was jetzt?", body: renderOnDemandNextActions(onDemandSummary.nextActions) },
 
   // Konsolidiert: Effective-URLs + Missing-Intake + Search-Errors -> Tech-Status
   { id: "tech-status", title: "Technischer Lauf-Status", navLabel: "Lauf-Status", body: techStatusBundle, skipSectionWrapper: true },
 
   // Kontext + Agent
   { id: "agent-view", title: "KI Coding Agents", navLabel: "Agents", body: renderAgentField(agentView) },
-  { id: "target-repo-context", title: "Zielrepo-Kontext", navLabel: "Kontext", body: renderProjectContextSources(projectProfile, null) }
+  { id: "target-repo-context", title: "Zielrepo-Kontext", navLabel: "Kontext", body: renderProjectContextSources(projectProfile, null) },
+
+  // "Was jetzt?" ganz unten — der Abschluss-Call-to-Action mit 4 Tabs
+  {
+    id: "what-now", title: "Was jetzt? — Action-Steps", navLabel: "Was jetzt?",
+    body: renderWhatNowSection({ projectKey: "eventbear-worker" }),
+    skipSectionWrapper: true
+  }
 ];
 
 // Konsolidierte "Empfehlungen"-Section wird direkt in document.mjs als

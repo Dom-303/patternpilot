@@ -30,7 +30,8 @@ import {
   renderOnDemandRunDriftCards,
   renderOnDemandGovernanceCards,
   renderOnDemandStabilityCards,
-  renderTabbedSection
+  renderTabbedSection,
+  renderWhatNowSection
 } from "../lib/html/sections.mjs";
 import { renderPolicySummaryCard, renderPolicyCalibrationCard, renderHtmlList, renderTopRecommendations, renderRecommendedActions } from "../lib/html/shared.mjs";
 import { renderInfoGrid } from "../lib/html/components.mjs";
@@ -194,12 +195,18 @@ const sections = [
   { id: "artifacts", title: "Artefakte", navLabel: "Artefakte", body: renderOnDemandArtifactCards(emptyOnDemandSummary.artifacts) },
   { id: "run-plan", title: "Laufplan", navLabel: "Plan", body: renderOnDemandRunPlanCards(emptyOnDemandSummary.runPlan) },
   { id: "run-health", title: "Lauf-Gesundheit", navLabel: "Lauf-Gesundheit", body: runHealthBundle, skipSectionWrapper: true },
-  { id: "what-now", title: "Was jetzt?", navLabel: "Was jetzt?", body: renderOnDemandNextActions([]) },
   { id: "tech-status", title: "Technischer Lauf-Status", navLabel: "Lauf-Status", body: techStatusBundle, skipSectionWrapper: true },
 
   // Kontext + Agent
   { id: "agent-view", title: "KI Coding Agents", navLabel: "Agents", body: renderAgentField(emptyAgentView) },
-  { id: "target-repo-context", title: "Zielrepo-Kontext", navLabel: "Kontext", body: renderProjectContextSources(emptyProjectProfile, null) }
+  { id: "target-repo-context", title: "Zielrepo-Kontext", navLabel: "Kontext", body: renderProjectContextSources(emptyProjectProfile, null) },
+
+  // "Was jetzt?" ganz unten als Abschluss-CTA
+  {
+    id: "what-now", title: "Was jetzt? — Action-Steps", navLabel: "Was jetzt?",
+    body: renderWhatNowSection({ projectKey: "eventbear-worker" }),
+    skipSectionWrapper: true
+  }
 ];
 
 const html = renderHtmlDocument({
