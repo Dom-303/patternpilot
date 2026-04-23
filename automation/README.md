@@ -112,6 +112,7 @@ Die Hook-Referenz liegt unter:
 - `automation/hooks/README.md`
 - `docs/reference/AUTOMATION_ALERT_DELIVERY.md`
 - `docs/reference/AUTOMATION_FAILURE_RECOVERY_POLICY.md`
+- `docs/reference/SCHEDULER_CHAIN_RUN_AUTOMATION.md`
 
 Fuer GitHub Actions ist der MVP-Kanal jetzt bewusst:
 
@@ -138,6 +139,15 @@ Retrybare Fehler mit freigegebenem Auto-Resume brauchen dagegen keinen manuellen
 - `network_transient` -> Cooldown und spaeter wieder `ready`
 
 Auth- oder Projektfehler bleiben bewusst hart und landen in `blocked_manual`.
+
+## Chain-Run Limits
+
+Automation-Jobs koennen fuer den Kettenlauf jetzt projektweise Limits und Scheduler-Metadaten tragen:
+
+- `maxProjectsPerRun`
+- `schedulerHook`
+
+Damit kann ein All-Projects-Job bewusst nur ein rotierendes Projektfenster pro Tick ziehen, statt immer die gesamte Menge in einem Lauf zu bearbeiten.
 
 ## Maintenance
 

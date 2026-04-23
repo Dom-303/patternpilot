@@ -214,6 +214,40 @@ describe("updateAutomationJobState", () => {
     assert.equal(failed.jobs["first-run-watchlist"].failureRecoveryMode, "manual_clear_required");
     assert.equal(failed.jobs["first-run-watchlist"].resumeRecommendation.strategy, "manual_resume_after_retryable_failure");
   });
+
+  test("stores scheduler hook and project window metadata for chain-run jobs", () => {
+    const initial = {
+      schemaVersion: 1,
+      updatedAt: null,
+      jobs: {}
+    };
+
+    const updated = updateAutomationJobState(initial, {
+      jobName: "all-project-watchlists",
+      runId: "run-2",
+      createdAt: "2026-04-23T09:00:00.000Z",
+      counts: { failed: 0, completed: 1, completed_with_blocks: 0 },
+      failures: [],
+      jobMetadata: {
+        scope: "all-projects",
+        schedulerHook: "staggered-project-window",
+        maxProjectsPerRun: 2,
+        totalProjects: 5,
+        projectWindowKeys: ["alpha", "beta"],
+        projectWindowTruncated: true,
+        projectWindowStartCursor: 0,
+        nextProjectCursor: 2
+      }
+    });
+
+    assert.equal(updated.jobs["all-project-watchlists"].jobScope, "all-projects");
+    assert.equal(updated.jobs["all-project-watchlists"].schedulerHook, "staggered-project-window");
+    assert.equal(updated.jobs["all-project-watchlists"].maxProjectsPerRun, 2);
+    assert.equal(updated.jobs["all-project-watchlists"].totalProjects, 5);
+    assert.deepEqual(updated.jobs["all-project-watchlists"].projectWindowKeys, ["alpha", "beta"]);
+    assert.equal(updated.jobs["all-project-watchlists"].projectWindowTruncated, true);
+    assert.equal(updated.jobs["all-project-watchlists"].nextProjectCursor, 2);
+  });
 });
 
 describe("evaluateAutomationJobs", () => {

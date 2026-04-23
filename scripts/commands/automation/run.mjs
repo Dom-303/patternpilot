@@ -4,6 +4,7 @@ import {
   buildRunResumeRecommendation,
   collectUrls,
   createRunId,
+  loadAutomationJobs,
   loadAutomationJobState,
   loadProjectAlignmentRules,
   loadProjectBinding,
@@ -22,6 +23,7 @@ import {
   releaseAutomationLock,
   renderAutomationRunSummary,
   selectAutomationDiscoveryCandidates,
+  selectAutomationProjectWindow,
   setAutomationPhase,
   summarizeAutomationProjects
 } from "../../../lib/automation/automation.mjs";
@@ -37,9 +39,24 @@ import { runReEvaluate, runReviewWatchlist } from "../watchlist.mjs";
 
 export async function runAutomation(rootDir, config, options) {
   const projectEntries = Object.entries(config.projects ?? {});
-  const targetEntries = options.project && !options.allProjects
+  const rawTargetEntries = options.project && !options.allProjects
     ? projectEntries.filter(([projectKey]) => projectKey === options.project)
     : projectEntries;
+  const automationJobs = options.automationJob
+    ? (await loadAutomationJobs(rootDir, config)).jobs
+    : [];
+  const automationJobDefinition = options.automationJob
+    ? automationJobs.find((job) => job.name === options.automationJob) ?? null
+    : null;
+  const existingAutomationJobState = options.automationJob
+    ? (await loadAutomationJobState(rootDir, config)).state
+    : { jobs: {} };
+  const projectWindow = selectAutomationProjectWindow(
+    rawTargetEntries,
+    automationJobDefinition ?? {},
+    existingAutomationJobState?.jobs?.[options.automationJob] ?? {}
+  );
+  const targetEntries = projectWindow.entries;
   const createdAt = new Date().toISOString();
   const runId = createRunId(new Date(createdAt));
   const promotionMode = options.promotionMode ?? "skip";
@@ -69,6 +86,13 @@ export async function runAutomation(rootDir, config, options) {
   console.log(`- run_id: ${runId}`);
   console.log(`- automation_job: ${options.automationJob ?? "-"}`);
   console.log(`- projects: ${targetEntries.length}`);
+  console.log(`- projects_available: ${projectWindow.totalProjects}`);
+  console.log(`- max_projects_per_run: ${projectWindow.maxProjectsPerRun || "-"}`);
+  console.log(`- project_window_truncated: ${projectWindow.truncated ? "yes" : "no"}`);
+  console.log(`- project_window_start_cursor: ${projectWindow.startCursor ?? 0}`);
+  console.log(`- project_window_next_cursor: ${projectWindow.nextProjectCursor ?? 0}`);
+  console.log(`- project_window_keys: ${projectWindow.projectKeys.join(",") || "-"}`);
+  console.log(`- scheduler_hook: ${automationJobDefinition?.schedulerHook ?? "-"}`);
   console.log(`- promotion_mode: ${promotionMode}`);
   console.log(`- dry_run: ${options.dryRun ? "yes" : "no"}`);
   console.log(`- skip_discovery: ${options.skipDiscovery ? "yes" : "no"}`);
@@ -467,6 +491,22 @@ export async function runAutomation(rootDir, config, options) {
       createdAt,
       dryRun: options.dryRun,
       automationJob: options.automationJob,
+      automationJobDefinition: automationJobDefinition
+        ? {
+            name: automationJobDefinition.name,
+            scope: automationJobDefinition.scope ?? null,
+            schedulerHook: automationJobDefinition.schedulerHook ?? null,
+            maxProjectsPerRun: automationJobDefinition.maxProjectsPerRun ?? null
+          }
+        : null,
+      jobSelection: {
+        totalProjects: projectWindow.totalProjects,
+        maxProjectsPerRun: projectWindow.maxProjectsPerRun,
+        truncated: projectWindow.truncated,
+        startCursor: projectWindow.startCursor,
+        nextProjectCursor: projectWindow.nextProjectCursor,
+        projectKeys: projectWindow.projectKeys
+      },
       promotionMode,
       continueOnProjectError: options.automationContinueOnProjectError,
       forceLock: options.automationForceLock,
@@ -508,7 +548,17 @@ export async function runAutomation(rootDir, config, options) {
         createdAt,
         counts,
         failures,
-        projectRuns
+        projectRuns,
+        jobMetadata: {
+          scope: automationJobDefinition?.scope ?? null,
+          schedulerHook: automationJobDefinition?.schedulerHook ?? null,
+          maxProjectsPerRun: projectWindow.maxProjectsPerRun,
+          totalProjects: projectWindow.totalProjects,
+          projectWindowKeys: projectWindow.projectKeys,
+          projectWindowTruncated: projectWindow.truncated,
+          projectWindowStartCursor: projectWindow.startCursor,
+          nextProjectCursor: projectWindow.nextProjectCursor
+        }
       });
       await writeAutomationJobState(rootDir, config, nextState, options.dryRun);
       console.log(`Automation job state: ${path.relative(rootDir, statePath)}${options.dryRun ? " (dry-run not written)" : ""}`);

@@ -12,6 +12,7 @@ import {
   finalizeAutomationProjectRun,
   releaseAutomationLock,
   renderAutomationRunSummary,
+  selectAutomationProjectWindow,
   selectAutomationDiscoveryCandidates,
   setAutomationPhase,
   summarizeAutomationProjects,
@@ -350,6 +351,35 @@ describe("buildDiscoveryPolicyCalibration", () => {
 });
 
 describe("automation project run state", () => {
+  test("selectAutomationProjectWindow rotates a limited all-project chain across runs", () => {
+    const entries = [
+      ["alpha", {}],
+      ["beta", {}],
+      ["gamma", {}]
+    ];
+
+    const firstWindow = selectAutomationProjectWindow(entries, {
+      scope: "all-projects",
+      maxProjectsPerRun: 2,
+      schedulerHook: "staggered-project-window"
+    }, {
+      nextProjectCursor: 0
+    });
+    const secondWindow = selectAutomationProjectWindow(entries, {
+      scope: "all-projects",
+      maxProjectsPerRun: 2,
+      schedulerHook: "staggered-project-window"
+    }, {
+      nextProjectCursor: firstWindow.nextProjectCursor
+    });
+
+    assert.deepEqual(firstWindow.projectKeys, ["alpha", "beta"]);
+    assert.equal(firstWindow.truncated, true);
+    assert.equal(firstWindow.nextProjectCursor, 2);
+    assert.deepEqual(secondWindow.projectKeys, ["gamma", "alpha"]);
+    assert.equal(secondWindow.nextProjectCursor, 1);
+  });
+
   test("marks completed_with_blocks when completed and blocked phases coexist", () => {
     const run = createAutomationProjectRun("sample-project");
     setAutomationPhase(run, "discover", { status: "completed", reason: "run_complete", count: 4 });
