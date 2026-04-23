@@ -12,6 +12,7 @@ import {
   loadWatchlistUrls,
   normalizeGithubUrl,
   reEvaluateQueueEntries,
+  selectReEvaluateTargets,
   renderWatchlistReviewHtmlReport,
   writeLatestReportPointers,
   writeRunArtifacts
@@ -22,10 +23,8 @@ import {
 } from "../shared/golden-path.mjs";
 import {
   buildWatchlistReview,
-  buildWatchlistReviewReport,
-  classifyReviewItemState
+  buildWatchlistReviewReport
 } from "../../lib/review.mjs";
-import { computeRulesFingerprint } from "../../lib/classification/evaluation.mjs";
 import { refreshContext } from "../shared/runtime-helpers.mjs";
 import { runIntake } from "./discovery.mjs";
 import { readProblem } from "../../lib/problem/store.mjs";
@@ -63,47 +62,6 @@ function buildReviewCommandGuidance(projectKey, review) {
   return {
     primary: commands.releaseCheck,
     additional: [commands.reviewWatchlist, commands.showProject]
-  };
-}
-
-function selectReEvaluateTargets(queueRows, alignmentRules, options = {}) {
-  const currentFingerprint = computeRulesFingerprint(alignmentRules);
-  const requestedUrls = new Set(
-    (options.urls ?? []).map((url) => normalizeGithubUrl(url).normalizedRepoUrl)
-  );
-  const allowedUrls = options.allowedUrls ? new Set(options.allowedUrls) : null;
-  const states = { complete: 0, fallback: 0, stale: 0 };
-  const targets = [];
-
-  for (const row of queueRows) {
-    const stateFields = classifyReviewItemState(row, alignmentRules, currentFingerprint);
-    states[stateFields.decisionDataState] += 1;
-    const normalizedUrl = row.normalized_repo_url || row.repo_url;
-
-    if (requestedUrls.size > 0 && !requestedUrls.has(normalizedUrl)) {
-      continue;
-    }
-    if (allowedUrls && !allowedUrls.has(normalizedUrl)) {
-      continue;
-    }
-    if (options.staleOnly) {
-      if (stateFields.decisionDataState !== "stale") {
-        continue;
-      }
-    } else if (stateFields.decisionDataState !== "stale" && stateFields.decisionDataState !== "fallback") {
-      continue;
-    }
-
-    targets.push({
-      row,
-      stateFields
-    });
-  }
-
-  return {
-    currentFingerprint,
-    states,
-    targets
   };
 }
 
@@ -307,32 +265,158 @@ export async function runSyncAllWatchlists(rootDir, config, options) {
   }
 }
 
+function renderReEvaluateSummary({
+  projectKey,
+  createdAt,
+  dryRun,
+  staleOnly,
+  states,
+  totalTargetRows,
+  selectedTargetRows,
+  remainingTargetRows,
+  limitApplied,
+  currentFingerprint,
+  driftCounts,
+  updates
+}) {
+  const driftLines = Object.keys(driftCounts ?? {}).length > 0
+    ? Object.entries(driftCounts)
+      .sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0]))
+      .map(([reason, count]) => `- ${reason}: ${count}`)
+      .join("\n")
+    : "- none";
+  const updateLines = (updates?.length ?? 0) > 0
+    ? updates.map((update) =>
+      `- ${update.audit.repoRef}: triggers=${update.audit.triggerReasons.join(",") || "-"} | previous_fingerprint=${update.audit.previousRulesFingerprint ?? "-"} | next_fingerprint=${update.audit.nextRulesFingerprint ?? "-"} | disposition=${update.decisionFields.reviewDisposition} | intake_doc=${update.intakeDocResult.status}`
+    ).join("\n")
+    : "- none";
+
+  return `# Patternpilot Re-Evaluate
+
+- project: ${projectKey}
+- created_at: ${createdAt}
+- dry_run: ${dryRun ? "yes" : "no"}
+- stale_only: ${staleOnly ? "yes" : "no"}
+- complete_rows: ${states.complete}
+- fallback_rows: ${states.fallback}
+- stale_rows: ${states.stale}
+- target_rows_total: ${totalTargetRows}
+- target_rows_selected: ${selectedTargetRows}
+- target_rows_remaining: ${remainingTargetRows}
+- batch_limit: ${limitApplied ?? "-"}
+- current_rules_fingerprint: ${currentFingerprint}
+
+## Drift Signals
+
+${driftLines}
+
+## Updated Items
+
+${updateLines}
+`;
+}
+
 export async function runReEvaluate(rootDir, config, options) {
   const projectKey = options.project || config.defaultProject;
   const { project, binding } = await loadProjectBinding(rootDir, config, projectKey);
   const alignmentRules = await loadProjectAlignmentRules(rootDir, project, binding);
   const queueRows = (await loadQueueEntries(rootDir, config))
     .filter((row) => row.project_key === projectKey);
-  const selection = selectReEvaluateTargets(queueRows, alignmentRules, options);
+  const normalizedUrls = (options.urls ?? []).map((url) => {
+    const rawUrl = String(url ?? "").trim();
+    if (!rawUrl) {
+      return null;
+    }
+    return normalizeGithubUrl(rawUrl).normalizedRepoUrl;
+  }).filter(Boolean);
+  const selection = selectReEvaluateTargets(queueRows, alignmentRules, {
+    ...options,
+    urls: normalizedUrls
+  });
+  const totalTargetRows = selection.targets.length;
+  const limitApplied = options.limit && Number.isFinite(options.limit) && options.limit > 0
+    ? Number(options.limit)
+    : null;
+  const plannedTargets = limitApplied
+    ? selection.targets.slice(0, limitApplied)
+    : selection.targets;
+  const remainingTargetRows = Math.max(0, totalTargetRows - plannedTargets.length);
+  const createdAt = new Date().toISOString();
+  const runId = createRunId(new Date(createdAt));
 
-  if (options.limit && Number.isFinite(options.limit) && options.limit > 0) {
-    selection.targets = selection.targets.slice(0, options.limit);
+  let updates = [];
+
+  if (plannedTargets.length > 0) {
+    const targetMetadataByUrl = new Map(
+      plannedTargets
+        .filter((item) => item.target.normalizedRepoUrl)
+        .map((item) => [
+          item.target.normalizedRepoUrl,
+          {
+            decisionDataState: item.target.decisionDataState,
+            previousRulesFingerprint: item.target.previousRulesFingerprint,
+            driftReasons: item.target.driftReasons
+          }
+        ])
+    );
+    updates = await reEvaluateQueueEntries(
+      rootDir,
+      config,
+      plannedTargets.map((item) => item.row),
+      alignmentRules,
+      {
+        ...options,
+        targetMetadataByUrl
+      }
+    );
   }
 
-  console.log(`# Patternpilot Re-Evaluate`);
-  console.log(``);
-  console.log(`- project: ${projectKey}`);
-  console.log(`- dry_run: ${options.dryRun ? "yes" : "no"}`);
-  console.log(`- stale_only: ${options.staleOnly ? "yes" : "no"}`);
-  console.log(`- queue_rows: ${queueRows.length}`);
-  console.log(`- complete_rows: ${selection.states.complete}`);
-  console.log(`- fallback_rows: ${selection.states.fallback}`);
-  console.log(`- stale_rows: ${selection.states.stale}`);
-  console.log(`- target_rows: ${selection.targets.length}`);
-  console.log(`- current_rules_fingerprint: ${selection.currentFingerprint}`);
+  const summary = renderReEvaluateSummary({
+    projectKey,
+    createdAt,
+    dryRun: options.dryRun,
+    staleOnly: options.staleOnly,
+    states: selection.states,
+    totalTargetRows,
+    selectedTargetRows: plannedTargets.length,
+    remainingTargetRows,
+    limitApplied,
+    currentFingerprint: selection.currentFingerprint,
+    driftCounts: selection.driftCounts,
+    updates
+  });
+  const manifest = {
+    command: "re-evaluate",
+    runId,
+    projectKey,
+    createdAt,
+    dryRun: options.dryRun,
+    staleOnly: Boolean(options.staleOnly),
+    batchLimit: limitApplied,
+    queueRows: queueRows.length,
+    totalTargetRows,
+    selectedTargetRows: plannedTargets.length,
+    remainingTargetRows,
+    currentFingerprint: selection.currentFingerprint,
+    states: selection.states,
+    driftCounts: selection.driftCounts,
+    updates
+  };
+  const runDir = await writeRunArtifacts({
+    rootDir,
+    config,
+    projectKey,
+    runId,
+    manifest,
+    summary,
+    projectProfile: null,
+    dryRun: options.dryRun
+  });
 
-  if (selection.targets.length === 0) {
-    console.log(``);
+  console.log(summary);
+  console.log(`Run directory: ${path.relative(rootDir, runDir)}`);
+
+  if (plannedTargets.length === 0) {
     console.log(`- status: skipped_no_targets`);
     console.log(`- note: Queue entries are already current for this selection.`);
     console.log(``);
@@ -345,34 +429,27 @@ export async function runReEvaluate(rootDir, config, options) {
       command: "re-evaluate",
       projectKey,
       mode: options.dryRun ? "dry_run" : "write",
-      reportPath: "-"
+      reportPath: path.relative(rootDir, runDir)
     });
     return {
       projectKey,
+      runId,
+      runDir,
       updates: [],
       states: selection.states,
-      targetRows: 0
+      targetRows: 0,
+      totalTargetRows,
+      remainingTargetRows,
+      driftCounts: selection.driftCounts
     };
   }
 
-  const updates = await reEvaluateQueueEntries(
-    rootDir,
-    config,
-    selection.targets.map((item) => item.row),
-    alignmentRules,
-    options
-  );
-
-  console.log(``);
-  console.log(`## Updated Items`);
-  for (const update of updates) {
-    const repoRef = `${update.row.owner}/${update.row.name}`;
-    console.log(
-      `- ${repoRef}: disposition=${update.decisionFields.reviewDisposition} | effort=${update.decisionFields.effortBand} (${update.decisionFields.effortScore}) | value=${update.decisionFields.valueBand} (${update.decisionFields.valueScore}) | intake_doc=${update.intakeDocResult.status}`
-    );
-  }
   console.log(``);
   const commands = buildGoldenPathCommands(projectKey);
+  if (remainingTargetRows > 0) {
+    console.log(`- next_batch_hint: ${remainingTargetRows} target row(s) remain for a later re-evaluate batch.`);
+  }
+  console.log(``);
   console.log(renderNextCommandSections({
     primary: commands.reviewWatchlist,
     additional: [commands.releaseCheck, commands.showProject]
@@ -382,13 +459,18 @@ export async function runReEvaluate(rootDir, config, options) {
     command: "re-evaluate",
     projectKey,
     mode: options.dryRun ? "dry_run" : "write",
-    reportPath: "-"
+    reportPath: path.relative(rootDir, runDir)
   });
 
   return {
     projectKey,
+    runId,
+    runDir,
     updates,
     states: selection.states,
-    targetRows: selection.targets.length
+    targetRows: plannedTargets.length,
+    totalTargetRows,
+    remainingTargetRows,
+    driftCounts: selection.driftCounts
   };
 }

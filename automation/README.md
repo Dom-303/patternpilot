@@ -112,6 +112,7 @@ Die Hook-Referenz liegt unter:
 - `automation/hooks/README.md`
 - `docs/reference/AUTOMATION_ALERT_DELIVERY.md`
 - `docs/reference/AUTOMATION_FAILURE_RECOVERY_POLICY.md`
+- `docs/reference/AUTOMATION_REEVALUATION_OPERATIONS.md`
 - `docs/reference/SCHEDULER_CHAIN_RUN_AUTOMATION.md`
 
 Fuer GitHub Actions ist der MVP-Kanal jetzt bewusst:
@@ -158,3 +159,5 @@ npm run re-evaluate -- --project my-project --stale-only --dry-run
 ```
 
 Damit werden stale oder fallback Decision-Felder neu berechnet und der `## Decision Signals`-Block in bestehenden Intake-Dossiers mitgezogen.
+
+Re-Evaluate-Laeufe schreiben dabei jetzt auch eigene Audit-Artefakte mit Drift-Ursachen, Batch-Fenster und Update-Ergebnis pro Repo.

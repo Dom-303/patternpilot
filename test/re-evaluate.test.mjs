@@ -8,8 +8,10 @@ import {
   makeTempQueueWorkspace
 } from "./helpers/fixtures.mjs";
 import {
+  classifyReEvaluateTarget,
   reevaluateQueueRow,
-  reEvaluateQueueEntries
+  reEvaluateQueueEntries,
+  selectReEvaluateTargets
 } from "../lib/re-evaluate.mjs";
 import { loadQueueEntries } from "../lib/queue.mjs";
 
@@ -91,6 +93,52 @@ describe("reevaluateQueueRow", () => {
   });
 });
 
+describe("classifyReEvaluateTarget", () => {
+  test("detects rules fingerprint drift for stale decision data", () => {
+    const target = classifyReEvaluateTarget(
+      makeQueueRow({
+        rules_fingerprint: "oldfingerprnt",
+        decision_summary: "Legacy decision summary",
+        effort_band: "medium",
+        effort_score: "42",
+        value_band: "high",
+        value_score: "72",
+        review_disposition: "review_queue"
+      }),
+      makeFakeAlignmentRules()
+    );
+
+    assert.equal(target.decisionDataState, "stale");
+    assert.ok(target.driftReasons.includes("rules_fingerprint_drift"));
+  });
+});
+
+describe("selectReEvaluateTargets", () => {
+  test("summarizes stale and fallback drift reasons before batching", () => {
+    const selection = selectReEvaluateTargets([
+      makeQueueRow({
+        rules_fingerprint: "oldfingerprnt",
+        decision_summary: "Legacy decision summary",
+        effort_band: "medium",
+        effort_score: "42",
+        value_band: "high",
+        value_score: "72",
+        review_disposition: "review_queue"
+      }),
+      makeQueueRow({
+        repo_url: "https://github.com/acme/fallback",
+        normalized_repo_url: "https://github.com/acme/fallback",
+        owner: "acme",
+        name: "fallback"
+      })
+    ], makeFakeAlignmentRules());
+
+    assert.equal(selection.targets.length, 2);
+    assert.equal(selection.driftCounts.rules_fingerprint_drift, 1);
+    assert.equal(selection.driftCounts.fallback_decision_data, 1);
+  });
+});
+
 describe("reEvaluateQueueEntries", () => {
   test("updates queue entries and rewrites intake decision signals", async () => {
     const row = makeQueueRow();
@@ -120,7 +168,16 @@ describe("reEvaluateQueueEntries", () => {
         workspace.config,
         [row],
         makeFakeAlignmentRules(),
-        { dryRun: false }
+        {
+          dryRun: false,
+          targetMetadataByUrl: new Map([
+            [row.normalized_repo_url, {
+              decisionDataState: "stale",
+              previousRulesFingerprint: "oldfingerprnt",
+              driftReasons: ["rules_fingerprint_drift"]
+            }]
+          ])
+        }
       );
 
       const queueRows = await loadQueueEntries(workspace.rootDir, workspace.config);
@@ -131,6 +188,8 @@ describe("reEvaluateQueueEntries", () => {
       assert.equal(updates[0].intakeDocResult.status, "updated");
       assert.equal(updatedRow.review_disposition, "intake_now");
       assert.notEqual(updatedRow.rules_fingerprint, "");
+      assert.deepEqual(updates[0].audit.triggerReasons, ["rules_fingerprint_drift"]);
+      assert.equal(updates[0].audit.previousDecisionDataState, "stale");
       assert.ok(intakeContent.includes("- review_disposition: intake_now"));
       assert.ok(!intakeContent.includes("- effort: unknown"));
     } finally {
@@ -163,10 +222,20 @@ describe("reEvaluateQueueEntries", () => {
         workspace.config,
         [row],
         makeFakeAlignmentRules(),
-        { dryRun: true }
+        {
+          dryRun: true,
+          targetMetadataByUrl: new Map([
+            [row.normalized_repo_url, {
+              decisionDataState: "fallback",
+              previousRulesFingerprint: null,
+              driftReasons: ["fallback_decision_data"]
+            }]
+          ])
+        }
       );
 
       assert.equal(updates[0].intakeDocResult.status, "dry_run_preview");
+      assert.deepEqual(updates[0].audit.triggerReasons, ["fallback_decision_data"]);
       assert.equal(fs.readFileSync(intakePath, "utf8"), originalContent);
     } finally {
       workspace.cleanup();
