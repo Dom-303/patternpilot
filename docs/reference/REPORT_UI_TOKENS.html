@@ -111,7 +111,39 @@ body::before {
 .group:last-child { margin-bottom: 0; }
 .report-overview { margin-bottom: 56px; }
 .sections > *:last-child { margin-bottom: 0; }
-.report-footer { margin-top: 56px; }
+.report-footer {
+  margin-top: 72px;
+  padding-top: 32px;
+  border-top: 1px solid var(--rule-soft);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.report-footer img {
+  width: 48px;
+  height: 48px;
+  opacity: 0.7;
+}
+.report-footer p {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin: 0;
+}
+
+/* Clickable recommendation badge (opens explain modal) */
+.repo-row .badge.badge--clickable {
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.repo-row .badge.badge--clickable:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+}
 .group-head {
   display: flex; align-items: center; justify-content: space-between;
   gap: 20px;
@@ -555,6 +587,40 @@ a.name:hover::after { color: var(--neon-magenta); transform: translate(1px, -1px
   font-variant-numeric: tabular-nums;
 }
 
+/* Discovery "Weitere Kandidaten"-Dropdown (Top 3 + Rest) */
+details.candidates-rest {
+  border-top: 1px solid var(--card-rule-soft);
+  background: var(--card-bg-alt);
+}
+details.candidates-rest > summary.candidates-rest-toggle {
+  list-style: none;
+  cursor: pointer;
+  padding: 16px 36px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--card-ink-soft);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: color 0.15s, background 0.15s;
+}
+details.candidates-rest > summary.candidates-rest-toggle::marker { content: ""; }
+details.candidates-rest > summary.candidates-rest-toggle::-webkit-details-marker { display: none; }
+details.candidates-rest > summary.candidates-rest-toggle:hover {
+  color: var(--neon-magenta);
+  background: rgba(255,61,151,0.04);
+}
+details.candidates-rest .candidates-rest-chevron {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--neon-magenta);
+  transition: transform 0.2s;
+}
+details.candidates-rest[open] .candidates-rest-chevron { transform: rotate(180deg); }
+details.candidates-rest .candidates-rest-body { background: var(--card-bg); }
+
 /* Repo-Row as expandable <details> element (deep content) */
 details.repo-row {
   display: block;
@@ -651,6 +717,20 @@ details.repo-row .repo-body-value {
   color: var(--card-ink);
   word-wrap: break-word;
 }
+details.repo-row .repo-body-value--empty {
+  color: var(--card-ink-muted);
+  font-style: italic;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+details.repo-row .repo-body-empty-reason {
+  font-family: 'JetBrains Mono', monospace;
+  font-style: normal;
+  font-size: 11px;
+  color: var(--card-ink-muted);
+  letter-spacing: 0.02em;
+}
 details.repo-row .repo-body-list {
   list-style: none;
   padding: 0;
@@ -724,6 +804,12 @@ details.repo-row .repo-body-list li::before {
   gap: 1px;
   background: var(--card-rule-soft);
   border-top: 1px solid var(--card-rule-soft);
+}
+.info-grid--halves {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (max-width: 720px) {
+  .info-grid--halves { grid-template-columns: 1fr; }
 }
 .info-grid .info-card {
   padding: 22px 28px;
@@ -1857,6 +1943,22 @@ details.repo-row .repo-body-list li::before {
       else modal.setAttribute('open', '');
     });
   });
+  // Generic explain-on-click: any element with data-explain-title + data-explain-body
+  // opens the info-modal with that content directly (no panel lookup needed).
+  document.querySelectorAll('[data-explain-title]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const title = el.getAttribute('data-explain-title') || '';
+      const body = el.getAttribute('data-explain-body') || '';
+      modalTitle.textContent = title;
+      const p = document.createElement('p');
+      p.textContent = body;
+      modalBody.replaceChildren(p);
+      if (typeof modal.showModal === 'function') modal.showModal();
+      else modal.setAttribute('open', '');
+    });
+  });
+
   if (modalClose) modalClose.addEventListener('click', () => modal.close());
   modal.addEventListener('click', (e) => {
     const rect = modal.getBoundingClientRect();
