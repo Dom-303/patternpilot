@@ -258,16 +258,16 @@ test("renderCoverageCards emits axis-rows per group", () => {
   assert.match(html, /coverage-axis-group/);
 });
 
-test("renderProjectContextSources emits info-grid--halves + status-chip, intro-copy now comes from section-description", () => {
+test("renderProjectContextSources emits restructured 2-card layout (Quellen + Fähigkeiten) + status-chip", () => {
   const html = renderProjectContextSources({
     contextSources: { loadedFiles: [], missingFiles: [], scannedDirectories: [], declaredFiles: [], declaredDirectories: [] },
     capabilitiesPresent: []
   }, null);
-  assert.match(html, /info-grid--halves/);
+  assert.match(html, /class="info-grid"/, "has info-grid wrapper (default 2 cols)");
   assert.match(html, /context-status/, "has status chip");
-  assert.match(html, /Grund:/, "empty-state carries explicit reason");
+  assert.match(html, /Eingelesene Kontextquellen/, "sources card present");
+  assert.match(html, /Extrahierte Faehigkeiten/, "capabilities card present");
   assert.doesNotMatch(html, /class="section-intro"/, "inline section-intro moved to section-description wrapper");
-  assert.doesNotMatch(html, /info-card-copy/, "per-card copy removed, description lives in description-collapse");
 });
 
 test("renderAgentField includes richer JSON snapshot and agent-action-button ids", () => {
