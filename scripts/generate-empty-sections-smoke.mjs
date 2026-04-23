@@ -29,9 +29,10 @@ import {
   renderOnDemandRunPlanCards,
   renderOnDemandRunDriftCards,
   renderOnDemandGovernanceCards,
-  renderOnDemandStabilityCards
+  renderOnDemandStabilityCards,
+  renderTabbedSection
 } from "../lib/html/sections.mjs";
-import { renderPolicySummaryCard, renderPolicyCalibrationCard, renderHtmlList } from "../lib/html/shared.mjs";
+import { renderPolicySummaryCard, renderPolicyCalibrationCard, renderHtmlList, renderTopRecommendations, renderRecommendedActions } from "../lib/html/shared.mjs";
 import { renderInfoGrid } from "../lib/html/components.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -124,72 +125,81 @@ const emptyStability = {
   comparedPairs: 0
 };
 
+// Konsolidierte Bundles
+const discoveryPolicyBundle = renderTabbedSection({
+  id: "discovery-policy", title: "Discovery-Regelwerk", sub: "Wirkung + Kalibrierung",
+  accent: "orange", countChip: "2 Ansichten",
+  tabs: [
+    { label: "Aktuelle Wirkung", body: renderPolicySummaryCard(emptyDiscovery) },
+    { label: "Kalibrierung", body: renderPolicyCalibrationCard(emptyDiscovery) }
+  ]
+});
+
+const runHealthBundle = renderTabbedSection({
+  id: "run-health", title: "Lauf-Gesundheit", sub: "Drift / Stabilitaet / Governance",
+  accent: "purple", countChip: "3 Ansichten",
+  tabs: [
+    { label: "Drift", body: renderOnDemandRunDriftCards(emptyDrift) },
+    { label: "Stabilitaet", body: renderOnDemandStabilityCards(emptyStability) },
+    { label: "Governance", body: renderOnDemandGovernanceCards(emptyGovernance) }
+  ]
+});
+
+const techStatusBundle = renderTabbedSection({
+  id: "tech-status", title: "Technischer Lauf-Status", sub: "URLs / Intake-Luecken / Suchfehler",
+  accent: "green", countChip: "3 Ansichten",
+  tabs: [
+    { label: "Wirksame URLs", body: renderHtmlList([], "Zu diesem Lauf gehoerten keine wirksamen URLs.") },
+    { label: "Fehlendes Intake", body: renderHtmlList([], "Alle Watchlist-URLs sind abgedeckt.") },
+    { label: "Suchfehler", body: renderHtmlList([], "Keine Suchfehler in diesem Lauf.") }
+  ]
+});
+
+const empfehlungenBundle = renderTabbedSection({
+  id: "empfehlungen", title: "Empfehlungen", sub: "Top-Rang + Nach Disposition",
+  accent: "magenta", countChip: "2 Ansichten",
+  tabs: [
+    { label: "Top-Rang", body: renderTopRecommendations([], []) },
+    { label: "Nach Disposition gruppiert", body: renderRecommendedActions({ candidates: [], reportType: "discovery", runRoot: null }) }
+  ]
+});
+
 const sections = [
-  // Discovery
+  { id: "empfehlungen", title: "Empfehlungen", navLabel: "Empfehlungen", body: empfehlungenBundle, skipSectionWrapper: true },
   {
-    id: "candidates",
-    title: "Discovery-Kandidaten",
-    navLabel: "Kandidaten",
+    id: "candidates", title: "Discovery-Kandidaten", navLabel: "Kandidaten",
     body: renderDiscoveryCandidateCards([], reportView)
   },
   {
-    id: "discovery-lenses",
-    title: "Discovery-Linsen",
-    navLabel: "Linsen",
+    id: "discovery-lenses", title: "Discovery-Linsen", navLabel: "Linsen",
     body: `<p class="empty">Noch keine Discovery-Linsen fuer diesen Lauf aufgebaut. Sie entstehen sobald Pattern Pilot echte GitHub-Queries gegen dein Projekt ausfuehrt.</p>`
   },
-  { id: "discovery-policy", title: "Discovery-Regelwerk", navLabel: "Regeln", body: renderPolicySummaryCard(emptyDiscovery) },
-  { id: "policy-calibration", title: "Regel-Kalibrierung", navLabel: "Kalibrierung", body: renderPolicyCalibrationCard(emptyDiscovery) },
+  { id: "discovery-policy", title: "Discovery-Regelwerk", navLabel: "Regelwerk", body: discoveryPolicyBundle, skipSectionWrapper: true },
 
   // Watchlist-Review
   {
-    id: "top-compared-repositories",
-    title: "Staerkste Vergleichs-Repos",
-    navLabel: "Top Repos",
+    id: "top-compared-repositories", title: "Staerkste Vergleichs-Repos", navLabel: "Top Repos",
     body: renderWatchlistTopCards(emptyWatchlistReview, reportView)
   },
   { id: "coverage", title: "Coverage", navLabel: "Coverage", body: renderCoverageCards(emptyCoverage) },
   { id: "review-scope", title: "Review-Umfang", navLabel: "Umfang", body: renderReviewScopeCards(emptyWatchlistReview) },
   {
-    id: "highest-risk-signals",
-    title: "Staerkste Risikosignale",
-    navLabel: "Risiken",
+    id: "highest-risk-signals", title: "Staerkste Risikosignale", navLabel: "Risiken",
     body: renderHtmlList([], "Keine Risikosignale vorhanden. Sie erscheinen, sobald Review-Items mit niedrigem Fit-Band oder offenen Warnsignalen auftauchen.")
-  },
-  {
-    id: "missing-watchlist-intake",
-    title: "Fehlendes Intake fuer Watchlist",
-    navLabel: "Fehlendes Intake",
-    body: renderHtmlList([], "Alle aktuellen Watchlist-URLs sind bereits in der Queue abgedeckt — oder die Watchlist ist leer.")
   },
   { id: "repo-matrix", title: "Repo-Matrix", navLabel: "Matrix", body: renderRepoMatrix(emptyWatchlistReview, reportView) },
 
   // On-Demand
   { id: "run-summary", title: "Laufzusammenfassung", navLabel: "Lauf", body: renderOnDemandRunCards(emptyOnDemandSummary) },
-  {
-    id: "effective-urls",
-    title: "Wirksame URLs",
-    navLabel: "URLs",
-    body: renderHtmlList([], "Zu diesem Lauf gehoerten keine wirksamen URLs.")
-  },
   { id: "artifacts", title: "Artefakte", navLabel: "Artefakte", body: renderOnDemandArtifactCards(emptyOnDemandSummary.artifacts) },
   { id: "run-plan", title: "Laufplan", navLabel: "Plan", body: renderOnDemandRunPlanCards(emptyOnDemandSummary.runPlan) },
-  { id: "run-drift", title: "Laufdrift", navLabel: "Drift", body: renderOnDemandRunDriftCards(emptyDrift) },
-  { id: "run-stability", title: "Stabilitaet", navLabel: "Stabilitaet", body: renderOnDemandStabilityCards(emptyStability) },
-  { id: "run-governance", title: "Governance", navLabel: "Governance", body: renderOnDemandGovernanceCards(emptyGovernance) },
+  { id: "run-health", title: "Lauf-Gesundheit", navLabel: "Lauf-Gesundheit", body: runHealthBundle, skipSectionWrapper: true },
   { id: "what-now", title: "Was jetzt?", navLabel: "Was jetzt?", body: renderOnDemandNextActions([]) },
+  { id: "tech-status", title: "Technischer Lauf-Status", navLabel: "Lauf-Status", body: techStatusBundle, skipSectionWrapper: true },
 
   // Kontext + Agent
   { id: "agent-view", title: "KI Coding Agents", navLabel: "Agents", body: renderAgentField(emptyAgentView) },
-  { id: "target-repo-context", title: "Zielrepo-Kontext", navLabel: "Kontext", body: renderProjectContextSources(emptyProjectProfile, null) },
-
-  // Suchfehler
-  {
-    id: "search-errors",
-    title: "Suchfehler",
-    navLabel: "Suchfehler",
-    body: renderHtmlList([], "Keine Suchfehler in diesem Lauf.")
-  }
+  { id: "target-repo-context", title: "Zielrepo-Kontext", navLabel: "Kontext", body: renderProjectContextSources(emptyProjectProfile, null) }
 ];
 
 const html = renderHtmlDocument({

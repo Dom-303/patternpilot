@@ -29,9 +29,10 @@ import {
   renderOnDemandRunPlanCards,
   renderOnDemandRunDriftCards,
   renderOnDemandGovernanceCards,
-  renderOnDemandStabilityCards
+  renderOnDemandStabilityCards,
+  renderTabbedSection
 } from "../lib/html/sections.mjs";
-import { renderPolicySummaryCard, renderPolicyCalibrationCard, renderHtmlList } from "../lib/html/shared.mjs";
+import { renderPolicySummaryCard, renderPolicyCalibrationCard, renderHtmlList, renderTopRecommendations, renderRecommendedActions } from "../lib/html/shared.mjs";
 import { renderInfoGrid } from "../lib/html/components.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -340,6 +341,62 @@ const stability = {
 
 // --- Sections zusammenbauen ---
 
+// ---- Konsolidierte Section-Bundles -------------------------------------
+
+const discoveryPolicyBundle = renderTabbedSection({
+  id: "discovery-policy",
+  title: "Discovery-Regelwerk",
+  sub: "Wirkung + Kalibrierung",
+  accent: "orange",
+  countChip: "2 Ansichten",
+  tabs: [
+    { label: "Aktuelle Wirkung", body: renderPolicySummaryCard(discovery) },
+    { label: "Kalibrierung", body: renderPolicyCalibrationCard(discovery) }
+  ]
+});
+
+const runHealthBundle = renderTabbedSection({
+  id: "run-health",
+  title: "Lauf-Gesundheit",
+  sub: "Drift / Stabilitaet / Governance",
+  accent: "purple",
+  countChip: "3 Ansichten",
+  tabs: [
+    { label: "Drift", body: renderOnDemandRunDriftCards(runDrift) },
+    { label: "Stabilitaet", body: renderOnDemandStabilityCards(stability) },
+    { label: "Governance", body: renderOnDemandGovernanceCards(governance) }
+  ]
+});
+
+const techStatusBundle = renderTabbedSection({
+  id: "tech-status",
+  title: "Technischer Lauf-Status",
+  sub: "URLs / Intake-Luecken / Suchfehler",
+  accent: "green",
+  countChip: "3 Ansichten",
+  tabs: [
+    { label: "Wirksame URLs", body: renderHtmlList(onDemandSummary.effectiveUrls, "Keine wirksamen URLs.") },
+    { label: "Fehlendes Intake", body: renderHtmlList(["https://github.com/example/new-watchlist-entry", "https://github.com/another/fresh-watchlist-item"], "Alle Watchlist-URLs sind in der Queue abgedeckt.") },
+    { label: "Suchfehler", body: renderHtmlList(["Query 'event dedup' lieferte 0 Treffer", "Timeout bei civic_events (retry nach 8s OK)"], "Keine Suchfehler.") }
+  ]
+});
+
+const empfehlungenBundle = renderTabbedSection({
+  id: "empfehlungen",
+  title: "Empfehlungen",
+  sub: "Top-Rang + Nach Disposition",
+  accent: "magenta",
+  countChip: "2 Ansichten",
+  tabs: [
+    { label: "Top-Rang", body: renderTopRecommendations([
+        "AI-team-UoA/pyJedAI: als Record-Linkage-Basis uebernehmen",
+        "J535D165/recordlinkage: Blocking-Strategie adaptieren",
+        "citybureau/city-scrapers: Adapter-Muster pruefen"
+      ], candidates) },
+    { label: "Nach Disposition gruppiert", body: renderRecommendedActions({ candidates, reportType: "discovery", runRoot: { reportSchemaVersion: "2", itemsDataStateSummary: { complete: 5, fallback: 0, stale: 0 }, runConfidence: "high" } }) }
+  ]
+});
+
 const sections = [
   // Discovery-spezifisch
   {
@@ -358,8 +415,8 @@ const sections = [
       { title: "Query-Familie: civic_events", copy: "city scrapers OR municipal events", items: ["Civic-Data-Ecosystem", "Fallback fuer DACH-Anpassung"] }
     ])
   },
-  { id: "discovery-policy", title: "Discovery-Regelwerk", navLabel: "Regeln", body: renderPolicySummaryCard(discovery) },
-  { id: "policy-calibration", title: "Regel-Kalibrierung", navLabel: "Kalibrierung", body: renderPolicyCalibrationCard(discovery) },
+  // Konsolidiert: Regelwerk + Kalibrierung -> eine Tab-Section
+  { id: "discovery-policy", title: "Discovery-Regelwerk", navLabel: "Regelwerk", body: discoveryPolicyBundle, skipSectionWrapper: true },
 
   // Watchlist-Review-spezifisch
   {
@@ -379,47 +436,36 @@ const sections = [
       "j-e-d/agenda-lumiton: Wartung unklar, letzter Commit vor 14 Monaten"
     ], "Keine Risikosignale vorhanden.")
   },
-  {
-    id: "missing-watchlist-intake",
-    title: "Fehlendes Intake fuer Watchlist",
-    navLabel: "Fehlendes Intake",
-    body: renderHtmlList(
-      ["https://github.com/example/new-watchlist-entry", "https://github.com/another/fresh-watchlist-item"],
-      "Alle aktuellen Watchlist-URLs sind bereits in der Queue abgedeckt."
-    )
-  },
   { id: "repo-matrix", title: "Repo-Matrix", navLabel: "Matrix", body: renderRepoMatrix(watchlistReview, reportView) },
 
   // On-Demand-spezifisch
   { id: "run-summary", title: "Laufzusammenfassung", navLabel: "Lauf", body: renderOnDemandRunCards(onDemandSummary) },
-  {
-    id: "effective-urls",
-    title: "Wirksame URLs",
-    navLabel: "URLs",
-    body: renderHtmlList(onDemandSummary.effectiveUrls, "Keine wirksamen URLs.")
-  },
   { id: "artifacts", title: "Artefakte", navLabel: "Artefakte", body: renderOnDemandArtifactCards(onDemandSummary.artifacts) },
   { id: "run-plan", title: "Laufplan", navLabel: "Plan", body: renderOnDemandRunPlanCards(onDemandSummary.runPlan) },
-  { id: "run-drift", title: "Laufdrift", navLabel: "Drift", body: renderOnDemandRunDriftCards(runDrift) },
-  { id: "run-stability", title: "Stabilitaet", navLabel: "Stabilitaet", body: renderOnDemandStabilityCards(stability) },
-  { id: "run-governance", title: "Governance", navLabel: "Governance", body: renderOnDemandGovernanceCards(governance) },
+  // Konsolidiert: Drift + Stabilitaet + Governance -> eine Tab-Section
+  { id: "run-health", title: "Lauf-Gesundheit", navLabel: "Lauf-Gesundheit", body: runHealthBundle, skipSectionWrapper: true },
   { id: "what-now", title: "Was jetzt?", navLabel: "Was jetzt?", body: renderOnDemandNextActions(onDemandSummary.nextActions) },
+
+  // Konsolidiert: Effective-URLs + Missing-Intake + Search-Errors -> Tech-Status
+  { id: "tech-status", title: "Technischer Lauf-Status", navLabel: "Lauf-Status", body: techStatusBundle, skipSectionWrapper: true },
 
   // Kontext + Agent
   { id: "agent-view", title: "KI Coding Agents", navLabel: "Agents", body: renderAgentField(agentView) },
-  { id: "target-repo-context", title: "Zielrepo-Kontext", navLabel: "Kontext", body: renderProjectContextSources(projectProfile, null) },
-
-  // Suchfehler
-  {
-    id: "search-errors",
-    title: "Suchfehler",
-    navLabel: "Suchfehler",
-    body: renderHtmlList([
-      "Query 'event dedup' lieferte 0 Treffer — GitHub-Rate-Limit-Warnung vor Abfrage",
-      "Timeout bei github.com/search?q=civic_events (retry erfolgreich nach 8s)"
-    ], "Keine Suchfehler in diesem Lauf.")
-  }
+  { id: "target-repo-context", title: "Zielrepo-Kontext", navLabel: "Kontext", body: renderProjectContextSources(projectProfile, null) }
 ];
+
+// Konsolidierte "Empfehlungen"-Section wird direkt in document.mjs als
+// hardcoded Overview-Block emittiert. Fuer den Smoke ersetzen wir die
+// separaten Sections "recommendations" + "recommended-actions" durch
+// ein einziges Tab-Bundle, das wir in sections-Array einschleusen
+// (als skipSectionWrapper).
+sections.unshift({
+  id: "empfehlungen",
+  title: "Empfehlungen",
+  navLabel: "Empfehlungen",
+  body: empfehlungenBundle,
+  skipSectionWrapper: true
+});
 
 const html = renderHtmlDocument({
   title: "Pattern Pilot — Alle Sektionen (Demo)",
@@ -437,12 +483,11 @@ const html = renderHtmlDocument({
     { label: "Profil", value: "balanced", primary: false },
     { label: "Ziel-Repo", value: "eventbear-worker", primary: false }
   ],
-  recommendations: [
-    "AI-team-UoA/pyJedAI: als Record-Linkage-Basis uebernehmen",
-    "J535D165/recordlinkage: Blocking-Strategie adaptieren",
-    "citybureau/city-scrapers: Adapter-Muster pruefen"
-  ],
-  candidates,
+  // Konsolidierte "Empfehlungen"-Section (mit Tabs fuer Top-Rang + Disposition)
+  // ersetzt im Smoke die hardcoded Overview-Panels. Die werden dadurch leer
+  // und durch den default-aktivierten Empty-Toggle ausgeblendet.
+  recommendations: [],
+  candidates: [],
   sections,
   agentPayloadScript: JSON.stringify({ schemaVersion: "2", handoff: "sample" }),
   modeOptions: ["dedupe_and_identity", "source_discovery", "quality_gate"],
