@@ -14,10 +14,15 @@ import { applyHardConstraints, applySoftBoost } from "../../lib/discovery/proble
 import { problemFit as computeProblemFit, combinedScore } from "../../lib/discovery/problem-ranking.mjs";
 import { selectWithDiversity } from "../../lib/discovery/problem-diversity.mjs";
 import { runDiscoveryPass } from "../../lib/discovery/pass.mjs";
+import {
+  buildLandscapeQueryPlans,
+  buildLandscapeAgentView,
+  buildLandscapeTechStatus
+} from "../../lib/landscape/enrichment.mjs";
 
 async function loadCandidateRepos({ rootDir, config, projectKey, slug, problem, skipDiscovery, options }) {
   if (skipDiscovery) {
-    return { repos: [], note: "skip_discovery" };
+    return { repos: [], queries: [], note: "skip_discovery" };
   }
 
   const depth = options.depth ?? "standard";
@@ -33,7 +38,7 @@ async function loadCandidateRepos({ rootDir, config, projectKey, slug, problem, 
   const queries = problemQueries;
 
   if (queries.length === 0) {
-    return { repos: [], note: "problem_query_family: empty(reason: no_seeds)" };
+    return { repos: [], queries: [], note: "problem_query_family: empty(reason: no_seeds)" };
   }
 
   const passResult = await runDiscoveryPass({
@@ -44,7 +49,7 @@ async function loadCandidateRepos({ rootDir, config, projectKey, slug, problem, 
 
   if (passResult.error) {
     console.warn(`[problem:explore] discovery pass warning: ${passResult.error}`);
-    return { repos: [], note: passResult.error };
+    return { repos: [], queries, note: passResult.error, passError: passResult.error };
   }
 
   const rawRepos = passResult.repos ?? [];
@@ -80,6 +85,7 @@ async function loadCandidateRepos({ rootDir, config, projectKey, slug, problem, 
 
   return {
     repos: selection.selected,
+    queries,
     selectedByScore: selection.selectedByScore,
     selectedByDivergence: selection.selectedByDivergence,
     diversity_gap: selection.diversity_gap
@@ -183,6 +189,36 @@ export async function runProblemExplore(rootDir, config, options) {
     }
   };
 
+  // Topmost Repo je Cluster — wird gebraucht fuer den agentView-Priority-Path,
+  // ausserdem fuer den heuristischen Brief.
+  const topRepoByCluster = {};
+  for (const cluster of landscape.clusters ?? []) {
+    if (cluster.members?.length > 0) {
+      const top = cluster.members[0];
+      topRepoByCluster[cluster.label] = top.url ?? top.html_url ?? top.id;
+    }
+  }
+
+  // Renderer-seitige Sections: queryPlans / agentView / techStatus.
+  // Ohne diese drei bleiben die neuen Cockpit-Night-Sections leer.
+  const queryPlansValue = buildLandscapeQueryPlans(discoveryResult.queries ?? [], problem);
+  output.queryPlans = queryPlansValue;
+  output.agentView = buildLandscapeAgentView({
+    problem,
+    slug,
+    project: problem?.project ?? project,
+    clusters: output.clusters,
+    topRepoByCluster,
+    queryPlans: queryPlansValue
+  });
+  output.techStatus = buildLandscapeTechStatus({
+    queries: discoveryResult.queries ?? [],
+    candidateCount: reposWithKeywords.length,
+    clusterCount: output.clusters.length,
+    outlierCount: output.outliers.length,
+    passError: discoveryResult.passError ?? null
+  });
+
   await fs.writeFile(path.join(landscapeDir, "landscape.json"), `${JSON.stringify(output, null, 2)}\n`);
 
   // Optionally augment with LLM
@@ -201,14 +237,6 @@ export async function runProblemExplore(rootDir, config, options) {
 
   // Write brief.md
   const { buildHeuristicBrief } = await import("../../lib/brief/heuristic.mjs");
-  const topRepoByCluster = {};
-  for (const cluster of landscape.clusters) {
-    if (cluster.members.length > 0) {
-      // members are the raw repos with .url/.html_url; pick the first
-      const top = cluster.members[0];
-      topRepoByCluster[cluster.label] = top.url ?? top.html_url ?? top.id;
-    }
-  }
   const briefMd = buildHeuristicBrief({ problem, landscape: output, topRepoByCluster, llmAugmentation });
   await fs.writeFile(path.join(landscapeDir, "brief.md"), briefMd);
 
