@@ -379,6 +379,15 @@ const sections = [
       "j-e-d/agenda-lumiton: Wartung unklar, letzter Commit vor 14 Monaten"
     ], "Keine Risikosignale vorhanden.")
   },
+  {
+    id: "missing-watchlist-intake",
+    title: "Fehlendes Intake fuer Watchlist",
+    navLabel: "Fehlendes Intake",
+    body: renderHtmlList(
+      ["https://github.com/example/new-watchlist-entry", "https://github.com/another/fresh-watchlist-item"],
+      "Alle aktuellen Watchlist-URLs sind bereits in der Queue abgedeckt."
+    )
+  },
   { id: "repo-matrix", title: "Repo-Matrix", navLabel: "Matrix", body: renderRepoMatrix(watchlistReview, reportView) },
 
   // On-Demand-spezifisch

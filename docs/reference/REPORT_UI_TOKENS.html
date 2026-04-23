@@ -933,6 +933,86 @@ details.repo-row .repo-body-secondary .repo-body-grid {
 .axis-percent .axis-percent-hint { font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--card-ink-muted); }
 .axis-value { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--card-ink-soft); text-align: right; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
 
+/* Section-Description: inline collapsible Dropdown, default geschlossen.
+   Ersetzt den frueheren Info-Button + Modal-Mechanismus pro Section. */
+.section-description {
+  margin: -6px 36px 18px;
+  padding: 0;
+  background: var(--card-bg-alt);
+  border: 1px solid var(--card-rule-soft);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.section-description > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 10px 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--card-ink-soft);
+  transition: color 0.15s, background 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  user-select: none;
+}
+.section-description > summary::marker { content: ""; }
+.section-description > summary::-webkit-details-marker { display: none; }
+.section-description > summary::before {
+  content: '▸';
+  color: var(--neon-magenta);
+  transition: transform 0.2s;
+  display: inline-block;
+}
+.section-description[open] > summary::before { transform: rotate(90deg); }
+.section-description > summary:hover { color: var(--neon-magenta); }
+.section-description > summary:focus-visible {
+  outline: 2px solid var(--neon-magenta);
+  outline-offset: 2px;
+}
+.section-description .section-description-label::after {
+  content: 'ⓘ';
+  margin-left: 8px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 400;
+  opacity: 0.7;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.section-description .section-description-body {
+  padding: 4px 16px 16px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--card-ink);
+}
+.section-description .section-description-body p {
+  margin: 0 0 8px;
+}
+.section-description .section-description-body p:last-child { margin-bottom: 0; }
+.section-description .section-description-body strong { color: var(--card-ink); font-weight: 600; }
+
+/* Dark-Variante fuer content-intro (dunkler Background) */
+.section-description--dark {
+  background: rgba(28, 35, 56, 0.4);
+  border-color: var(--rule);
+}
+.section-description--dark > summary { color: var(--ink-soft); }
+.section-description--dark > summary:hover { color: var(--neon-magenta); }
+.section-description--dark .section-description-body { color: var(--ink-soft); }
+.section-description--dark .section-description-body strong { color: var(--ink); }
+
+/* Im content-intro als inline-block ausgerichtet */
+.section-description--intro {
+  display: inline-block;
+  margin: 24px auto 0;
+  max-width: 680px;
+  text-align: left;
+}
+
 /* Glossary-Term: markiert Fachbegriffe im Flietext mit dashed underline + Klick-Explain */
 .glossary-term {
   font-style: normal;

@@ -153,18 +153,18 @@ test("renderInfoGrid halves variant adds modifier class", () => {
   assert.match(halves, /class="info-grid info-grid--halves"/);
 });
 
-test("renderHtmlSection auto-wires info-button when section-id has info-map entry", () => {
+test("renderHtmlSection auto-wires inline description-collapse when section-id has info-map entry", () => {
   const htmlWithInfo = renderHtmlSection("Kennzahlen", "<p>body</p>", "default", "stats");
-  assert.match(htmlWithInfo, /data-explain-title=/);
-  assert.match(htmlWithInfo, /class="head-actions"/);
+  assert.match(htmlWithInfo, /class="section-description"/);
+  assert.match(htmlWithInfo, /section-description-label/);
   const htmlWithoutInfo = renderHtmlSection("Unknown", "<p>body</p>", "default", "no-such-section");
-  assert.doesNotMatch(htmlWithoutInfo, /head-actions/);
+  assert.doesNotMatch(htmlWithoutInfo, /section-description/);
 });
 
-test("renderCollapsibleSection emits <details> with marker + info-btn if available", () => {
+test("renderCollapsibleSection emits <details> with marker + inline description if available", () => {
   const html = renderCollapsibleSection("Discovery-Linsen", "body", { sectionId: "discovery-lenses", collapsed: true });
   assert.match(html, /<details class="section-preview-details">/);
-  assert.match(html, /data-explain-title=/);
+  assert.match(html, /class="section-description"/);
 });
 
 test("renderStickyNav filters items with id+navLabel and highlights active with aria-current", () => {
@@ -258,15 +258,16 @@ test("renderCoverageCards emits axis-rows per group", () => {
   assert.match(html, /coverage-axis-group/);
 });
 
-test("renderProjectContextSources uses info-grid--halves with intro and per-card explanatory copy", () => {
+test("renderProjectContextSources emits info-grid--halves + status-chip, intro-copy now comes from section-description", () => {
   const html = renderProjectContextSources({
     contextSources: { loadedFiles: [], missingFiles: [], scannedDirectories: [], declaredFiles: [], declaredDirectories: [] },
     capabilitiesPresent: []
   }, null);
   assert.match(html, /info-grid--halves/);
-  assert.match(html, /class="section-intro"/, "has explanatory intro paragraph");
+  assert.match(html, /context-status/, "has status chip");
   assert.match(html, /Grund:/, "empty-state carries explicit reason");
-  assert.match(html, /info-card-copy/, "each card has a descriptive copy line");
+  assert.doesNotMatch(html, /class="section-intro"/, "inline section-intro moved to section-description wrapper");
+  assert.doesNotMatch(html, /info-card-copy/, "per-card copy removed, description lives in description-collapse");
 });
 
 test("renderAgentField includes richer JSON snapshot and agent-action-button ids", () => {
