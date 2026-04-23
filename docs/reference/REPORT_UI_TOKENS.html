@@ -145,12 +145,15 @@ body::before {
   box-shadow: 0 4px 14px rgba(0,0,0,0.3);
 }
 .group-head {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 20px;
+  display: flex; align-items: center; justify-content: flex-start;
+  gap: 16px;
   padding-bottom: 18px;
   margin-bottom: 24px;
   border-bottom: 1px solid var(--rule-soft);
 }
+.group-head h3 { flex: 1 1 auto; min-width: 0; }
+.group-head .info-btn,
+.group-head .dark-info-btn { flex-shrink: 0; }
 .group-head h3 {
   font-family: 'Syne', sans-serif;
   font-weight: 700; text-transform: uppercase;
@@ -552,6 +555,18 @@ a.name:hover::after { color: var(--neon-magenta); transform: translate(1px, -1px
   padding: 6px 11px; border-radius: 4px;
   font-weight: 700;
   display: inline-flex; align-items: center; gap: 7px;
+  line-height: 1;
+}
+/* Button-Reset for badges that are <button> elements (keeping badge visual) */
+button.badge {
+  font-family: 'JetBrains Mono', monospace;
+  border: 1px solid transparent;
+  color: inherit;
+  cursor: pointer;
+}
+button.badge:focus-visible {
+  outline: 2px solid var(--neon-magenta);
+  outline-offset: 2px;
 }
 .repo-row .badge::before {
   content: '';
@@ -753,6 +768,40 @@ details.repo-row .repo-body-list li::before {
   left: 0;
   color: var(--neon-magenta);
   font-weight: 700;
+}
+/* Secondary details inside repo-body: "Mehr zeigen" toggle */
+details.repo-row .repo-body-secondary {
+  margin-top: 14px;
+  border-top: 1px dashed var(--card-rule);
+  padding-top: 12px;
+}
+details.repo-row .repo-body-secondary > summary {
+  list-style: none;
+  cursor: pointer;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--card-ink-muted);
+  padding: 4px 0 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.15s;
+}
+details.repo-row .repo-body-secondary > summary::marker { content: ""; }
+details.repo-row .repo-body-secondary > summary::-webkit-details-marker { display: none; }
+details.repo-row .repo-body-secondary > summary::before {
+  content: '▸';
+  color: var(--neon-magenta);
+  transition: transform 0.2s;
+  display: inline-block;
+}
+details.repo-row .repo-body-secondary[open] > summary::before { transform: rotate(90deg); }
+details.repo-row .repo-body-secondary > summary:hover { color: var(--neon-magenta); }
+details.repo-row .repo-body-secondary .repo-body-grid {
+  margin-top: 8px;
 }
 
 /* Axis Row */
@@ -1174,6 +1223,84 @@ details.repo-row .repo-body-list li::before {
   font-size: 13px;
   color: var(--card-ink);
   font-weight: 600;
+}
+
+/* === Mobile Breakpoints === */
+@media (max-width: 720px) {
+  .hero h1 { font-size: clamp(42px, 12vw, 72px); line-height: 0.95; }
+  .hero { padding: 48px 0 24px; }
+  .hero .slogan { font-size: 15px; }
+  .content-intro { margin: 16px auto 56px; padding: 0 16px; }
+  .content-intro .subject { font-size: clamp(26px, 7vw, 38px); }
+  .content-intro .meta {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 10px;
+  }
+  .section-head {
+    padding: 22px 22px 18px;
+    gap: 12px;
+  }
+  .section-body { padding: 4px 0 8px; }
+  details.repo-row > summary {
+    grid-template-columns: 28px 1fr auto 24px;
+    gap: 14px;
+    padding: 16px 22px;
+  }
+  details.repo-row > summary > .score-cell {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 0;
+    border-left: none;
+    border-top: 1px dashed var(--card-rule-soft);
+    padding-top: 10px;
+    margin-top: 6px;
+  }
+  details.repo-row .repo-body { padding: 18px 22px 22px; }
+  details.repo-row .repo-body-grid { grid-template-columns: 1fr; }
+
+  .axis-row {
+    grid-template-columns: 28px 100px 1fr 56px;
+    gap: 12px;
+    padding: 14px 22px;
+  }
+  .axis-row .axis-value { display: none; }
+
+  .preview { grid-template-columns: repeat(2, 1fr); column-gap: 12px; row-gap: 14px; }
+  .stat { padding: 20px 18px; }
+  .stat .v { font-size: 36px; }
+
+  .meta-grid { margin: 6px 22px 18px; }
+
+  .coverage-axis-group { padding: 4px 22px 18px; }
+
+  .info-grid { grid-template-columns: 1fr; }
+  .info-grid .info-card { padding: 18px 22px; }
+  .info-grid .info-card.wide { grid-column: auto; }
+
+  details.candidates-rest > summary.candidates-rest-toggle { padding: 14px 22px; }
+
+  .section-preview .toolbar-body { padding: 22px 22px 24px; }
+
+  .report-footer { margin-top: 48px; padding-top: 24px; }
+}
+
+@media (max-width: 480px) {
+  .shell { padding: 18px 14px 56px; gap: 16px; }
+  .hero { padding: 36px 0 18px; }
+  .hero h1 { font-size: clamp(38px, 14vw, 56px); }
+  .content-intro .eyebrow { font-size: 10px; letter-spacing: 0.18em; }
+  .preview { grid-template-columns: 1fr; }
+  .stat .v { font-size: 32px; }
+  .section-head { padding: 18px 16px 14px; }
+  details.repo-row > summary { padding: 14px 16px; grid-template-columns: 26px 1fr auto 22px; }
+  details.repo-row .repo-body { padding: 16px 16px 20px; }
+  .axis-row { padding: 12px 16px; grid-template-columns: 24px 1fr 48px; }
+  .axis-row .axis-label { grid-column: 2 / 3; }
+  .axis-row .axis-track { grid-column: 1 / -1; grid-row: 2; }
+  .axis-row .axis-percent { grid-column: 3 / 4; text-align: right; }
 }
 
 @media print {
@@ -1650,7 +1777,7 @@ details.repo-row .repo-body-list li::before {
   
   <div class="sidenav-eyebrow">Inhalt</div>
   <ul class="sidenav-list">
-    <li><a href="#problem" class="active"><span class="n">01</span>Problem-Landkarte</a></li>
+    <li><a href="#problem" class="active" aria-current="location"><span class="n">01</span>Problem-Landkarte</a></li>
     <li><a href="#uebersicht"><span class="n">02</span>Übersicht</a></li>
     <li><a href="#cluster"><span class="n">03</span>Cluster</a></li>
     <li><a href="#achsen"><span class="n">04</span>Achsen-View</a></li>
@@ -1666,7 +1793,7 @@ details.repo-row .repo-body-list li::before {
     <div class="anchor">#stats</div>
   </div>
   <div class="sample-frame sample-frame--on-dark"><div class="preview">
-<div class="stat">
+<div class="stat accent-magenta">
   <div class="k">Kandidaten</div>
   <div class="v">12</div>
   <div class="trend">+4 gegenueber Vorlauf</div>
@@ -1711,7 +1838,7 @@ details.repo-row .repo-body-list li::before {
     </div>
     <div class="head-actions">
       <span class="count-chip">5 Repos</span>
-      <button class="info-btn" aria-label="Was ist ein Cluster?" aria-expanded="false" data-info-trigger="sample-cluster">i</button>
+      <button type="button" class="info-btn" aria-label="Was ist ein Cluster?" aria-expanded="false" aria-haspopup="dialog" data-info-trigger="sample-cluster">i</button>
     </div>
   </div>
   
@@ -1888,8 +2015,8 @@ details.repo-row .repo-body-list li::before {
   <span class="badge adopt">Uebernehmen</span>
   <span class="badge adapt">Adaptieren</span>
   <span class="badge observe">Beobachten</span>
-  <button class="info-btn" aria-label="Demo-Info" aria-expanded="false" data-info-trigger="sample-demo">i</button>
-  <button class="dark-info-btn" aria-label="Demo-Info Dark" aria-expanded="false" data-info-trigger="sample-demo-dark">i</button>
+  <button type="button" class="info-btn" aria-label="Demo-Info" aria-expanded="false" aria-haspopup="dialog" data-info-trigger="sample-demo">i</button>
+  <button type="button" class="dark-info-btn" aria-label="Demo-Info Dark" aria-expanded="false" aria-haspopup="dialog" data-info-trigger="sample-demo-dark">i</button>
 </div>
 </section>
 
@@ -1907,7 +2034,12 @@ details.repo-row .repo-body-list li::before {
   const links = document.querySelectorAll('.sidenav-list a');
   const sections = document.querySelectorAll('[data-nav-section]');
   const setActive = (id) => {
-    links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + id));
+    links.forEach(l => {
+      const isActive = l.getAttribute('href') === '#' + id;
+      l.classList.toggle('active', isActive);
+      if (isActive) l.setAttribute('aria-current', 'location');
+      else l.removeAttribute('aria-current');
+    });
   };
   if (sections.length && 'IntersectionObserver' in window) {
     const observer = new IntersectionObserver((entries) => {
@@ -1931,6 +2063,22 @@ details.repo-row .repo-body-list li::before {
   const modalTitle = document.getElementById('info-modal-title');
   const modalBody = document.getElementById('info-modal-body');
   const modalClose = modal.querySelector('.modal-close');
+
+  // Focus management: store the triggering element when modal opens, restore
+  // focus to it when modal closes. Improves keyboard-only navigation.
+  let lastTrigger = null;
+  const openModal = (trigger) => {
+    lastTrigger = trigger || null;
+    if (typeof modal.showModal === 'function') modal.showModal();
+    else modal.setAttribute('open', '');
+  };
+  modal.addEventListener('close', () => {
+    if (lastTrigger && typeof lastTrigger.focus === 'function') {
+      lastTrigger.focus();
+    }
+    lastTrigger = null;
+  });
+
   document.querySelectorAll('[data-info-trigger]').forEach(btn => {
     btn.addEventListener('click', () => {
       const id = btn.getAttribute('data-info-trigger');
@@ -1939,8 +2087,7 @@ details.repo-row .repo-body-list li::before {
       const titleAttr = btn.getAttribute('data-info-title') || modalTitle.textContent;
       modalTitle.textContent = titleAttr;
       modalBody.replaceChildren(...Array.from(panel.cloneNode(true).children));
-      if (typeof modal.showModal === 'function') modal.showModal();
-      else modal.setAttribute('open', '');
+      openModal(btn);
     });
   });
   // Generic explain-on-click: any element with data-explain-title + data-explain-body
@@ -1954,8 +2101,7 @@ details.repo-row .repo-body-list li::before {
       const p = document.createElement('p');
       p.textContent = body;
       modalBody.replaceChildren(p);
-      if (typeof modal.showModal === 'function') modal.showModal();
-      else modal.setAttribute('open', '');
+      openModal(el);
     });
   });
 
