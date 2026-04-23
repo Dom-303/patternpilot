@@ -25,6 +25,7 @@ Wenn projektbezogen gearbeitet wird, zusaetzlich die Dateien des aktiven Zielpro
 
 ## Arbeitsstil
 
+- Patternpilot laeuft auf macOS, Linux und Windows (inkl. WSL). Keine Shell-spezifischen Kommandos in npm-Scripts oder Code, Pfade immer ueber `path.*`, damit die Cross-Platform-Garantie nicht bricht.
 - Intake zuerst in Queue und Dossier, nicht direkt in die Landkarte
 - Auto-Guesses sichtbar als vorlaeufig markieren
 - jedes Ergebnis auf Projektwirkung herunterbrechen

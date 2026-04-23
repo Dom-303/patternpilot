@@ -28,6 +28,7 @@ Es hilft dir, externe GitHub-Repositories nicht nur zu sammeln, sondern im Konte
 
 ### Was du dafuer brauchst
 
+- Node.js 20 oder neuer — laeuft nativ auf macOS, Linux und Windows (inkl. WSL)
 - lokal: `npm install`
 - fuer den ersten Test: kein GitHub-Login zwingend noetig
 - fuer stabile echte GitHub-Laeufe: ein GitHub-Konto und ein fine-grained Token in `.env.local`

@@ -16,6 +16,14 @@
   "bugs": {
     "url": "https://github.com/Dom-303/patternpilot/issues"
   },
+  "engines": {
+    "node": ">=20"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
   "keywords": [
     "repo-intelligence",
     "github",

@@ -35,6 +35,7 @@ Diese Dateien in dieser Reihenfolge zuerst lesen:
 
 ## Betriebsregeln
 
+- Patternpilot muss auf allen drei Haupt-Betriebssystemen laufen: macOS, Linux und Windows (inkl. WSL). Keine Shell-spezifischen Aufrufe in npm-Scripts, Pfade immer ueber `path.*`, keine harten POSIX- oder Windows-Separatoren im Code.
 - `knowledge/repo_landkarte.csv` ist kuratierter Wissensbestand, nicht rohe Intake-Ablage.
 - Neue GitHub-Links gehen zuerst in `state/repo_intake_queue.csv` und in ein projektbezogenes Intake-Dossier.
 - Auto-Guesses sind Hilfssignale, keine Wahrheit.
