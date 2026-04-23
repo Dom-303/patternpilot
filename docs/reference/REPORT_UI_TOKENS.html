@@ -938,6 +938,156 @@ details.repo-row .repo-body-secondary .repo-body-grid {
 .axis-percent .axis-percent-hint { font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--card-ink-muted); }
 .axis-value { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--card-ink-soft); text-align: right; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
 
+/* Agent "Start-Hier"-Block: der klare Einstieg fuer KI-Coding-Agenten,
+   sitzt oben im agent-view-section-body, faellt visuell auf. */
+.agent-start-here {
+  margin: 16px 36px 20px;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, rgba(255,61,151,0.08), rgba(169,122,255,0.06));
+  border: 1px solid rgba(255,61,151,0.25);
+  border-left: 4px solid var(--neon-magenta);
+  border-radius: 6px;
+}
+.agent-start-here-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--neon-magenta);
+  margin-bottom: 8px;
+}
+.agent-start-here-body {
+  margin: 0;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--card-ink);
+}
+.agent-start-here-body strong { color: var(--card-ink); font-weight: 600; }
+
+/* Inline-code in info-card-lists (z.B. Tech-Stack, Success-Criteria) */
+.info-card .info-card-list li code {
+  padding: 2px 6px;
+  background: var(--card-bg-alt);
+  border: 1px solid var(--card-rule);
+  border-radius: 3px;
+  color: var(--neon-magenta);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+}
+
+/* Decision-Reasoning-Tab (Entscheidungs-Begruendung pro Top-Kandidat) */
+.decision-reasoning-list {
+  padding: 24px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.decision-reasoning-item {
+  padding: 18px 20px;
+  background: var(--card-bg-alt);
+  border: 1px solid var(--card-rule-soft);
+  border-radius: 8px;
+  border-left: 3px solid var(--neon-magenta);
+}
+.decision-reasoning-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.decision-reasoning-rank {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--neon-magenta);
+  color: #fff;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.decision-reasoning-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--card-ink);
+  flex: 1 1 auto;
+  min-width: 0;
+  word-break: break-all;
+}
+.decision-reasoning-impact {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid;
+}
+.decision-reasoning-impact.impact-hoch { color: var(--card-green); border-color: rgba(30,138,51,0.4); background: rgba(30,138,51,0.08); }
+.decision-reasoning-impact.impact-mittel { color: var(--card-orange); border-color: rgba(194,77,0,0.4); background: rgba(194,77,0,0.08); }
+.decision-reasoning-impact.impact-niedrig { color: var(--card-ink-muted); border-color: var(--card-rule); background: transparent; }
+.decision-reasoning-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+@media (max-width: 720px) {
+  .decision-reasoning-body { grid-template-columns: 1fr; }
+}
+.decision-reasoning-col-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--card-ink-muted);
+  margin-bottom: 8px;
+}
+.decision-reasoning-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.decision-reasoning-col li {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--card-ink);
+  padding-left: 14px;
+  position: relative;
+}
+.decision-reasoning-col li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  color: var(--neon-magenta);
+  font-weight: 700;
+}
+.decision-reasoning-col li.empty-hint {
+  color: var(--card-ink-muted);
+  font-style: italic;
+}
+.decision-reasoning-alt {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--card-rule);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--card-ink-muted);
+  letter-spacing: 0.04em;
+}
+.decision-reasoning-alt strong { color: var(--card-ink); font-weight: 600; }
+
 /* What-Now-Section-spezifische Listen */
 .what-now-compact {
   list-style: none;

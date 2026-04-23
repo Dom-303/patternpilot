@@ -31,7 +31,8 @@ import {
   renderOnDemandGovernanceCards,
   renderOnDemandStabilityCards,
   renderTabbedSection,
-  renderWhatNowSection
+  renderWhatNowSection,
+  renderEmpfehlungenSection
 } from "../lib/html/sections.mjs";
 import { renderPolicySummaryCard, renderPolicyCalibrationCard, renderHtmlList, renderTopRecommendations, renderRecommendedActions } from "../lib/html/shared.mjs";
 import { renderInfoGrid } from "../lib/html/components.mjs";
@@ -79,7 +80,10 @@ const emptyAgentView = {
   uncertainties: [],
   codingStarter: { primary: null, secondary: [] },
   payload: {},
-  downloadFileName: "patternpilot-agent-handoff.json"
+  downloadFileName: "patternpilot-agent-handoff.json",
+  techStack: null,
+  references: [],
+  successCriteria: []
 };
 
 const emptyDiscovery = {
@@ -156,13 +160,13 @@ const techStatusBundle = renderTabbedSection({
   ]
 });
 
-const empfehlungenBundle = renderTabbedSection({
-  id: "empfehlungen", title: "Empfehlungen", sub: "Top-Rang + Nach Disposition",
-  accent: "magenta", countChip: "2 Ansichten",
-  tabs: [
-    { label: "Top-Rang", body: renderTopRecommendations([], []) },
-    { label: "Nach Disposition gruppiert", body: renderRecommendedActions({ candidates: [], reportType: "discovery", runRoot: null }) }
-  ]
+const empfehlungenBundle = renderEmpfehlungenSection({
+  recommendations: [],
+  candidates: [],
+  reportType: "discovery",
+  runRoot: null,
+  renderTopRecommendations,
+  renderRecommendedActions
 });
 
 const sections = [

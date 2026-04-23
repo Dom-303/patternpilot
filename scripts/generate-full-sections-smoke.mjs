@@ -31,7 +31,8 @@ import {
   renderOnDemandGovernanceCards,
   renderOnDemandStabilityCards,
   renderTabbedSection,
-  renderWhatNowSection
+  renderWhatNowSection,
+  renderEmpfehlungenSection
 } from "../lib/html/sections.mjs";
 import { renderPolicySummaryCard, renderPolicyCalibrationCard, renderHtmlList, renderTopRecommendations, renderRecommendedActions } from "../lib/html/shared.mjs";
 import { renderInfoGrid } from "../lib/html/components.mjs";
@@ -165,7 +166,25 @@ const agentView = {
     ]
   },
   payload: { schemaVersion: "2", handoffType: "discovery-to-worker" },
-  downloadFileName: "patternpilot-agent-handoff-eventbear-worker.json"
+  downloadFileName: "patternpilot-agent-handoff-eventbear-worker.json",
+  techStack: {
+    languages: ["JavaScript (ES Modules)", "Node.js 20", "Python 3.11 (via subprocess)"],
+    runtime: "Node.js 20 mit Sub-Process-Brücke zu Python",
+    testCommand: "npm test",
+    buildCommand: "npm run build"
+  },
+  references: [
+    "lib/dedup/heuristic.mjs",
+    "lib/extract/schema.mjs",
+    "adapters/*.mjs (falls schon existiert)",
+    "test/dedup.test.mjs"
+  ],
+  successCriteria: [
+    { label: "Unit-Tests", command: "npm --test test/dedup.test.mjs", expect: "alle tests pass" },
+    { label: "Integration-Benchmark", command: "npm run bench:dedup", expect: "precision > 0.9, recall > 0.85" },
+    { label: "Schema-Kompatibilitaet", command: "npm run validate-schema", expect: "40/40 Spalten bleiben befuellt" },
+    "Keine neue Node-Dependency ohne Legal-OK fuer Lizenz"
+  ]
 };
 
 const projectProfile = {
@@ -403,20 +422,22 @@ const techStatusBundle = renderTabbedSection({
   ]
 });
 
-const empfehlungenBundle = renderTabbedSection({
-  id: "empfehlungen",
-  title: "Empfehlungen",
-  sub: "Top-Rang + Nach Disposition",
-  accent: "magenta",
-  countChip: "2 Ansichten",
-  tabs: [
-    { label: "Top-Rang", body: renderTopRecommendations([
-        "AI-team-UoA/pyJedAI: als Record-Linkage-Basis uebernehmen",
-        "J535D165/recordlinkage: Blocking-Strategie adaptieren",
-        "citybureau/city-scrapers: Adapter-Muster pruefen"
-      ], candidates) },
-    { label: "Nach Disposition gruppiert", body: renderRecommendedActions({ candidates, reportType: "discovery", runRoot: { reportSchemaVersion: "2", itemsDataStateSummary: { complete: 5, fallback: 0, stale: 0 }, runConfidence: "high" } }) }
-  ]
+const empfehlungenBundle = renderEmpfehlungenSection({
+  recommendations: [
+    "AI-team-UoA/pyJedAI: als Record-Linkage-Basis uebernehmen",
+    "J535D165/recordlinkage: Blocking-Strategie adaptieren",
+    "citybureau/city-scrapers: Adapter-Muster pruefen"
+  ],
+  candidates,
+  reportType: "discovery",
+  runRoot: {
+    reportSchemaVersion: "2",
+    itemsDataStateSummary: { complete: 5, fallback: 0, stale: 0 },
+    runConfidence: "high",
+    runGapSignals: [{ gap: "dedupe_and_identity", count: 4, strength: "strong" }]
+  },
+  renderTopRecommendations,
+  renderRecommendedActions
 });
 
 // Konsolidierte Kandidaten + Vergleichs-Repos → eine Section mit Tabs
