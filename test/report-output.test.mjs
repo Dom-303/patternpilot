@@ -30,6 +30,60 @@ describe("buildBrowserLinkTarget", () => {
       }
     }
   });
+
+  test("emits a file:// URI for plain Linux/macOS absolute paths when no WSL distro is present", () => {
+    const previous = process.env.WSL_DISTRO_NAME;
+    delete process.env.WSL_DISTRO_NAME;
+    try {
+      const out = buildBrowserLinkTarget("/home/alice/patternpilot/projects/demo/reports/report.html");
+      assert.equal(out, "file:///home/alice/patternpilot/projects/demo/reports/report.html");
+    } finally {
+      if (previous !== undefined) process.env.WSL_DISTRO_NAME = previous;
+    }
+  });
+
+  test("URL-encodes unsafe chars in Linux/macOS paths (spaces, #, ?, %)", () => {
+    const previous = process.env.WSL_DISTRO_NAME;
+    delete process.env.WSL_DISTRO_NAME;
+    try {
+      const out = buildBrowserLinkTarget("/home/alice/my reports/r#1.html");
+      assert.equal(out, "file:///home/alice/my%20reports/r%231.html");
+    } finally {
+      if (previous !== undefined) process.env.WSL_DISTRO_NAME = previous;
+    }
+  });
+
+  test("leaves native Windows drive paths untouched (C:\\...)", () => {
+    const previous = process.env.WSL_DISTRO_NAME;
+    delete process.env.WSL_DISTRO_NAME;
+    try {
+      const out = buildBrowserLinkTarget("C:\\Users\\alice\\patternpilot\\report.html");
+      assert.equal(out, "C:\\Users\\alice\\patternpilot\\report.html");
+    } finally {
+      if (previous !== undefined) process.env.WSL_DISTRO_NAME = previous;
+    }
+  });
+
+  test("leaves native Windows UNC paths untouched (\\\\server\\share\\...)", () => {
+    const previous = process.env.WSL_DISTRO_NAME;
+    delete process.env.WSL_DISTRO_NAME;
+    try {
+      const out = buildBrowserLinkTarget("\\\\fileserver\\share\\report.html");
+      assert.equal(out, "\\\\fileserver\\share\\report.html");
+    } finally {
+      if (previous !== undefined) process.env.WSL_DISTRO_NAME = previous;
+    }
+  });
+
+  test("passes relative paths through unchanged", () => {
+    const previous = process.env.WSL_DISTRO_NAME;
+    delete process.env.WSL_DISTRO_NAME;
+    try {
+      assert.equal(buildBrowserLinkTarget("projects/demo/reports/report.html"), "projects/demo/reports/report.html");
+    } finally {
+      if (previous !== undefined) process.env.WSL_DISTRO_NAME = previous;
+    }
+  });
 });
 
 describe("pushBrowserLink", () => {
