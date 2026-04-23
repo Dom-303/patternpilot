@@ -1287,6 +1287,41 @@ details.repo-row .repo-body-secondary .repo-body-grid {
   .report-footer { margin-top: 48px; padding-top: 24px; }
 }
 
+/* === Skip-to-content (a11y) === */
+.skip-to-content {
+  position: absolute;
+  left: 16px;
+  top: -200px;
+  z-index: 1000;
+  padding: 12px 18px;
+  background: var(--neon-magenta);
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 6px;
+  box-shadow: 0 10px 32px rgba(0,0,0,0.5);
+  transition: top 0.2s;
+}
+.skip-to-content:focus {
+  top: 16px;
+  outline: none;
+}
+
+/* === Reduced motion (a11y) === */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  html { scroll-behavior: auto; }
+}
+
 @media (max-width: 480px) {
   .shell { padding: 18px 14px 56px; gap: 16px; }
   .hero { padding: 36px 0 18px; }
