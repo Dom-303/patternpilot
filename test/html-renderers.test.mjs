@@ -307,7 +307,31 @@ test("renderAgentField includes richer JSON snapshot and agent-action-button ids
   assert.match(html, /Sekundaerer Pfad 1/);
 });
 
-test("renderLandscapeHtml produces full Cockpit-Night structure and sidenav with cluster anchors", () => {
+test("renderLandscapeEntscheidungenSection emits 3 tabs with expected content", async () => {
+  const { renderLandscapeEntscheidungenSection } = await import("../lib/html/sections.mjs");
+  const html = renderLandscapeEntscheidungenSection({
+    clusters: [
+      { label: "Divergent-Cluster", relation: "divergent", member_ids: ["a/b", "c/d"], pattern_family: "x" },
+      { label: "Adjacent-Cluster", relation: "adjacent", member_ids: ["e/f"], pattern_family: "y" },
+      { label: "Near-Cluster", relation: "near_current_approach", member_ids: ["g/h"], pattern_family: "z" }
+    ]
+  });
+  assert.match(html, /class="tabs"/);
+  assert.match(html, /Top-Rang/);
+  assert.match(html, /Nach Relation gruppiert/);
+  assert.match(html, /Entscheidungs-Begruendung/);
+  assert.match(html, /Divergent-Cluster/);
+  assert.match(html, /Impact hoch/);
+});
+
+test("renderLandscapeEntscheidungenSection empty state when no clusters", async () => {
+  const { renderLandscapeEntscheidungenSection } = await import("../lib/html/sections.mjs");
+  const html = renderLandscapeEntscheidungenSection({ clusters: [] });
+  assert.match(html, /keine Repos in den Clustern/);
+  assert.match(html, /keine Cluster nach Relation/);
+});
+
+test("renderLandscapeHtml produces full Cockpit-Night structure including all new sections", () => {
   const html = renderLandscapeHtml({
     problem: { title: "Problem-Title", slug: "slug-id", project: "proj" },
     landscape: {
@@ -320,6 +344,7 @@ test("renderLandscapeHtml produces full Cockpit-Night structure and sidenav with
     },
     runId: "2026-04-23"
   });
+  // Bestehende Struktur
   assert.match(html, /<span class="pilot">Pilot<\/span>/);
   assert.match(html, /class="content-intro"/);
   assert.match(html, /class="sidenav"/);
@@ -327,6 +352,17 @@ test("renderLandscapeHtml produces full Cockpit-Night structure and sidenav with
   assert.match(html, /class="axis-row"/);
   assert.match(html, /class="meta-grid"/);
   assert.match(html, /class="info-modal"/);
+  // Neue Cockpit-Night-Uebertragungen
+  assert.match(html, /class="skip-to-content"/, "skip-link present");
+  assert.match(html, /class="section-break"/, "section-break after hero");
+  assert.match(html, /id="landscape-filter"/, "filter toolbar section");
+  assert.match(html, /id="show-empty-sections-toggle"/, "empty-toggle in filter");
+  assert.match(html, /id="uebersicht"/, "uebersicht section");
+  assert.match(html, /id="entscheidungen"/, "entscheidungen with tabs");
+  assert.match(html, /id="what-now"/, "what-now action-steps section");
+  assert.match(html, /class="footer-cta"/, "footer CTAs");
+  assert.match(html, /problem:refresh/, "footer next-run command");
+  assert.match(html, /class="section-description"/, "description-collapse per section");
 });
 
 test("renderLandscapeHtml tolerates missing axis-view + invalid dimensions", () => {
