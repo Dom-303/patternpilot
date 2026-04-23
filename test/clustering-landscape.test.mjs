@@ -74,6 +74,9 @@ test("buildLandscape promotes keyword sub-clusters to top level when structural 
 test("buildLandscape applies rescue threshold when stage2 returns a single large cluster", () => {
   // Six repos with uniformly high pairwise Jaccard at threshold 0.35 (common+shared dominate)
   // but differentiable at 0.55 (unique group tokens dominate the stricter bound).
+  // stripUniversalRatio=0 disables the universal-keyword preprocessor so we can
+  // exercise the original rescue pathway in isolation; on real discovery runs the
+  // preprocessor handles this collision class before rescue is ever needed.
   const repos = [
     { id: "a1", keywords: new Set(["common", "shared", "unique1"]) },
     { id: "a2", keywords: new Set(["common", "shared", "unique1", "alpha"]) },
@@ -84,11 +87,68 @@ test("buildLandscape applies rescue threshold when stage2 returns a single large
   ];
   const ls = buildLandscape({
     repos,
-    problem: { approach_signature: [], suspected_approach_axes: [] }
+    problem: { approach_signature: [], suspected_approach_axes: [] },
+    stripUniversalRatio: 0
   });
   assert.ok(ls.clusters.length >= 2, `expected >=2 clusters after rescue, got ${ls.clusters.length}`);
   const stages = ls.clusters.map((c) => c.stage);
   assert.ok(stages.includes("keyword-rescued"), `rescue pass should run when stage2 collapses to one; got stages ${JSON.stringify(stages)}`);
+});
+
+test("buildLandscape splits via stripUniversalKeywords when common topic tokens dominate", () => {
+  // Sechs Repos, die zwei Topic-Tokens ("python", "dedup") teilen — typischer
+  // Patternpilot-Discovery-Output. Intern zerfallen sie in zwei Sub-Familien
+  // (blocking-basiert vs. probabilistic-basiert). Ohne Preprocessing wuerden
+  // "python" und "dedup" die Jaccard-Similarity dominieren und alle 6 Repos
+  // in einen Mega-Cluster zusammenfallen. Mit stripUniversalKeywords werden
+  // die 100%-Tokens entfernt und die verbleibenden Diskriminatoren trennen
+  // die zwei Familien sauber in Stage 2.
+  const repos = [
+    { id: "a1", keywords: new Set(["python", "dedup", "blocking", "lsh", "hash", "specific-a1"]) },
+    { id: "a2", keywords: new Set(["python", "dedup", "blocking", "lsh", "hash", "specific-a2"]) },
+    { id: "a3", keywords: new Set(["python", "dedup", "blocking", "lsh", "hash", "specific-a3"]) },
+    { id: "b1", keywords: new Set(["python", "dedup", "probabilistic", "bayesian", "em", "specific-b1"]) },
+    { id: "b2", keywords: new Set(["python", "dedup", "probabilistic", "bayesian", "em", "specific-b2"]) },
+    { id: "b3", keywords: new Set(["python", "dedup", "probabilistic", "bayesian", "em", "specific-b3"]) }
+  ];
+  const ls = buildLandscape({
+    repos,
+    problem: { approach_signature: [], suspected_approach_axes: [] },
+    // Explizit ratio=0.9 im synthetischen 6-Repo-Test: der Produktionsdefault
+    // von 0.5 wuerde hier zu aggressiv auch "blocking"/"probabilistic"
+    // strippen (3/6 = 50%). In echten 20er-Discovery-Korpussen sind solche
+    // Sub-Familien-Tokens typischerweise nur in 15-25% vertreten, nicht 50%.
+    stripUniversalRatio: 0.9
+  });
+  assert.ok(ls.clusters.length >= 2, `expected >=2 clusters after stripping universals, got ${ls.clusters.length}`);
+  // Labels should NOT contain "python" or "dedup" (those were stripped as universal)
+  const labels = ls.clusters.map((c) => c.label ?? "");
+  for (const label of labels) {
+    assert.ok(!label.includes("python"), `label "${label}" should not contain universal token "python"`);
+    assert.ok(!label.includes("dedup"), `label "${label}" should not contain universal token "dedup"`);
+  }
+});
+
+test("buildLandscape skips stripUniversalKeywords when stripUniversalRatio=0", () => {
+  // Gleicher Input wie oben — aber Preprocessing explizit ausgeschaltet.
+  // Jetzt kollabieren alle 6 Repos in einen Cluster, dessen Label die
+  // Topic-Tokens enthaelt (weil sie nicht mehr herausgefiltert werden).
+  const repos = [
+    { id: "a1", keywords: new Set(["python", "dedup", "blocking", "lsh", "hash"]) },
+    { id: "a2", keywords: new Set(["python", "dedup", "blocking", "lsh", "hash"]) },
+    { id: "a3", keywords: new Set(["python", "dedup", "blocking", "lsh", "hash"]) },
+    { id: "b1", keywords: new Set(["python", "dedup", "probabilistic", "bayesian", "em"]) },
+    { id: "b2", keywords: new Set(["python", "dedup", "probabilistic", "bayesian", "em"]) },
+    { id: "b3", keywords: new Set(["python", "dedup", "probabilistic", "bayesian", "em"]) }
+  ];
+  const ls = buildLandscape({
+    repos,
+    problem: { approach_signature: [], suspected_approach_axes: [] },
+    stripUniversalRatio: 0
+  });
+  const label = ls.clusters[0]?.label ?? "";
+  assert.ok(label.includes("python") || label.includes("dedup"),
+    `with preprocessing disabled, label should retain universal tokens, got "${label}"`);
 });
 
 test("buildLandscape leaves a genuinely homogeneous single cluster intact", () => {

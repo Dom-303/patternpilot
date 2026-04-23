@@ -216,7 +216,8 @@ export async function runProblemExplore(rootDir, config, options) {
     candidateCount: reposWithKeywords.length,
     clusterCount: output.clusters.length,
     outlierCount: output.outliers.length,
-    passError: discoveryResult.passError ?? null
+    passError: discoveryResult.passError ?? null,
+    landscapeSignal: output.landscape_signal
   });
 
   await fs.writeFile(path.join(landscapeDir, "landscape.json"), `${JSON.stringify(output, null, 2)}\n`);
