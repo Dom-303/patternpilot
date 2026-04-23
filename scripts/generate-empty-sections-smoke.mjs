@@ -1,0 +1,221 @@
+// scripts/generate-empty-sections-smoke.mjs
+//
+// Realistischer Ausgangs-Zustand des Reports: keine Fake-Repos, keine
+// aufgebauschten Texte, nur Section-Shells mit Empty-States. So wuerde
+// ein Pattern-Pilot-Erstlauf aussehen, bevor echte Daten drin sind.
+//
+// Zweck: User sieht die komplette 27-Section-Struktur inkl. aller
+// Nav-Eintraege, aber ohne irgendwelche erfundenen Inhalte.
+// Jede Section kommt mit Empty-State-Meldung + Begruendung.
+//
+// Output: runs/_ui-test/empty-sections-smoke.html
+
+import { writeFileSync, mkdirSync } from "fs";
+import { dirname, resolve } from "path";
+import { fileURLToPath } from "url";
+
+import { renderHtmlDocument } from "../lib/html/document.mjs";
+import {
+  renderDiscoveryCandidateCards,
+  renderWatchlistTopCards,
+  renderCoverageCards,
+  renderReviewScopeCards,
+  renderProjectContextSources,
+  renderAgentField,
+  renderRepoMatrix,
+  renderOnDemandRunCards,
+  renderOnDemandArtifactCards,
+  renderOnDemandNextActions,
+  renderOnDemandRunPlanCards,
+  renderOnDemandRunDriftCards,
+  renderOnDemandGovernanceCards,
+  renderOnDemandStabilityCards
+} from "../lib/html/sections.mjs";
+import { renderPolicySummaryCard, renderPolicyCalibrationCard, renderHtmlList } from "../lib/html/shared.mjs";
+import { renderInfoGrid } from "../lib/html/components.mjs";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const outPath = resolve(__dirname, "../runs/_ui-test/empty-sections-smoke.html");
+
+// Minimal-Daten — wie ein echter Erstlauf ohne fertige Ergebnisse
+
+const reportView = { candidateCount: 0, showMatrix: true };
+const emptyCoverage = { mainLayers: [], gapAreas: [], capabilities: [] };
+
+const emptyWatchlistReview = {
+  topItems: [],
+  items: [],
+  coverage: emptyCoverage,
+  reviewScope: "watchlist",
+  inputUrlCount: 0,
+  watchlistCount: 0,
+  selectedUrls: [],
+  runConfidence: "unbekannt",
+  itemsDataStateSummary: { complete: 0, fallback: 0, stale: 0 },
+  projectProfile: null,
+  binding: null,
+  projectKey: "eventbear-worker"
+};
+
+const emptyProjectProfile = {
+  contextSources: {
+    loadedFiles: [],
+    missingFiles: [],
+    scannedDirectories: [],
+    declaredFiles: [],
+    declaredDirectories: []
+  },
+  capabilitiesPresent: []
+};
+
+const emptyAgentView = {
+  mission: [],
+  deliverable: [],
+  priorityRepos: [],
+  context: [],
+  guardrails: [],
+  uncertainties: [],
+  codingStarter: { primary: null, secondary: [] },
+  payload: {},
+  downloadFileName: "patternpilot-agent-handoff.json"
+};
+
+const emptyDiscovery = {
+  policySummary: { enabled: false },
+  policyCalibration: null
+};
+
+const emptyOnDemandSummary = {
+  runKind: "not_run",
+  recommendedFocus: "-",
+  sourceMode: "not_run",
+  explicitUrls: [],
+  effectiveUrls: [],
+  appendWatchlist: false,
+  runPlan: { runKind: "not_run", recommendedFocus: "-", notes: [], defaultPhases: {} },
+  intakeRun: { items: [] },
+  reEvaluateRun: { updates: [] },
+  reviewRun: { review: emptyWatchlistReview },
+  promoteRun: { items: [] },
+  artifacts: {},
+  nextActions: []
+};
+
+const emptyDrift = {
+  driftStatus: "unbekannt",
+  signals: [],
+  resumeGuidance: { mode: "-", nextAction: "-" },
+  queueSnapshot: { decisionStateSummary: { complete: 0, fallback: 0, stale: 0 } }
+};
+
+const emptyGovernance = {
+  status: "unbekannt",
+  autoDispatchAllowed: false,
+  autoApplyAllowed: false,
+  recommendedPromotionMode: "-",
+  blockedPhases: [],
+  nextAction: null
+};
+
+const emptyStability = {
+  status: "unbekannt",
+  stableStreak: 0,
+  unstableStreak: 0,
+  comparedPairs: 0
+};
+
+const sections = [
+  // Discovery
+  {
+    id: "candidates",
+    title: "Discovery-Kandidaten",
+    navLabel: "Kandidaten",
+    body: renderDiscoveryCandidateCards([], reportView)
+  },
+  {
+    id: "discovery-lenses",
+    title: "Discovery-Linsen",
+    navLabel: "Linsen",
+    body: `<p class="empty">Noch keine Discovery-Linsen fuer diesen Lauf aufgebaut. Sie entstehen sobald Pattern Pilot echte GitHub-Queries gegen dein Projekt ausfuehrt.</p>`
+  },
+  { id: "discovery-policy", title: "Discovery-Regelwerk", navLabel: "Regeln", body: renderPolicySummaryCard(emptyDiscovery) },
+  { id: "policy-calibration", title: "Regel-Kalibrierung", navLabel: "Kalibrierung", body: renderPolicyCalibrationCard(emptyDiscovery) },
+
+  // Watchlist-Review
+  {
+    id: "top-compared-repositories",
+    title: "Staerkste Vergleichs-Repos",
+    navLabel: "Top Repos",
+    body: renderWatchlistTopCards(emptyWatchlistReview, reportView)
+  },
+  { id: "coverage", title: "Coverage", navLabel: "Coverage", body: renderCoverageCards(emptyCoverage) },
+  { id: "review-scope", title: "Review-Umfang", navLabel: "Umfang", body: renderReviewScopeCards(emptyWatchlistReview) },
+  {
+    id: "highest-risk-signals",
+    title: "Staerkste Risikosignale",
+    navLabel: "Risiken",
+    body: renderHtmlList([], "Keine Risikosignale vorhanden. Sie erscheinen, sobald Review-Items mit niedrigem Fit-Band oder offenen Warnsignalen auftauchen.")
+  },
+  {
+    id: "missing-watchlist-intake",
+    title: "Fehlendes Intake fuer Watchlist",
+    navLabel: "Fehlendes Intake",
+    body: renderHtmlList([], "Alle aktuellen Watchlist-URLs sind bereits in der Queue abgedeckt — oder die Watchlist ist leer.")
+  },
+  { id: "repo-matrix", title: "Repo-Matrix", navLabel: "Matrix", body: renderRepoMatrix(emptyWatchlistReview, reportView) },
+
+  // On-Demand
+  { id: "run-summary", title: "Laufzusammenfassung", navLabel: "Lauf", body: renderOnDemandRunCards(emptyOnDemandSummary) },
+  {
+    id: "effective-urls",
+    title: "Wirksame URLs",
+    navLabel: "URLs",
+    body: renderHtmlList([], "Zu diesem Lauf gehoerten keine wirksamen URLs.")
+  },
+  { id: "artifacts", title: "Artefakte", navLabel: "Artefakte", body: renderOnDemandArtifactCards(emptyOnDemandSummary.artifacts) },
+  { id: "run-plan", title: "Laufplan", navLabel: "Plan", body: renderOnDemandRunPlanCards(emptyOnDemandSummary.runPlan) },
+  { id: "run-drift", title: "Laufdrift", navLabel: "Drift", body: renderOnDemandRunDriftCards(emptyDrift) },
+  { id: "run-stability", title: "Stabilitaet", navLabel: "Stabilitaet", body: renderOnDemandStabilityCards(emptyStability) },
+  { id: "run-governance", title: "Governance", navLabel: "Governance", body: renderOnDemandGovernanceCards(emptyGovernance) },
+  { id: "what-now", title: "Was jetzt?", navLabel: "Was jetzt?", body: renderOnDemandNextActions([]) },
+
+  // Kontext + Agent
+  { id: "agent-view", title: "KI Coding Agents", navLabel: "Agents", body: renderAgentField(emptyAgentView) },
+  { id: "target-repo-context", title: "Zielrepo-Kontext", navLabel: "Kontext", body: renderProjectContextSources(emptyProjectProfile, null) },
+
+  // Suchfehler
+  {
+    id: "search-errors",
+    title: "Suchfehler",
+    navLabel: "Suchfehler",
+    body: renderHtmlList([], "Keine Suchfehler in diesem Lauf.")
+  }
+];
+
+const html = renderHtmlDocument({
+  title: "Pattern Pilot — Alle 27 Sections (leerer Erstlauf)",
+  reportType: "discovery",
+  projectKey: "eventbear-worker",
+  createdAt: "2026-04-23T14:00:00Z",
+  heroSubtitle: "balanced",
+  candidateCount: 0,
+  runRoot: null,
+  stats: [
+    { label: "Kandidaten", value: 0, primary: true },
+    { label: "Empfehlungen", value: 0, primary: true },
+    { label: "Risiken", value: 0, primary: true },
+    { label: "Lauf-Datum", value: "23.04.2026", primary: false },
+    { label: "Profil", value: "balanced", primary: false },
+    { label: "Ziel-Repo", value: "eventbear-worker", primary: false }
+  ],
+  recommendations: [],
+  candidates: [],
+  sections,
+  agentPayloadScript: "",
+  modeOptions: [],
+  layerOptions: []
+});
+
+mkdirSync(dirname(outPath), { recursive: true });
+writeFileSync(outPath, html, "utf8");
+console.log(`Wrote ${outPath} (${html.length} bytes, ${sections.length} sections)`);
