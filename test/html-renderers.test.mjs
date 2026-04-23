@@ -258,13 +258,15 @@ test("renderCoverageCards emits axis-rows per group", () => {
   assert.match(html, /coverage-axis-group/);
 });
 
-test("renderProjectContextSources uses info-grid--halves", () => {
+test("renderProjectContextSources uses info-grid--halves with intro and per-card explanatory copy", () => {
   const html = renderProjectContextSources({
     contextSources: { loadedFiles: [], missingFiles: [], scannedDirectories: [], declaredFiles: [], declaredDirectories: [] },
     capabilitiesPresent: []
   }, null);
   assert.match(html, /info-grid--halves/);
-  assert.match(html, /Keine Information vorhanden/);
+  assert.match(html, /class="section-intro"/, "has explanatory intro paragraph");
+  assert.match(html, /Grund:/, "empty-state carries explicit reason");
+  assert.match(html, /info-card-copy/, "each card has a descriptive copy line");
 });
 
 test("renderAgentField includes richer JSON snapshot and agent-action-button ids", () => {
