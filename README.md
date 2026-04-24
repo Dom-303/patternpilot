@@ -43,12 +43,19 @@ Es hilft dir, externe GitHub-Repositories nicht nur zu sammeln, sondern im Konte
 
 ### GitHub-API-Limits im Blick behalten
 
-Discovery feuert pro Query einen GitHub-Search-Aufruf ab. Zwei Hebel helfen dir, Laufqualitaet und Rate-Limits zu balancieren:
+GitHub gibt dir zwei getrennte Budgets, die sich unabhaengig voneinander nachfuellen:
 
-- **`--per-page <n>`** (1-100, Default 20) — wieviele Kandidaten GitHub pro Query zurueckliefert. Hoeher bringt mehr Vielfalt pro Problem-Linse, verbrennt aber schneller das Stunden-Kontingent. Beispiel: `npm run problem:explore -- <slug> --project <p> --per-page 50`.
-- **`--depth <profile>`** (`focused` / `balanced` / `expansive` / `max`) — wieviele Query-Varianten pro Lauf ueberhaupt gefeuert werden. `balanced` (Default) passt fuer Routine-Runs, `max` fuer tiefe Einzel-Analysen.
+- **REST — 5.000 Requests pro Stunde.** Fuer alles Normale: README holen, Lizenz pruefen, Topics lesen.
+- **Search — 30 Requests pro Minute.** Eigenes Budget nur fuer GitHub-Suchen. Das ist meistens der Engpass.
 
-GitHub-Context fuer den Dreh am Regler: authentifizierte Nutzer haben **5.000 REST-Requests/h**, wovon Search-Requests ein eigenes Budget von **30 Requests/min** teilen. Pattern Pilot-Laeufe kombinieren Search + README-Enrichment + License-Lookup, sodass `--per-page 100` × 12 Queries realistisch 50-60 Requests verbraucht. Du siehst `403`-Fehler direkt in der Konsole, wenn du ein Limit triffst — der Lauf laeuft trotzdem mit Teil-Ergebnis durch.
+Ein Problem-Landscape-Lauf mit 12 Queries und `--per-page 20` verbraucht typisch 12 Search-Requests + ~50 REST-Requests — bleibt in beiden Budgets locker drin. Bei mehreren Laeufen hintereinander oder `--per-page 100` triffst du dagegen leicht die 30-Search-pro-Minute-Grenze. Wichtig: ein Lauf bricht bei einem `403` nicht ab, er liefert nur Teilergebnisse der gedrosselten Queries.
+
+Zwei Hebel, um bewusst zu dosieren:
+
+- **`--per-page <n>`** (1-100, Default 20) — wieviele Kandidaten pro Query zurueckkommen. Hoeher bringt mehr Vielfalt pro Problem-Linse, kostet aber mehr REST-Requests.
+- **`--depth <profile>`** (`focused` / `balanced` / `expansive` / `max`) — wieviele Query-Varianten ueberhaupt gefeuert werden. `balanced` ist der sichere Default.
+
+**Faustregel:** Default 20 passt fuer Routine-Runs; `--per-page 50` fuer Einzel-Laeufe mit mehr Tiefe; `--per-page 100` nur fuer gezielte Tiefenanalysen. Wenn du rate-limited wirst, reicht meist eine 2-Minuten-Pause — der Search-Kanister fuellt sich schnell wieder.
 
 
 ## So Arbeitet Patternpilot
