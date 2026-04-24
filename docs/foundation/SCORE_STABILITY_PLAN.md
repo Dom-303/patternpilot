@@ -1,7 +1,7 @@
 # Score-Stabilitaets-Plan — auf Weg zu reproduzierbaren 9-10/10 Reports
 
 - last_updated: 2026-04-24
-- status: Phase 0 done (Test-Harness); Phase 1 scaffolding done (Diversifier + Dictionary + CLI-Flag, Default off); Phase 2-5 offen
+- status: Phase 0 done; Phase 1 scaffolding done (Default off); Phase 2 scaffolding done (Classifier + Lexikon + CLI-Flag, Default off); Phase 3-5 offen
 - scope: Landscape- und Discovery-Report
 - zielkorridor: Median 9, Min 8, Max 10 ueber beliebige Problem-Slugs und Zielprojekte
 - begriff: "Problem-Slug" = Eingangsargument von `npm run problem:explore -- <slug>`, z. B. `event-dedup`, `schema-extraction`
@@ -91,8 +91,13 @@ Jede Phase wird gegen drei Kriterien abgeklopft:
 - **Rollback:** CLI-Flag `--seed-strategy=manual` deaktiviert die Diversity-Stufe komplett; Dictionary-Datei loeschen laesst Code still auf Legacy-Pfad zuruecklaufen
 - **Acceptance:** `event-dedup` und `self-healing` zeigen in Phase-0-Score einen Anstieg um ≥1.0 Punkt; `schema-extraction` zeigt Score-Delta im Bereich `±0.2` (kein Regression)
 
-### Phase 2 — Pattern-Family-Hardening
+### Phase 2 — Pattern-Family-Hardening ✓ scaffolding done, default off
 
+- **Status:** 2026-04-24 ausgerollt als opt-in. Implementierung: `lib/clustering/pattern-family-classifier.mjs` (pure `classifyRepoPatternFamily` + `classifyRepos`), `lib/clustering/pattern-family-lexicon.json` (25 Familien mit Keyword-Listen), CLI-Flag `--pattern-family=off|auto` (Default `off` = Baseline-Verhalten). Integration: problem-explore.mjs klassifiziert Repos zwischen enrichment und buildLandscape, wenn Flag `auto`. 19 neue Tests in `release:smoke`. Baseline-Scores unveraendert (6/8/7/2)
+- **Aufruf:** `npm run problem:explore -- <slug> --project <project> --pattern-family auto`
+- **Architektonische Entdeckung:** Der im Plan angenommene Stage-1-Classifier (`classification/core.mjs#guessClassification`) wird im Worker-Intake-Pfad aufgerufen, **nicht** im problem:explore-Pfad. Phase 2 schliesst damit keine "zweite Stufe" zu einer "ersten" — sie ist die **erste** Pattern-Family-Heuristik im Landscape-Pfad ueberhaupt. Stage-3-LLM bleibt explizit draussen (siehe OQ-005)
+- **Verifikation am realen Korpus:** Auf den gefreezten Baseline-Fixtures klassifiziert der Classifier 6/6 (event-dedup) und 2/2 (schema-extraction) bisher `unknown`-Member-Repos. Labels plausibel: `deduper`, `matcher`, `scraper`, `orchestrator`
+- **Offen:** Default von `off` auf `auto` flippen, sobald ein Real-Run Score-Delta zeigt; Lexikon-Kurations-Loop nach 5-10 Real-Runs (Familien auf Baseline der tatsaechlich klassifizierten Repos haerten)
 - **Ziel:** U2 — `unknown`-Quote von 30-40 % auf < 10 % (Population: alle Cluster-Member-Repos, nicht rohe Discovery-Treffer)
 - **Konkret:**
   - `lib/discovery/pattern-family.mjs`: zweite Evidenz-Stufe einziehen, wenn Primary-Heuristik `unknown` ergibt

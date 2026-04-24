@@ -1,0 +1,131 @@
+{
+  "version": 1,
+  "description": "Keyword-Lexikon fuer die Phase-2-Pattern-Family-Klassifikation. Jeder Eintrag hat einen label-Schluessel (wird als pattern_family gesetzt), eine Liste von Keyword-Phrasen und ein min_matches-Schwellwert. Die Phrasen werden case-insensitive als Substring im kombinierten Text aus topics + description + readme-first-paragraph gesucht. Der Classifier gibt die Family mit dem hoechsten gewichteten Match zurueck, nur wenn dieser >= min_matches ist. Sonst null. Eine Klassifikation ist nie eine Garantie, sondern ein heuristischer Lift gegenueber \"unknown\".",
+  "families": [
+    {
+      "label": "parser",
+      "keywords": ["parser", "parsing", "lexer", "tokenizer", "ast ", "grammar", "parse ", "parses "],
+      "min_matches": 1
+    },
+    {
+      "label": "validator",
+      "keywords": ["validator", "validation", "schema validation", "linter", "linting", "ajv", "json schema"],
+      "min_matches": 1
+    },
+    {
+      "label": "scraper",
+      "keywords": ["scraper", "scraping", "crawl", "crawler", "crawling", "headless", "playwright", "puppeteer", "selenium"],
+      "min_matches": 1
+    },
+    {
+      "label": "extractor",
+      "keywords": ["extractor", "extraction", "extract ", "scraper", "content extraction", "html extraction", "data extraction"],
+      "min_matches": 1
+    },
+    {
+      "label": "classifier",
+      "keywords": ["classifier", "classification", "classify", "tagging", "categoriz", "label"],
+      "min_matches": 1
+    },
+    {
+      "label": "deduper",
+      "keywords": ["dedupe", "dedup", "deduplication", "duplicate", "record linkage", "entity resolution", "entity matching"],
+      "min_matches": 1
+    },
+    {
+      "label": "normalizer",
+      "keywords": ["normaliz", "canonical", "canonicaliz", "standardiz", "clean", "data cleaning"],
+      "min_matches": 1
+    },
+    {
+      "label": "matcher",
+      "keywords": ["fuzzy match", "similarity", "string matching", "levenshtein", "jaro", "winkler", "approximate match"],
+      "min_matches": 1
+    },
+    {
+      "label": "scheduler",
+      "keywords": ["scheduler", "scheduling", "cron", "job queue", "task queue", "recurring job"],
+      "min_matches": 1
+    },
+    {
+      "label": "orchestrator",
+      "keywords": ["orchestrat", "workflow", "pipeline", "dag", "airflow", "prefect", "dagster", "argo workflow"],
+      "min_matches": 1
+    },
+    {
+      "label": "cli_tool",
+      "keywords": ["cli ", "command line", "command-line", "terminal tool", "shell tool", "npx "],
+      "min_matches": 1
+    },
+    {
+      "label": "sdk",
+      "keywords": ["sdk", "client library", "api client", "javascript client", "python client", "typescript client"],
+      "min_matches": 1
+    },
+    {
+      "label": "framework",
+      "keywords": ["framework", "platform", "toolkit", "starter kit", "scaffold"],
+      "min_matches": 1
+    },
+    {
+      "label": "converter",
+      "keywords": ["converter", "convert ", "conversion", "transform", "transformer", "json to", "yaml to", "xml to"],
+      "min_matches": 1
+    },
+    {
+      "label": "aggregator",
+      "keywords": ["aggregator", "aggregation", "feed aggregator", "rss reader", "content aggregation"],
+      "min_matches": 1
+    },
+    {
+      "label": "enricher",
+      "keywords": ["enrich", "enricher", "enrichment", "data enrichment", "augment"],
+      "min_matches": 1
+    },
+    {
+      "label": "indexer",
+      "keywords": ["indexer", "indexing", "search engine", "full-text search", "inverted index", "elasticsearch", "meilisearch"],
+      "min_matches": 1
+    },
+    {
+      "label": "serializer",
+      "keywords": ["serializer", "serialization", "serialize", "protobuf", "avro", "msgpack", "cbor"],
+      "min_matches": 1
+    },
+    {
+      "label": "renderer",
+      "keywords": ["renderer", "rendering", "template engine", "html rendering", "svg rendering"],
+      "min_matches": 1
+    },
+    {
+      "label": "schema_parser",
+      "keywords": ["json-ld", "microdata", "rdfa", "schema.org", "structured data", "schema parser", "ical", "rrule", "vcard"],
+      "min_matches": 1
+    },
+    {
+      "label": "geocoder",
+      "keywords": ["geocod", "geolocation", "address parser", "address normaliz", "libpostal", "nominatim"],
+      "min_matches": 1
+    },
+    {
+      "label": "nlp_entity",
+      "keywords": ["named entity", "entity extraction", "ner ", "spacy", "tokenization", "nlp "],
+      "min_matches": 1
+    },
+    {
+      "label": "adaptive_scraper",
+      "keywords": ["self-healing", "self healing", "adaptive selector", "wrapper induction", "xpath healing", "dom template"],
+      "min_matches": 1
+    },
+    {
+      "label": "schema_mapper",
+      "keywords": ["schema alignment", "schema mapping", "field mapping", "semantic mapping", "taxonomy", "ontology"],
+      "min_matches": 1
+    },
+    {
+      "label": "plugin_system",
+      "keywords": ["plugin system", "plugin architecture", "plugin framework", "extension api", "module loader"],
+      "min_matches": 1
+    }
+  ]
+}

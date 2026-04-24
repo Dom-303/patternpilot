@@ -17,6 +17,7 @@ import { problemFit as computeProblemFit, combinedScore } from "../../lib/discov
 import { selectWithDiversity } from "../../lib/discovery/problem-diversity.mjs";
 import { runDiscoveryPass } from "../../lib/discovery/pass.mjs";
 import { diversifySeeds } from "../../lib/discovery/seed-diversifier.mjs";
+import { classifyRepos } from "../../lib/clustering/pattern-family-classifier.mjs";
 import {
   buildLandscapeQueryPlans,
   buildLandscapeAgentView,
@@ -32,12 +33,30 @@ const SEED_DICTIONARY_PATH = path.join(
   "seed-dictionary.json"
 );
 
+const PATTERN_FAMILY_LEXICON_PATH = path.join(
+  path.dirname(fileURLToPath(import.meta.url)),
+  "..",
+  "..",
+  "lib",
+  "clustering",
+  "pattern-family-lexicon.json"
+);
+
 function loadSeedDictionary() {
   try {
     return JSON.parse(readFileSync(SEED_DICTIONARY_PATH, "utf8"));
   } catch (error) {
     console.warn(`[problem:explore] seed-dictionary missing or invalid (${error.message}) — falling back to passthrough.`);
     return { phrases: [] };
+  }
+}
+
+function loadPatternFamilyLexicon() {
+  try {
+    return JSON.parse(readFileSync(PATTERN_FAMILY_LEXICON_PATH, "utf8"));
+  } catch (error) {
+    console.warn(`[problem:explore] pattern-family-lexicon missing or invalid (${error.message}) — falling back to passthrough.`);
+    return { families: [] };
   }
 }
 
@@ -180,8 +199,19 @@ export async function runProblemExplore(rootDir, config, options) {
     keywords: repo.keywords instanceof Set ? repo.keywords : extractRepoKeywords(repo)
   }));
 
+  const patternFamilyStrategy = options.patternFamilyStrategy ?? "off";
+  let patternFamilySummary = null;
+  let reposForClustering = reposWithKeywords;
+  if (patternFamilyStrategy === "auto") {
+    const lexicon = loadPatternFamilyLexicon();
+    const { repos: classifiedRepos, summary } = classifyRepos(reposWithKeywords, lexicon);
+    reposForClustering = classifiedRepos;
+    patternFamilySummary = { strategy: "auto", ...summary };
+    console.log(`[problem:explore] pattern-family=auto — classified ${summary.classified}/${summary.total} repos (${Math.round(summary.classified_ratio * 100)}%).`);
+  }
+
   const landscape = buildLandscape({
-    repos: reposWithKeywords,
+    repos: reposForClustering,
     problem: {
       approach_signature: problem.derived.approach_signature,
       suspected_approach_axes: problem.fields.suspected_approach_axes ?? []
@@ -227,7 +257,9 @@ export async function runProblemExplore(rootDir, config, options) {
       note: discoveryResult.note ?? null
     },
     seed_strategy: discoveryResult.seedStrategy ?? "manual",
-    seed_diversification: discoveryResult.seedDiversification ?? null
+    seed_diversification: discoveryResult.seedDiversification ?? null,
+    pattern_family_strategy: patternFamilyStrategy,
+    pattern_family_summary: patternFamilySummary
   };
 
   // Topmost Repo je Cluster — wird gebraucht fuer den agentView-Priority-Path,
