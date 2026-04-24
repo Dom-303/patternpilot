@@ -307,7 +307,7 @@ test("renderAgentField includes richer JSON snapshot and agent-action-button ids
   assert.match(html, /Sekundaerer Pfad 1/);
 });
 
-test("renderLandscapeEntscheidungenSection emits 3 tabs with expected content", async () => {
+test("renderLandscapeEntscheidungenSection emits 3 tabs with cluster-level verdicts", async () => {
   const { renderLandscapeEntscheidungenSection } = await import("../lib/html/sections.mjs");
   const html = renderLandscapeEntscheidungenSection({
     clusters: [
@@ -317,18 +317,23 @@ test("renderLandscapeEntscheidungenSection emits 3 tabs with expected content", 
     ]
   });
   assert.match(html, /class="tabs"/);
-  assert.match(html, /Top-Rang/);
-  assert.match(html, /Nach Relation gruppiert/);
-  assert.match(html, /Entscheidungs-Begruendung/);
+  // Tab-Labels — Cluster-Verdikt ersetzt Top-Rang, Nach Impact statt Nach Relation
+  assert.match(html, /Cluster-Verdikt/);
+  assert.match(html, /Nach Impact/);
+  assert.match(html, /Strategische Begruendung/);
+  // Cluster-Verdikt-Tab zeigt Cluster mit Handlungs-Verdikt
   assert.match(html, /Divergent-Cluster/);
+  assert.match(html, /Uebernehmen pruefen/);
+  assert.match(html, /Adaptions-Skizze/);
+  // Nach Impact Tab bucketed
   assert.match(html, /Impact hoch/);
 });
 
 test("renderLandscapeEntscheidungenSection empty state when no clusters", async () => {
   const { renderLandscapeEntscheidungenSection } = await import("../lib/html/sections.mjs");
   const html = renderLandscapeEntscheidungenSection({ clusters: [] });
-  assert.match(html, /keine Repos in den Clustern/);
-  assert.match(html, /keine Cluster nach Relation/);
+  assert.match(html, /ohne Cluster kein Handlungsverdikt/);
+  assert.match(html, /Noch keine Cluster zum Impact/);
 });
 
 test("renderLandscapeEmpfehlungenSection emits 3 tabs with repo-level disposition", async () => {
