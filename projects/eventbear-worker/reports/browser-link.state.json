@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-04-24T12:36:21.506Z",
+  "updated_at": "2026-04-24T12:44:25.849Z",
   "sections": {
     "problem-explore": {
       "self-healing-adaptive-source-intake": {
         "label": "self-healing-adaptive-source-intake",
         "href": "\\\\wsl.localhost\\Ubuntu-24.04\\home\\domi\\eventbaer\\dev\\patternpilot\\projects\\eventbear-worker\\problems\\self-healing-adaptive-source-intake\\landscape\\2026-04-24T12-24-16-883Z\\landscape.html",
-        "updated_at": "2026-04-24T12:24:16.902Z"
+        "updated_at": "2026-04-24T12:44:25.849Z"
       },
       "schema-exact-extraction-into-40-column-masterlist": {
         "label": "schema-exact-extraction-into-40-column-masterlist",

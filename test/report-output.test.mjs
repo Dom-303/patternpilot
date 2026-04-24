@@ -101,13 +101,14 @@ describe("pushBrowserLink", () => {
       assert.ok(md.startsWith("# Pattern Pilot — Browser Links"));
       assert.ok(md.includes("## Problem-Mode Landscapes"));
       assert.ok(md.includes("**virt-list**"));
-      // Windows-UNC als Copy-Paste-Pfad in Backticks
-      assert.ok(md.includes("Windows: `\\\\wsl.localhost\\Ubuntu-24.04\\a\\landscape.html`"));
-      // POSIX-Pfad als zusaetzliche WSL/Linux-Option in Backticks
-      assert.ok(md.includes("WSL:     `/a/landscape.html`"));
-      // Anleitungs-Block oben im Dokument
+      // Plain-Text Windows-UNC, kein Backtick-Code-Span — copy-paste-freundlich
+      assert.ok(md.includes("\\\\wsl.localhost\\Ubuntu-24.04\\a\\landscape.html"));
+      assert.ok(!md.includes("`\\\\wsl.localhost"));
+      // POSIX-Pfad als zusaetzliche WSL-Option, ebenfalls plain text
+      assert.ok(md.includes("WSL: /a/landscape.html"));
+      // Anleitungs-Block oben
       assert.ok(md.includes("So oeffnest du einen Report"));
-      // Bewusst KEINE Markdown-file-Links — VS Code blockt die
+      // Keine Markdown-file-Links (VS Code blockt die)
       assert.ok(!md.includes("[Open report](file://"));
 
       const state = JSON.parse(fs.readFileSync(`${browserLinkPath}.state.json`, "utf8"));
