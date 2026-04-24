@@ -24,6 +24,8 @@ Es hilft dir, externe GitHub-Repositories nicht nur zu sammeln, sondern im Konte
 - bindet dein eigenes Zielrepo als Bezugspunkt an
 - sammelt externe GitHub-Repos nicht blind, sondern bewertet sie relativ zu deinem Projekt
 - fuehrt von Intake ueber Review bis zu kuratierten Learnings und Entscheidungen
+- faehrt im Problem-Mode gezielte Problem-Landscapes: Cluster-Analyse + KI-Coding-Agent-Handoff + Achsen-View
+- erzeugt zwei final gestaltete HTML-Reports (Discovery/Review + Landscape) im eigenen Cockpit-Night-Design-System
 - trennt bewusst zwischen Produktcode, lokalem Laufzeit-Zustand und projektbezogenen Ergebnissen
 
 ### Was du dafuer brauchst
@@ -201,6 +203,33 @@ Wichtig:
   Listet alle aktiven Probleme mit letzter Landscape-Referenz.
 
 
+## Reports & Design System
+
+`patternpilot` produziert zwei **voll gestaltete HTML-Reports** und einen eigenen **Design-Guide**. Alle drei sind inhaltlich und strukturell final — nur Inhalte atmen weiter, Layout steht.
+
+### Landscape-Report (Problem-Mode)
+
+- erzeugt von `npm run problem:explore -- <slug> --project <project>`
+- cluster-orientiert: 21 Sections mit Problem-Details, Entscheidungen, Empfehlungen, Problem-Linsen, N Cluster, Coverage, Achsen-View, Risikosignale, KI Coding Agent, Lauf-Gesundheit und mehr
+- Source: [`lib/landscape/html-report.mjs`](lib/landscape/html-report.mjs)
+
+### Discovery / Review / On-Demand-Report
+
+- erzeugt von `npm run review:watchlist`, `npm run on-demand`, `npm run sync:watchlist`
+- kandidaten-orientiert: Empfehlungen, Top-Vergleichs-Repos, Repo-Matrix, Coverage, Zielrepo-Kontext, KI Coding Agent, Lauf-Gesundheit, Was-Jetzt-Actions
+- Source: [`lib/html-renderer.mjs`](lib/html-renderer.mjs)
+
+### Cockpit-Night-Styleguide
+
+- 17-Kapitel-Design-Deliverable mit Prinzipien, Farbsystem (4 Familien, 23 Tokens), Typografie-Skala, allen Komponenten-States und Do/Don't-Karten
+- Build: `node scripts/generate-styleguide.mjs`
+- Rendered: [`docs/reference/REPORT_UI_TOKENS.html`](docs/reference/REPORT_UI_TOKENS.html)
+
+Jeder Run haengt die drei HTML-Links in `projects/<project>/reports/browser-link` unter **"Design System & Docs"** — einmal Windows-UNC-Pfad zum Copy-Paste in den Browser.
+
+Details, was sich aendern darf und was nicht: [`docs/reference/TEMPLATE_LOCK.md`](docs/reference/TEMPLATE_LOCK.md).
+
+
 ## Fuer Fortgeschrittene Nutzer
 
 - Produkt- und Systembild:
@@ -234,7 +263,7 @@ Das heisst:
 
 Die Lizenz dafuer ist:
 
-- [Apache-2.0](LICENSE)
+- [MIT](LICENSE)
 
 ### Wichtige Open-Source-Dokumente
 

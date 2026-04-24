@@ -117,4 +117,4 @@ Bitte bevorzuge:
 
 ## Lizenz
 
-Mit Beitraegen zu diesem Repo erklaerst du dich damit einverstanden, dass dein Beitrag unter der Apache-2.0-Lizenz dieses Projekts veroeffentlicht wird.
+Mit Beitraegen zu diesem Repo erklaerst du dich damit einverstanden, dass dein Beitrag unter der MIT-Lizenz dieses Projekts veroeffentlicht wird.

@@ -7,7 +7,7 @@
     "patternpilot": "./scripts/patternpilot.mjs"
   },
   "description": "Patternpilot intake and repo intelligence tooling",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Dom-303/patternpilot.git"

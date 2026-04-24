@@ -9,6 +9,18 @@
 //
 // Quelle der Wahrheit: lib/html/tokens.mjs (Design-Tokens) und
 // lib/html/components.mjs (Renderer-Primitives).
+//
+// ============================================================================
+// STRUKTUR EINGEFROREN — NICHT AENDERN OHNE EXPLIZITEN USER-FREIGABE
+// ----------------------------------------------------------------------------
+// Der Styleguide ist eins von drei strukturell gefrorenen Report-UI-
+// Deliverables (Landscape-Template, Discovery/Review-Template, Styleguide).
+// Stand: commit 11d596b (24.04.2026). Details: docs/reference/TEMPLATE_LOCK.md
+// Erlaubt: Token-Werte + Beispiel-Inhalte aktualisieren, wenn die Base-Tokens
+//   in lib/html/tokens.mjs sich aendern.
+// Nicht erlaubt ohne User-Freigabe: Umbau der 17-Kapitel-Struktur, Entfernen
+//   von Kapiteln, Aesthetik-Drift weg von Cockpit Night.
+// ============================================================================
 
 import { writeFileSync } from "fs";
 import { fileURLToPath } from "url";
