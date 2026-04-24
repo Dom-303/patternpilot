@@ -85,7 +85,7 @@ test("renderSidenav emits nav with logo and numbered active item with aria-curre
   });
   assert.match(html, /class="sidenav"/);
   assert.match(html, /class="sidenav-logo-link"/);
-  assert.match(html, /<span class="n">01<\/span>Alpha/);
+  assert.match(html, /<span class="n">01<\/span><span class="label">Alpha<\/span>/);
   assert.match(html, /aria-current="location"/);
 });
 
