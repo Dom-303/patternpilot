@@ -44,7 +44,8 @@ async function loadCandidateRepos({ rootDir, config, projectKey, slug, problem, 
   const passResult = await runDiscoveryPass({
     config,
     projectKey,
-    queries
+    queries,
+    perPage: options.perPage ?? 20
   });
 
   if (passResult.error) {

@@ -41,6 +41,15 @@ Es hilft dir, externe GitHub-Repositories nicht nur zu sammeln, sondern im Konte
 - `runs/<project>/` fuer nachvollziehbare Laufhistorie
 - `state/` fuer lokalen Betriebszustand
 
+### GitHub-API-Limits im Blick behalten
+
+Discovery feuert pro Query einen GitHub-Search-Aufruf ab. Zwei Hebel helfen dir, Laufqualitaet und Rate-Limits zu balancieren:
+
+- **`--per-page <n>`** (1-100, Default 20) — wieviele Kandidaten GitHub pro Query zurueckliefert. Hoeher bringt mehr Vielfalt pro Problem-Linse, verbrennt aber schneller das Stunden-Kontingent. Beispiel: `npm run problem:explore -- <slug> --project <p> --per-page 50`.
+- **`--depth <profile>`** (`focused` / `balanced` / `expansive` / `max`) — wieviele Query-Varianten pro Lauf ueberhaupt gefeuert werden. `balanced` (Default) passt fuer Routine-Runs, `max` fuer tiefe Einzel-Analysen.
+
+GitHub-Context fuer den Dreh am Regler: authentifizierte Nutzer haben **5.000 REST-Requests/h**, wovon Search-Requests ein eigenes Budget von **30 Requests/min** teilen. Pattern Pilot-Laeufe kombinieren Search + README-Enrichment + License-Lookup, sodass `--per-page 100` × 12 Queries realistisch 50-60 Requests verbraucht. Du siehst `403`-Fehler direkt in der Konsole, wenn du ein Limit triffst — der Lauf laeuft trotzdem mit Teil-Ergebnis durch.
+
 
 ## So Arbeitet Patternpilot
 

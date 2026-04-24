@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-24T12:24:17.183Z",
+  "updated_at": "2026-04-24T12:36:21.506Z",
   "sections": {
     "problem-explore": {
       "self-healing-adaptive-source-intake": {
@@ -14,8 +14,8 @@
       },
       "event-deduplication-across-heterogenous-sources": {
         "label": "event-deduplication-across-heterogenous-sources",
-        "href": "\\\\wsl.localhost\\Ubuntu-24.04\\home\\domi\\eventbaer\\dev\\patternpilot\\projects\\eventbear-worker\\problems\\event-deduplication-across-heterogenous-sources\\landscape\\2026-04-24T12-23-54-108Z\\landscape.html",
-        "updated_at": "2026-04-24T12:23:54.132Z"
+        "href": "\\\\wsl.localhost\\Ubuntu-24.04\\home\\domi\\eventbaer\\dev\\patternpilot\\projects\\eventbear-worker\\problems\\event-deduplication-across-heterogenous-sources\\landscape\\2026-04-24T12-36-21-480Z\\landscape.html",
+        "updated_at": "2026-04-24T12:36:21.506Z"
       }
     },
     "review": {
