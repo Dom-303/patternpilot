@@ -17,6 +17,7 @@ import {
   COCKPIT_NIGHT_FONTS_HEAD,
   COCKPIT_NIGHT_BASE_CSS
 } from "../lib/html/tokens.mjs";
+import { LOGO_BASE64 } from "../lib/html/shared.mjs";
 import {
   renderCockpitHero,
   renderSectionBreak,
@@ -464,15 +465,18 @@ ${doDontPairs.map((pair) => `<article class="dodont-card">
 // Jede Section hat: id, chapter-Nummer (Roman), title, optionaler lead,
 // body-HTML. Nav wird aus dieser Liste abgeleitet.
 
+// Chapter-Nummern werden aus dem Array-Index abgeleitet (01, 02, ...),
+// damit sie 1:1 zur Sidenav-Auto-Nummerierung passen (renderSidenav
+// nummeriert von 01 an). So entsteht keine Asymmetrie Chapter ↔ Nav.
 const sections = [
-  { id: "principles", num: "00", title: "Prinzipien", lead: "Vier Regeln, die jede Entscheidung im Design-System tragen.", body: `<div class="principles-grid">
+  { id: "principles", title: "Prinzipien", lead: "Vier Regeln, die jede Entscheidung im Design-System tragen.", body: `<div class="principles-grid">
 ${principles.map((p) => `<article class="principle">
   <div class="principle-number">${p.n}</div>
   <h3 class="principle-title">${p.title}</h3>
   <p class="principle-body">${p.body}</p>
 </article>`).join("")}
 </div>` },
-  { id: "colors", num: "01", title: "Farbsystem", lead: "Vier Familien. Die dunkle Oberflaeche traegt, weisse Karten erklaeren, Neons markieren.", body: tokenGroups.map((g) => `<section class="token-family${g.neon ? " token-family--neon" : ""}">
+  { id: "colors", title: "Farbsystem", lead: "Vier Familien. Die dunkle Oberflaeche traegt, weisse Karten erklaeren, Neons markieren.", body: tokenGroups.map((g) => `<section class="token-family${g.neon ? " token-family--neon" : ""}">
   <header class="token-family-head">
     <h3 class="token-family-title">${g.title}</h3>
     <p class="token-family-hint">${g.hint}</p>
@@ -488,7 +492,7 @@ ${g.swatches.map((s) => `    <div class="token-swatch">
     </div>`).join("\n")}
   </div>
 </section>`).join("\n") },
-  { id: "typography", num: "02", title: "Typografie", lead: "Drei Schriften teilen sich die Arbeit — Syne setzt die Haltung, JetBrains Mono gibt Struktur, IBM Plex Sans traegt den Fliesstext.", body: `<div class="type-scale">
+  { id: "typography", title: "Typografie", lead: "Drei Schriften teilen sich die Arbeit — Syne setzt die Haltung, JetBrains Mono gibt Struktur, IBM Plex Sans traegt den Fliesstext.", body: `<div class="type-scale">
 ${typeScale.map((t) => `<div class="type-row">
   <div class="type-demo" style="${t.css}">${t.demo}</div>
   <div class="type-meta">
@@ -497,45 +501,55 @@ ${typeScale.map((t) => `<div class="type-row">
   </div>
 </div>`).join("\n")}
 </div>` },
-  { id: "accents", num: "03", title: "Section-Accents", lead: "Fuenf Akzente decken die semantischen Felder ab. Jede Section waehlt genau einen.", body: accentShowcase },
-  { id: "hero", num: "04", title: "Hero & Section-Break", lead: "Grosse Geste oben. Leichte Geste zwischen Bloecken.", body: heroSample },
-  { id: "intro", num: "05", title: "Content-Intro", lead: "Die Ueberleitung vom Hero in den Report-Korpus.", body: contentIntroSample },
-  { id: "sidenav", num: "06", title: "Sidenav", lead: "Links am Rand, eng gesetzt, Labels einzeilig mit Ellipsis als Safety-Net.", body: sidenavSample },
-  { id: "stats", num: "07", title: "Stat-Grid", lead: "Das einzige Raster, das 3 Spalten darf. Kompakte Zahlenmeta auf einen Blick.", body: `<div class="sample-frame sample-frame--on-dark">${statGridSample}</div>` },
-  { id: "repo-rows", num: "08", title: "Repo-Rows", lead: "Klickbare Listenzeile mit Name, Meta, Disposition-Badge, optionalem Score.", body: repoRowsSample },
-  { id: "axis", num: "09", title: "Axis-Rows", lead: "Fuer Achsen-Views: Label links, 0–100% Bar, Wert rechts.", body: axisSample },
-  { id: "meta-grid", num: "10", title: "Meta-Grid", lead: "Dichte Key-Value-Zellen fuer Lauf-Info und sekundaere Metriken.", body: metaGridSample },
-  { id: "info-grid", num: "11", title: "Info-Grid", lead: "Info-Karten mit Title + Copy + Bullets. Max 2 Spalten.", body: infoGridSample },
-  { id: "tabs", num: "12", title: "Tabs", lead: "Konsolidiert mehrere Sichten einer Section in einem Block.", body: tabsSample },
-  { id: "badges", num: "13", title: "Badges & Buttons", lead: "Disposition-Badges (adopt/adapt/observe), Info-Buttons (light/dark), Ghost-Button, Kontext-Status.", body: badgeSample },
-  { id: "agent-snapshot", num: "14", title: "Agent Snapshot", lead: "Toolbar + JSON-Datei-Meta + 3 Action-Buttons (Copy/Open/Download). Primary-Button traegt Magenta-Gradient.", body: agentSnapshotSample },
-  { id: "description-collapse", num: "15", title: "Description Collapse", lead: "Hilfetexte pro Section — standardmaessig zugeklappt, damit die Sektion nicht ueberladen wirkt.", body: descriptionCollapseSample },
-  { id: "dodont", num: "16", title: "Do & Don't", lead: "Vier Regelfaelle, die in Reviews immer wieder auftauchen.", body: doDontGrid }
+  { id: "accents", title: "Section-Accents", lead: "Fuenf Akzente decken die semantischen Felder ab. Jede Section waehlt genau einen.", body: accentShowcase },
+  { id: "hero", title: "Hero & Section-Break", lead: "Grosse Geste oben. Leichte Geste zwischen Bloecken.", body: heroSample },
+  { id: "intro", title: "Content-Intro", lead: "Die Ueberleitung vom Hero in den Report-Korpus.", body: contentIntroSample },
+  { id: "sidenav", title: "Sidenav", lead: "Links am Rand, eng gesetzt, Labels einzeilig mit Ellipsis als Safety-Net.", body: sidenavSample },
+  { id: "stats", title: "Stat-Grid", lead: "Das einzige Raster, das 3 Spalten darf. Kompakte Zahlenmeta auf einen Blick.", body: `<div class="sample-frame sample-frame--on-dark">${statGridSample}</div>` },
+  { id: "repo-rows", title: "Repo-Rows", lead: "Klickbare Listenzeile mit Name, Meta, Disposition-Badge, optionalem Score.", body: repoRowsSample },
+  { id: "axis", title: "Axis-Rows", lead: "Fuer Achsen-Views: Label links, 0–100% Bar, Wert rechts.", body: axisSample },
+  { id: "meta-grid", title: "Meta-Grid", lead: "Dichte Key-Value-Zellen fuer Lauf-Info und sekundaere Metriken.", body: metaGridSample },
+  { id: "info-grid", title: "Info-Grid", lead: "Info-Karten mit Title + Copy + Bullets. Max 2 Spalten.", body: infoGridSample },
+  { id: "tabs", title: "Tabs", lead: "Konsolidiert mehrere Sichten einer Section in einem Block.", body: tabsSample },
+  { id: "badges", title: "Badges & Buttons", lead: "Disposition-Badges (adopt/adapt/observe), Info-Buttons (light/dark), Ghost-Button, Kontext-Status.", body: badgeSample },
+  { id: "agent-snapshot", title: "Agent Snapshot", lead: "Toolbar + JSON-Datei-Meta + 3 Action-Buttons (Copy/Open/Download). Primary-Button traegt Magenta-Gradient.", body: agentSnapshotSample },
+  { id: "description-collapse", title: "Description Collapse", lead: "Hilfetexte pro Section — standardmaessig zugeklappt, damit die Sektion nicht ueberladen wirkt.", body: descriptionCollapseSample },
+  { id: "dodont", title: "Do & Don't", lead: "Vier Regelfaelle, die in Reviews immer wieder auftauchen.", body: doDontGrid }
 ];
 
 // --- Section-Nav (abgeleitet) ---------------------------------------------
 const navItems = sections.map((s) => ({ href: `#${s.id}`, label: s.title }));
 
 // --- Sektion-Render -------------------------------------------------------
-const sectionsHtml = sections.map((s) => `<section class="chapter" id="${s.id}">
+// data-nav-section-Attribut ist entscheidend: INFO_DIALOG_SCRIPT beobachtet
+// diese Sections mit einem IntersectionObserver und togglet die .active-
+// Klasse auf dem passenden Sidenav-Link — das ist der Magenta-Balken, der
+// links neben dem aktuellen Kapitel mitwandert.
+//
+// Kapitel-Num wird aus dem Index abgeleitet (01, 02, ...), damit sie 1:1
+// zur Sidenav-Auto-Nummerierung passt.
+const sectionsHtml = sections.map((s, i) => {
+  const num = String(i + 1).padStart(2, "0");
+  return `<section class="chapter" id="${s.id}" data-nav-section>
   <header class="chapter-head">
-    <span class="chapter-num">${s.num}</span>
+    <span class="chapter-num">${num}</span>
     <h2 class="chapter-title">${s.title}</h2>
   </header>
   ${s.lead ? `<p class="chapter-lead">${s.lead}</p>` : ""}
   <div class="chapter-body">${s.body}</div>
-</section>`).join("\n");
+</section>`;
+}).join("\n");
 
 // --- Sidenav fuer Styleguide ----------------------------------------------
-const sidenavHtml = `<nav class="sidenav">
-  <a href="#top" class="sidenav-logo-link" aria-label="Zum Seitenanfang">
-    <div class="sidenav-brand">P</div>
-  </a>
-  <div class="sidenav-eyebrow">Styleguide</div>
-  <ul class="sidenav-list">
-${navItems.map((item, i) => `    <li><a href="${item.href}"><span class="n">${String(i).padStart(2, "0")}</span><span class="label">${item.label}</span></a></li>`).join("\n")}
-  </ul>
-</nav>`;
+// Nutzt renderSidenav (dieselbe Primitive wie die Templates), damit echtes
+// Pattern-Pilot-Logo, Border-Left-Regel und Active-Indikator konsistent
+// sind. Logo kommt aus assets/logo-icon.png via LOGO_BASE64.
+const sidenavHtml = renderSidenav({
+  logoSrc: LOGO_BASE64,
+  logoAlt: "Pattern Pilot",
+  eyebrow: "Styleguide",
+  items: navItems
+});
 
 const styleguideCss = `
 /* ==========================================================================
@@ -548,14 +562,6 @@ const styleguideCss = `
 @media (max-width: 960px) {
   .styleguide-shell { grid-template-columns: 1fr; gap: 24px; padding: 24px 20px 80px; }
   .styleguide-shell .sidenav { display: none; }
-}
-
-.sidenav-brand {
-  width: 44px; height: 44px; border-radius: 10px;
-  background: linear-gradient(135deg, var(--neon-magenta), var(--neon-purple));
-  color: #fff; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 28px;
-  display: inline-flex; align-items: center; justify-content: center;
-  line-height: 1; box-shadow: 0 8px 24px rgba(255,61,151,0.35);
 }
 
 /* Hero */
