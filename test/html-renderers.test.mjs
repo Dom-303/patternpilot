@@ -331,6 +331,40 @@ test("renderLandscapeEntscheidungenSection empty state when no clusters", async 
   assert.match(html, /keine Cluster nach Relation/);
 });
 
+test("renderLandscapeEmpfehlungenSection emits 3 tabs with repo-level disposition", async () => {
+  const { renderLandscapeEmpfehlungenSection } = await import("../lib/html/sections.mjs");
+  const html = renderLandscapeEmpfehlungenSection({
+    clusters: [
+      { label: "Graph-Matching", relation: "divergent", pattern_family: "graph", member_ids: ["https://github.com/owner-a/repo-1", "https://github.com/owner-a/repo-2"] },
+      { label: "Fuzzy-String", relation: "adjacent", pattern_family: "fuzzy", member_ids: ["https://github.com/owner-b/repo-3"] },
+      { label: "Record-Linkage", relation: "near_current_approach", pattern_family: "classic", member_ids: ["owner-c/repo-4"] }
+    ]
+  });
+  // Section structure
+  assert.match(html, /id="empfehlungen"/);
+  assert.match(html, /class="tabs"/);
+  assert.match(html, /Top-Rang \(kurz\)/);
+  assert.match(html, /Nach Disposition gruppiert/);
+  assert.match(html, /Entscheidungs-Begruendung/);
+  // Repo-level disposition labels (not cluster-level)
+  assert.match(html, /Uebernehmen pruefen/);
+  assert.match(html, /Adaptieren/);
+  // Clickable repo links for both URL forms
+  assert.match(html, /href="https:\/\/github\.com\/owner-a\/repo-1"/);
+  assert.match(html, /href="https:\/\/github\.com\/owner-c\/repo-4"/);
+  // Top-5 ranking uses padded numbers
+  assert.match(html, /01\. owner-a\/repo-1/);
+  // Impact classification
+  assert.match(html, /Impact hoch/);
+});
+
+test("renderLandscapeEmpfehlungenSection empty state when no clusters", async () => {
+  const { renderLandscapeEmpfehlungenSection } = await import("../lib/html/sections.mjs");
+  const html = renderLandscapeEmpfehlungenSection({ clusters: [] });
+  assert.match(html, /Noch keine Repos im Landscape/);
+  assert.match(html, /Noch keine Repos zum Gruppieren/);
+});
+
 test("renderLandscapeHtml produces full Cockpit-Night structure including all new sections", () => {
   const html = renderLandscapeHtml({
     problem: { title: "Problem-Title", slug: "slug-id", project: "proj" },

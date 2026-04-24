@@ -5,7 +5,7 @@
   "project": "eventbear-worker",
   "created_at": "2026-04-22",
   "updated_at": "2026-04-24",
-  "latest_landscape": "landscape/2026-04-24T12-58-37-370Z",
+  "latest_landscape": "landscape/2026-04-24T13-13-11-147Z",
   "last_explore_result": "ok",
   "fields": {
     "description": "Der EventBaer-Worker braucht pro neuer Quelle manuelle Extraktor-Tuning-Arbeit: neue Selektoren hand-crafted, Edge-Cases patchen, neue Source-Families anlegen. Jede Quelle bleibt isolierter Fix — die Pipeline hat keinen Pattern-Bank, der aus gelösten Fällen Extraktions-Regeln destilliert, und kein Self-Healing bei Struktur-Drift. Gesucht werden Patterns aus Wrapper-Induction, Template-Learning und adaptivem Selector-Recovery, die \"einmal gelöst, überall ähnlich\" realisieren.",
