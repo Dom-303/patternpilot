@@ -43,22 +43,6 @@ Es hilft dir, externe GitHub-Repositories nicht nur zu sammeln, sondern im Konte
 - `runs/<project>/` fuer nachvollziehbare Laufhistorie
 - `state/` fuer lokalen Betriebszustand
 
-### GitHub-API-Limits im Blick behalten
-
-GitHub gibt dir zwei getrennte Budgets, die sich unabhaengig voneinander nachfuellen:
-
-- **REST — 5.000 Requests pro Stunde.** Fuer alles Normale: README holen, Lizenz pruefen, Topics lesen.
-- **Search — 30 Requests pro Minute.** Eigenes Budget nur fuer GitHub-Suchen. Das ist meistens der Engpass.
-
-Ein Problem-Landscape-Lauf mit 12 Queries und `--per-page 20` verbraucht typisch 12 Search-Requests + ~50 REST-Requests — bleibt in beiden Budgets locker drin. Bei mehreren Laeufen hintereinander oder `--per-page 100` triffst du dagegen leicht die 30-Search-pro-Minute-Grenze. Wichtig: ein Lauf bricht bei einem `403` nicht ab, er liefert nur Teilergebnisse der gedrosselten Queries.
-
-Zwei Hebel, um bewusst zu dosieren:
-
-- **`--per-page <n>`** (1-100, Default 20) — wieviele Kandidaten pro Query zurueckkommen. Hoeher bringt mehr Vielfalt pro Problem-Linse, kostet aber mehr REST-Requests.
-- **`--depth <profile>`** (`focused` / `balanced` / `expansive` / `max`) — wieviele Query-Varianten ueberhaupt gefeuert werden. `balanced` ist der sichere Default.
-
-**Faustregel:** Default 20 passt fuer Routine-Runs; `--per-page 50` fuer Einzel-Laeufe mit mehr Tiefe; `--per-page 100` nur fuer gezielte Tiefenanalysen. Wenn du rate-limited wirst, reicht meist eine 2-Minuten-Pause — der Search-Kanister fuellt sich schnell wieder.
-
 
 ## So Arbeitet Patternpilot
 
@@ -179,8 +163,17 @@ Wichtig:
 
 ## Die Wichtigsten Befehle
 
+### Setup & Anbindung
+
 - `npm run bootstrap -- --project my-project --target ../my-project --label "My Project"`
   Erstellt die lokale Konfiguration und bindet dein erstes Zielrepo.
+- `npm run doctor`
+  Prueft Token, Pfade, Lokale-Konfiguration. Mit `--offline` ohne GitHub.
+- `npm run patternpilot -- product-readiness`
+  Zeigt, wie nah dein Setup an einem belastbaren Betriebszustand ist.
+
+### Haupt-Fluss: Repos rein, Review raus
+
 - `npm run intake -- --project my-project <github-url>`
   Legt einen einzelnen Fund sauber an.
 - `npm run sync:watchlist -- --project my-project`
@@ -188,19 +181,25 @@ Wichtig:
 - `npm run review:watchlist -- --project my-project --dry-run`
   Verdichtet Watchlist-Funde zu einem Review.
 - `npm run patternpilot -- discover --project my-project --dry-run`
-  Sucht optional automatisch nach moeglich passenden GitHub-Repos fuer dein Zielprojekt.
+  Sucht optional automatisch nach moeglich passenden GitHub-Repos.
 - `npm run patternpilot -- discover-evaluate --project my-project`
   Bewertet gespeicherte Discovery-Runs und zeigt gute oder noisige Query-Familien.
-- `npm run validate:cohort`
-  Faellt die breite Fremdprojekt-Welle ueber die eingebaute Referenzkohorte.
-- `npm run patternpilot -- product-readiness`
-  Zeigt, wie nah dein lokaler Setup an einem belastbaren Betriebszustand ist.
+
+### Problem-Mode: von der Frage zur Landscape
+
 - `npm run problem:create -- --project my-project --title "..."`
-  Legt ein problem.md-Artefakt an. Ohne `--project` als standalone-Problem unter `state/standalone-problems/`.
+  Legt ein problem.md-Artefakt an. Ohne `--project` als standalone-Problem.
 - `npm run problem:explore -- <slug>`
-  Startet den Kettenlauf: targeted discovery -> clustering -> Solution Landscape + Brief.
+  Startet den Kettenlauf: targeted discovery → clustering → Solution-Landscape + Brief.
 - `npm run problem:list`
   Listet alle aktiven Probleme mit letzter Landscape-Referenz.
+
+### Validation & Analyse-Profile
+
+- `npm run validate:cohort`
+  Faellt die breite Fremdprojekt-Welle ueber die eingebaute Referenzkohorte.
+- `npm run patternpilot -- discover --project my-project --per-page 50 --depth deep`
+  Tiefere Discovery mit mehr Kandidaten pro Query.
 
 
 ## Reports & Design System
@@ -232,20 +231,32 @@ Details, was sich aendern darf und was nicht: [`docs/reference/TEMPLATE_LOCK.md`
 
 ## Fuer Fortgeschrittene Nutzer
 
-- Produkt- und Systembild:
-  [OPERATING_MODEL.md](docs/foundation/OPERATING_MODEL.md)
-- Ehrlicher Produktstatus:
-  [V1_STATUS.md](docs/foundation/V1_STATUS.md)
-- Projekt-Alignment:
-  [PROJECT_ALIGNMENT_MODEL.md](docs/reference/PROJECT_ALIGNMENT_MODEL.md)
-- GitHub-Discovery:
-  [GITHUB_DISCOVERY_MODEL.md](docs/reference/GITHUB_DISCOVERY_MODEL.md)
-- GitHub-Token-Setup:
-  [GITHUB_TOKEN_SETUP.md](docs/reference/GITHUB_TOKEN_SETUP.md)
-- Automation und Alerts:
-  [AUTOMATION_ALERT_DELIVERY.md](docs/reference/AUTOMATION_ALERT_DELIVERY.md)
-- Automation-Betriebsgrenze:
-  [AUTOMATION_OPERATING_MODE.md](docs/foundation/AUTOMATION_OPERATING_MODE.md)
+### Deep-Dive-Doku
+
+- Produkt- und Systembild: [OPERATING_MODEL.md](docs/foundation/OPERATING_MODEL.md)
+- Ehrlicher Produktstatus: [V1_STATUS.md](docs/foundation/V1_STATUS.md)
+- Projekt-Alignment: [PROJECT_ALIGNMENT_MODEL.md](docs/reference/PROJECT_ALIGNMENT_MODEL.md)
+- GitHub-Discovery-Modell: [GITHUB_DISCOVERY_MODEL.md](docs/reference/GITHUB_DISCOVERY_MODEL.md)
+- GitHub-Token-Setup: [GITHUB_TOKEN_SETUP.md](docs/reference/GITHUB_TOKEN_SETUP.md)
+- Automation und Alerts: [AUTOMATION_ALERT_DELIVERY.md](docs/reference/AUTOMATION_ALERT_DELIVERY.md)
+- Automation-Betriebsgrenze: [AUTOMATION_OPERATING_MODE.md](docs/foundation/AUTOMATION_OPERATING_MODE.md)
+- Report-Template-Lock: [TEMPLATE_LOCK.md](docs/reference/TEMPLATE_LOCK.md)
+
+### GitHub-API-Limits im Blick behalten
+
+GitHub gibt dir zwei getrennte Budgets, die sich unabhaengig voneinander nachfuellen:
+
+- **REST — 5.000 Requests pro Stunde.** Fuer alles Normale: README holen, Lizenz pruefen, Topics lesen.
+- **Search — 30 Requests pro Minute.** Eigenes Budget nur fuer GitHub-Suchen. Meistens der Engpass.
+
+Ein Problem-Landscape-Lauf mit 12 Queries und `--per-page 20` verbraucht typisch 12 Search-Requests + ~50 REST-Requests — bleibt in beiden Budgets locker drin. Bei mehreren Laeufen hintereinander oder `--per-page 100` triffst du leicht die 30-Search-pro-Minute-Grenze. Wichtig: ein Lauf bricht bei einem `403` nicht ab, er liefert nur Teilergebnisse der gedrosselten Queries.
+
+Zwei Hebel, um bewusst zu dosieren:
+
+- **`--per-page <n>`** (1-100, Default 20) — wieviele Kandidaten pro Query zurueckkommen. Hoeher bringt mehr Vielfalt, kostet aber mehr REST-Requests.
+- **`--depth <profile>`** (`focused` / `balanced` / `expansive` / `max`) — wieviele Query-Varianten ueberhaupt gefeuert werden.
+
+**Faustregel:** Default 20 fuer Routine-Runs; `--per-page 50` fuer Einzel-Laeufe mit mehr Tiefe; `--per-page 100` nur fuer gezielte Tiefenanalysen. Bei Rate-Limit 2-Minuten-Pause — der Search-Kanister fuellt sich schnell wieder.
 
 
 ## Open Source
@@ -267,15 +278,62 @@ Die Lizenz dafuer ist:
 
 ### Wichtige Open-Source-Dokumente
 
-- Beitragsregeln:
-  [CONTRIBUTING.md](CONTRIBUTING.md)
-- Changelog:
-  [CHANGELOG.md](CHANGELOG.md)
-- Release Notes:
-  [RELEASE_NOTES_v0.1.0.md](docs/foundation/RELEASE_NOTES_v0.1.0.md)
-- Freigabeform:
-  [OPEN_SOURCE_RELEASE.md](docs/foundation/OPEN_SOURCE_RELEASE.md)
-- Release-Check:
-  [RELEASE_CHECKLIST.md](docs/foundation/RELEASE_CHECKLIST.md)
-- Release-Kommunikation:
-  [RELEASE_COMMUNICATION.md](docs/foundation/RELEASE_COMMUNICATION.md)
+- Beitragsregeln: [CONTRIBUTING.md](CONTRIBUTING.md)
+- Changelog: [CHANGELOG.md](CHANGELOG.md)
+- Release Notes: [RELEASE_NOTES_v0.1.0.md](docs/foundation/RELEASE_NOTES_v0.1.0.md)
+- Freigabeform: [OPEN_SOURCE_RELEASE.md](docs/foundation/OPEN_SOURCE_RELEASE.md)
+- Release-Check: [RELEASE_CHECKLIST.md](docs/foundation/RELEASE_CHECKLIST.md)
+- Release-Kommunikation: [RELEASE_COMMUNICATION.md](docs/foundation/RELEASE_COMMUNICATION.md)
+
+
+---
+
+## Jetzt Starten
+
+Pattern Pilot laeuft komplett lokal — kein Account, keine Cloud, keine Telemetrie. Vier Zeilen zum ersten Durchlauf:
+
+```bash
+git clone https://github.com/Dom-303/patternpilot.git
+cd patternpilot
+npm install
+npm run doctor -- --offline
+```
+
+Drei Wege in die Tiefe, je nachdem wie du tickst:
+
+<table>
+<tr>
+<td align="center" width="33%">
+<a href="docs/foundation/SIMPLE_GUIDE.md"><strong>Simple Guide</strong></a><br/>
+<sub>Sprache ohne Jargon.<br/>Fuer den ersten Eindruck.</sub>
+</td>
+<td align="center" width="33%">
+<a href="docs/foundation/GETTING_STARTED.md"><strong>Getting Started</strong></a><br/>
+<sub>Vier Befehle, erster Run.<br/>Direkt zur Praxis.</sub>
+</td>
+<td align="center" width="33%">
+<a href="docs/reference/REPORT_UI_TOKENS.html"><strong>Design-Guide</strong></a><br/>
+<sub>Cockpit Night von innen.<br/>Fuer UI-Neugierige.</sub>
+</td>
+</tr>
+</table>
+
+
+## Mitarbeiten
+
+Pull Requests sind willkommen. Vor dem ersten PR kurz:
+
+- [CONTRIBUTING.md](CONTRIBUTING.md) — Regeln und Ton
+- [TEMPLATE_LOCK.md](docs/reference/TEMPLATE_LOCK.md) — was gefroren ist (Report-UI) und was atmet (Daten, Logik)
+- Issues und Feedback: [github.com/Dom-303/patternpilot/issues](https://github.com/Dom-303/patternpilot/issues)
+
+
+---
+
+<p align="center">
+  <img src="assets/logo-horizontal.png" alt="Pattern Pilot" width="320">
+</p>
+
+<p align="center">
+  <sub><strong>Pattern Pilot</strong> · Lokales Repo-Intelligence-Produkt · <a href="LICENSE">MIT-Lizenz</a> · gebaut mit Sorgfalt</sub>
+</p>
