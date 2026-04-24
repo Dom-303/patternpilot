@@ -1,0 +1,4 @@
+label,pattern_family,main_layer,relation,member_count,signature_contrast
+dedupe+python+query:record-linkage-library,record linkage library,problem_lens,adjacent,9,query:record-linkage-library|library|linkage
+dedupe+deduplication+entity-resolution,entity resolution deduplication,problem_lens,adjacent,3,query:entity-resolution-deduplication|dedupe|deduplication
+agent+python+typescript,unknown,unknown,adjacent,8,typescript|levenshtein|query:splink-record-linkage

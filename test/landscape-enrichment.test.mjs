@@ -119,6 +119,16 @@ describe("buildLandscapeTechStatus", () => {
     assert.ok(status.missingCandidates.some((m) => m.includes("1 Cluster")));
   });
 
+  test("single_cluster_collapse emits ready-to-run CLI commands with slug+project", () => {
+    const status = buildLandscapeTechStatus({
+      queries: ["q"], candidateCount: 8, clusterCount: 1, outlierCount: 0,
+      problemSlug: "event-dedup", projectKey: "eventbear-worker"
+    });
+    assert.ok(status.missingCandidates.some((m) => m.includes("npm run problem:explore -- event-dedup --project eventbear-worker --per-page 50")));
+    assert.ok(status.missingCandidates.some((m) => m.includes("--depth deep")));
+    assert.ok(status.missingCandidates.some((m) => m.includes("projects/eventbear-worker/problems/event-dedup/problem.md")));
+  });
+
   test("surfaces high-outlier-rate warning when > 50% unmatched", () => {
     const status = buildLandscapeTechStatus({ queries: ["q"], candidateCount: 10, clusterCount: 2, outlierCount: 7 });
     assert.ok(status.missingCandidates.some((m) => m.includes("Outlier-Rate")));
