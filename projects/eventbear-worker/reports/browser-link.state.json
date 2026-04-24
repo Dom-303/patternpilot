@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-24T13:13:11.173Z",
+  "updated_at": "2026-04-24T13:26:59.674Z",
   "sections": {
     "problem-explore": {
       "self-healing-adaptive-source-intake": {
@@ -22,7 +22,14 @@
       "latest": {
         "label": "Latest review",
         "href": "\\\\wsl.localhost\\Ubuntu-24.04\\home\\domi\\eventbaer\\dev\\patternpilot\\projects\\eventbear-worker\\reports\\patternpilot-report-eventbear-worker-2026-04-24.html",
-        "updated_at": "2026-04-24T12:24:17.183Z"
+        "updated_at": "2026-04-24T13:26:59.674Z"
+      }
+    },
+    "docs": {
+      "ui-styleguide": {
+        "label": "UI-Styleguide (Cockpit Night Design System)",
+        "href": "\\\\wsl.localhost\\Ubuntu-24.04\\home\\domi\\eventbaer\\dev\\patternpilot\\docs\\reference\\REPORT_UI_TOKENS.html",
+        "updated_at": "2026-04-24T13:25:45.817Z"
       }
     }
   }

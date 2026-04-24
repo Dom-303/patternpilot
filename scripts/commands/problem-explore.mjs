@@ -284,7 +284,8 @@ export async function runProblemExplore(rootDir, config, options) {
           key: slug,
           label: slug,
           href: buildBrowserLinkTarget(path.resolve(landscapeHtmlPath))
-        }
+        },
+        { rootDir }
       );
     } catch (error) {
       console.warn(`[problem-explore] could not update browser-link: ${error.message}`);
