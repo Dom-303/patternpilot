@@ -35,6 +35,7 @@ Diese Dateien in dieser Reihenfolge zuerst lesen:
 
 ## Betriebsregeln
 
+- **HTML-Report-Templates sind strukturell eingefroren** (Stand commit 22f6587, 24.04.2026): `lib/landscape/html-report.mjs` + `lib/html-renderer.mjs`. Erlaubt: inhaltliche Qualitaet, Bugfixes, neue Daten-Builder. Nicht erlaubt ohne User-Freigabe: Section-Reihenfolge umbauen, Renderer-Helper austauschen, Nav-Label-Konvention aendern, max-2-Col-Grundregel aufweichen. Details in den Datei-Kopfkommentaren.
 - Patternpilot muss auf allen drei Haupt-Betriebssystemen laufen: macOS, Linux und Windows (inkl. WSL). Keine Shell-spezifischen Aufrufe in npm-Scripts, Pfade immer ueber `path.*`, keine harten POSIX- oder Windows-Separatoren im Code.
 - `knowledge/repo_landkarte.csv` ist kuratierter Wissensbestand, nicht rohe Intake-Ablage.
 - Neue GitHub-Links gehen zuerst in `state/repo_intake_queue.csv` und in ein projektbezogenes Intake-Dossier.
