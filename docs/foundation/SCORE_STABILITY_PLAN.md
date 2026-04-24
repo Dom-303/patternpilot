@@ -1,10 +1,11 @@
 # Score-Stabilitaets-Plan — auf Weg zu reproduzierbaren 9-10/10 Reports
 
 - last_updated: 2026-04-24
-- status: draft, kritisch reviewed
+- status: Phase 0 done (Test-Harness); Phase 1-5 offen
 - scope: Landscape- und Discovery-Report
 - zielkorridor: Median 9, Min 8, Max 10 ueber beliebige Problem-Slugs und Zielprojekte
 - begriff: "Problem-Slug" = Eingangsargument von `npm run problem:explore -- <slug>`, z. B. `event-dedup`, `schema-extraction`
+- baseline nach Phase 0: `01-event-dedup` 6/10, `02-schema-extraction` 8/10, `03-self-healing` 7/10, `04-watchlist-review-empty` 2/10 (Median 6.5, Min 2, Max 8) — siehe `npm run score:baseline`
 
 ## 1. Warum dieser Plan ueberhaupt
 
@@ -51,8 +52,10 @@ Jede Phase wird gegen drei Kriterien abgeklopft:
 
 ## 5. Die fuenf Phasen
 
-### Phase 0 — Test-Harness
+### Phase 0 — Test-Harness ✓ done
 
+- **Status:** 2026-04-24 geliefert. Implementierung: `lib/scoring/score-report.mjs` (pure functions), `scripts/score-report.mjs` (CLI), `test/fixtures/score-baseline/` (4 gefreezte Runs), `test/score-report.test.mjs` (21 Tests, in `npm run release:smoke` enthalten)
+- **Aufrufe:** `npm run score -- <run-path> [--pretty]` fuer Einzel-Scores, `npm run score:baseline` fuer die Baseline-Tabelle
 - **Ziel:** reproduzierbare Score-Messung pro Run, damit jede Phase messbar verbessert/verschlechtert
 - **Konkret:**
   - `scripts/score-report.mjs` schreiben: liest einen Landscape- oder Discovery-Run aus den gefreezten JSON-Artefakten (**kein Live-API-Call**) und spuckt eine numerische Score (0-10) mit Teil-Noten pro Achse aus

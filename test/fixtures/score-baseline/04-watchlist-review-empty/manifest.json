@@ -1,0 +1,342 @@
+{
+  "runId": "2026-04-24T20-15-11-309Z",
+  "projectKey": "eventbear-worker",
+  "createdAt": "2026-04-24T20:15:11.309Z",
+  "dryRun": false,
+  "reviewScope": "watchlist",
+  "inputUrlCount": 0,
+  "reportPath": "projects/eventbear-worker/reviews/watchlist-review-balanced-standard.md",
+  "htmlReportPath": "projects/eventbear-worker/reports/patternpilot-report-eventbear-worker-2026-04-24.html",
+  "reportView": "standard",
+  "review": {
+    "createdAt": "2026-04-24T20:15:11.309Z",
+    "projectKey": "eventbear-worker",
+    "projectLabel": "Eventbaer Worker",
+    "binding": {
+      "projectKey": "eventbear-worker",
+      "projectLabel": "Eventbaer Worker",
+      "projectRoot": "../eventbaer/dev/eventbear-worker",
+      "readBeforeAnalysis": [
+        "AGENT_CONTEXT.md",
+        "README.md",
+        "WORKER_CONTRACT.md",
+        "WORKER_FLOW.md",
+        "docs/SOURCE_MASTERLIST_POLICY.md",
+        "package.json"
+      ],
+      "referenceDirectories": [
+        "lib",
+        "scripts",
+        "docs",
+        "sources",
+        "templates"
+      ],
+      "discoveryHints": [
+        "municipal event scraper",
+        "civic calendar data",
+        "adapter family review",
+        "event feed parser",
+        "source audit dedupe",
+        "playwright crawler extraction",
+        "location event normalization",
+        "calendar scraper"
+      ],
+      "discoveryStrategy": {
+        "broadAnchorCount": 1,
+        "broadSignalCount": 1,
+        "broadMaxTerms": 4,
+        "signalLaneAnchorCount": 1,
+        "signalLaneSignalCount": 2,
+        "signalLaneMaxTerms": 4,
+        "signalLaneLimit": 4,
+        "archetypeAnchorCount": 1,
+        "archetypeSignalCount": 2,
+        "archetypeMaxTerms": 4,
+        "architectureAnchorCount": 1,
+        "architectureSignalCount": 2,
+        "architectureMaxTerms": 4,
+        "dependencyAnchorCount": 1,
+        "dependencySignalCount": 2,
+        "dependencyMaxTerms": 4,
+        "capabilityAnchorCount": 1,
+        "capabilitySignalCount": 2,
+        "capabilityMaxTerms": 4,
+        "manualAnchorCount": 1,
+        "manualMaxTerms": 4,
+        "negativeTermCount": 3,
+        "architectureGroundingMinScore": 5,
+        "dependencyGroundingMinScore": 6,
+        "capabilityGroundingMinScore": 5,
+        "prioritySignalLaneIds": [
+          "public_event_intake",
+          "adapter_family",
+          "normalization_schema"
+        ],
+        "seedSignalSources": [
+          "discoveryHints",
+          "targetCapabilities",
+          "analysisQuestions"
+        ],
+        "preferredQueryFamilies": [
+          "signal_lane",
+          "architecture",
+          "capability",
+          "archetype",
+          "dependency",
+          "broad"
+        ],
+        "seedRepoFields": [
+          "fullName",
+          "name",
+          "description",
+          "topics"
+        ],
+        "minSeedSignalHits": 3,
+        "minStrongSeedSignalHits": 2,
+        "defaultStrongSignals": [
+          "api",
+          "adapter",
+          "audit",
+          "civic",
+          "municipal",
+          "public",
+          "normalize",
+          "schema",
+          "validation",
+          "connector",
+          "crawler",
+          "dedupe",
+          "export",
+          "feed",
+          "masterlist",
+          "plugin",
+          "playwright",
+          "review"
+        ],
+        "defaultNegativeTerms": [
+          "awesome",
+          "boilerplate",
+          "starter",
+          "template",
+          "tutorial"
+        ]
+      },
+      "discoveryWorkflow": {
+        "defaultPolicyMode": "audit"
+      },
+      "discoveryBenchmarkFile": "bindings/eventbear-worker/DISCOVERY_BENCHMARK.json",
+      "discoverySeedsFile": "bindings/eventbear-worker/DISCOVERY_SEEDS.json",
+      "discoveryCohortsFile": "bindings/eventbear-worker/DISCOVERY_COHORTS.json",
+      "alignmentRulesFile": "bindings/eventbear-worker/ALIGNMENT_RULES.json",
+      "discoveryPolicyFile": "bindings/eventbear-worker/DISCOVERY_POLICY.json",
+      "analysisQuestions": [
+        "Welche Schicht im Zielrepo wird durch das externe Repo beleuchtet?",
+        "Welche Luecke, Staerkung oder Spannungsflaeche zeigt sich?",
+        "Ist das eher build_core, adapt_pattern, borrow_optional, observe_only oder avoid_as_core_dependency?",
+        "Welche konkrete Folgearbeit sollte fuer das Zielprojekt entstehen?"
+      ],
+      "targetCapabilities": [
+        "ingestion and adapters",
+        "data model and semantics",
+        "quality and governance",
+        "distribution and surfaces"
+      ],
+      "guardrails": [
+        "patternpilot bleibt Analyse- und Entscheidungsschicht, nicht Produktionslogik",
+        "externe Repos nie blind als Kernarchitektur uebernehmen",
+        "Distribution-, Surface- und Core-Logik bewusst getrennt halten"
+      ]
+    },
+    "projectProfile": {
+      "projectKey": "eventbear-worker",
+      "projectRoot": "/home/domi/eventbaer/dev/eventbaer/dev/eventbear-worker",
+      "referenceFiles": [
+        {
+          "path": "AGENT_CONTEXT.md",
+          "exists": false,
+          "excerpt": ""
+        },
+        {
+          "path": "README.md",
+          "exists": false,
+          "excerpt": ""
+        },
+        {
+          "path": "WORKER_CONTRACT.md",
+          "exists": false,
+          "excerpt": ""
+        },
+        {
+          "path": "WORKER_FLOW.md",
+          "exists": false,
+          "excerpt": ""
+        },
+        {
+          "path": "docs/SOURCE_MASTERLIST_POLICY.md",
+          "exists": false,
+          "excerpt": ""
+        },
+        {
+          "path": "package.json",
+          "exists": false,
+          "excerpt": ""
+        }
+      ],
+      "referenceDirectories": [
+        {
+          "path": "lib",
+          "entries": [],
+          "nestedEntries": [],
+          "extensionHints": [],
+          "directorySignals": [
+            "lib"
+          ]
+        },
+        {
+          "path": "scripts",
+          "entries": [],
+          "nestedEntries": [],
+          "extensionHints": [],
+          "directorySignals": []
+        },
+        {
+          "path": "docs",
+          "entries": [],
+          "nestedEntries": [],
+          "extensionHints": [],
+          "directorySignals": []
+        },
+        {
+          "path": "sources",
+          "entries": [],
+          "nestedEntries": [],
+          "extensionHints": [],
+          "directorySignals": []
+        },
+        {
+          "path": "templates",
+          "entries": [],
+          "nestedEntries": [],
+          "extensionHints": [],
+          "directorySignals": []
+        }
+      ],
+      "contextSources": {
+        "declaredFiles": [
+          "AGENT_CONTEXT.md",
+          "README.md",
+          "WORKER_CONTRACT.md",
+          "WORKER_FLOW.md",
+          "docs/SOURCE_MASTERLIST_POLICY.md",
+          "package.json"
+        ],
+        "loadedFiles": [],
+        "missingFiles": [
+          "AGENT_CONTEXT.md",
+          "README.md",
+          "WORKER_CONTRACT.md",
+          "WORKER_FLOW.md",
+          "docs/SOURCE_MASTERLIST_POLICY.md",
+          "package.json"
+        ],
+        "declaredDirectories": [
+          "lib",
+          "scripts",
+          "docs",
+          "sources",
+          "templates"
+        ],
+        "scannedDirectories": [
+          {
+            "path": "lib",
+            "entryCount": 0
+          },
+          {
+            "path": "scripts",
+            "entryCount": 0
+          },
+          {
+            "path": "docs",
+            "entryCount": 0
+          },
+          {
+            "path": "sources",
+            "entryCount": 0
+          },
+          {
+            "path": "templates",
+            "entryCount": 0
+          }
+        ]
+      },
+      "manifestSignals": {
+        "packageNames": [],
+        "descriptions": [],
+        "keywords": [],
+        "dependencySignals": [],
+        "scriptSignals": []
+      },
+      "architectureSignals": {
+        "directorySignals": [],
+        "extensionHints": []
+      },
+      "discoverySignals": [],
+      "corpus": "",
+      "capabilitiesPresent": []
+    },
+    "analysisProfile": {
+      "id": "balanced",
+      "label": "Balanced",
+      "summary": "Architecture, opportunities and risks in one pass."
+    },
+    "analysisDepth": {
+      "id": "standard",
+      "label": "Standard",
+      "topItems": 10,
+      "includeRepoMatrix": true
+    },
+    "reviewScope": "watchlist",
+    "selectedUrls": [],
+    "inputUrlCount": 0,
+    "watchlistCount": 0,
+    "items": [],
+    "topItems": [],
+    "strongestPatterns": [],
+    "riskiestItems": [],
+    "missingUrls": [],
+    "coverage": {
+      "mainLayers": [],
+      "gapAreas": [],
+      "capabilities": [],
+      "workerAreas": [],
+      "uncoveredCapabilities": [
+        "ingestion and adapters",
+        "data model and semantics",
+        "quality and governance",
+        "distribution and surfaces"
+      ]
+    },
+    "nextSteps": [
+      "Discovery can be widened for uncovered areas: ingestion and adapters, data model and semantics, quality and governance, distribution and surfaces."
+    ],
+    "projectProfileSummary": {
+      "capabilitiesPresent": []
+    },
+    "reportSchemaVersion": 2,
+    "runConfidence": "low",
+    "runConfidenceReason": "Only 0 candidate(s) evaluated - too few to draw a pattern",
+    "confidenceFactors": {
+      "candidateCount": 0,
+      "highFitCount": 0,
+      "unknownFitCount": 0,
+      "riskyCount": 0,
+      "capabilityDiversity": 0
+    },
+    "itemsDataStateSummary": {
+      "complete": 0,
+      "fallback": 0,
+      "stale": 0
+    },
+    "runGapSignals": []
+  }
+}
