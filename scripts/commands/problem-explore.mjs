@@ -100,7 +100,8 @@ async function loadCandidateRepos({ rootDir, config, projectKey, slug, problem, 
     config,
     projectKey,
     queries,
-    perPage: options.perPage ?? 20
+    perPage: options.perPage ?? 20,
+    slow: options.slow ?? false
   });
 
   if (passResult.error) {
@@ -146,7 +147,8 @@ async function loadCandidateRepos({ rootDir, config, projectKey, slug, problem, 
     selectedByDivergence: selection.selectedByDivergence,
     diversity_gap: selection.diversity_gap,
     seedStrategy,
-    seedDiversification
+    seedDiversification,
+    enrichmentHealth: passResult.enrichmentHealth ?? null
   };
 }
 
@@ -259,7 +261,8 @@ export async function runProblemExplore(rootDir, config, options) {
     seed_strategy: discoveryResult.seedStrategy ?? "manual",
     seed_diversification: discoveryResult.seedDiversification ?? null,
     pattern_family_strategy: patternFamilyStrategy,
-    pattern_family_summary: patternFamilySummary
+    pattern_family_summary: patternFamilySummary,
+    enrichment_health: discoveryResult.enrichmentHealth ?? null
   };
 
   // Topmost Repo je Cluster — wird gebraucht fuer den agentView-Priority-Path,

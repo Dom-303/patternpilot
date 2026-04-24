@@ -1,7 +1,7 @@
 # Score-Stabilitaets-Plan — auf Weg zu reproduzierbaren 9-10/10 Reports
 
 - last_updated: 2026-04-24
-- status: Phase 0 done; Phase 1 scaffolding done (Default off); Phase 2 scaffolding done (Classifier + Lexikon + CLI-Flag, Default off); Phase 3-5 offen
+- status: Phase 0 done; Phase 1 + Phase 2 scaffolding done (Default off); Phase 3 done (Rate-Limit-Retry Default on, --slow opt-in); Phase 4-5 offen
 - scope: Landscape- und Discovery-Report
 - zielkorridor: Median 9, Min 8, Max 10 ueber beliebige Problem-Slugs und Zielprojekte
 - begriff: "Problem-Slug" = Eingangsargument von `npm run problem:explore -- <slug>`, z. B. `event-dedup`, `schema-extraction`
@@ -112,8 +112,12 @@ Jede Phase wird gegen drei Kriterien abgeklopft:
 - **Rollback:** Stage 2/3 hinter Feature-Flag `PATTERN_FAMILY_MULTI_STAGE` (Default `true`). Flag auf `false` setzt Pipeline auf Stage-1-only zurueck
 - **Acceptance:** `event-dedup` und `self-healing` zeigen `pattern_family_unknown_ratio ≤ 0.10` im Run-Health-Panel (gemessen ueber Cluster-Member-Population)
 
-### Phase 3 — Rate-Limit-Resilienz
+### Phase 3 — Rate-Limit-Resilienz ✓ done
 
+- **Status:** 2026-04-24 geliefert. Implementierung: `lib/github/rate-limit.mjs` (pure utils), erweitertes `lib/github/api-client.mjs` (statusCode + responseHeaders an Errors, Rate-Limit-Retry mit `x-ratelimit-reset`-Awareness), `lib/discovery/pass.mjs` (enrichment_incomplete-Flag + optionaler Hard-Throttle), neues CLI-Flag `--slow`. 23 neue Tests (18 pure + 5 mocked https.request). Baseline-Scores unveraendert (6/8/7/2)
+- **Default ON:** Rate-Limit-Retry ist rein additiv — bei keinem Rate-Limit-Hit laeuft die Pipeline identisch wie vorher. Ein 403-Hit triggert jetzt Backoff (Reset-Header-aware, gekappt auf 90s) statt stillem Enrichment-Fail. Der Fix ist Backwards-Compatible fuer bestehende Aufrufer
+- **Aufrufe:** automatisch aktiv; `npm run problem:explore -- <slug> --slow` fuer sequentiellen 1-req/s-Modus auf Tokens ohne Premium-Limit
+- **Neue Observability:** Repos tragen jetzt `enrichment_incomplete: boolean` + `enrichment_error`; `landscape.json.enrichment_health = { total, incomplete, incomplete_ratio, throttle_ms }`
 - **Ziel:** U3 — keine stillen `null`-Enrichments mehr bei Laeufen mit > 40 Kandidaten
 - **Konkret:**
   - `lib/github/client.mjs`: zentrale Rate-Limit-Awareness. Beim naechsten Request Header `x-ratelimit-remaining` lesen, unterhalb 10 in backoff gehen (exp. Backoff mit Jitter, max 90 s)

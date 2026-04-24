@@ -167,7 +167,7 @@
     "validate:cohort": "node scripts/patternpilot.mjs validate-cohort",
     "getting-started": "node scripts/patternpilot.mjs getting-started",
     "release:check": "node scripts/patternpilot.mjs product-readiness",
-    "release:smoke": "node --test test/config.test.mjs test/project-profile.test.mjs test/product-readiness.test.mjs test/review.test.mjs test/re-evaluate.test.mjs test/policy-curation.test.mjs test/policy-curation-batch.test.mjs test/discovery.test.mjs test/discovery-feedback.test.mjs test/discovery-import.test.mjs test/discovery-shared.test.mjs test/discovery-evaluation.test.mjs test/score-report.test.mjs test/seed-diversifier.test.mjs test/pattern-family-classifier.test.mjs",
+    "release:smoke": "node --test test/config.test.mjs test/project-profile.test.mjs test/product-readiness.test.mjs test/review.test.mjs test/re-evaluate.test.mjs test/policy-curation.test.mjs test/policy-curation-batch.test.mjs test/discovery.test.mjs test/discovery-feedback.test.mjs test/discovery-import.test.mjs test/discovery-shared.test.mjs test/discovery-evaluation.test.mjs test/score-report.test.mjs test/seed-diversifier.test.mjs test/pattern-family-classifier.test.mjs test/github-rate-limit.test.mjs test/github-api-client-rate-limit.test.mjs",
     "discover:workspace": "node scripts/patternpilot.mjs discover-workspace",
     "init:env": "node scripts/patternpilot.mjs init-env",
     "init:project": "node scripts/patternpilot.mjs init-project",
