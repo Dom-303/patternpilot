@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-24T18:14:13.114Z",
+  "updated_at": "2026-04-24T18:25:18.931Z",
   "sections": {
     "problem-explore": {
       "self-healing-adaptive-source-intake": {
@@ -9,8 +9,8 @@
       },
       "schema-exact-extraction-into-40-column-masterlist": {
         "label": "schema-exact-extraction-into-40-column-masterlist",
-        "href": "\\\\wsl.localhost\\Ubuntu-24.04\\home\\domi\\eventbaer\\dev\\patternpilot\\projects\\eventbear-worker\\problems\\schema-exact-extraction-into-40-column-masterlist\\landscape\\2026-04-24T18-14-13-081Z\\landscape.html",
-        "updated_at": "2026-04-24T18:14:13.114Z"
+        "href": "\\\\wsl.localhost\\Ubuntu-24.04\\home\\domi\\eventbaer\\dev\\patternpilot\\projects\\eventbear-worker\\problems\\schema-exact-extraction-into-40-column-masterlist\\landscape\\2026-04-24T18-25-18-579Z\\landscape.html",
+        "updated_at": "2026-04-24T18:25:18.609Z"
       },
       "event-deduplication-across-heterogenous-sources": {
         "label": "event-deduplication-across-heterogenous-sources",
@@ -22,7 +22,7 @@
       "latest": {
         "label": "Latest review",
         "href": "\\\\wsl.localhost\\Ubuntu-24.04\\home\\domi\\eventbaer\\dev\\patternpilot\\projects\\eventbear-worker\\reports\\patternpilot-report-eventbear-worker-2026-04-24.html",
-        "updated_at": "2026-04-24T13:26:59.674Z"
+        "updated_at": "2026-04-24T18:25:18.931Z"
       }
     },
     "docs": {
