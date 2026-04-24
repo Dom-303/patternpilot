@@ -202,7 +202,7 @@ export async function runProblemExplore(rootDir, config, options) {
 
   // Renderer-seitige Sections: queryPlans / agentView / techStatus.
   // Ohne diese drei bleiben die neuen Cockpit-Night-Sections leer.
-  const queryPlansValue = buildLandscapeQueryPlans(discoveryResult.queries ?? [], problem);
+  const queryPlansValue = buildLandscapeQueryPlans(discoveryResult.queries ?? [], problem, reposWithKeywords);
   output.queryPlans = queryPlansValue;
   output.agentView = buildLandscapeAgentView({
     problem,
