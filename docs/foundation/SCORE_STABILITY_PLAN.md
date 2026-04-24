@@ -1,7 +1,7 @@
 # Score-Stabilitaets-Plan — auf Weg zu reproduzierbaren 9-10/10 Reports
 
 - last_updated: 2026-04-24
-- status: Phase 0 done (Test-Harness); Phase 1-5 offen
+- status: Phase 0 done (Test-Harness); Phase 1 scaffolding done (Diversifier + Dictionary + CLI-Flag, Default off); Phase 2-5 offen
 - scope: Landscape- und Discovery-Report
 - zielkorridor: Median 9, Min 8, Max 10 ueber beliebige Problem-Slugs und Zielprojekte
 - begriff: "Problem-Slug" = Eingangsargument von `npm run problem:explore -- <slug>`, z. B. `event-dedup`, `schema-extraction`
@@ -73,8 +73,12 @@ Jede Phase wird gegen drei Kriterien abgeklopft:
 - **Rollback:** Script-only, kein Produkt-Code beruehrt — revert = `git revert`
 - **Acceptance:** vier Baseline-Runs liefern deterministisch dieselbe Score auf zwei Maschinen (identische Fixtures)
 
-### Phase 1 — Seed-Diversifikation
+### Phase 1 — Seed-Diversifikation ✓ scaffolding done, default off
 
+- **Status:** 2026-04-24 ausgerollt als opt-in. Implementierung: `lib/discovery/seed-diversifier.mjs` (pure fns), `lib/discovery/seed-dictionary.json` (35 kuratierte Phrasen), CLI-Flag `--seed-strategy=auto|manual|off` (Default `manual` = Baseline-Verhalten). Integration in `scripts/commands/problem-explore.mjs`. 17 neue Tests in `release:smoke`. Baseline-Scores unveraendert (6/8/7/2)
+- **Aufruf:** `npm run problem:explore -- <slug> --project <project> --seed-strategy auto`
+- **Verifikation am realen Korpus:** 12-Seed event-dedup-Input ergibt `passthrough` (bereits 7 orthogonale Seeds); pathologisches 3-Seed-Kollaps ergibt `diversified` mit 3 Dictionary-Supplements. Diversifier ist Safety-Net fuer Edge-Cases, nicht Default-Transform — das matcht die real beobachtete Seed-Qualitaet
+- **Offen fuer spaeter:** Default von `manual` auf `auto` flippen, sobald ein echter Run mit `--seed-strategy auto` das Score-Delta beweisbar macht; LLM-Stage-3 (`--with-llm`) ist bewusst nicht enthalten (siehe OQ-005)
 - **Ziel:** U1 — keinen Run mehr mit < 3 orthogonalen Query-Familien
 - **Konkret:**
   - `lib/discovery/query-seeds.mjs`: nach der bestehenden Seed-Erzeugung eine Diversity-Check-Stufe einziehen. Wenn weniger als 3 Seeds strukturell unterschiedlich sind (Jaccard-Distanz < 0.5 auf Token-Ebene), **primaer** aus dem kuratierten Seed-Dictionary (`lib/discovery/seed-dictionary.json` mit ~40 Achsen: parser, validator, extractor, transformer, crawler, scheduler, ...) orthogonale Kombinationen ziehen

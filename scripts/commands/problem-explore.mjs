@@ -1,5 +1,7 @@
 import fs from "node:fs/promises";
+import { readFileSync } from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { buildGenerateFn } from "../shared/llm-provider.mjs";
 import { buildLandscape } from "../../lib/clustering/landscape.mjs";
 import { extractRepoKeywords } from "../../lib/clustering/keywords.mjs";
@@ -14,11 +16,30 @@ import { applyHardConstraints, applySoftBoost } from "../../lib/discovery/proble
 import { problemFit as computeProblemFit, combinedScore } from "../../lib/discovery/problem-ranking.mjs";
 import { selectWithDiversity } from "../../lib/discovery/problem-diversity.mjs";
 import { runDiscoveryPass } from "../../lib/discovery/pass.mjs";
+import { diversifySeeds } from "../../lib/discovery/seed-diversifier.mjs";
 import {
   buildLandscapeQueryPlans,
   buildLandscapeAgentView,
   buildLandscapeTechStatus
 } from "../../lib/landscape/enrichment.mjs";
+
+const SEED_DICTIONARY_PATH = path.join(
+  path.dirname(fileURLToPath(import.meta.url)),
+  "..",
+  "..",
+  "lib",
+  "discovery",
+  "seed-dictionary.json"
+);
+
+function loadSeedDictionary() {
+  try {
+    return JSON.parse(readFileSync(SEED_DICTIONARY_PATH, "utf8"));
+  } catch (error) {
+    console.warn(`[problem:explore] seed-dictionary missing or invalid (${error.message}) — falling back to passthrough.`);
+    return { phrases: [] };
+  }
+}
 
 async function loadCandidateRepos({ rootDir, config, projectKey, slug, problem, skipDiscovery, options }) {
   if (skipDiscovery) {
@@ -30,8 +51,23 @@ async function loadCandidateRepos({ rootDir, config, projectKey, slug, problem, 
   const totalBudget = profile.limit;
   const split = splitBudget({ totalBudget, standalone: true });
 
+  const originalSeeds = problem.derived.query_seeds ?? [];
+  const seedStrategy = options.seedStrategy ?? "manual";
+  let effectiveSeeds = originalSeeds;
+  let seedDiversification = null;
+  if (seedStrategy === "auto") {
+    const dictionary = loadSeedDictionary();
+    seedDiversification = diversifySeeds(originalSeeds, dictionary);
+    effectiveSeeds = seedDiversification.seeds;
+    if (seedDiversification.added.length > 0) {
+      console.log(`[problem:explore] seed-strategy=auto — supplemented ${seedDiversification.added.length} seed(s) from dictionary: ${seedDiversification.added.map((a) => a.phrase).join(", ")}`);
+    } else {
+      console.log(`[problem:explore] seed-strategy=auto — no supplementation (${seedDiversification.reason}).`);
+    }
+  }
+
   const problemQueries = buildProblemQueryFamily({
-    seeds: problem.derived.query_seeds ?? [],
+    seeds: effectiveSeeds,
     budget: split.problem
   });
 
@@ -89,7 +125,9 @@ async function loadCandidateRepos({ rootDir, config, projectKey, slug, problem, 
     queries,
     selectedByScore: selection.selectedByScore,
     selectedByDivergence: selection.selectedByDivergence,
-    diversity_gap: selection.diversity_gap
+    diversity_gap: selection.diversity_gap,
+    seedStrategy,
+    seedDiversification
   };
 }
 
@@ -187,7 +225,9 @@ export async function runProblemExplore(rootDir, config, options) {
       by_divergence: discoveryResult.selectedByDivergence ?? null,
       diversity_gap: discoveryResult.diversity_gap ?? null,
       note: discoveryResult.note ?? null
-    }
+    },
+    seed_strategy: discoveryResult.seedStrategy ?? "manual",
+    seed_diversification: discoveryResult.seedDiversification ?? null
   };
 
   // Topmost Repo je Cluster — wird gebraucht fuer den agentView-Priority-Path,
