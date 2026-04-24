@@ -29,7 +29,7 @@ Derselbe physische Event wird von mehreren Quellen eingesammelt — mit leicht u
 Simple String-Match auf Titel + Datum. Funktioniert bei ~60% der Fälle; der Rest bleibt Dublette oder wird falsch gemerged. Keine Fuzzy-Logic, keine Adress-Normalisierung im Matcher, keine Zeit-Toleranz.
 
 ## hints
-- search_terms: record linkage library, entity resolution deduplication, probabilistic record matching, fuzzy string matching, jaro winkler similarity, blocking key dedup, splink record linkage, zingg entity matching
+- search_terms: record linkage library, entity resolution deduplication, probabilistic record matching, fuzzy string matching, jaro winkler similarity, blocking key dedup, splink record linkage, zingg entity matching, graph entity resolution, event canonicalization calendar, typescript entity resolution, streaming record deduplication
 - tech_tags: nodejs, typescript, javascript, python, java
 - constraint_tags: opensource
 - approach_keywords: record-linkage, entity-resolution, fuzzy-matching, probabilistic-matching, blocking, similarity-scoring, merge-resolution

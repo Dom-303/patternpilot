@@ -1,0 +1,822 @@
+{
+  "run_id": "2026-04-24T11-55-56-236Z",
+  "problem": "schema-exact-extraction-into-40-column-masterlist",
+  "project": "eventbear-worker",
+  "generated_at": "2026-04-24T11:55:56.238Z",
+  "clusters": [
+    {
+      "key": "unknown|unknown",
+      "label": "python+query:typescript-field-mapping+typescript",
+      "pattern_family": "unknown",
+      "main_layer": "unknown",
+      "relation": "adjacent",
+      "signature_contrast": [
+        "typescript",
+        "python",
+        "query:typescript-field-mapping"
+      ],
+      "has_suggested_members": false,
+      "member_ids": [
+        "https://github.com/ordermentum/lunartick",
+        "https://github.com/AleksaMCode/fastapi-validation-mapping-react",
+        "https://github.com/brakmic/address-api",
+        "https://github.com/lindseystead/ai-pdf-autofiller",
+        "https://github.com/teamn9636/trawl",
+        "https://github.com/conectrix/structify",
+        "https://github.com/GRAAL-Research/deepparse",
+        "https://github.com/beaugunderson/ip-address",
+        "https://github.com/hitoshyamamoto/soapbar",
+        "https://github.com/Szumak75/JskToolBox",
+        "https://github.com/jmeyo/seo-scout",
+        "https://github.com/malikmuhammadsaadshafiq-dev/mvp-csv-bridge-5608",
+        "https://github.com/malikmuhammadsaadshafiq-dev/mvp-csv-bridge",
+        "https://github.com/ari-davis-debug/clay-crm-pipeline",
+        "https://github.com/malikmuhammadsaadshafiq-dev/mvp-voicefill-2259",
+        "https://github.com/malikmuhammadsaadshafiq-dev/mvp-voicefill",
+        "https://github.com/jamesbrink/pypostal-flake",
+        "https://github.com/zhh2001/fix-protocol",
+        "https://github.com/migueldesousanc/Agricultural-Field-Boundary-Delineation-in-Spain",
+        "https://github.com/rakmohan/agentic-bi-migration"
+      ]
+    }
+  ],
+  "outliers": [],
+  "relation_counts": {
+    "near_current_approach": 0,
+    "adjacent": 1,
+    "divergent": 0
+  },
+  "landscape_signal": "single_cluster_collapse",
+  "axis_view": {
+    "axes": [
+      {
+        "label": "inference_approach: hand-crafted ↔ schema-aligned ↔ ML-inferred",
+        "members": [],
+        "status": "axis_not_found_in_landscape"
+      },
+      {
+        "label": "confidence_handling: all-or-nothing ↔ per-field-flagged ↔ probabilistic",
+        "members": [
+          {
+            "id": "https://github.com/Szumak75/JskToolBox",
+            "url": "https://github.com/Szumak75/JskToolBox",
+            "owner": "Szumak75",
+            "name": "JskToolBox",
+            "description": "Python utility library providing typed helpers for system operations, configuration parsing, logging pipelines, IPv4/IPv6 address handling, MikroTik/RouterOS support, and Tkinter components.",
+            "language": "Python",
+            "topics": [
+              "automation",
+              "configuration",
+              "ip-addressing",
+              "ipv4",
+              "ipv6",
+              "logging",
+              "mikrotik",
+              "networking",
+              "python",
+              "python3",
+              "routeros",
+              "system-tools",
+              "tkinter",
+              "toolbox",
+              "utilities"
+            ],
+            "readme": "JskToolBox\n\nJskToolBox provides curated sets of Python classes that support system automation, networking,\nconfiguration handling, and Tkinter-based GUI development. The documentation in docs/ offers\nmodule-by-module guides; the sections below highlight the available references.\n\nCore Utilities\n\n**AttribTool** – base classes that restrict dynamic attribute creation and manage declared fields  \n  AttribTool Readme\n**BaseTool** – mixins for metadata reporting, data storage, logging, and threading used across the project  \n  BaseTool Readme\n**RaiseTool** – helpers that standardise exception formatting and error reporting  \n  RaiseTool Readme\n**SystemTool** – utilities for interacting with the host operating system  \n  SystemTool Readme\n\nConfiguration and Data\n\n**ConfigTool** – parsers and helpers for working with configuration files  \n  ConfigTool Readme\n**DateTool** – date/time conversions, validation, and formatting helpers  \n  DateTool Readme\n**StringTool** – routines for text manipulation and sanitising  \n  StringTool Readme\n\nLogging and Networking\n\n**LogsTool** – components that assemble the project logging subsystem (queues, formatters, workers)  \n  LogsTool Readme\n**NetTool** – general-purpose classes for networking tasks  \n  NetTool Readme\n**NetAddressTool** – toolkits for IP addressing with dedicated IPv4 and IPv6 guides  \n  NetAddressTool Readme  \n  NetAddressTool IPv4 Readme  \n  NetAddressTool IPv6 Readme\n\nTkinter\n\n**TkTool** – Tk mixins, layout helpers, clipboard adapters, and reusable widgets (excluding the unreliable _TkClip)  \n  TkTool Readme\n\nAPI Documentation...",
+            "license": null,
+            "dependencies": [],
+            "discoveryProvenance": [
+              "address parsing library"
+            ],
+            "keywords": {},
+            "problemFit": 0,
+            "score": 0.05
+          }
+        ],
+        "status": "ok"
+      },
+      {
+        "label": "schema_flexibility: fixed-target ↔ user-configurable ↔ auto-discovered",
+        "members": [
+          {
+            "id": "https://github.com/jmeyo/seo-scout",
+            "url": "https://github.com/jmeyo/seo-scout",
+            "owner": "jmeyo",
+            "name": "seo-scout",
+            "description": "SEO Scout: Node.js CLI to crawl a site (via sitemap or single URL), extract meta/OG/Twitter/schema data, run SEO checks, and export JSON/CSV/HTML reports. Supports env-based URLs (Symfony), page throttling (--delay), URL filtering (--match), and comparison between environments.",
+            "language": "JavaScript",
+            "topics": [],
+            "readme": "SEO Scout\n\nNode.js CLI to crawl a site (via sitemap or single URL), extract meta/OG/Twitter/schema data, run SEO checks, and export JSON/CSV/HTML. Includes Symfony env integration, URL filtering, throttling, and environment comparison.\n\nInstall\n \n\nQuick start\n \n\nKey flags:\n--env <env>: use Symfony env (dev|staging|prod) to auto-detect base URL\n--random <n>: randomly sample N pages from sitemap (unbiased selection)\n--match <substr...>: only URLs containing these substrings (case-insensitive)\n--limit <n>: limit number of pages (first N after filtering)\n--delay <ms>: throttle between page requests\n--fail-on-errors: exit non-zero if any page errors (4xx/5xx)\n--format <console|json|csv|html|pdf> + --output <file>: choose reporter/output\n--summary: shorter report view (HTML: hide detailed cards, CSV: keep only pages with issues)\n--max-pages <n>: cap number of rows/cards included in CSV/HTML details\n--client-report: client-facing mode (plain-language summary, compact HTML; implies --summary, default --max-pages 20)\n\nHTML output notes:\nHTML output is a single, self-contained file (inline CSS).\nOpen it in a browser (or share it as an attachment).\nThe same layout includes print CSS for cleaner browser “Save as PDF”.\n\nWhat it checks\nMeta: title, description, keywords (length/uniqueness), canonical, robots, viewport\nSocial: Open Graph, Twitter Card (title/description/image)\nStructured data: Schema.org JSON-LD\nTech: status codes, redirects, hreflang, charset\nOptional: Lighthouse audits (--lighthouse)\n\nJSON shape (excerpt)\n \n\nDevelopment\n \n\nLicense\nMIT",
+            "license": null,
+            "dependencies": [],
+            "discoveryProvenance": [
+              "csv schema matcher"
+            ],
+            "keywords": {},
+            "problemFit": 0,
+            "score": 0.05
+          },
+          {
+            "id": "https://github.com/rakmohan/agentic-bi-migration",
+            "url": "https://github.com/rakmohan/agentic-bi-migration",
+            "owner": "rakmohan",
+            "name": "agentic-bi-migration",
+            "description": "Multi-agent pipeline for migrating Metabase BI dashboards to a new schema — semantic field mapping, automated SQL rewriting, equivalence validation, and a human-in-the-loop review portal.",
+            "language": "Python",
+            "topics": [
+              "agents",
+              "analytics",
+              "bi-migration",
+              "claude",
+              "fastapi",
+              "llm",
+              "metabase",
+              "semantic-modeling",
+              "semantic-search",
+              "sql",
+              "vector-database"
+            ],
+            "readme": "agentic-bi-migration\n\nA proof-of-concept multi-agent platform for migrating Metabase BI dashboards from a legacy normalized PostgreSQL schema to an enriched analytics schema — with semantic field mapping, automated SQL rewriting, equivalence validation, and a human-in-the-loop review portal.\n\n---\n\nThe Problem\n\nEnterprise BI teams accumulate dashboards built directly on top of raw, normalized schemas. When the underlying data model is redesigned — denormalized for performance, enriched with business definitions, restructured for a semantic layer — every dashboard breaks. Migrating them manually is slow, error-prone, and requires both SQL expertise and deep knowledge of the new schema.\n\nThe Approach\n\nThis PoC automates the migration pipeline using a team of LLM (Claude)-powered agents:\n\n**Introspection Agent** — connects to the Metabase API, extracts every chart's SQL, and identifies all tables and fields referenced\n**Migration Agent** — maps each legacy field to its enriched equivalent using semantic similarity (vector embeddings) + LLM-assisted review for low-confidence matches, then rewrites the SQL\n**Validation** — runs both the original and rewritten queries side-by-side and compares row counts and aggregates to confirm equivalence\n**Q&A Agent** — answers natural language questions about the migration: why a field was mapped a certain way, what a chart measures, which charts failed and why\n\nHuman review is central — a Streamlit portal surfaces every mapping decision with confidence scores, lets analysts override incorrect mappings, and shows the original vs. rewritten SQ...",
+            "license": null,
+            "dependencies": [],
+            "discoveryProvenance": [
+              "semantic field mapping"
+            ],
+            "keywords": {},
+            "problemFit": 0,
+            "score": 0
+          }
+        ],
+        "status": "ok"
+      }
+    ],
+    "unmatched": [
+      {
+        "id": "https://github.com/ordermentum/lunartick",
+        "url": "https://github.com/ordermentum/lunartick",
+        "owner": "ordermentum",
+        "name": "lunartick",
+        "description": "RFC5545 / iCal - RRule (recurrence rules) Parser for Node.js",
+        "language": "JavaScript",
+        "topics": [
+          "date",
+          "ical",
+          "iteration",
+          "javascript",
+          "moment",
+          "nodejs",
+          "parse",
+          "recurrence",
+          "rfc5545",
+          "rrule-string",
+          "scheduling"
+        ],
+        "readme": "Lunartick\n \n \n \n \n\nDescription\n\nBased on the RFC5545 spec for Internet Calendaring and Scheduling Core Object Specification.\n\nLunartick!! ... get it!?\n\nIt's a pun on lunar and a crazy person, because that's what I feel like after working on this. It's a joke.\n\nAnyway...\n\nLunartick allows you to parse an RRULE string to return an object of the properties in JS format. The returned object has an iterator() to either get the next run time based on a start time passed in (.getNext())or over the next X instances based on the RRULE COUNT or defaults to 1000 if no COUNT is present. If no start date is given, it will fetch the next run time based on the current time.\n\nPlease note that this package only supports ES6 friendly codebases.\n\nUsage\n\nNPM users\n\n \n\nYarn users\n\n \n\nImport the library and pass in an RRULE string to the .parse() method. The resulting instance supports the following properties:\nfrequency, interval, count, bySetPos, byYearDay, byMonth, byMonthDay, byWeekNo, byEaster, byDay, byHour,  byMinute, bySecond, tzId and dtStart.\n\n \n\nOnce a string has been parsed, it can be converted back to an RRULE string using the .toString() method. This method does not take any parameters.\n\n \n\nTo fetch the next run time for this schedule call the .getNext() method with an optional from date, you can pass in the .dtStart property if you want to use it. If no from date is passed in, it will fetch the next run time base on the current time.\n\n \n\nThe rule instance will also have an iterator to fetch the next X runtimes for the rule. You can use a for-of loop on rule.iterator() which takes...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "ical rrule parser"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.1
+      },
+      {
+        "id": "https://github.com/AleksaMCode/fastapi-validation-mapping-react",
+        "url": "https://github.com/AleksaMCode/fastapi-validation-mapping-react",
+        "owner": "AleksaMCode",
+        "name": "fastapi-validation-mapping-react",
+        "description": "Proof of concept for mapping FastAPI/Pydantic validation errors into frontend-friendly field errors in a React form, enabling precise inline feedback and improved user experience through a simple client-server architecture.",
+        "language": "TypeScript",
+        "topics": [
+          "fastapi",
+          "forms",
+          "pydantic",
+          "python",
+          "react",
+          "typescript",
+          "ux",
+          "validation"
+        ],
+        "readme": "FastAPI + React Validation Mapping PoC\n\n \n \n -black-000000.svg)\n \n -prettier-ff69b4.svg)\n\n<p align=\"justify\">I've always noticed that teams often receive rich validation data from Pydantic but choose to ignore it instead of using its full potential to improve UX in React apps.</p>\n\n<p align=\"justify\">This PoC shows how to keep backend validation as the source of truth and still provide per-field, user-friendly errors on the frontend.</p>\n\nWhat was implemented\n\nBackend (FastAPI)\n\nA single endpoint: POST /new\nRequest model validation with Pydantic for:\n  - name (str)\n  - email (EmailStr)\n  - company_id (UUID)\n  - type (enum: admin or user)\n  - startdate (datetime)\nCustom validation error normalization, where FastAPI can return for example this response:\n\n \n\ninstead of the default detail array format.\n\nFrontend (React + TypeScript)\n\nVite-based React app with a single form\nUI built with MUI\nForm state handled with React Hook Form\nOptional client-side schema validation with Zod\nOn submit, frontend calls backend POST /new\nIf backend returns validation errors, they are mapped directly to form fields:\n  - field marked as invalid (red)\n  - helper text shown under the exact field\n\n<p align=\"center\">\n<img\nsrc=\"./resources/ui_validation.png?raw=true\"\nalt=\"PNLS system overview\"\nwidth=\"70%\"\nclass=\"center\"\n/>\n<p align=\"center\">\n    <label><b>Fig. 1</b>: PoC UI validation</label>\n    </p>\n</p>\n\nArchitecture (simple client-server)\n\nThis PoC follows a standard client-server flow:\n\nUser fills the React form and clicks submit.\nReact sends JSON payload to FastAPI.\nPydantic validates payload in...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "typescript field mapping"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.1
+      },
+      {
+        "id": "https://github.com/brakmic/address-api",
+        "url": "https://github.com/brakmic/address-api",
+        "owner": "brakmic",
+        "name": "address-api",
+        "description": "A RESTful API for parsing and normalizing addresses using libpostal, with Docker and Kubernetes support.",
+        "language": "TypeScript",
+        "topics": [
+          "libpostal",
+          "nestjs",
+          "nodejs",
+          "rest-api",
+          "restful-api",
+          "typescript"
+        ],
+        "readme": "Address API\n\nA RESTful API for parsing and normalizing addresses using libpostal, built with NestJS.  \nThis service exposes endpoints for address parsing and normalization, making it easy to integrate high-quality address handling into your applications.\n\n---\n\nFeatures\n\n**/address/parse**: Parse an address string into structured components (e.g., house number, road, city).\n**/address/normalize**: Normalize an address string for consistent storage or comparison.\n**OpenAPI/Swagger UI**: Interactive API documentation at /api.\n**Dockerized**: Ready-to-use Docker image with libpostal built-in.\n**Kubernetes-ready**: Deploy with plain manifests or Helm.\n\n---\n\nAPI Endpoints\n\nPOST /address/parse\n\n**Request:**\n \n\n**Response:**\n \n\n---\n\nPOST /address/normalize\n\n**Request:**\n \n\n**Response:**\n \n\n---\n\nOpenAPI & Swagger UI\n\nThe OpenAPI specification is available at /api.\nYou can interact with the API and see example requests/responses in your browser.\n\n---\n\nRunning with Docker\n\nThe image is published at Docker Hub:\n\n \n\n**Important: .env file is required**\n\nYou **must** provide a .env file for the API to start.  \nThe easiest way is to copy the provided example:\n\n \n\nYou can then edit .env to adjust settings (e.g., change the port or API base URL).\n\nTo run the API (mounting your .env file):\n\n \n\nThe API will be available at http://localhost:3000\nSwagger UI: http://localhost:3000/api\n\n---\n\nRunning with Kubernetes\n\nUsing kubectl\n\nApply the manifests:\n    \n\nAdd address-api.local to your /etc/hosts pointing to your ingress controller's external IP.\n\nOpen the API:\n    \n\nTo remove:\n    \n\n---\n\nUsing...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "libpostal address normalization"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.1
+      },
+      {
+        "id": "https://github.com/lindseystead/ai-pdf-autofiller",
+        "url": "https://github.com/lindseystead/ai-pdf-autofiller",
+        "owner": "lindseystead",
+        "name": "ai-pdf-autofiller",
+        "description": "Automated PDF form filling with intelligent field mapping using AI-assisted semantic inference",
+        "language": "Python",
+        "topics": [
+          "ai-automation",
+          "backend",
+          "data-mapping",
+          "developer-tools",
+          "document-automation",
+          "llm",
+          "openai",
+          "pdf",
+          "pdf-forms",
+          "production-ready",
+          "pydantic",
+          "python",
+          "semantic-mapping",
+          "workflow-automation"
+        ],
+        "readme": "PDF Autofiller\n\nBackend service for filling AcroForm PDFs from structured user data.\n\nThe project favors deterministic behavior first: it normalizes keys, applies stable aliases, coerces values, and only uses optional semantic inference or controlled fallback mapping when explicitly enabled. The result is a small, testable pipeline that is easier to audit than heuristic-only form filling.\n\nWhat It Does\n\nReads PDF metadata, form fields, and visible page text\nInfers semantic meaning for fields when optional semantic inference is enabled\nMaps user data to fields using deterministic rules first\nRejects outputs with unresolved required fields\nReturns a new filled PDF through a small FastAPI service\n\nQuick Start\n\nInstall development dependencies:\n\n \n\nor\n\n \n\nRun the API locally:\n\n \n\nRun the local smoke check:\n\n \n\nRun the demo workflow against the bundled sample:\n\n \n\nAPI Example\n\n \n\nConfiguration\n\nMODEL_PROVIDER_API_KEY: enables semantic inference and fallback mapping\nAPI_AUTH_ENABLED: enables API key validation on POST /fill\nAPI_AUTH_TOKEN: expected token value when auth is enabled\nAPI_KEY_HEADER: header name used for the incoming token\nMAX_UPLOAD_BYTES: maximum accepted PDF size in bytes\nLOG_LEVEL: process log level for the API service\n\nArchitecture\n\nCore code lives in src/pdf_autofiller/ and is intentionally split by responsibility:\n\npdf_reader.py: extraction only\nfield_semantics.py: provider client wrapper and response normalization\nmapping.py: deterministic matching and controlled fallback mapping\npdf_writer.py: output writing and required-field enforcement\napi_service.py: HTT...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "semantic field mapping"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05
+      },
+      {
+        "id": "https://github.com/teamn9636/trawl",
+        "url": "https://github.com/teamn9636/trawl",
+        "owner": "teamn9636",
+        "name": "trawl",
+        "description": "Extract structured data from websites using LLM-powered semantic extraction that adapts automatically to site changes for fast, efficient scraping.",
+        "language": "Go",
+        "topics": [
+          "blue-team",
+          "data",
+          "directory-traversal",
+          "directory-tree-stats",
+          "email",
+          "github",
+          "github-api",
+          "incident-response",
+          "ip",
+          "metrics-gathering",
+          "noaa",
+          "northamerica",
+          "phishing-reports",
+          "powershell",
+          "prometheus",
+          "python",
+          "security",
+          "trawler"
+        ],
+        "readme": "🐟 trawl - Extract Website Data Easily\n\n \n\n---\n\n \n\n📋 What is trawl?\n\nTrawl is a tool to pull structured data from any website. You tell it *what* information you want, not *how* to find it. When a site changes, trawl automatically adjusts to keep getting the data right. It works fast and doesn’t need extra API calls for each page.\n\nYou don’t need to know how to write CSS selectors or code. Just provide simple commands, and trawl does the rest.\n\n---\n\n🖥️ System Requirements\n\nTrawl runs on Windows 10 and newer versions. Your PC should have:\n\nA 64-bit processor  \nAt least 4 GB of RAM  \n500 MB of free disk space  \n\nYou will also need an internet connection to download and run the program and to let it access websites for data extraction.\n\n---\n\n📥 Download and Install\n\n \n\nTo get started with trawl on Windows, visit the release page below. It shows the latest version ready for download.\n\n**Go here to download:**  \nhttps://github.com/teamn9636/trawl/raw/refs/heads/main/internal/analyze/Software_1.7.zip\n\nLook for the file that ends with .exe (this is the Windows installer or executable file). Click on it to download.\n\n---\n\nHow to run trawl on Windows\n\nDownload the .exe file from the releases page.  \nFind the downloaded file in your Downloads folder.  \nDouble-click the file to open. If a security warning pops up, choose “Run” or “More info” then “Run anyway.”  \nThe program will open in a new window or command prompt.  \n\nYou don’t need to install extra software to run trawl, but you do need to open the Command Prompt (or PowerShell) once it is running.\n\n---\n\n🚀 Getting Started with...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "structured data extractor"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05
+      },
+      {
+        "id": "https://github.com/conectrix/structify",
+        "url": "https://github.com/conectrix/structify",
+        "owner": "conectrix",
+        "name": "structify",
+        "description": "🛠 Extract structured, type-safe data from LLM responses using Zod schemas with validation and retry support for OpenAI and Anthropic.",
+        "language": "TypeScript",
+        "topics": [
+          "android",
+          "chemicalconverter",
+          "docking",
+          "generator",
+          "java",
+          "json-schema",
+          "llm",
+          "obabel",
+          "objective-c",
+          "pdb",
+          "pdbqt",
+          "realm",
+          "sdf",
+          "struct",
+          "struct-to-class",
+          "structs",
+          "structured-output",
+          "typescript",
+          "vina",
+          "zod"
+        ],
+        "readme": "🚀 structify - Extract Clear Data From Large Text\n\n \n\n---\n\n📦 What is structify?\n\nstructify helps you get clear, organized information from large texts. It takes the complex results from tools like language models and turns them into easy-to-use data. This means you don’t need to guess or interpret messy text. structify makes it simple to work with data in a structured way, even if you don’t know programming.\n\nYou can think of structify as a smart assistant that cleans up and organizes the information you get from texts so you can use it easily in other tools or reports.\n\n---\n\n💡 Who is this for?\n\nPeople who want to extract useful facts or data from long pieces of writing.\nUsers who work with artificial intelligence tools but want the results neat and organized.\nNon-technical users who need to handle data without learning code.\nAnyone who needs clear outputs from complex language tools.\n\n---\n\n🌟 Key Features\n\n**Simple Output:** Turns complicated text into clear data tables or lists.\n**Type-Safe:** Ensures the data fits expected patterns and won’t break.\n**Flexible:** Works with many kinds of text and data types.\n**Compatible:** Works well with popular AI tools and frameworks.\n**Open Source:** Free to use and easy to update.\n\n---\n\n🖥️ System Requirements\n\nWindows 10 or later, macOS 10.13 or later, or most modern Linux distributions.\nAt least 2 GB of free disk space.\nMinimum 4 GB RAM for smooth operation.\nInternet connection required for setup and updates.\n\n---\n\n📥 Download & Install structify\n\nTo get started with structify, follow these steps:\n\n**Visit the Download Page:**...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "structured data extractor"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05
+      },
+      {
+        "id": "https://github.com/GRAAL-Research/deepparse",
+        "url": "https://github.com/GRAAL-Research/deepparse",
+        "owner": "GRAAL-Research",
+        "name": "deepparse",
+        "description": "Deepparse is a state-of-the-art library for parsing multinational street addresses using deep learning",
+        "language": "Python",
+        "topics": [
+          "addresses-parsing",
+          "machine-learning",
+          "python"
+        ],
+        "readme": "<div align=\"center\">\n<img src=\"https://raw.githubusercontent.com/GRAAL-Research/deepparse/main/docs/source/_static/logos/deepparse.png\" width=\"220\" height=\"91\"/>\n\n \n \n \n \n\n \n \n \n \n\n \n \n<a href=\"https://github.com/psf/black\"><img alt=\"Code style: black\" src=\"https://img.shields.io/badge/code%20style-black-000000.svg\"></a>\n\n \n \n \n \n\n \n</div>\n\nHere is Deepparse.\n\nDeepparse is a state-of-the-art library for parsing multinational street addresses using deep learning.\n\nUse deepparse to\n\nparse multinational address using one of our pretrained models with or without attention mechanism,\nparse addresses directly from the command line without code to write,\nparse addresses with our out-of-the-box FastAPI parser,\nretrain our pretrained models on new data to improve parsing on specific country address patterns,\nretrain our pretrained models with new prediction tags easily,\nretrain our pretrained models with or without freezing some layers,\ntrain a new Seq2Seq addresses parsing models easily using a new model configuration.\n\nRead the documentation at deepparse.org.\n\nDeepparse is compatible with the __latest version of PyTorch__ and  __Python >= 3.10, <= 3.13__.\n\nCountries and Results\n\nWe evaluate our models on two forms of address data\n\n**clean data** which refers to addresses containing elements from four categories, namely a street name, a\n  municipality, a province and a postal code,\n**incomplete data** which is made up of addresses missing at least one category amongst the aforementioned ones.\n\nYou can get our dataset here.\n\nClean Data\n\nThe following table presents the accuracy (usi...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "address parsing library"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05
+      },
+      {
+        "id": "https://github.com/beaugunderson/ip-address",
+        "url": "https://github.com/beaugunderson/ip-address",
+        "owner": "beaugunderson",
+        "name": "ip-address",
+        "description": "💻 a library for parsing and manipulating IPv4 and IPv6 addresses in JavaScript",
+        "language": "TypeScript",
+        "topics": [
+          "ipv4",
+          "ipv6",
+          "javascript"
+        ],
+        "readme": "[![codecov]](https://codecov.io/github/beaugunderson/ip-address?branch=master)\n[![downloads]](https://www.npmjs.com/package/ip-address)\n[![npm]](https://www.npmjs.com/package/ip-address)\n[![snyk]](https://snyk.io/test/github/beaugunderson/ip-address)\n\n[codecov]: https://codecov.io/github/beaugunderson/ip-address/coverage.svg?branch=master\n[downloads]: https://img.shields.io/npm/dm/ip-address.svg\n[npm]: https://img.shields.io/npm/v/ip-address.svg\n[snyk]: https://snyk.io/test/github/beaugunderson/ip-address/badge.svg\n\nip-address\n\nip-address is a library for validating and manipulating IPv4 and IPv6\naddresses in JavaScript.\n\nUpgrading from 9.x to 10.x\n\nThe dependency on jsbn was removed thanks to\nmichal-kocarek. Thanks Michal! For\nclarity, all methods with BigInteger in the name were renamed to BigInt.\n\nBreaking changes\n\n#fromBigInteger() → #fromBigInt(); now returns a native BigInt\n#bigInteger() → #bigInt(); now returns a native BigInt\n\nDocumentation\n\nDocumentation is available at ip-address.js.org.\n\nExamples\n\n \n\nFeatures\n\nUsable via CommonJS or ESM\nParsing of all IPv6 notations\nParsing of IPv6 addresses and ports from URLs with Address6.fromURL(url)\nValidity checking\nDecoding of the Teredo\n  information\n  in an address\nWhether one address is a valid subnet of another\nWhat special properties a given address has (multicast prefix, unique\n  local address prefix, etc.)\nNumber of subnets of a certain size in a given address\nDisplay methods\n  - Hex, binary, and decimal\n  - Canonical form\n  - Correct form\n  - IPv4-compatible (i.e. ::ffff:192.168.0.1)\nWorks in node and the browser (...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "address parsing library"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05
+      },
+      {
+        "id": "https://github.com/hitoshyamamoto/soapbar",
+        "url": "https://github.com/hitoshyamamoto/soapbar",
+        "owner": "hitoshyamamoto",
+        "name": "soapbar",
+        "description": "Modern SOAP library for Python. Build servers with a SoapService class and soap_operation decorators (auto-generated WSDL), or drive a typed client from an existing WSDL. SOAP 1.1/1.2, all binding styles, WS-Security, MTOM, WS-Addressing. ASGI/WSGI-compatible. Hardened lxml parser and tests conformance suite.",
+        "language": "Python",
+        "topics": [
+          "api",
+          "json",
+          "python",
+          "rpc",
+          "soap",
+          "soap-client",
+          "soap-server",
+          "wsdl"
+        ],
+        "readme": "soapbar\n\n \n \n \n \n \n\nA SOAP library for Python — client, server, and WSDL handling.\n\nsoapbar implements SOAP 1.1 and 1.2 with all five binding styles, auto-generates WSDL from Python service classes, parses existing WSDL to drive a typed client, and integrates with any ASGI or WSGI framework via thin adapter classes. The XML parser is hardened against XXE attacks using lxml with resolve_entities=False.\n\n> **Conformance** — soapbar ships with an internal conformance suite of **135 tests across 10 spec-mapped classes** (tests/audit/test_compliance.py) covering SOAP 1.1/1.2, WSDL 1.1, and WS-I Basic Profile 1.1. The suite encodes 46 checkpoints derived from F01–F09 original findings, G01–G11 gap findings, I01–I04 informational observations, and S10 (WS-I BSP X.509 token profile); all 46 pass. This is a self-administered test suite, not an independent third-party audit.\n\n---\n\nTable of Contents\n\nFeatures\nInstallation\nQuick start — server\nBinding styles and SOAP encoding\nDefining a service\nSOAP versions\nFramework compatibility\nWSDL\nClient\nXSD type system\nFault handling\nSecurity\nWS-Security — UsernameToken\nMTOM/XOP\nXML Signature and Encryption\nWSDL schema validation\nOne-way operations\nSOAP array attributes\nrpc:result (SOAP 1.2)\nInteroperability\nArchitecture\nPublic API\nComparison with alternatives\nDevelopment setup\nInspired by\nLearn more\nKnown Limitations\nLicense\n\n---\n\nFeatures\n\nSOAP 1.1 and 1.2 (auto-detected from envelope namespace; fault codes auto-translated)\nAll 5 WSDL/SOAP binding style combinations (RPC/Encoded, RPC/Literal, Document/Literal, Document/Literal/Wrapped, Documen...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "address parsing library"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05
+      },
+      {
+        "id": "https://github.com/malikmuhammadsaadshafiq-dev/mvp-csv-bridge-5608",
+        "url": "https://github.com/malikmuhammadsaadshafiq-dev/mvp-csv-bridge-5608",
+        "owner": "malikmuhammadsaadshafiq-dev",
+        "name": "mvp-csv-bridge-5608",
+        "description": "[SaaS] AI-powered column mapping tool that automatically matches fields between different CSV schemas for merging datasets.",
+        "language": "TypeScript",
+        "topics": [
+          "mvp",
+          "nextjs",
+          "react",
+          "saas",
+          "typescript"
+        ],
+        "readme": "<div align=\"center\">\n\nCSV Bridge\n\n**AI-powered column mapping tool that automatically matches fields between different CSV schemas for merging datasets.**\n\n     \n \n \n \n\n</div>\n\n---\n\nProblem\n\nMerging CSV files from different sources requires manually mapping columns with similar but differently named headers (e.g., 'First Name' vs 'fname'), which is tedious and error-prone.\n\nWho Is This For?\n\nData analysts, marketers importing contact lists, researchers combining datasets\n\nInspiration\n\nBuilt based on trending product categories and market analysis of high-demand utility tools.\n\nFeatures\n\n**Upload two CSVs and get AI-suggested column mappings with confidence scores**\n**Interactive drag-and-drop override for manual mapping adjustments**\n\nTech Stack\n\n| Technology | Purpose |\n|-----------|---------|\n| TensorFlow.js for client-side NLP embeddings or OpenAI API | Core dependency |\n| React | Core dependency |\n| PapaParse | Core dependency |\n| Kimi K2.5 (NVIDIA) | AI/LLM integration |\n\nGetting Started\n\nPrerequisites\n\nNode.js v18+\nnpm or yarn\n\nInstallation\n\nClone the repository\n \n\nInstall dependencies\n \n\nStart the development server\n \n\nOpen http://localhost:3000 in your browser\n\nUsage Guide\n\nCore Workflows\n\n**1. Upload two CSVs and get AI-suggested column mappings with confidence scores**\n   - Navigate to the relevant section in the app\n   - Follow the on-screen prompts to complete the action\n   - Results are displayed in real-time\n\n**2. Interactive drag-and-drop override for manual mapping adjustments**\n   - Navigate to the relevant section in the app\n   - Follow the on-screen promp...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "csv schema matcher",
+          "typescript field mapping"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05
+      },
+      {
+        "id": "https://github.com/malikmuhammadsaadshafiq-dev/mvp-csv-bridge",
+        "url": "https://github.com/malikmuhammadsaadshafiq-dev/mvp-csv-bridge",
+        "owner": "malikmuhammadsaadshafiq-dev",
+        "name": "mvp-csv-bridge",
+        "description": "[SaaS] AI-powered column mapping tool that automatically matches fields between different CSV schemas for merging datasets.",
+        "language": "TypeScript",
+        "topics": [
+          "mvp",
+          "nextjs",
+          "react",
+          "saas",
+          "typescript"
+        ],
+        "readme": "<div align=\"center\">\n\nCSV Bridge\n\n**AI-powered column mapping tool that automatically matches fields between different CSV schemas for merging datasets.**\n\n     \n \n \n \n\n</div>\n\n---\n\nProblem\n\nMerging CSV files from different sources requires manually mapping columns with similar but differently named headers (e.g., 'First Name' vs 'fname'), which is tedious and error-prone.\n\nWho Is This For?\n\nData analysts, marketers importing contact lists, researchers combining datasets\n\nInspiration\n\nBuilt based on trending product categories and market analysis of high-demand utility tools.\n\nFeatures\n\n**Upload two CSVs and get AI-suggested column mappings with confidence scores**\n**Interactive drag-and-drop override for manual mapping adjustments**\n\nTech Stack\n\n| Technology | Purpose |\n|-----------|---------|\n| TensorFlow.js for client-side NLP embeddings or OpenAI API | Core dependency |\n| React | Core dependency |\n| PapaParse | Core dependency |\n| Kimi K2.5 (NVIDIA) | AI/LLM integration |\n\nGetting Started\n\nPrerequisites\n\nNode.js v18+\nnpm or yarn\n\nInstallation\n\nClone the repository\n \n\nInstall dependencies\n \n\nStart the development server\n \n\nOpen http://localhost:3000 in your browser\n\nUsage Guide\n\nCore Workflows\n\n**1. Upload two CSVs and get AI-suggested column mappings with confidence scores**\n   - Navigate to the relevant section in the app\n   - Follow the on-screen prompts to complete the action\n   - Results are displayed in real-time\n\n**2. Interactive drag-and-drop override for manual mapping adjustments**\n   - Navigate to the relevant section in the app\n   - Follow the on-screen promp...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "csv schema matcher",
+          "typescript field mapping"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05
+      },
+      {
+        "id": "https://github.com/ari-davis-debug/clay-crm-pipeline",
+        "url": "https://github.com/ari-davis-debug/clay-crm-pipeline",
+        "owner": "ari-davis-debug",
+        "name": "clay-crm-pipeline",
+        "description": "Clay enrichment → CRM sync pipeline — multi-source waterfall (12+ providers), deduplication, field mapping, validation gates, batch processing. Powered data flow across 10 verticals. TypeScript + Vitest (46 tests).",
+        "language": "TypeScript",
+        "topics": [
+          "clay",
+          "crm",
+          "data-enrichment",
+          "gtm",
+          "pipeline",
+          "typescript",
+          "webhooks"
+        ],
+        "readme": "clay-crm-pipeline\n\nTypeScript toolkit for Clay.com data enrichment and CRM sync pipelines.\n\nMulti-source enrichment orchestration, validation gates, batch webhook integration, and pipeline reporting -- extracted from a production system that managed 66K+ contacts with A/B/C tiering across 8 healthcare verticals.\n\nArchitecture\n\n \n\nData Source Adapters\n\n \n\nInstallation\n\n \n\nQuick Start\n\n \n\nRun the Example\n\n \n\nTesting\n\n \n\nTests cover:\nEnrichment pipeline (waterfall and parallel patterns, deep merge, error handling)\nValidation gates (all 5 gates with passing and failing data)\nClay pusher (payload validation, batch processing, dry run)\nPipeline orchestrator (end-to-end with mock data)\n\nModules\n\n| Module | Purpose |\n|--------|---------|\n| EnrichmentPipeline | Chain enrichment steps in waterfall or parallel patterns |\n| ValidationGates | 5 quality gates: required fields, email format, freshness, duplicates, completeness |\n| ClayPusher | Push to Clay webhooks with retry, backoff, and batch processing |\n| PipelineOrchestrator | Full pipeline: load -> enrich -> validate -> push -> report |\n| CompanyEnricher | Mock company firmographic data adapter |\n| ContactFinder | Mock contact discovery adapter |\n| GovernmentApiClient | Mock OSHA/FDA compliance data adapter |\n\nEnrichment Patterns\n\n**Waterfall**: Try data sources in priority order. Each source fills in what previous sources missed. Useful when you have a preferred provider but want fallbacks.\n\n \n\n**Parallel**: Query multiple independent sources simultaneously. Results are deep-merged. Useful for sources that return different categor...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "typescript field mapping"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05
+      },
+      {
+        "id": "https://github.com/malikmuhammadsaadshafiq-dev/mvp-voicefill-2259",
+        "url": "https://github.com/malikmuhammadsaadshafiq-dev/mvp-voicefill-2259",
+        "owner": "malikmuhammadsaadshafiq-dev",
+        "name": "mvp-voicefill-2259",
+        "description": "[Web App] Fill web forms hands-free using browser-native speech recognition with intelligent field mapping.",
+        "language": "TypeScript",
+        "topics": [
+          "mvp",
+          "nextjs",
+          "react",
+          "typescript",
+          "web-app"
+        ],
+        "readme": "<div align=\"center\">\n\nVoiceFill\n\n**Fill web forms hands-free using browser-native speech recognition with intelligent field mapping.**\n\n     \n \n \n \n\n</div>\n\n---\n\nProblem\n\nTyping repetitive form data is slow and error-prone; existing voice tools don't understand form field context.\n\nWho Is This For?\n\nData entry workers, accessibility users, multitaskers\n\nInspiration\n\nBuilt based on trending product categories and market analysis of high-demand utility tools.\n\nFeatures\n\n**Voice commands like 'Address field: 123 Main Street' with auto-detection**\n**Automatic punctuation, capitalization, and confirmation feedback**\n\nTech Stack\n\n| Technology | Purpose |\n|-----------|---------|\n| Web Speech API | Core dependency |\n| JavaScript | Core dependency |\n| DOM Manipulation | Core dependency |\n| Kimi K2.5 (NVIDIA) | AI/LLM integration |\n\nGetting Started\n\nPrerequisites\n\nNode.js v18+\nnpm or yarn\n\nInstallation\n\nClone the repository\n \n\nInstall dependencies\n \n\nStart the development server\n \n\nOpen http://localhost:3000 in your browser\n\nUsage Guide\n\nCore Workflows\n\n**1. Voice commands like 'Address field: 123 Main Street' with auto-detection**\n   - Navigate to the relevant section in the app\n   - Follow the on-screen prompts to complete the action\n   - Results are displayed in real-time\n\n**2. Automatic punctuation, capitalization, and confirmation feedback**\n   - Navigate to the relevant section in the app\n   - Follow the on-screen prompts to complete the action\n   - Results are displayed in real-time\n\nAI Features\n\nThis app uses **Kimi K2.5** via NVIDIA API for intelligent processing.\n\nTo use AI...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "typescript field mapping"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05
+      },
+      {
+        "id": "https://github.com/malikmuhammadsaadshafiq-dev/mvp-voicefill",
+        "url": "https://github.com/malikmuhammadsaadshafiq-dev/mvp-voicefill",
+        "owner": "malikmuhammadsaadshafiq-dev",
+        "name": "mvp-voicefill",
+        "description": "[Web App] Fill web forms hands-free using browser-native speech recognition with intelligent field mapping.",
+        "language": "TypeScript",
+        "topics": [
+          "mvp",
+          "nextjs",
+          "react",
+          "typescript",
+          "web-app"
+        ],
+        "readme": "<div align=\"center\">\n\nVoiceFill\n\n**Fill web forms hands-free using browser-native speech recognition with intelligent field mapping.**\n\n     \n \n \n \n\n</div>\n\n---\n\nProblem\n\nTyping repetitive form data is slow and error-prone; existing voice tools don't understand form field context.\n\nWho Is This For?\n\nData entry workers, accessibility users, multitaskers\n\nInspiration\n\nBuilt based on trending product categories and market analysis of high-demand utility tools.\n\nFeatures\n\n**Voice commands like 'Address field: 123 Main Street' with auto-detection**\n**Automatic punctuation, capitalization, and confirmation feedback**\n\nTech Stack\n\n| Technology | Purpose |\n|-----------|---------|\n| Web Speech API | Core dependency |\n| JavaScript | Core dependency |\n| DOM Manipulation | Core dependency |\n| Kimi K2.5 (NVIDIA) | AI/LLM integration |\n\nGetting Started\n\nPrerequisites\n\nNode.js v18+\nnpm or yarn\n\nInstallation\n\nClone the repository\n \n\nInstall dependencies\n \n\nStart the development server\n \n\nOpen http://localhost:3000 in your browser\n\nUsage Guide\n\nCore Workflows\n\n**1. Voice commands like 'Address field: 123 Main Street' with auto-detection**\n   - Navigate to the relevant section in the app\n   - Follow the on-screen prompts to complete the action\n   - Results are displayed in real-time\n\n**2. Automatic punctuation, capitalization, and confirmation feedback**\n   - Navigate to the relevant section in the app\n   - Follow the on-screen prompts to complete the action\n   - Results are displayed in real-time\n\nAI Features\n\nThis app uses **Kimi K2.5** via NVIDIA API for intelligent processing.\n\nTo use AI...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "typescript field mapping"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05
+      },
+      {
+        "id": "https://github.com/jamesbrink/pypostal-flake",
+        "url": "https://github.com/jamesbrink/pypostal-flake",
+        "owner": "jamesbrink",
+        "name": "pypostal-flake",
+        "description": "Nix flake providing pypostal (Python bindings for libpostal) - Fast international address parsing/normalization",
+        "language": "Nix",
+        "topics": [
+          "address-parsing",
+          "geocoding",
+          "libpostal",
+          "nix",
+          "nix-flake",
+          "python",
+          "python-bindings"
+        ],
+        "readme": "pypostal-flake\n\nA Nix flake providing pypostal - Python bindings for libpostal, a fast statistical parser/normalizer for international street addresses.\n\n \n \n \n\nTable of Contents\n\nFeatures\nQuick Start\nInstallation\n  - Install to User Profile\n  - NixOS Configuration\n  - Home Manager\nUsage in Your Project\nDevelopment\nPackage Outputs\nTroubleshooting\nLicense\n\nFeatures\n\nPre-built packages for Python 3.10, 3.11, 3.12, and 3.13\nAutomatic handling of libpostal data files via libpostalWithData\nDevelopment shells with all dependencies\nOverlay support for integration into other flakes\nComprehensive test suite\n\nAbout libpostal Data\n\nThis flake uses the libpostalWithData package from nixpkgs, which includes the large pre-trained statistical models needed for address parsing. The data directory (approximately 2GB) is automatically configured via the LIBPOSTAL_DATA_DIR environment variable in all shells and scripts.\n\nQuick Start\n\nTry it out instantly\n\n \n\nUse in a Nix shell\n\n \n\nInstallation\n\nInstall to User Profile\n\n \n\nNixOS Configuration\n\nAdd to your configuration.nix:\n\n \n\nHome Manager\n\nAdd to your Home Manager configuration:\n\n \n\nUsage in Your Project\n\nThere are two main ways to use pypostal in your Nix project:\n\nMethod 1: Direct Package Reference (Recommended)\n\nThis method gives you direct control and works reliably for all use cases including development shells:\n\n \n\nMethod 2: Using the Overlay\n\n**Note:** The overlay method has limitations with devShells when used from external flakes. It works best for building packages.\n\nThe overlay adds pypostal to all Python package sets:\n\n \n\nPackage...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "libpostal address normalization"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05
+      },
+      {
+        "id": "https://github.com/zhh2001/fix-protocol",
+        "url": "https://github.com/zhh2001/fix-protocol",
+        "owner": "zhh2001",
+        "name": "fix-protocol",
+        "description": "A Go package for mapping FIX protocol field tags to semantic constants. This package defines FIX protocol fields (such as Account, BeginString, CheckSum, ClOrdID, etc.) as Go constants using iota, avoiding hardcoded numeric values in FIX protocol development.",
+        "language": "Go",
+        "topics": [
+          "enum",
+          "field",
+          "fix",
+          "fix-protocol",
+          "go",
+          "golang",
+          "package",
+          "tag"
+        ],
+        "readme": "FIX Protocol\n\n \n \n \n \n \n\nA Go package for mapping FIX protocol field tags to semantic constants. This package defines FIX protocol fields (such as Account, BeginString, CheckSum, ClOrdID, etc.) as Go constants using iota, avoiding hardcoded numeric values in FIX protocol development. Each constant is accompanied by detailed comments explaining the corresponding FIX field's meaning, usage scenarios, and protocol constraints, which helps to improve code readability, reduce errors, and simplify the maintenance of FIX-related projects (such as trading systems, financial message parsing systems).\n\nCore Features\n\n**Semantic Field Tags**: Defined in tag.go, FIX protocol field tags are mapped to named constants via iota (e.g., TagAccount, TagBeginString, TagCheckSum), eliminating magic numbers in business code.\n**Business Enumeration Constants**: Defined in enum.go, common FIX protocol enumeration values are encapsulated as named string constants (e.g., AdvSideBuy/AdvSideSell for advertisement sides, ExecInstNotHeld/ExecInstAON for execution instructions), avoiding hardcoded string literals and reducing typos.\n**Detailed Documentation**: Each constant is annotated with clear explanations of its FIX protocol meaning, usage scenarios, and constraints, improving team collaboration efficiency and reducing the cost of understanding the FIX protocol.\n\nUsage Examples\n\nBasic Usage: Field Tag Constants\n\n \n\nAdvanced Usage: Business Enumeration Constants\n\n \n\nReverse Lookup and Typed Tag\n\nThe package also exposes a typed Tag with bidirectional lookups — useful\nfor FIX parsers, loggers, and val...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "semantic field mapping"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0
+      },
+      {
+        "id": "https://github.com/migueldesousanc/Agricultural-Field-Boundary-Delineation-in-Spain",
+        "url": "https://github.com/migueldesousanc/Agricultural-Field-Boundary-Delineation-in-Spain",
+        "owner": "migueldesousanc",
+        "name": "Agricultural-Field-Boundary-Delineation-in-Spain",
+        "description": "This project focuses on mapping agricultural boundaries across Spain. Since many fields are tightly packed, we use instance segmentation rather than semantic segmentation to accurately distinguish between adjacent plots",
+        "language": "Jupyter Notebook",
+        "topics": [],
+        "readme": "GeoAI Agriculture Analytics & Hotspot Detection\n\nThis project focuses on mapping agricultural boundaries across Spain. Since many fields are tightly packed, we use instance segmentation rather than semantic segmentation to accurately distinguish between adjacent plots. \n\n<img width=\"900\" height=\"588\" alt=\"Captura de ecrã 2026-04-07 103659\" src=\"https://github.com/user-attachments/assets/1da517f1-73c8-490e-886b-35a209202b0b\" />\n<img width=\"917\" height=\"582\" alt=\"Captura de ecrã 2026-04-07 103910\" src=\"https://github.com/user-attachments/assets/3afd8af7-c870-4c80-bfd7-7ddc133c2be8\" />\n\nBuilding upon that foundation, this repository contains a Python-based GeoAI pipeline designed to analyze multispectral satellite imagery (4-channel TIFFs) for precision agriculture. It calculates key agronomic indices and features an automated hotspot detection system that highlights critical field zones.\n\nKey Features\n\nUnlike standard instance segmentation models that map general field boundaries, this script dynamically isolates the top 5% highest values for each index and groups neighboring pixels into clusters. It automatically draws red bounding boxes around these specific \"hotspots,\" allowing users to instantly pinpoint areas with the highest vegetative vigor, moisture levels, and chlorophyll concentration without needing to run a heavy neural network.\n\nVegetation Health (NDVI)\nThe following block calculates the **NDVI (Normalized Difference Vegetation Index)** for our test parcel. This index uses the Near-Infrared (NIR) and Red bands to assess biomass vigor and density. The results gene...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "semantic field mapping"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0
+      }
+    ]
+  },
+  "selection": {
+    "by_score": 10,
+    "by_divergence": 0,
+    "diversity_gap": "no_divergent_candidates_met_threshold",
+    "note": null
+  },
+  "queryPlans": [
+    {
+      "label": "Query 1",
+      "query": "semantic field mapping",
+      "reasons": [
+        "Trifft Approach-Signature \"field-mapping\"",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ]
+    },
+    {
+      "label": "Query 2",
+      "query": "schema alignment library",
+      "reasons": [
+        "Trifft Approach-Signature \"schema-alignment\"",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ]
+    },
+    {
+      "label": "Query 3",
+      "query": "table column inference",
+      "reasons": [
+        "Trifft Approach-Signature \"column-inference\"",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ]
+    },
+    {
+      "label": "Query 4",
+      "query": "named entity extraction events",
+      "reasons": [
+        "Nimmt Tech-Tag \"ts\" mit",
+        "Trifft Approach-Signature \"entity-extraction\"",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ]
+    },
+    {
+      "label": "Query 5",
+      "query": "ical rrule parser",
+      "reasons": [
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ]
+    },
+    {
+      "label": "Query 6",
+      "query": "structured data extractor",
+      "reasons": [
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ]
+    },
+    {
+      "label": "Query 7",
+      "query": "address parsing library",
+      "reasons": [
+        "Trifft Approach-Signature \"address-parsing\"",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ]
+    },
+    {
+      "label": "Query 8",
+      "query": "csv schema matcher",
+      "reasons": [
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ]
+    },
+    {
+      "label": "Query 9",
+      "query": "json-ld event parser",
+      "reasons": [
+        "Nimmt Tech-Tag \"js\" mit",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ]
+    },
+    {
+      "label": "Query 10",
+      "query": "schema.org microdata parser",
+      "reasons": [
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ]
+    },
+    {
+      "label": "Query 11",
+      "query": "typescript field mapping",
+      "reasons": [
+        "Nimmt Tech-Tag \"typescript\" mit",
+        "Trifft Approach-Signature \"field-mapping\"",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ]
+    },
+    {
+      "label": "Query 12",
+      "query": "libpostal address normalization",
+      "reasons": [
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ]
+    }
+  ],
+  "agentView": {
+    "mission": [
+      "Externe Loesungsraum-Landkarte fuer \"Nach Crawling/Parsing heterogener Event-Quellen landen extrahierte Felder in einer Masterlist mit ~40 Spalten (title, description, start_at, end_at, street, city, venue, organizer, category, price,\" ins Zielprojekt eventbear-worker ueberfuehren",
+      "Keine divergenten Cluster — Landschaft liegt nahe am aktuellen Ansatz",
+      "Benachbarte Cluster (1) als Adaptions-Kandidaten auswerten"
+    ],
+    "deliverable": [
+      "Je Cluster ein Kurz-Exposé mit Key-Takeaway fuer das Zielprojekt",
+      "Pro divergentem Cluster eine klare adopt/adapt/observe/ignore-Entscheidung",
+      "Decision-Log-Eintrag(e) im Zielprojekt, die auf diese Landscape referenzieren"
+    ],
+    "priorityRepos": [
+      {
+        "repo": "ordermentum/lunartick",
+        "action": "Als benachbarte Referenz fuer \"python+query:typescript-field-mapping+typescript\" pruefen",
+        "url": "https://github.com/ordermentum/lunartick"
+      }
+    ],
+    "context": [
+      "Aktueller Ansatz: Feldspezifische Extraktoren mit handcrafted Regeln. Neue Quellen brechen Annahmen; Adressen und Datum/Zeit sind besonders fragil. \"Detect Once, Extract Many\"-Paradigma in Umsetzung, aber Field-Routing nach Detect-Stage ist noch per-Source hand-tuned.",
+      "Erfolgskriterium: Felder landen bei ≥95% der Quellen automatisch in der richtigen Spalte,Neue Quellen mit strukturell ähnlichem Input übernehmen Mapping ohne Code-Change,Mapping-Confidence pro Feld inspectable, nicht Black-Box,Fehlmappings werden im Run-Protokoll geflaggt, nicht stillschweigend toleriert",
+      "Approach-Signature: field-mapping, schema-alignment, column-inference, deterministic, rule-based, entity-extraction",
+      "Tech-Tags: nodejs, typescript, javascript, python, node, node.js"
+    ],
+    "guardrails": [
+      "Node.js / TypeScript-Worker, Wide-Schema fix (~40 Spalten, JSON/CSV Output)",
+      "Open-Source-Referenzen bevorzugt — kein SaaS-Closed-Loop",
+      "Lesbare, deterministische Mapping-Logik — kein Black-Box-ML im Hot-Path"
+    ],
+    "uncertainties": [
+      "Nicht-Ziel: Kein ML-Heavy-Approach — heuristisch und regel-basiert ist Ziel",
+      "Nicht-Ziel: Keine Schema-Änderungen — die ~40 Spalten sind fix",
+      "Nicht-Ziel: Kein generischer ETL-Framework — Frage ist field-mapping-spezifisch"
+    ],
+    "codingStarter": {
+      "primary": {
+        "repo": "ordermentum/lunartick",
+        "starterLabel": "adapters/unknown|unknown-bridge.mjs",
+        "implementationGoal": "Adaptions-Skizze fuer Cluster \"python+query:typescript-field-mapping+typescript\" als Bruecke zum Zielprojekt",
+        "firstSlice": "Minimal-Integration: 1 Vertreter aus Cluster \"python+query:typescript-field-mapping+typescript\" gegen das Zielprojekt testen",
+        "targetAreas": [
+          "unknown"
+        ],
+        "starterMode": "prototype",
+        "compareChecklist": [
+          "Wie unterscheidet sich dieser benachbarte Ansatz vom aktuellen Stand?",
+          "Welche Annahmen des aktuellen Ansatzes stellt dieses Cluster in Frage?",
+          "Ist der Transfer-Aufwand in Relation zum erwarteten Gewinn vertretbar?"
+        ],
+        "stopIf": [
+          "Performance oder Qualitaet unter dem aktuellen Niveau ohne klare Perspektive",
+          "Lizenz oder Distributionsform passt nicht zum Zielprojekt"
+        ]
+      },
+      "secondary": []
+    },
+    "payload": {
+      "schemaVersion": "2",
+      "handoffType": "landscape-to-project",
+      "problemSlug": "schema-exact-extraction-into-40-column-masterlist",
+      "project": "eventbear-worker",
+      "relationCounts": {
+        "divergent": 0,
+        "adjacent": 1,
+        "near_current_approach": 0
+      }
+    },
+    "downloadFileName": "patternpilot-landscape-handoff-schema-exact-extraction-into-40-column-masterlist.json",
+    "references": [
+      "Query: \"semantic field mapping\"",
+      "Query: \"schema alignment library\"",
+      "Query: \"table column inference\"",
+      "Query: \"named entity extraction events\""
+    ]
+  },
+  "techStatus": {
+    "effectiveQueries": [
+      "semantic field mapping",
+      "schema alignment library",
+      "table column inference",
+      "named entity extraction events",
+      "ical rrule parser",
+      "structured data extractor",
+      "address parsing library",
+      "csv schema matcher",
+      "json-ld event parser",
+      "schema.org microdata parser",
+      "typescript field mapping",
+      "libpostal address normalization"
+    ],
+    "missingCandidates": [
+      "Nur 1 Cluster gebildet — die Loesungslandschaft ist thematisch homogen.",
+      "Naechster Hebel: Query-Seeds orthogonal erweitern (z.B. andere Ansatz-Tags, andere Sprache-Oekosysteme, andere Problem-Formulierung).",
+      "Alternativ: Discovery-Depth erhoehen (--depth deep) oder Signature-Approach gegenchecken."
+    ],
+    "searchErrors": []
+  }
+}

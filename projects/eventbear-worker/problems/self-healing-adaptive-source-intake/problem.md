@@ -29,7 +29,7 @@ Der EventBaer-Worker braucht pro neuer Quelle manuelle Extraktor-Tuning-Arbeit: 
 Paradigmen-Shift "Detect Once, Extract Many" in Umsetzung: Strategy-Registry + Pluggable Extractors. Aber die Onboarding-Kosten pro Quelle und das Fehlen eines echten Feedback/Lernsystems bleiben die dominanten Scaling-Blocker. Gesucht: externe Patterns fuer Wrapper-Maintenance, Template-Learning und adaptiven Selector-Recovery.
 
 ## hints
-- search_terms: wrapper induction, selector self-healing, adaptive xpath, DOM template matching, scraper auto-recovery, extraction rule learning, automatic wrapper maintenance, wrapper learning system
+- search_terms: wrapper induction, selector self-healing, adaptive xpath, DOM template matching, scraper auto-recovery, extraction rule learning, automatic wrapper maintenance, wrapper learning system, playwright auto heal selectors, crawlee adaptive crawler, readability article extraction, structured data linter schema
 - tech_tags: nodejs, typescript, playwright, puppeteer, crawler
 - constraint_tags: opensource
 - approach_keywords: self-healing, adaptive, wrapper-induction, pattern-bank, auto-onboarding, feedback-loop, template-learning, selector-drift

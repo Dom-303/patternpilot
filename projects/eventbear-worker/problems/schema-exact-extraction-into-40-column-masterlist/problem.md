@@ -29,7 +29,7 @@ Nach Crawling/Parsing heterogener Event-Quellen landen extrahierte Felder in ein
 Feldspezifische Extraktoren mit handcrafted Regeln. Neue Quellen brechen Annahmen; Adressen und Datum/Zeit sind besonders fragil. "Detect Once, Extract Many"-Paradigma in Umsetzung, aber Field-Routing nach Detect-Stage ist noch per-Source hand-tuned.
 
 ## hints
-- search_terms: semantic field mapping, schema alignment library, table column inference, named entity extraction events, ical rrule parser, structured data extractor, address parsing library, csv schema matcher
+- search_terms: semantic field mapping, schema alignment library, table column inference, named entity extraction events, ical rrule parser, structured data extractor, address parsing library, csv schema matcher, json-ld event parser, schema.org microdata parser, typescript field mapping, libpostal address normalization
 - tech_tags: nodejs, typescript, javascript, python
 - constraint_tags: opensource
 - approach_keywords: field-mapping, schema-alignment, column-inference, deterministic, rule-based, entity-extraction, date-parsing, address-parsing

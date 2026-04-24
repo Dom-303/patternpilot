@@ -1,0 +1,2 @@
+label,pattern_family,main_layer,relation,member_count,signature_contrast
+automation+query:adaptive-xpath+query:selector-self-healing,unknown,unknown,adjacent,20,query:selector-self-healing|automation|query:adaptive-xpath
