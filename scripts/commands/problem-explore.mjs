@@ -241,9 +241,27 @@ export async function runProblemExplore(rootDir, config, options) {
   const briefMd = buildHeuristicBrief({ problem, landscape: output, topRepoByCluster, llmAugmentation });
   await fs.writeFile(path.join(landscapeDir, "brief.md"), briefMd);
 
+  // Zielrepo-Kontext fuer die HTML-Sicht laden (falls ein Projekt gebunden
+  // ist). Stellt die gleiche Parity-Section bereit wie im Discovery-Report:
+  // welche Projekt-Dateien Pattern Pilot wirklich gelesen hat.
+  let projectProfile = null;
+  let binding = null;
+  if (project) {
+    try {
+      const { loadProjectBinding, loadProjectProfile } = await import("../../lib/project.mjs");
+      const bindingInfo = await loadProjectBinding(rootDir, config, project);
+      binding = bindingInfo?.binding ?? null;
+      if (binding) {
+        projectProfile = await loadProjectProfile(rootDir, project, binding);
+      }
+    } catch (err) {
+      console.warn(`[problem-explore] could not load project context: ${err.message}`);
+    }
+  }
+
   // Write landscape.html
   const { renderLandscapeHtml } = await import("../../lib/landscape/html-report.mjs");
-  const html = renderLandscapeHtml({ problem, landscape: output, runId });
+  const html = renderLandscapeHtml({ problem, landscape: output, runId, projectProfile, binding });
   const landscapeHtmlPath = path.join(landscapeDir, "landscape.html");
   await fs.writeFile(landscapeHtmlPath, html);
 

@@ -1,0 +1,4 @@
+label,pattern_family,main_layer,relation,member_count,signature_contrast
+dedupe+python+query:record-linkage-library,record linkage library,problem_lens,adjacent,8,query:record-linkage-library|linkage|record
+dedupe+entity-resolution+python,entity resolution deduplication,problem_lens,adjacent,7,query:entity-resolution-deduplication|entity-resolution|dedupe
+jaro-winkler+python+string-similarity,unknown,unknown,divergent,5,string-similarity|jaro-winkler|levenshtein

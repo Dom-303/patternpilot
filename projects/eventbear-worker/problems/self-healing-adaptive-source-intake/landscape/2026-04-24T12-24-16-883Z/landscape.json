@@ -1,0 +1,784 @@
+{
+  "run_id": "2026-04-24T12-24-16-883Z",
+  "problem": "self-healing-adaptive-source-intake",
+  "project": "eventbear-worker",
+  "generated_at": "2026-04-24T12:24:16.883Z",
+  "clusters": [
+    {
+      "key": "provenance|selector-self-healing",
+      "label": "automation+playwright+query:selector-self-healing",
+      "pattern_family": "selector self-healing",
+      "main_layer": "problem_lens",
+      "relation": "adjacent",
+      "signature_contrast": [
+        "query:selector-self-healing",
+        "browser",
+        "e2e-testing"
+      ],
+      "has_suggested_members": false,
+      "member_ids": [
+        "https://github.com/alexandriashai/cbrowser",
+        "https://github.com/lvortexl/aws-test-framework-boilerplate",
+        "https://github.com/TheFishPilot/Verity-Agentic-Web-Scraper",
+        "https://github.com/cmelski/online-portfolio",
+        "https://github.com/bouncyinbox/self-healing-crawler",
+        "https://github.com/chkimas/ai-qa-orchestrator",
+        "https://github.com/kaua433/maestro-skill",
+        "https://github.com/Abdul-Muizz1310/magpie-backend",
+        "https://github.com/Karthick-1501/playwright-agent",
+        "https://github.com/yurgus25/autotest_recorder",
+        "https://github.com/DivyenduDutta/AutoMorph",
+        "https://github.com/SikandarMirza/superior-browser-mcp",
+        "https://github.com/uelkerd/vision",
+        "https://github.com/EsraaKamel11/Self-Healing-Selenium-Framework",
+        "https://github.com/nyctophilian20anya/AI_Self_Healing_Login",
+        "https://github.com/mathieuask/linkedin-automation"
+      ]
+    },
+    {
+      "key": "unknown|unknown",
+      "label": "data+selectors+xpath",
+      "pattern_family": "unknown",
+      "main_layer": "unknown",
+      "relation": "divergent",
+      "signature_contrast": [
+        "xpath",
+        "data",
+        "selectors"
+      ],
+      "has_suggested_members": false,
+      "member_ids": [
+        "https://github.com/D4Vinci/Scrapling",
+        "https://github.com/chrisabruce/scrapling-rs",
+        "https://github.com/mehardsingh/scholarly-entity-wrapper-induction",
+        "https://github.com/TheNavee/supervised-wrapper-induction"
+      ]
+    }
+  ],
+  "outliers": [],
+  "relation_counts": {
+    "near_current_approach": 0,
+    "adjacent": 1,
+    "divergent": 1
+  },
+  "landscape_signal": "ok",
+  "axis_view": {
+    "axes": [
+      {
+        "label": "extraction_paradigm: hand-crafted ↔ structural-inference ↔ learned-patterns",
+        "members": [],
+        "status": "axis_not_found_in_landscape"
+      },
+      {
+        "label": "feedback_loop: none ↔ manual-curation ↔ automatic-pattern-bank",
+        "members": [],
+        "status": "axis_not_found_in_landscape"
+      },
+      {
+        "label": "onboarding_cost: high-per-source ↔ templated ↔ zero-touch",
+        "members": [],
+        "status": "axis_not_found_in_landscape"
+      }
+    ],
+    "unmatched": [
+      {
+        "id": "https://github.com/alexandriashai/cbrowser",
+        "url": "https://github.com/alexandriashai/cbrowser",
+        "owner": "alexandriashai",
+        "name": "cbrowser",
+        "description": "Cognitive Browser: The browser automation that thinks. Constitutional safety • Persona UX testing • Natural language interface • Self-healing selectors • Built for AI agents",
+        "language": "TypeScript",
+        "topics": [
+          "accessibility",
+          "ai",
+          "ai-testing",
+          "browser-automation",
+          "claude",
+          "e2e-testing",
+          "mcp",
+          "playwright",
+          "testing",
+          "typescript",
+          "ux-testing",
+          "visual-testing",
+          "web-scraping"
+        ],
+        "readme": "CBrowser — Cognitive Browser Automation\n\n> **The browser automation that thinks like your users.** 120 MCP tools. 26 cognitive traits. 11 disability personas. The only framework that predicts when users give up.\n\n \n \n \n \n \n \n\n \n\n---\n\n5-Minute Quickstart\n\nGet from zero to your first cognitive insight in 3 commands:\n\n \n\n**What you get:** A cognitive transport score (0-1), abandonment risk percentage, and the UX bottleneck — in under 30 seconds.\n\n**No API key needed** for basic commands (navigate, screenshot, click, extract, explore). Cognitive journeys require an Anthropic API key:\n\n \n\n**Check your environment:** Run npx cbrowser doctor to verify everything is set up correctly.\n\n**Accessibility:** CBrowser supports --no-color (or NO_COLOR env var), --plain (no emoji/decorations), and --json-output (structured JSON) for screen readers, CI pipelines, and scripting.\n\n---\n\nTable of Contents\n\n5-Minute Quickstart\nCognitive Transport Chain\nVisual Overlays & Attention Analysis\nAI Friendliness Suite\nCognitive User Simulation\nAccessibility Empathy Testing\nConstitutional AI Safety\nSite Knowledge System\nNatural Language Testing\nVisual Testing\nCompetitive UX Benchmark\nGeo Proxy\nMCP Server Integration\nCI/CD Integration\nAPI Reference\nConfiguration\nEnterprise Edition\nContributing\nLicense\n\n---\n\nCognitive Transport Chain\n\nThe 6-layer Sequential Transport Chain computes exactly how hard your page is for any persona — and predicts whether they'll abandon:\n\n| Layer | What It Measures | Research Basis |\n|-------|-----------------|----------------|\n| **Saliency** | Visual attention capture | CIE-La...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "selector self-healing"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.1
+      },
+      {
+        "id": "https://github.com/lvortexl/aws-test-framework-boilerplate",
+        "url": "https://github.com/lvortexl/aws-test-framework-boilerplate",
+        "owner": "lvortexl",
+        "name": "aws-test-framework-boilerplate",
+        "description": "Reference architecture for a unified test framework spanning AWS backend integration, Playwright UI, and synthetic user-journey agents. TypeScript monorepo with self-healing selectors and CircleCI orchestration.",
+        "language": "TypeScript",
+        "topics": [
+          "ci-circleci",
+          "e2e-testing",
+          "playwright",
+          "qa",
+          "reference-architecture",
+          "test-automationaws",
+          "typescript"
+        ],
+        "readme": "AWS Test Framework — Architectural Reference\n\nA unified architecture for AWS-backed API testing, Playwright UI testing, and synthetic user journey simulation, routed through a CircleCI pipeline that scales to N teams and environments.\n\n> This repository is an **architectural reference**, not a runnable project. It documents how the pieces fit together, what the interfaces look like, and how the CI pipeline decomposes work. Deployment requires engagement.\n\n---\n\nWhat's demonstrated\n\n| Layer | Pattern |\n|---|---|\n| **AWS-native API testing** | SigV4-signed requests, Secrets Manager, DynamoDB, Lambda, SQS, Athena, API Gateway, CloudWatch |\n| **Multi-team / multi-env** | Configurable team list, three environments, dynamically routed CircleCI pipeline |\n| **Self-healing UI tests** | Playwright Page Object Model backed by a selector registry with ordered fallback strategies |\n| **Synthetic user journeys** | Black-box intelligence layer producing session reports with emotional arc and root-cause analysis |\n| **Rich reporting** | Allure + Mochawesome + JUnit, published to S3 with Slack notifications |\n| **Dynamic CI** | CircleCI setup continuation routes each commit to the right workflow |\n\n---\n\nHow to read this repo in 10 minutes\n\nAn ordered tour for someone evaluating the architecture:\n\ntest/services/ — AWS QA integration patterns (5 min)\n\nThe technical core. Start with generic-api-fetch.service.ts and aws-credentials.service.ts — these two files show the canonical signed-request pattern and the credential-resolution algorithm that handles both local AWS SSO and CI static-IAM. The...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "selector self-healing"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.1
+      },
+      {
+        "id": "https://github.com/TheFishPilot/Verity-Agentic-Web-Scraper",
+        "url": "https://github.com/TheFishPilot/Verity-Agentic-Web-Scraper",
+        "owner": "TheFishPilot",
+        "name": "Verity-Agentic-Web-Scraper",
+        "description": "Verity API for verified web extraction in AI pipelines (Fastify + TypeScript, self-healing selectors, success-based billing).",
+        "language": "TypeScript",
+        "topics": [
+          "api",
+          "fastify",
+          "llm",
+          "playwright",
+          "typescript",
+          "web-scraping"
+        ],
+        "readme": "Verity\nProduction-grade web extraction platform for AI data pipelines.\n\n**Website:** https://fetchverity.com\n\n \n\nWhy Verity\nVerity is built to deliver reliable structured data from difficult websites with production controls already built in.\n\nWorks across dynamic pages, anti-bot conditions, and multi-step extraction flows\nSupports async queue-backed execution for scale\nIncludes billing governance, org controls, and usage attribution\nDesigned with testing, benchmarking, and observability from day one\n\nFeature Inventory (From fetchverity.com)\nFeature list aligned to the live product site content (checked March 24, 2026).\n\nTruth Layer And Core Engine\n| Capability | What It Does |\n|---|---|\n| Success-Based Billing | Failed extractions are always 0 credits. |\n| Vision Loop | Pixel-level verification for extraction integrity. |\n| Self-Healing | Automatically adapts to UI/layout changes. |\n| Substrate | Produces validated JSON for direct RAG/agent pipelines. |\n| Stealth | Adaptive fingerprinting + human-like behavior modeling. |\n\nEngineered For Results\n| Feature | Description |\n|---|---|\n| Multi-Format Output | Single-pass output across markdown, json, rawHtml, links, images, summary, branding, and more. |\n| Change Tracking | Snapshot, diff, retention controls, and webhook alerts. |\n| Discovery Map & Crawl | Domain mapping, scalable crawling, SSE progress streaming, and robots compliance. |\n| Agent Extraction | Multi-step navigation with schema-verified extraction. |\n| Regional Routing | Geo-distributed browser routing for localized extraction. |\n| Org-Ready Teams | Shared API ke...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "selector self-healing"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.1
+      },
+      {
+        "id": "https://github.com/cmelski/online-portfolio",
+        "url": "https://github.com/cmelski/online-portfolio",
+        "owner": "cmelski",
+        "name": "online-portfolio",
+        "description": "static website for my online cv/portfolio. Features pytest playwright test automation framework with self healing selector logic.",
+        "language": "HTML",
+        "topics": [],
+        "readme": "**Overview**\n\nStatic website for my online cv and portfolio.  Also includes a python playwright test automation framework. This framework includes an AI-assisted selector healing mechanism designed to improve test stability when UI changes break existing locators.\n\nIt follows a structured fallback approach:\n\nPrimary selector \nAlternative selectors\nAI-generated selector based on DOM context\n\nWhen a valid selector is found, it is reused. If AI successfully heals a selector, it is automatically persisted for future runs.\n\n**How it works**\n\nSelector Resolution\n\nEach element is defined in a selector store:\n\n{\n  \"automation_projects\": {\n    \"primary\": \"#projects-personal .card\",\n    \"alternatives\": [\n      \"#projects_personal .card\",\n      \".projects-personal .card\"\n    ]\n  }\n}\n\nThe framework attempts each selector until a valid match is found.\n\nValidation\n\nSelectors are validated by checking that at least one element is present:\n\nlocator.first.wait_for(timeout=1000)\n\nThis avoids false positives where a locator exists but matches no elements.\n\nAI Healing\n\nIf all selectors fail:\n\nThe current DOM is captured\nThe broken selector is sent to the AI model\nA new selector is generated based on DOM structure\n\nSelector Normalization\n\nAI responses are cleaned before use:\n\nselector = selector.replace(\"```\", \"\").strip()\n\nThis ensures compatibility with Playwright.\n\nPersistence\n\nIf the AI-generated selector is valid:\n\nIt replaces the primary selector\nIt is saved back to the selector store\nself.store[name][\"primary\"] = new_selector\n\nThis allows the framework to “learn” over time.\n\n**Example Usa...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "selector self-healing"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05
+      },
+      {
+        "id": "https://github.com/bouncyinbox/self-healing-crawler",
+        "url": "https://github.com/bouncyinbox/self-healing-crawler",
+        "owner": "bouncyinbox",
+        "name": "self-healing-crawler",
+        "description": "A production-quality web crawler that automatically detects when a website redesigns, invalidates stale CSS selectors, and uses Claude (LLM) to re-extract data and generate new selectors — all without any manual rule updates.",
+        "language": "Python",
+        "topics": [],
+        "readme": "Self-Healing Web Crawler\n\nA production-quality web crawler that automatically detects when a website redesigns, invalidates stale CSS selectors, and uses Claude (LLM) to re-extract data and generate new selectors — all without any manual rule updates.\n\nThe Problem\n\nCSS-selector-based scrapers break silently when websites redesign. Maintaining hundreds of scraper rules across dozens of domains is expensive, slow, and fragile. A redesign at 2am that flips all IDs to class names will go undetected until someone notices bad data hours later.\n\nThe Solution\n\nA two-path extraction system that is both fast and resilient:\n\n**Fast path (99% of requests):** Use cached CSS selectors — near-zero cost, ~1–5ms per page.\n**Healing path (on drift or first visit):** Detect structural change via DOM fingerprinting, invalidate stale selectors, call the LLM to semantically re-extract and generate new selectors, cache them for the next visit.\n\n---\n\nSystem Architecture\n\n \n\n---\n\nProject Structure\n\n \n\n---\n\nKey Design Decisions\n\nStructural Similarity: Jaccard on DOM Shingles\n\nThe original POC used XOR comparison on SHA256 hashes — fundamentally wrong. SHA256 is a cryptographic hash: a 1-character DOM change flips ~50% of output bits by design, making the similarity score meaningless (identical pages would score ~0.5).\n\n**Fix:** DOM skeleton text is broken into overlapping 3-grams (shingles) of consecutive tag tokens. Jaccard similarity over these sets gives a true locality-sensitive score:\n\n \n\nIdentical DOM → 1.0\nText-only change (same tags, new content) → 1.0 (skeleton strips text)\nComplete redesig...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "selector self-healing"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05
+      },
+      {
+        "id": "https://github.com/chkimas/ai-qa-orchestrator",
+        "url": "https://github.com/chkimas/ai-qa-orchestrator",
+        "owner": "chkimas",
+        "name": "ai-qa-orchestrator",
+        "description": "Autonomous AI-powered web testing platform with self-healing selectors, predictive stability analysis, and real-time monitoring. Built with Next.js 16, Python/FastAPI, Playwright, and Supabase. Features multi-model AI integration (Gemini, Claude, GPT-4o), AES-256 vault security, and tactical PDF reporting.",
+        "language": "TypeScript",
+        "topics": [],
+        "readme": "ARGUS\n\nAutonomous web automation system that maps application routes, executes browser tasks, captures execution evidence, and stores telemetry using a Python worker, Playwright automation, and a Next.js dashboard.\n\nScreenshot\n\n \n\nTech Stack\n\n**Automation Worker**\n\nPython\nFastAPI (ASGI server)\nUvicorn\nPlaywright (Chromium automation)\nReportLab (PDF generation)\n\n**Dashboard**\n\nNext.js (App Router)\nReact\nTypeScript\nTailwind CSS\nTurbopack\n\n**Data Layer**\n\nSupabase\nPostgreSQL\nSupabase Realtime\nSupabase Storage\n\n**Authentication**\n\nClerk\n\n**AI Providers (pluggable gateway)**\n\nOpenAI\nAnthropic\nGoogle Gemini\nGroq (Llama models)\nSonar (Perplexity)\n\nExternal libraries and documentation:\n\nFastAPI — https://fastapi.tiangolo.com\nUvicorn — https://www.uvicorn.org\nPlaywright — https://playwright.dev\nReportLab — https://www.reportlab.com\nNext.js — https://nextjs.org\nTailwind CSS — https://tailwindcss.com\nSupabase — https://supabase.com\nClerk — https://clerk.com\nPostgreSQL — https://www.postgresql.org\n\n---\n\nArchitecture / Directory Structure\n\n \n\nai/\n\nAI-related logic for route analysis, selector healing, and report generation.\n\nanalyzer.py — computes page stability scores and risk metrics.\ncrawler.py — automated spider that discovers routes and captures DOM snapshots.\nhealer.py — generates alternative selectors when automation fails.\nplanner.py — produces execution plans from input tasks.\nprovider.py — abstraction layer for AI providers.\nreporter.py — PDF report generation using ReportLab.\nvault.py — encryption utilities used for key handling.\n\nautomation/core/\n\nBrowser automation runtime...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "selector self-healing"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05
+      },
+      {
+        "id": "https://github.com/kaua433/maestro-skill",
+        "url": "https://github.com/kaua433/maestro-skill",
+        "owner": "kaua433",
+        "name": "maestro-skill",
+        "description": "Generate production-ready Maestro YAML test flows for mobile and web apps with accurate selectors, project setup, CI/CD configurations, and test reports.",
+        "language": "",
+        "topics": [
+          "ai-agent",
+          "android",
+          "automation",
+          "command-framework",
+          "copilot",
+          "developer-experience",
+          "e2e-testing",
+          "maestro",
+          "mobile-testing",
+          "npm-packages",
+          "project-planning",
+          "qa-automation",
+          "react-native",
+          "self-healing",
+          "software-quality",
+          "test-automation"
+        ],
+        "readme": "🎛 maestro-skill - Generate Test Flows Easily\n\n \n\n---\n\n📋 About maestro-skill\n\nmaestro-skill is a tool that helps you create test flows for mobile and web apps. It works with many popular app types like React Native, Flutter, Swift, Kotlin, and Capacitor. You don’t need coding skills to use it. It lets you make tests that check if your app works well on phones or browsers.\n\nThis tool supports Android and iOS apps. It also works with web apps built on modern technology. You can use it to make tests that run on real devices or emulators. The main goal is to make testing easier and faster.\n\n---\n\n🖥 System Requirements\n\nBefore downloading, check your computer meets these needs:\n\nMicrosoft Windows 10 or later (64-bit)\nAt least 4 GB of RAM\n500 MB free storage space\nInternet connection for download and updates\nOptional: An Android or iOS device/emulator for running tests\n\nIf you want to test mobile apps, make sure your device is connected to your computer or you can run an emulator.\n\n---\n\n🚀 Getting Started\n\nFollow these steps to get maestro-skill running on your Windows computer.\n\nVisit the Download Page\n\nClick the button below to go to the download page.\n\n \n\nThis page lists all releases of the app. Find the latest release at the top.\n\nDownload the Windows Installer\n\nLook for a file with a name similar to maestro-skill-setup.exe. The file should be labeled for Windows. Click the file to download it to your computer.\n\nRun the Installer\n\nOpen the folder where the file downloaded.\nDouble-click the .exe file.\nFollow the instructions in the setup wizard.\nAccept the terms if asked.\nCho...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "selector self-healing"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0
+      },
+      {
+        "id": "https://github.com/Abdul-Muizz1310/magpie-backend",
+        "url": "https://github.com/Abdul-Muizz1310/magpie-backend",
+        "owner": "Abdul-Muizz1310",
+        "name": "magpie-backend",
+        "description": "YAML-defined scrapers that self-heal via LLM + PR. One YAML = one spider (Scrapy or Playwright), content-addressed dedup, and a healer that re-derives broken selectors and opens a GitHub PR for review.",
+        "language": "Python",
+        "topics": [],
+        "readme": "🐦‍⬛ magpie-backend\n\n> 🔧 **YAML-defined scrapers that self-heal via LLM + PR.**\n> One config = one spider. When selectors break, an LLM patches them and opens a pull request.\n\n🌐 Live API · 📖 Why · 🏗️ Architecture · 🎬 Demo\n\n \n \n \n \n \n \n \n \n \n \n \n\n---\n\n \n\n---\n\n🎯 Why this exists\n\nScrapers break constantly. Selectors rot when sites redesign. The usual fix: someone notices days later, debugs manually, ships a patch. **magpie automates the detection-and-fix loop** while keeping humans in the review seat.\n\n📝 **One YAML = one spider** — a factory pattern emits Scrapy (static) or Playwright (JS-rendered) from the same config schema; CSS **and** XPath selectors are both supported per-field.\n🧬 **Self-healing via LLM + PR or in-place patch** — zero items (or a dead container selector) triggers a healer that re-fetches HTML, re-derives selectors via an LLM, validates them, and either opens a GitHub PR (for file-origin configs) or writes the fix directly to Postgres (for api-origin configs).\n🔒 **No auto-merge for file-origin heals** — PRs labeled scrape:self-heal require human review.\n🔑 **Content-addressed deduplication** — items are SHA-256 hashed with NFC normalization; runs produce diffs (new / updated / removed), not full dumps.\n🛡️ **Strict config validation** — Pydantic v2 with extra=\"forbid\" + compiled selector checks; typos and broken selectors fail at submit time, not at scrape time.\n⚙️ **Async task queue** — scrapes run via Procrastinate (Postgres-backed) with retry + exponential backoff; a stale-run reaper cleans up after worker crashes.\n\n---\n\n✨ Features\n\n🏭 YAML-dri...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "selector self-healing"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0
+      },
+      {
+        "id": "https://github.com/Karthick-1501/playwright-agent",
+        "url": "https://github.com/Karthick-1501/playwright-agent",
+        "owner": "Karthick-1501",
+        "name": "playwright-agent",
+        "description": "AI-powered Playwright test automation agent with self-healing selectors, registry-based element tracking, and LLM-driven code generation",
+        "language": "JavaScript",
+        "topics": [],
+        "readme": "Playwright AI Test Agent\n\n \n\nAn AI-powered Playwright test automation framework with a **self-healing selector registry**, **CDP-based DOM discovery (Scout)**, and a **fully implemented orchestrator** that enforces a strict 4-layer architecture. The agent (Claude API) is a pure code translator — all deterministic logic lives in the orchestrator.\n\n---\n\nArchitecture\n\n \n\n| Layer | Path | Responsibility |\n|---|---|---|\n| Elements | src/elements/{Page}.elements.js | Locator builder functions only |\n| Base Page | src/pages/BasePage.js | ActionEngine + AssertEngine (registry-aware) |\n| Page Objects | src/pages/{Page}.page.js | All page-specific business methods |\n| Tests | src/tests/{feature}/{name}.spec.js | describe/test + TestData.get() only |\n| Config | config/ | Environment URLs + test data |\n\nOrchestrator vs Agent (hard boundary)\n\n| Concern | Owner |\n|---|---|\n| Input presence validation | Orchestrator (src/agent/orchestrator.js) |\n| Stale index halt + ack | Orchestrator |\n| Registry state resolution | Orchestrator |\n| Scout element filtering | Orchestrator |\n| Pending patch deduplication | Orchestrator |\n| Tier 3 permission gate | Orchestrator |\n| Post-call envelope validation | Orchestrator |\n| File write + registry sync | Orchestrator |\n| NL prompt → element matching | Agent |\n| Locator tier selection | Agent |\n| Code generation | Agent |\n| Warning / clarification narration | Agent |\n\nThe orchestrator runs 7 deterministic gates before every Claude API call. The agent receives only clean, pre-resolved context and never re-validates inputs.\n\n---\n\nSelf-Healing Registry\n\nEver...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "selector self-healing"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0
+      },
+      {
+        "id": "https://github.com/yurgus25/autotest_recorder",
+        "url": "https://github.com/yurgus25/autotest_recorder",
+        "owner": "yurgus25",
+        "name": "autotest_recorder",
+        "description": "AutoTest Recorder & Player is a Chrome extension for no‑code web test automation. Record user actions, edit them in a visual editor, and replay with smart waits, self‑healing selectors, rich logs, and screenshots.",
+        "language": "JavaScript",
+        "topics": [],
+        "readme": "🎬 AutoTest Recorder & Player\n\n**Русский** | English\n\n     \n\n**Мощное расширение для браузера** для автоматизации тестирования веб-приложений **без написания кода.** Записывайте действия пользователя, редактируйте тест-кейсы в визуальном редакторе и воспроизводите их автоматически. Подходит для QA, разработчиков и всех, кто хочет сократить рутину ручных проверок.\n\n**Репозиторий:** github.com/yurgus25/autotest_recorder\n\n---\n\nВерсия и журнал изменений\n\nТекущая ветка **0.9.7.2** — подробности в **CHANGELOG.md** (в том числе отличия от последней сборки в Chrome Web Store, если вы ставите расширение оттуда).\n\nКратко на английском: **CHANGELOG_EN.md**.\n\n---\n\nУстановка\n\nС GitHub Releases (рекомендуется для разработки и тестов без Store)\n\nОткройте **Releases**.\nСкачайте **autotest-recorder-<версия>.zip** у нужного релиза (в архиве — готовая папка расширения, в корне лежит manifest.json).\nРаспакуйте архив в любую папку.\nВ Chrome откройте chrome://extensions/, включите **«Режим разработчика»**.\nНажмите **«Загрузить распакованное расширение»** и укажите **папку**, в которой находится manifest.json (не файл zip).\n\nАрхив для релизов собирается workflow **Release extension zip** (пуш тега v* или запуск вручную: *Run workflow* → тег, например v0.9.7.2).\n\nКлон репозитория\n\n \n\nДалее шаги 4–5 как выше, выбрав **корень клона** (где лежит manifest.json).\n\nСборка zip локально (Windows)\n\nВ полном клоне (в готовый zip скрипты сборки не входят — только файлы расширения):\n\n \n\nРезультат: dist/autotest-recorder-<версия>.zip.\n\n---\n\n💝 Поддержать проект\n\nЕсли инструмент полезен в работе, вы можете подд...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "selector self-healing"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0
+      },
+      {
+        "id": "https://github.com/DivyenduDutta/AutoMorph",
+        "url": "https://github.com/DivyenduDutta/AutoMorph",
+        "owner": "DivyenduDutta",
+        "name": "AutoMorph",
+        "description": "An adaptive UI automation system that leverages semantic DOM understanding to locate and interact with elements, enabling resilient, self-healing workflows without relying on static selectors",
+        "language": "Python",
+        "topics": [
+          "agentic-ai",
+          "agentic-workflow",
+          "automation",
+          "deep-learning",
+          "generative-ai",
+          "google-adk-framework",
+          "python"
+        ],
+        "readme": "AutoMorph\nAn adaptive UI automation system that leverages semantic DOM understanding to locate and interact with elements, enabling resilient, self-healing workflows without relying on static selectors.",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "selector self-healing"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0
+      },
+      {
+        "id": "https://github.com/SikandarMirza/superior-browser-mcp",
+        "url": "https://github.com/SikandarMirza/superior-browser-mcp",
+        "owner": "SikandarMirza",
+        "name": "superior-browser-mcp",
+        "description": "Superior Browser MCP - Enhanced browser automation with visual overlays, smart element detection, and AI features. Surpasses Blueprint MCP with features like numbered element overlays, form detection, ad/popup detection, self-healing selectors, cookie/storage management, and more.",
+        "language": "JavaScript",
+        "topics": [],
+        "readme": "Superior Browser MCP\n\n> Browser automation via MCP for Chrome and Firefox with enhanced AI features\n\n \n \n\nWhat is this?\n\nAn enhanced MCP (Model Context Protocol) server that surpasses Blueprint MCP with advanced features for AI-powered browser automation. Uses your real browser profile with all your logged-in sessions, cookies, and extensions intact.\n\nWhy Superior?\n\n| Feature | Blueprint MCP | Superior Browser MCP |\n|---------|---------------|----------------------|\n| Visual Overlays | ❌ | ✅ Numbered element badges |\n| Element Classification | Basic | ✅ Full AI categorization |\n| Form Detection | Basic | ✅ Smart field matching |\n| Ad Detection | ❌ | ✅ Auto-detect & block |\n| Popup Handling | ❌ | ✅ Cookie, modal, notification |\n| Self-Healing Selectors | ❌ | ✅ Fuzzy matching on failure |\n| Storage Management | ❌ | ✅ localStorage & sessionStorage |\n| Accessibility Tree | Basic | ✅ Full ARIA support |\n| CAPTCHA Detection | ❌ | ✅ Report & alert |\n| Login Form Detection | ❌ | ✅ Auto-detect credentials |\n| Visual Diff | ❌ | ✅ Page state comparison |\n\nInstallation\n\nInstall the MCP Server\n\n \n\nInstall the Browser Extension\n\n**Chrome / Edge / Opera**\nDownload from Releases\nLoad unpacked at chrome://extensions/\n\n**Firefox**\nDownload from Releases\nLoad at about:debugging#/runtime/this-firefox\n\nConfigure your MCP client\n\n**Claude Desktop** (~/Library/Application Support/Claude/claude_desktop_config.json):\n\n \n\n**Claude Code**:\n \n\nQuick Start\n\n**Start your MCP client** (Claude Desktop, Cursor, etc)\n**Click the Superior Browser MCP extension icon** in your browser\nThe extension auto-connec...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "selector self-healing"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0
+      },
+      {
+        "id": "https://github.com/uelkerd/vision",
+        "url": "https://github.com/uelkerd/vision",
+        "owner": "uelkerd",
+        "name": "vision",
+        "description": "AI-powered autonomous Android QA testing agent — vision models + ADB + self-healing selectors",
+        "language": "Go",
+        "topics": [],
+        "readme": "Vision Agent\n\nA Go-based agentic visual Android tester that interacts with devices like a human would.\n\nFeatures\n\n**Visual Analysis**: Uses vision models (Ollama-based) to understand mobile app screens.\n**Human-like Interaction**: Simulates natural gestures, typing, and timing.\n**Self-Healing Selectors**: Resolves UI coordinates dynamically when layouts drift.\n**Maestro Integration**: Run complex test flows defined in YAML.\n**Natural Language Tasks**: Execute high-level tasks like \"Search for Tidal and launch it\".\n\nQuick Start\n\nPrerequisites\n\nGo 1.24+\nADB installed and device connected\nOllama running with vision models (e.g., llama3.2-vision:11b)\n\nBuild\n\n \n\nRun\n\n \n\nDocumentation\n\nVision Improvements\nAndroid UI Interaction Research\nContribution Guide\n\nLicense\n\nMIT",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "selector self-healing"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0
+      },
+      {
+        "id": "https://github.com/EsraaKamel11/Self-Healing-Selenium-Framework",
+        "url": "https://github.com/EsraaKamel11/Self-Healing-Selenium-Framework",
+        "owner": "EsraaKamel11",
+        "name": "Self-Healing-Selenium-Framework",
+        "description": "AI-powered self-healing Selenium framework that autonomously detects broken test selectors, generates ranked repairs via Claude Sonnet + LangGraph, validates fixes through multi-layer protocols, and routes results by confidence — auto-commit, PR, or issue escalation. Zero human intervention needed.",
+        "language": "Python",
+        "topics": [
+          "ai-testing",
+          "autonomous-tests",
+          "ci-cd",
+          "claude-ai",
+          "devops",
+          "dom-diffing",
+          "fastapi",
+          "flaky-tests",
+          "langchain",
+          "langgraph",
+          "opentelemetry",
+          "python",
+          "selenium",
+          "self-healing-tests",
+          "semantic-similarity",
+          "test-automation"
+        ],
+        "readme": "Self-Healing Selenium Framework\n\n \n \n \n \n \n\nAn autonomous pipeline that detects broken Selenium selectors, classifies the root cause, generates ranked repair candidates via Claude Sonnet, validates each candidate through a three-layer protocol, scores composite confidence, and delivers the fix — either as a direct commit, a pull request, or a GitHub issue — without human intervention for high-confidence repairs.\n\n---\n\nCore Philosophy — Four Invariants\n\nThe framework is built around four guarantees that are never compromised:\n\n**Never block the test suite.** Every failure is caught, routed through the pipeline asynchronously, and resolved without halting CI. The framework is a background healer, not a gatekeeper.\n**Every threshold is observable and recalibratable.** No confidence value, retry count, or routing boundary is hardcoded. All are read from Settings at call time and drift toward real-world accuracy through monthly recalibration driven by human override events.\n**Validation before any write.** Three layers of validation — functional subprocess re-run, DOM uniqueness check, regression guard — must all pass before a repair candidate touches the routing decision. The interrupt_before=[\"autonomous_commit\"] safety checkpoint means a human can always review before code lands.\n**Graceful degradation at every boundary.** PostgreSQL unavailable → JSONL/JSON file fallback. No API key → mock LLM via RunnableLambda. Rule-based classifier insufficient → LLM fallback. No GitHub token → local git only. Nothing crashes; everything logs.\n\n---\n\nPipeline Architecture\n\nThe self-healing...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "selector self-healing"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0
+      },
+      {
+        "id": "https://github.com/nyctophilian20anya/AI_Self_Healing_Login",
+        "url": "https://github.com/nyctophilian20anya/AI_Self_Healing_Login",
+        "owner": "nyctophilian20anya",
+        "name": "AI_Self_Healing_Login",
+        "description": "A Selenium-based automated login system featuring AI-driven self-healing capabilities. This project dynamically identifies and updates locators (IDs, XPaths, Selectors) in real-time to prevent test script failures due to UI changes.",
+        "language": "Python",
+        "topics": [],
+        "readme": "",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "selector self-healing"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0
+      },
+      {
+        "id": "https://github.com/mathieuask/linkedin-automation",
+        "url": "https://github.com/mathieuask/linkedin-automation",
+        "owner": "mathieuask",
+        "name": "linkedin-automation",
+        "description": "🤖 Automated LinkedIn prospecting agent — warm-up sequences, Notion CRM, self-healing selectors, AI personalization",
+        "language": "JavaScript",
+        "topics": [],
+        "readme": "🤖 LinkedIn Automation — Smart Prospecting Agent\n\n> Automated LinkedIn outreach with warm-up sequences, Notion CRM sync, self-healing selectors, and AI-powered personalization.\n\n \n \n \n\n🔄 How it flows\n\n \n\n✨ Features\n\n🎯 Smart Prospecting\n**Intelligent Profile Scoring (0-100)**: Evaluates prospects based on role, company size, location, industry, and activity level\n**ICP Matching**: Automatically filters profiles against your Ideal Customer Profile\n**Adaptive Learning Engine**: Improves scoring weights based on acceptance and reply rates\n**Multi-language Support**: Detects profile language and adapts messages accordingly\n\n🔄 Progressive Warm-up\n**Gradual Activity Ramp-up**: Starts with 2-3 actions/day, progressively increases to avoid LinkedIn detection\n**Gaussian-distributed Delays**: Human-like timing with configurable mean (5 min) and standard deviation (1.5 min)\n**Business Hours Detection**: Operates only during realistic working hours (9 AM - 6 PM local time)\n**Shadow-ban Prevention**: Monitors account health and automatically throttles if warning signs detected\n\n🧠 AI-Powered Messaging\n**Role-based Templates**: Different message styles for Founders, CTOs, CEOs, and Managers\n**Industry Adaptations**: Specialized variants for FinTech, HealthTech, E-commerce, SaaS, etc.\n**Variable Substitution**: {firstName}, {lastName}, {company} automatically filled\n**Claude AI Integration**: Optional AI-powered message generation for maximum personalization\n**Auto-research**: AI autonomously improves templates based on acceptance/reply metrics\n\n🛡️ Self-Healing Architecture\n**Selector...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "selector self-healing"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0
+      },
+      {
+        "id": "https://github.com/D4Vinci/Scrapling",
+        "url": "https://github.com/D4Vinci/Scrapling",
+        "owner": "D4Vinci",
+        "name": "Scrapling",
+        "description": "🕷️ An adaptive Web Scraping framework that handles everything from a single request to a full-scale crawl!",
+        "language": "Python",
+        "topics": [
+          "ai",
+          "ai-scraping",
+          "automation",
+          "crawler",
+          "crawling",
+          "crawling-python",
+          "data",
+          "data-extraction",
+          "mcp",
+          "mcp-server",
+          "playwright",
+          "python",
+          "scraping",
+          "selectors",
+          "stealth",
+          "web-scraper",
+          "web-scraping",
+          "web-scraping-python",
+          "webscraping",
+          "xpath"
+        ],
+        "readme": "<!-- mcp-name: io.github.D4Vinci/Scrapling -->\n\n<h1 align=\"center\">\n    <a href=\"https://scrapling.readthedocs.io\">\n        <picture>\n          <source media=\"(prefers-color-scheme: dark)\" srcset=\"https://raw.githubusercontent.com/D4Vinci/Scrapling/main/docs/assets/cover_dark.svg?sanitize=true\">\n          <img alt=\"Scrapling Poster\" src=\"https://raw.githubusercontent.com/D4Vinci/Scrapling/main/docs/assets/cover_light.svg?sanitize=true\">\n        </picture>\n    </a>\n    <br>\n    <small>Effortless Web Scraping for the Modern Web</small>\n</h1>\n\n<p align=\"center\">\n    <a href=\"https://trendshift.io/repositories/14244\" target=\"_blank\"><img src=\"https://trendshift.io/api/badge/repositories/14244\" alt=\"D4Vinci%2FScrapling | Trendshift\" style=\"width: 250px; height: 55px;\" width=\"250\" height=\"55\"/></a>\n    <br/>\n    <a href=\"https://github.com/D4Vinci/Scrapling/blob/main/docs/README_AR.md\">العربيه</a> | <a href=\"https://github.com/D4Vinci/Scrapling/blob/main/docs/README_ES.md\">Español</a> | <a href=\"https://github.com/D4Vinci/Scrapling/blob/main/docs/README_PT_BR.md\">Português (Brasil)</a> | <a href=\"https://github.com/D4Vinci/Scrapling/blob/main/docs/README_FR.md\">Français</a> | <a href=\"https://github.com/D4Vinci/Scrapling/blob/main/docs/README_DE.md\">Deutsch</a> | <a href=\"https://github.com/D4Vinci/Scrapling/blob/main/docs/README_CN.md\">简体中文</a> | <a href=\"https://github.com/D4Vinci/Scrapling/blob/main/docs/README_JP.md\">日本語</a> |  <a href=\"https://github.com/D4Vinci/Scrapling/blob/main/docs/README_RU.md\">Русский</a> | <a href=\"https://github.com/D4Vinci/Scrapling/blob/main/docs/...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "adaptive xpath"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.1
+      },
+      {
+        "id": "https://github.com/chrisabruce/scrapling-rs",
+        "url": "https://github.com/chrisabruce/scrapling-rs",
+        "owner": "chrisabruce",
+        "name": "scrapling-rs",
+        "description": "Adaptive web scraping, built in Rust. A high-performance port of Python Scrapling.",
+        "language": "Rust",
+        "topics": [
+          "ai",
+          "ai-scraping",
+          "automation",
+          "crawler",
+          "crawling",
+          "crawling-rust",
+          "data",
+          "data-extraction",
+          "mcp",
+          "mcp-server",
+          "playwright",
+          "rust-lang",
+          "scraping",
+          "selectors",
+          "stealth",
+          "web-scraper",
+          "web-scraping",
+          "web-scraping-rust",
+          "webscraping",
+          "xpath"
+        ],
+        "readme": "scrapling-rs\n\nThe Rust port of Scrapling, a web scraping framework that actually handles the messy reality of modern websites. Built for speed, built for stealth, built to keep working when sites change their HTML.\n\nIf you've used the Python version, you already know the API. If you haven't, here's the short version: Scrapling finds elements even after a website redesigns, impersonates real browsers so anti-bot systems can't tell you apart, and does it all fast enough to crawl thousands of pages concurrently.\n\nThis Rust port takes everything that makes Scrapling good and removes the performance ceiling. No GIL. No garbage collector. Native async. Single binary deployment.\n\nWhat makes this different\n\nMost scraping libraries break the moment a website changes a CSS class or moves a div. Scrapling doesn't. It saves a structural fingerprint of every element you care about and uses a 12-factor similarity algorithm to find it again, even when the surrounding HTML looks completely different. That's the adaptive engine, and it's the reason people use Scrapling over everything else.\n\nThe other big thing: real browser fingerprint impersonation. Not just setting a User-Agent header. Full TLS fingerprint emulation (JA3/JA4, HTTP/2 settings, cipher order) through 135+ browser profiles so anti-bot systems see Chrome, Firefox, or Safari instead of a Rust HTTP client.\n\nFeatures\n\n**HTML parsing and selection**\nFast DOM parsing via html5ever with CSS selector support, including ::text and ::attr() pseudo-elements\nFull DOM navigation: parent, children, siblings, ancestors, descendants\nFind el...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "adaptive xpath"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.1
+      },
+      {
+        "id": "https://github.com/mehardsingh/scholarly-entity-wrapper-induction",
+        "url": "https://github.com/mehardsingh/scholarly-entity-wrapper-induction",
+        "owner": "mehardsingh",
+        "name": "scholarly-entity-wrapper-induction",
+        "description": "A wrapper induction tool to retrieve structured information from semi-structured web pages regarding scholarly entities like professors, researchers, etc.",
+        "language": "Jupyter Notebook",
+        "topics": [],
+        "readme": "scholarly-entity-wrapper-induction\nA wrapper induction tool to retrieve structured information from semi-structured web pages regarding scholarly entities like professors, researchers, etc.\n\nVariance Based Wrapper Induction\n\nWrapper induction using variance/frequency to separate information from \"templated\" portions of webpages. Creates \"anchor points\" to label content on webpages in an unsupervised fashion (no external labels of HTML elements required).\n\nRun all cells in WrapperInduction4.ipynb.\n\nUsing **just three** training URLs, it can produce the following result for the unseen URL:\n\n \n \n\nHITS Algorithm Based Template Labelling\n\nUses a novel variation of HTIS with spaCy semantic word embeddings to create labels for HTML header elements. Run all cells in hits_algorithm.ipynb.\n\nGibson (Hashing) Wrapper Induction\n\nBased on \"The Volume and Evolution of Web Page Templates\" by Gibson, Punera, and Tomkins. Template-hash counts with both pure text and DOM trees. For pure text, run all cells in gibson_text.ipynb. For DOM trees, run all cells in gibson_dom.ipynb.",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "wrapper induction"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0
+      },
+      {
+        "id": "https://github.com/TheNavee/supervised-wrapper-induction",
+        "url": "https://github.com/TheNavee/supervised-wrapper-induction",
+        "owner": "TheNavee",
+        "name": "supervised-wrapper-induction",
+        "description": "Easily extract information from webpages. Automatic css selector and regex generation.",
+        "language": "HTML",
+        "topics": [],
+        "readme": "============================\nSupervised Wrapper Induction\n============================\n\nSWI is a library for extracting structured data from HTML pages. The difference with other\nXPath based libraries is that it builds itself the selectors needed. It was inspired by scrapely. Given\nsome example web page(s) and the data to be extracted, SWI constructs a wrapper to extract\ninformation on all similar pages.\n\nInstallation\n============\n\nInstall SWI with pip::\n\n    pip install supervised_wrapper_induction\n\nBuild Locally\n=============\n\nSWI works in Python 3.3+.\n\nTo build::\n\n    python setup.py sdist\n\nRequirements\n============\n\nSWI uses:\n\nBeautifulSoup4\nfuzzywuzzy\npython-Levenshtein\nextruct\npython-lxml\nsoupsieve\n\nUsage (API)\n===========\n\nYou can use SWI to build very capable scrapers.\n\nWhat follows is a quick example that you can run in a python shell.\n\nStart by importing and instantiating the Extractor class::\n\n    >>> from swi import Extractor\n    >>> extractor = Extractor()\n\nThen, proceed to train the Extractor by adding some page and the data you expect\nto scrape from there (note that all keys and values in the data you pass must\nbe strings).::\n\n    >>> import requests\n    >>> url1 = \"https://pypi.org/project/pip/19.2.1/\"\n    >>> response = requests.get(url1)\n    >>> train_set_1 = {\"name\":\"pip 19.2.1\",\n\t\t\"maintainers\":[\"cjerdonek\", \"dstufft\"],\n\t\t\"maintainers_profile_pictures\":[\n\t\t\"https://warehouse-camo.cmh1.psfhosted.org/697af4520c5134f9d47c5647352f0a1a83bac949/68747470733a2f2f7365637572652e67726176617461722e636f6d2f6176617461722f39623531336565376363343030633962373337346634363...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "wrapper induction"
+        ],
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0
+      }
+    ]
+  },
+  "selection": {
+    "by_score": 10,
+    "by_divergence": 0,
+    "diversity_gap": "no_divergent_candidates_met_threshold",
+    "note": null
+  },
+  "queryPlans": [
+    {
+      "label": "Query 1",
+      "query": "wrapper induction",
+      "reasons": [
+        "Trifft Approach-Signature \"wrapper-induction\"",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Kurze Query — breite Abdeckung, ggf. zu generisch"
+      ]
+    },
+    {
+      "label": "Query 2",
+      "query": "selector self-healing",
+      "reasons": [
+        "Trifft Approach-Signature \"self-healing\"",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Kurze Query — breite Abdeckung, ggf. zu generisch"
+      ]
+    },
+    {
+      "label": "Query 3",
+      "query": "adaptive xpath",
+      "reasons": [
+        "Trifft Approach-Signature \"adaptive\"",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Kurze Query — breite Abdeckung, ggf. zu generisch"
+      ]
+    },
+    {
+      "label": "Query 4",
+      "query": "DOM template matching",
+      "reasons": [
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ]
+    },
+    {
+      "label": "Query 5",
+      "query": "scraper auto-recovery",
+      "reasons": [
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Kurze Query — breite Abdeckung, ggf. zu generisch"
+      ]
+    },
+    {
+      "label": "Query 6",
+      "query": "extraction rule learning",
+      "reasons": [
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ]
+    },
+    {
+      "label": "Query 7",
+      "query": "automatic wrapper maintenance",
+      "reasons": [
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ]
+    },
+    {
+      "label": "Query 8",
+      "query": "wrapper learning system",
+      "reasons": [
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ]
+    },
+    {
+      "label": "Query 9",
+      "query": "playwright auto heal selectors",
+      "reasons": [
+        "Nimmt Tech-Tag \"playwright\" mit",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ]
+    },
+    {
+      "label": "Query 10",
+      "query": "crawlee adaptive crawler",
+      "reasons": [
+        "Nimmt Tech-Tag \"crawler\" mit",
+        "Trifft Approach-Signature \"adaptive\"",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ]
+    },
+    {
+      "label": "Query 11",
+      "query": "readability article extraction",
+      "reasons": [
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ]
+    },
+    {
+      "label": "Query 12",
+      "query": "structured data linter schema",
+      "reasons": [
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ]
+    }
+  ],
+  "agentView": {
+    "mission": [
+      "Externe Loesungsraum-Landkarte fuer \"Der EventBaer-Worker braucht pro neuer Quelle manuelle Extraktor-Tuning-Arbeit: neue Selektoren hand-crafted, Edge-Cases patchen, neue Source-Families anlegen\" ins Zielprojekt eventbear-worker ueberfuehren",
+      "Divergente Cluster (1) pruefen — hoeheres Lernpotenzial, hoeherer Transfer-Aufwand",
+      "Benachbarte Cluster (1) als Adaptions-Kandidaten auswerten"
+    ],
+    "deliverable": [
+      "Je Cluster ein Kurz-Exposé mit Key-Takeaway fuer das Zielprojekt",
+      "Pro divergentem Cluster eine klare adopt/adapt/observe/ignore-Entscheidung",
+      "Decision-Log-Eintrag(e) im Zielprojekt, die auf diese Landscape referenzieren"
+    ],
+    "priorityRepos": [
+      {
+        "repo": "D4Vinci/Scrapling",
+        "action": "Als divergente Referenz fuer \"data+selectors+xpath\" pruefen",
+        "url": "https://github.com/D4Vinci/Scrapling"
+      },
+      {
+        "repo": "alexandriashai/cbrowser",
+        "action": "Als benachbarte Referenz fuer \"automation+playwright+query:selector-self-healing\" pruefen",
+        "url": "https://github.com/alexandriashai/cbrowser"
+      }
+    ],
+    "context": [
+      "Aktueller Ansatz: Paradigmen-Shift \"Detect Once, Extract Many\" in Umsetzung: Strategy-Registry + Pluggable Extractors. Aber die Onboarding-Kosten pro Quelle und das Fehlen eines echten Feedback/Lernsystems bleiben die dominanten Scaling-Blocker. Gesucht: externe Patterns fuer Wrapper-Maintenance, Template-Learning und adaptiven Selector-Recovery.",
+      "Erfolgskriterium: 100 neue Quellen in einem Batch laufen ohne per-Source Engineering durch,Selektor-Drift (Site-HTML-Änderung) wird automatisch erkannt und repariert statt stillschweigend leere Events zu liefern,Gelöste Extraktions-Regeln propagieren in einen Pattern-Bank, den ähnliche Quellen wiederverwenden,Neue Source-Families werden aus strukturellen Signalen vorgeschlagen statt hand-klassifiziert",
+      "Approach-Signature: self-healing, adaptive, wrapper-induction, pattern-bank, auto-onboarding, feedback-loop",
+      "Tech-Tags: nodejs, typescript, playwright, puppeteer, crawler, node"
+    ],
+    "guardrails": [
+      "Node.js-Worker mit gezielter Playwright-Eskalation, kein Python-Heavy-Stack",
+      "Open-Source-Referenzen bevorzugt — kein SaaS-Closed-Loop in der Kern-Pipeline",
+      "Lern-Entscheidungen müssen inspectable bleiben — kein Black-Box-ML im Hot-Path"
+    ],
+    "uncertainties": [
+      "Nicht-Ziel: Kein LLM-first-Extractor — heuristische + strukturelle Inferenz ist das Ziel",
+      "Nicht-Ziel: Keine generische Scraper-Library — die Frage ist System-Ebene, nicht Library-Wahl",
+      "Nicht-Ziel: Kein Orchestration-Tool (Airflow, Prefect) — die Lücke ist in Extraction/Normalization, nicht Scheduling"
+    ],
+    "codingStarter": {
+      "primary": {
+        "repo": "D4Vinci/Scrapling",
+        "starterLabel": "adapters/unknown|unknown-bridge.mjs",
+        "implementationGoal": "Adaptions-Skizze fuer Cluster \"data+selectors+xpath\" als Bruecke zum Zielprojekt",
+        "firstSlice": "Minimal-Integration: 1 Vertreter aus Cluster \"data+selectors+xpath\" gegen das Zielprojekt testen",
+        "targetAreas": [
+          "unknown"
+        ],
+        "starterMode": "exploration",
+        "compareChecklist": [
+          "Wie unterscheidet sich dieser divergente Ansatz vom aktuellen Stand?",
+          "Welche Annahmen des aktuellen Ansatzes stellt dieses Cluster in Frage?",
+          "Ist der Transfer-Aufwand in Relation zum erwarteten Gewinn vertretbar?"
+        ],
+        "stopIf": [
+          "Performance oder Qualitaet unter dem aktuellen Niveau ohne klare Perspektive",
+          "Lizenz oder Distributionsform passt nicht zum Zielprojekt"
+        ]
+      },
+      "secondary": [
+        {
+          "repo": "alexandriashai/cbrowser",
+          "starterLabel": "adapters/provenance|selector-self-healing-bridge.mjs",
+          "implementationGoal": "Alternativer Pfad aus Cluster \"automation+playwright+query:selector-self-healing\"",
+          "firstSlice": "Kurzvergleich gegen primaeren Pfad",
+          "targetAreas": [
+            "problem_lens"
+          ],
+          "starterMode": "exploration",
+          "compareChecklist": [
+            "Wo unterscheidet sich dieser Pfad vom primaeren?"
+          ],
+          "stopIf": [
+            "Keine klaren Unterschiede zum primaeren Pfad"
+          ]
+        }
+      ]
+    },
+    "payload": {
+      "schemaVersion": "2",
+      "handoffType": "landscape-to-project",
+      "problemSlug": "self-healing-adaptive-source-intake",
+      "project": "eventbear-worker",
+      "relationCounts": {
+        "divergent": 1,
+        "adjacent": 1,
+        "near_current_approach": 0
+      }
+    },
+    "downloadFileName": "patternpilot-landscape-handoff-self-healing-adaptive-source-intake.json",
+    "references": [
+      "Query: \"wrapper induction\"",
+      "Query: \"selector self-healing\"",
+      "Query: \"adaptive xpath\"",
+      "Query: \"DOM template matching\""
+    ]
+  },
+  "techStatus": {
+    "effectiveQueries": [
+      "wrapper induction",
+      "selector self-healing",
+      "adaptive xpath",
+      "DOM template matching",
+      "scraper auto-recovery",
+      "extraction rule learning",
+      "automatic wrapper maintenance",
+      "wrapper learning system",
+      "playwright auto heal selectors",
+      "crawlee adaptive crawler",
+      "readability article extraction",
+      "structured data linter schema"
+    ],
+    "missingCandidates": [],
+    "searchErrors": []
+  }
+}

@@ -3,9 +3,9 @@
   "projectKey": "eventbear-worker",
   "reportKind": "review",
   "command": "review-watchlist",
-  "createdAt": "2026-04-23T21:21:14.700Z",
-  "runId": "2026-04-23T21-21-14-700Z",
-  "reportPath": "projects/eventbear-worker/reports/patternpilot-report-eventbear-worker-2026-04-23.html",
+  "createdAt": "2026-04-24T12:24:17.159Z",
+  "runId": "2026-04-24T12-24-17-159Z",
+  "reportPath": "projects/eventbear-worker/reports/patternpilot-report-eventbear-worker-2026-04-24.html",
   "handoff": {
     "schemaVersion": 2,
     "handoffType": "patternpilot_agent_brief",

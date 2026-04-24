@@ -101,7 +101,10 @@ describe("pushBrowserLink", () => {
       assert.ok(md.startsWith("# Pattern Pilot — Browser Links"));
       assert.ok(md.includes("## Problem-Mode Landscapes"));
       assert.ok(md.includes("**virt-list**"));
+      // Raw-Pfad bleibt als Code-Span fuer copy-paste erhalten
       assert.ok(md.includes("\\\\wsl.localhost\\Ubuntu-24.04\\a\\landscape.html"));
+      // Zusaetzliche klickbare Markdown-Link-Zeile mit file:// URL
+      assert.ok(md.includes("[Open report](file://wsl.localhost/Ubuntu-24.04/a/landscape.html)"));
 
       const state = JSON.parse(fs.readFileSync(`${browserLinkPath}.state.json`, "utf8"));
       assert.ok(state.sections["problem-explore"]["virt-list"].href.includes("landscape.html"));
