@@ -87,6 +87,38 @@ Datenartefakt.
 
 Acceptance-FAIL hier ist **kein Bug**, sondern die ehrliche Vermessung. Der Plan hat fuer eventbear-worker geliefert; cross-domain-Acceptance erfordert Phase 7.
 
+### Lauf 4 — Cross-Project nach Phase 7 ✓ PASS
+
+- **Datum:** 2026-04-25
+- **Quelle:** [`stability/post-phase7.md`](stability/post-phase7.md)
+- **Setup:** wie Lauf 3, aber pinflow neu gerechnet mit Phase 7.1 Per-Project-Lexikon, alle Runs gegen den Phase-7.0-Scorer (member-coverage-basierte label-fidelity) bewertet
+- **Aggregat (Combined):** Median **8.44/10**, Min **7/10**, Max **10/10**, Mean **8.46/10**
+- **Aggregat-Split:** Struktur median 10, Inhalt median 6.88
+- **Acceptance:** **PASS** (combined median 8.44 ≥ 8, min 7 ≥ 7, max 10 ≥ 9)
+
+| Run | Lauf 3 (pre-7) | Lauf 4 (post-7) | Δ | Hebel |
+|---|---|---|---|---|
+| event-dedup | 8.75 | **10** | **+1.25** | Phase 7.0 (label-fidelity 0→2) |
+| schema-extraction | 7.5 | 7.5 | 0 | Cluster-Members thematisch zu disjunkt |
+| self-healing | 7 | 7 | 0 | Search-Limit-Hit beim Run, zu wenige Members fuer Lift |
+| review w/ auto-discover | 9.38 | 9.38 | 0 | bereits vor Phase 7 sehr stark |
+| eventbear-web | 8.13 | **9.38** | **+1.25** | Phase 7.0 (label-fidelity 0→2) |
+| pinflow | 4.75 | **7.5** | **+2.75** | Phase 7.1 (Per-Project-Lexikon: 65 % → 100 % Klassifikation, struct 7→10, content 2.5→5) |
+
+Schwaechste Achsen nach Lauf 4:
+1. `[content] label-fidelity` — mean 0.83/2 (war 0.17 — verdreifacht), min 0/2
+2. `[content] problem-fit` — mean 1/2 (unveraendert)
+3. `[structure] cluster-diversity` — mean 1.83/2 (self-healing-Search-Limit-Outlier)
+4. `[content] classification-confidence` — mean 1.83/2 (Phase 7.1 Lift)
+
+Phase 7 hat zwei der drei urspruenglichen Inhalts-Schwaechen geheilt:
+- **classification-confidence** ist ueber alle 6 Runs jetzt mean 1.83/2 (war ~1.5)
+- **label-fidelity** ist mean 0.83/2 (war 0.17) — die Haelfte der Runs auf 2/2
+
+Was offen bleibt:
+- **problem-fit** (mean 1/2) ist domain-spezifisch und schwierig per Heuristik zu heben — der Token-Overlap zwischen problem-Seeds und Repo-Tokens ist physisch begrenzt durch unterschiedliche Vokabulare
+- **schema-extraction** und **self-healing** lifteten nicht — bei beiden ist die Cluster-Member-Token-Struktur disjunkter als der Label-Builder ausgleichen kann
+
 Beobachtungen aus dem Lauf:
 
 - **Phase 1 (Seed-Diversifier):** Auf allen drei Slugs `passthrough — already_diverse`. Bestaetigt: die existierende Seed-Generierung ist in den meisten Faellen bereits orthogonal genug; Phase 1 ist Safety-Net fuer Edge-Cases

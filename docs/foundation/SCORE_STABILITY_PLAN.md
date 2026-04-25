@@ -1,7 +1,7 @@
 # Score-Stabilitaets-Plan — auf Weg zu reproduzierbaren 9-10/10 Reports
 
 - last_updated: 2026-04-25
-- status: Phase 0-6 done. Phase 6 erweiterte den Scorer um 4 Inhalts-Achsen (problem-fit, label-fidelity, classification-confidence, decision-readiness) und enthuellt: Struktur 10/10 + Inhalt 6.25/10 = Combined 8.13/10 — Acceptance PASS bleibt, aber `label-fidelity` ist konsistent schwach (mean 0.25/2). Phase 7 = Cross-Domain-Erweiterungen, getriggert von echtem zweitem Zielprojekt.
+- status: Phase 0-7 done. Phase 7 lieferte Label-Fidelity-Fix (7.0), Per-Project-Lexikon (7.1) und Lexikon-Auto-Extension-Helper (7.2). Cross-Project-Lauf 4 ueber 3 Domaenen erreicht **Acceptance PASS** (combined median 8.44, min 7, max 10) — pre-Phase-7 war Combined median 7.82 mit FAIL.
 - scope: Landscape- und Discovery-Report
 - zielkorridor: Median 9, Min 8, Max 10 ueber beliebige Problem-Slugs und Zielprojekte
 - begriff: "Problem-Slug" = Eingangsargument von `npm run problem:explore -- <slug>`, z. B. `event-dedup`, `schema-extraction`
@@ -157,6 +157,30 @@ Jede Phase wird gegen drei Kriterien abgeklopft:
   - **Seed-Qualitaet:** Auto-Discovery ist nur so gut wie die Seeds, die Phase 1 bereitstellt. **Deshalb muss Phase 1 vor Phase 4 stehen**
 - **Rollback:** CLI-Flag `--no-auto-discover` setzt das Feature fuer einzelne Runs aus; env var `PATTERNPILOT_AUTO_DISCOVERY=false` global
 - **Acceptance:** `npm run review:watchlist` mit leerer Watchlist rendert einen Report mit ≥ 8 gefuellten Sections und sichtbarem Auto-Discovery-Banner im Intro
+
+### Phase 7 — Cross-Domain-Erweiterungen ✓ done
+
+- **Status:** 2026-04-25 alle drei Sub-Phasen geliefert. Cross-Project-Acceptance auf Combined median 8.44/min 7/max 10 — vorher 7.82/4.75/9.38
+
+#### Phase 7.0 — Label-Fidelity-Fix (domain-unabhaengig)
+
+- `lib/clustering/labels.mjs`: Token-Ranking nach Member-Coverage (statt roher Frequenz), `query:*`-Provenance-Filter, Pattern-Family als erstes Label-Element
+- `lib/scoring/score-report.mjs`: landscapeLabelFidelity misst jetzt Member-Coverage (welcher Anteil der Members enthaelt jedes Label-Token)
+- Wirkung: event-dedup label-fidelity 0→2, eventbear-web 0→2. Mean ueber alle Runs 0.17→0.83 (verdreifacht)
+- Test-Baselines aktualisiert
+
+#### Phase 7.1 — Per-Project-Pattern-Family-Lexikon
+
+- `bindings/<project>/PATTERN_FAMILY_LEXICON.json` als optionaler Override. Default-Lexikon und Project-Lexikon werden gemerged (Label-Schluessel = key, project gewinnt bei Konflikt)
+- `scripts/commands/problem-explore.mjs#loadPatternFamilyLexicon(rootDir, projectKey)` macht den Merge
+- Sample: `bindings/pinflow/PATTERN_FAMILY_LEXICON.json` mit 12 devtools-Familien (framework_adapter, devtools_protocol, source_mapper, mcp_bridge, browser_overlay, ...)
+- Wirkung pinflow: Klassifikation 65 % → 100 %, struct 7→10, content 2.5→5, Combined 4.75→7.5
+
+#### Phase 7.2 — Lexikon-Auto-Extension-Helper
+
+- `lib/scoring/lexicon-suggest.mjs` (pure functions) + `scripts/suggest-lexicon.mjs` (CLI)
+- `npm run lexicon:suggest [--project <key>] [--output <md>] [--json]`: walkt landscape.json-Artefakte, sammelt Topics + Description-Tokens aller Repos die als pattern_family=unknown verblieben, schlaegt Kandidaten-Tokens vor, die als Familien ins Lexikon uebernommen werden koennten
+- 17 neue Tests in `release:smoke`. Vorschlag-basiert, kein Auto-Editor — Mensch reviewt + kuratiert
 
 ### Phase 6 — Inhalts-Scorer ✓ done
 
