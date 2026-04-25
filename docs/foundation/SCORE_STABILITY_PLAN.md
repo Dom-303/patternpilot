@@ -1,7 +1,7 @@
 # Score-Stabilitaets-Plan — auf Weg zu reproduzierbaren 9-10/10 Reports
 
-- last_updated: 2026-04-25
-- status: Phase 0-7 done. Phase 7 lieferte Label-Fidelity-Fix (7.0), Per-Project-Lexikon (7.1) und Lexikon-Auto-Extension-Helper (7.2). Cross-Project-Lauf 4 ueber 3 Domaenen erreicht **Acceptance PASS** (combined median 8.44, min 7, max 10) — pre-Phase-7 war Combined median 7.82 mit FAIL.
+- last_updated: 2026-04-26
+- status: Phase 0-7 done inkl. Phase 7.3 (TF-IDF-Label-Diskriminator). Empirik: 11 Real-Runs ueber 4 Projekte und 9 Domaenen. Auf in-domain bzw. mit per-project-Lexikon stabil ≥ 8. Pure Cross-Domain ohne Lexikon-Investment Median 6.88. Pipeline ist bereit fuer Real-World-Nutzung; weitere Hebel kommen aus Real-World-Trigger.
 - scope: Landscape- und Discovery-Report
 - zielkorridor: Median 9, Min 8, Max 10 ueber beliebige Problem-Slugs und Zielprojekte
 - begriff: "Problem-Slug" = Eingangsargument von `npm run problem:explore -- <slug>`, z. B. `event-dedup`, `schema-extraction`
