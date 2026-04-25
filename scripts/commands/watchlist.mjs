@@ -26,9 +26,11 @@ import {
   buildWatchlistReviewReport
 } from "../../lib/review.mjs";
 import { refreshContext } from "../shared/runtime-helpers.mjs";
-import { runIntake } from "./discovery.mjs";
+import { runDiscover, runIntake } from "./discovery.mjs";
 import { readProblem } from "../../lib/problem/store.mjs";
 import { applySoftBoost } from "../../lib/discovery/problem-constraints.mjs";
+import { assessWatchlistHealth } from "../../lib/review/watchlist-health.mjs";
+import { runAutoDiscoverForReview } from "../../lib/review/auto-discover.mjs";
 
 function buildReviewReportPath(rootDir, binding, review, outputSlug) {
   const reportFilename = outputSlug
@@ -70,6 +72,33 @@ export async function runReviewWatchlist(rootDir, config, options) {
   const { project, binding } = await loadProjectBinding(rootDir, config, projectKey);
   const alignmentRules = await loadProjectAlignmentRules(rootDir, project, binding);
   const projectProfile = await loadProjectProfile(rootDir, project, binding, alignmentRules);
+
+  // Phase 4 Layer 2: --auto-discover trigger.  Wenn der Nutzer den Flag
+  // gesetzt hat UND die Watchlist unter dem Schwellwert liegt, ruft der
+  // Helper runDiscover mit focused/quick/intake/appendWatchlist auf.
+  // Bei selectedUrls > 0 wird der Trigger unterdrueckt, weil der Nutzer
+  // den Korridor explizit gewaehlt hat. Fail-Fall: Health-Layer-1 bleibt
+  // wirksam, der Review laeuft weiter mit dem unveraenderten Stand.
+  let autoDiscoverResult = null;
+  if (options.autoDiscover && (!options.urls || options.urls.length === 0)) {
+    const initialWatchlistUrls = await loadWatchlistUrls(rootDir, project);
+    const initialQueueRows = (await loadQueueEntries(rootDir, config))
+      .filter((row) => row.project_key === binding.projectKey);
+    const initialHealth = assessWatchlistHealth({
+      watchlistCount: initialWatchlistUrls.length,
+      queueCount: initialQueueRows.length,
+    });
+    autoDiscoverResult = await runAutoDiscoverForReview({
+      rootDir,
+      config,
+      projectKey: binding.projectKey,
+      health: initialHealth,
+      options,
+      runDiscoverFn: options.runDiscoverFn ?? runDiscover,
+      logger: console,
+    });
+  }
+
   const review = await buildWatchlistReview(
     rootDir,
     config,
@@ -79,6 +108,10 @@ export async function runReviewWatchlist(rootDir, config, options) {
     projectProfile,
     options
   );
+
+  if (autoDiscoverResult) {
+    review.autoDiscoverResult = autoDiscoverResult;
+  }
 
   let problemForFilter = null;
   if (options.problem) {
