@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-04-25T22:17:27.418Z",
+  "updated_at": "2026-04-25T22:51:07.124Z",
   "sections": {
     "problem-explore": {
       "kubernetes-operator-for-batch-ml-training-jobs": {
         "label": "kubernetes-operator-for-batch-ml-training-jobs",
-        "href": "\\\\wsl.localhost\\Ubuntu-24.04\\home\\domi\\eventbaer\\dev\\patternpilot\\projects\\cross-domain-test\\problems\\kubernetes-operator-for-batch-ml-training-jobs\\landscape\\2026-04-25T21-55-10-038Z\\landscape.html",
-        "updated_at": "2026-04-25T21:55:10.113Z"
+        "href": "\\\\wsl.localhost\\Ubuntu-24.04\\home\\domi\\eventbaer\\dev\\patternpilot\\projects\\cross-domain-test\\problems\\kubernetes-operator-for-batch-ml-training-jobs\\landscape\\2026-04-25T22-51-06-705Z\\landscape.html",
+        "updated_at": "2026-04-25T22:51:07.124Z"
       },
       "rust-embedded-firmware-ota-updates-with-rollback": {
         "label": "rust-embedded-firmware-ota-updates-with-rollback",

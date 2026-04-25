@@ -129,10 +129,13 @@ test("buildLandscape splits via stripUniversalKeywords when common topic tokens 
   }
 });
 
-test("buildLandscape skips stripUniversalKeywords when stripUniversalRatio=0", () => {
-  // Gleicher Input wie oben — aber Preprocessing explizit ausgeschaltet.
-  // Jetzt kollabieren alle 6 Repos in einen Cluster, dessen Label die
-  // Topic-Tokens enthaelt (weil sie nicht mehr herausgefiltert werden).
+test("buildLandscape with stripUniversalRatio=0 still produces discriminative labels via TF-IDF (Phase 7.3)", () => {
+  // Gleicher Input wie oben — aber stripUniversalKeywords-Preprocessing
+  // explizit ausgeschaltet. Vor Phase 7.3 wuerden die universalen Topic-
+  // Tokens (python, dedup) ungebremst ins Label wandern. Mit Phase 7.3
+  // erkennt der Label-Builder ueber globale IDF, dass python+dedup in
+  // BEIDEN Sub-Clustern auftauchen → IDF=0 → demoted. Cluster-spezifische
+  // Tokens (blocking/lsh/hash bzw. probabilistic/bayesian/em) gewinnen.
   const repos = [
     { id: "a1", keywords: new Set(["python", "dedup", "blocking", "lsh", "hash"]) },
     { id: "a2", keywords: new Set(["python", "dedup", "blocking", "lsh", "hash"]) },
@@ -146,9 +149,21 @@ test("buildLandscape skips stripUniversalKeywords when stripUniversalRatio=0", (
     problem: { approach_signature: [], suspected_approach_axes: [] },
     stripUniversalRatio: 0
   });
-  const label = ls.clusters[0]?.label ?? "";
-  assert.ok(label.includes("python") || label.includes("dedup"),
-    `with preprocessing disabled, label should retain universal tokens, got "${label}"`);
+  // Mit zwei Sub-Clustern erwarten wir disjunkte Labels — keiner der
+  // beiden enthaelt die geteilten universal-Tokens.
+  for (const cluster of ls.clusters) {
+    const label = cluster.label ?? "";
+    assert.ok(!label.includes("python"),
+      `Phase 7.3: shared 'python' token should be IDF-demoted out of label, got "${label}"`);
+    assert.ok(!label.includes("dedup"),
+      `Phase 7.3: shared 'dedup' token should be IDF-demoted out of label, got "${label}"`);
+  }
+  // Insgesamt sollten cluster-spezifische Tokens in Labels auftauchen.
+  const allLabels = ls.clusters.map((c) => c.label ?? "").join(" ");
+  assert.ok(
+    allLabels.includes("blocking") || allLabels.includes("probabilistic"),
+    `expected discriminative tokens in labels, got: ${allLabels}`,
+  );
 });
 
 test("buildLandscape leaves a genuinely homogeneous single cluster intact", () => {

