@@ -1,7 +1,7 @@
 # Discovery Seed Memory
 
 - project: eventbear-worker
-- generated_at: 2026-04-22T15:52:25.060Z
+- generated_at: 2026-04-25T19:47:01.737Z
 
 ## Priority Repos
 

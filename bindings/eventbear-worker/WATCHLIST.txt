@@ -1,1 +1,4 @@
 # GitHub repo URLs fuer spaetere Watchlist-Intakes
+https://github.com/citybureau/city-scrapers
+https://github.com/city-bureau/city-scrapers-events
+https://github.com/j-e-d/agenda-lumiton

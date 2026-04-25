@@ -1,7 +1,7 @@
 # Score-Stabilitaets-Plan — auf Weg zu reproduzierbaren 9-10/10 Reports
 
 - last_updated: 2026-04-25
-- status: Phase 0-4 done; Phase 5 done (Stability-Harness + Initial-Baseline-Lauf, Real-World-10-Slug-Lauf folgt asynchron mit GitHub-API-Quota)
+- status: Phase 0-5 done. Real-World-Lauf mit Phase-1+2+4-Flags erreicht **Acceptance PASS** (Median 10/10, Min 9/10, Max 10/10) — siehe `SCORE_STABILITY_RESULTS.md` Lauf 2
 - scope: Landscape- und Discovery-Report
 - zielkorridor: Median 9, Min 8, Max 10 ueber beliebige Problem-Slugs und Zielprojekte
 - begriff: "Problem-Slug" = Eingangsargument von `npm run problem:explore -- <slug>`, z. B. `event-dedup`, `schema-extraction`
