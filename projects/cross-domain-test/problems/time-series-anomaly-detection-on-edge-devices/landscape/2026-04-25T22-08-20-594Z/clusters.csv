@@ -1,0 +1,5 @@
+label,pattern_family,main_layer,relation,member_count,signature_contrast
+embedded-ml+embedded+inference,embedded ml,problem_lens,divergent,7,query:embedded-ml|inference|quantization
+isolation-forest-embedded+detection+embedded,isolation forest embedded,problem_lens,adjacent,3,query:isolation-forest-embedded|detection|intrusion
+schema_parser+---+2026,schema_parser,unknown,divergent,2,---|2026|agriculture
+--------------------+machine-learning+rust,unknown,unknown,adjacent,5,query:esn-reservoir-computing|machine-learning|--------------------

@@ -1,0 +1,111 @@
+{
+  "slug": "kubernetes-operator-for-batch-ml-training-jobs",
+  "title": "Kubernetes operator for batch ML training jobs",
+  "status": "active",
+  "project": "cross-domain-test",
+  "created_at": "2026-04-25",
+  "updated_at": "2026-04-25",
+  "latest_landscape": "landscape/2026-04-25T21-55-10-038Z",
+  "last_explore_result": "ok",
+  "fields": {
+    "description": "We need a Kubernetes operator that schedules and manages batch ML training jobs across heterogeneous GPU node pools. Operator must implement custom resource definitions for jobs, automatic node-affinity selection based on GPU type, pod-disruption budgets, checkpoint persistence to S3, and cost-aware scheduling that prefers spot instances. We are looking for prior-art operator patterns, controller frameworks, GPU-scheduler implementations, and KubeBuilder-based ML platforms.",
+    "current_approach": "- Manual ad-hoc Job objects with init-containers\n- Spot-instance handling via raw nodeSelector annotations\n- Checkpoint logic implemented in user training scripts",
+    "success_criteria": [
+      "Custom Resource Definition for a TrainingJob type",
+      "Node-affinity selection by GPU memory + architecture",
+      "Checkpoint persistence with restart-from-checkpoint",
+      "Cost-aware spot-instance preference with graceful preemption handling",
+      "Operator follows KubeBuilder/Operator-SDK conventions"
+    ],
+    "constraints": [
+      "Go-based operator, KubeBuilder framework",
+      "Open-source license (Apache-2.0 preferred)",
+      "Must work with multi-cloud (AWS, GCP, Azure)"
+    ],
+    "non_goals": [
+      "Replacing Kubeflow's full pipeline architecture",
+      "Building a model-registry on top",
+      "Inference-serving (separate concern)"
+    ],
+    "suspected_approach_axes": [
+      "scheduler_strategy: gang-scheduling ↔ priority-class ↔ topology-aware",
+      "checkpoint_layer: pvc-based ↔ object-store ↔ in-memory",
+      "cost_model: spot-only ↔ mixed-pool ↔ preemption-tolerant"
+    ],
+    "hints": {
+      "search_terms": [
+        "kubernetes operator",
+        "kubebuilder",
+        "batch job scheduling",
+        "gpu scheduler",
+        "ml training operator",
+        "custom resource definition",
+        "controller runtime",
+        "spot instance handling",
+        "pod disruption budget"
+      ],
+      "tech_tags": [
+        "kubernetes",
+        "k8s",
+        "golang",
+        "kubebuilder",
+        "operator-sdk",
+        "controller-runtime",
+        "helm",
+        "gpu",
+        "cuda"
+      ],
+      "constraint_tags": [
+        "opensource",
+        "apache-or-mit",
+        "multi-cloud"
+      ],
+      "approach_keywords": [
+        "custom-resource-definition",
+        "controller-pattern",
+        "node-affinity",
+        "gpu-scheduling",
+        "spot-preemption",
+        "checkpoint-persistence"
+      ]
+    }
+  },
+  "derived": {
+    "query_seeds": [
+      "kubernetes operator",
+      "kubebuilder",
+      "batch job scheduling",
+      "gpu scheduler",
+      "ml training operator",
+      "custom resource definition",
+      "controller runtime",
+      "spot instance handling",
+      "pod disruption budget"
+    ],
+    "tech_tags": [
+      "kubernetes",
+      "k8s",
+      "golang",
+      "kubebuilder",
+      "operator-sdk",
+      "controller-runtime",
+      "helm",
+      "gpu",
+      "cuda",
+      "go"
+    ],
+    "constraint_tags": [
+      "opensource",
+      "apache-or-mit",
+      "multi-cloud"
+    ],
+    "approach_signature": [
+      "custom-resource-definition",
+      "controller-pattern",
+      "node-affinity",
+      "gpu-scheduling",
+      "spot-preemption",
+      "checkpoint-persistence"
+    ]
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "updated_at": "2026-04-25T22:17:27.418Z",
+  "sections": {
+    "problem-explore": {
+      "kubernetes-operator-for-batch-ml-training-jobs": {
+        "label": "kubernetes-operator-for-batch-ml-training-jobs",
+        "href": "\\\\wsl.localhost\\Ubuntu-24.04\\home\\domi\\eventbaer\\dev\\patternpilot\\projects\\cross-domain-test\\problems\\kubernetes-operator-for-batch-ml-training-jobs\\landscape\\2026-04-25T21-55-10-038Z\\landscape.html",
+        "updated_at": "2026-04-25T21:55:10.113Z"
+      },
+      "rust-embedded-firmware-ota-updates-with-rollback": {
+        "label": "rust-embedded-firmware-ota-updates-with-rollback",
+        "href": "\\\\wsl.localhost\\Ubuntu-24.04\\home\\domi\\eventbaer\\dev\\patternpilot\\projects\\cross-domain-test\\problems\\rust-embedded-firmware-ota-updates-with-rollback\\landscape\\2026-04-25T21-58-37-827Z\\landscape.html",
+        "updated_at": "2026-04-25T21:58:37.892Z"
+      },
+      "crdt-based-collaborative-text-editing-for-mobile": {
+        "label": "crdt-based-collaborative-text-editing-for-mobile",
+        "href": "\\\\wsl.localhost\\Ubuntu-24.04\\home\\domi\\eventbaer\\dev\\patternpilot\\projects\\cross-domain-test\\problems\\crdt-based-collaborative-text-editing-for-mobile\\landscape\\2026-04-25T22-02-46-507Z\\landscape.html",
+        "updated_at": "2026-04-25T22:02:49.674Z"
+      },
+      "time-series-anomaly-detection-on-edge-devices": {
+        "label": "time-series-anomaly-detection-on-edge-devices",
+        "href": "\\\\wsl.localhost\\Ubuntu-24.04\\home\\domi\\eventbaer\\dev\\patternpilot\\projects\\cross-domain-test\\problems\\time-series-anomaly-detection-on-edge-devices\\landscape\\2026-04-25T22-08-20-594Z\\landscape.html",
+        "updated_at": "2026-04-25T22:08:20.664Z"
+      },
+      "privacy-preserving-federated-learning-aggregator": {
+        "label": "privacy-preserving-federated-learning-aggregator",
+        "href": "\\\\wsl.localhost\\Ubuntu-24.04\\home\\domi\\eventbaer\\dev\\patternpilot\\projects\\cross-domain-test\\problems\\privacy-preserving-federated-learning-aggregator\\landscape\\2026-04-25T22-17-27-314Z\\landscape.html",
+        "updated_at": "2026-04-25T22:17:27.418Z"
+      }
+    },
+    "docs": {
+      "ui-styleguide": {
+        "label": "UI-Styleguide (Cockpit Night Design System)",
+        "href": "\\\\wsl.localhost\\Ubuntu-24.04\\home\\domi\\eventbaer\\dev\\patternpilot\\docs\\reference\\REPORT_UI_TOKENS.html",
+        "updated_at": "2026-04-25T21:55:10.113Z"
+      },
+      "discovery-demo": {
+        "label": "Discovery-Demo (alle Sections voll befuellt)",
+        "href": "\\\\wsl.localhost\\Ubuntu-24.04\\home\\domi\\eventbaer\\dev\\patternpilot\\runs\\_ui-test\\full-sections-smoke.html",
+        "updated_at": "2026-04-25T21:55:10.113Z"
+      },
+      "landscape-demo": {
+        "label": "Landscape-Demo (alle Sections voll befuellt)",
+        "href": "\\\\wsl.localhost\\Ubuntu-24.04\\home\\domi\\eventbaer\\dev\\patternpilot\\runs\\_ui-test\\landscape-demo-smoke.html",
+        "updated_at": "2026-04-25T21:55:10.113Z"
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "projectKey": "cross-domain-test",
+  "blockedOwners": [],
+  "blockedRepoPatterns": [],
+  "blockedTopics": [],
+  "blockedPatternFamilies": [],
+  "blockedMainLayers": [],
+  "blockedGapAreas": [],
+  "blockedLicenseCategories": [],
+  "blockedLicenses": [],
+  "blockedHomepageHosts": [],
+  "blockedSignalPatterns": [],
+  "blockedRiskFlags": [],
+  "minStars": 0,
+  "minProjectFitScore": 0,
+  "allowDispositions": [
+    "intake_now",
+    "review_queue"
+  ],
+  "allowGapAreas": [],
+  "allowCapabilitiesAny": [],
+  "preferredPatternFamilies": [],
+  "preferredMainLayers": [],
+  "preferredSignalPatterns": [],
+  "preferredTopics": [],
+  "preferredGapAreas": [],
+  "preferredCapabilities": [],
+  "requirePositiveCohortForDispositions": [],
+  "positiveSignalCohorts": []
+}

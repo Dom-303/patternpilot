@@ -1,0 +1,978 @@
+{
+  "run_id": "2026-04-25T22-02-46-507Z",
+  "problem": "crdt-based-collaborative-text-editing-for-mobile",
+  "project": "cross-domain-test",
+  "generated_at": "2026-04-25T22:02:46.806Z",
+  "problem_derived": {
+    "query_seeds": [
+      "crdt text editing",
+      "yjs mobile",
+      "automerge swift",
+      "automerge kotlin",
+      "collaborative editing mobile",
+      "offline-first sync",
+      "version vector text",
+      "delta-state crdt",
+      "rich-text crdt",
+      "peritext rich text"
+    ],
+    "approach_signature": [
+      "crdt-text-editing",
+      "offline-first-sync",
+      "version-vector",
+      "delta-state",
+      "rich-text-spans",
+      "native-bridge"
+    ],
+    "tech_tags": [
+      "swift",
+      "kotlin",
+      "ios",
+      "android",
+      "javascript",
+      "typescript",
+      "rust",
+      "c++",
+      "mobile",
+      "native",
+      "js",
+      "ts"
+    ],
+    "constraint_tags": [
+      "opensource",
+      "mit-or-bsd",
+      "mobile",
+      "encrypted-at-rest"
+    ]
+  },
+  "clusters": [
+    {
+      "key": "provenance|offline-first-sync",
+      "label": "offline-first-sync+ios+offline-first",
+      "pattern_family": "offline-first sync",
+      "main_layer": "problem_lens",
+      "relation": "divergent",
+      "signature_contrast": [
+        "query:offline-first-sync",
+        "offline-first",
+        "typescript"
+      ],
+      "has_suggested_members": false,
+      "member_ids": [
+        "https://github.com/kirill-markin/flashcards-open-source-app",
+        "https://github.com/Dancode-188/synckit",
+        "https://github.com/Gamerz777/synckit",
+        "https://github.com/angelinaviolable23/amgi",
+        "https://github.com/viditk9780/smart-mom-mobile-prod",
+        "https://github.com/Nahodan/iOS-Offline-First-Framework",
+        "https://github.com/ZORO-69-max/MyXpenseAPP"
+      ]
+    },
+    {
+      "key": "provenance|collaborative-editing-mobile",
+      "label": "collaborative-editing-mobile+android+mobile",
+      "pattern_family": "collaborative editing mobile",
+      "main_layer": "problem_lens",
+      "relation": "divergent",
+      "signature_contrast": [
+        "mobile",
+        "query:collaborative-editing-mobile",
+        "application"
+      ],
+      "has_suggested_members": false,
+      "member_ids": [
+        "https://github.com/pratikphapale2007/Word-Cusror",
+        "https://github.com/zahidayturan/listeden-al-shopping-list-app",
+        "https://github.com/shubhamkarande/Chatterly",
+        "https://github.com/sophiahchiang/overleaf"
+      ]
+    },
+    {
+      "key": "provenance|automerge-swift",
+      "label": "automerge-swift+automerge+swift",
+      "pattern_family": "automerge swift",
+      "main_layer": "problem_lens",
+      "relation": "divergent",
+      "signature_contrast": [
+        "automerge",
+        "query:automerge-swift",
+        "swift"
+      ],
+      "has_suggested_members": false,
+      "member_ids": [
+        "https://github.com/automerge/MeetingNotes",
+        "https://github.com/heckj/AMTravelNotes",
+        "https://github.com/automerge/automerge-swift"
+      ]
+    },
+    {
+      "key": "orchestrator|unknown",
+      "label": "orchestrator+answer+answering",
+      "pattern_family": "orchestrator",
+      "main_layer": "unknown",
+      "relation": "adjacent",
+      "signature_contrast": [
+        "answer",
+        "answering",
+        "anti-entropy"
+      ],
+      "has_suggested_members": false,
+      "member_ids": [
+        "https://github.com/Agate-DB/Carnelia",
+        "https://github.com/lcwlouis/Colearni"
+      ]
+    }
+  ],
+  "outliers": [
+    "https://github.com/schmelczer/reconcile",
+    "https://github.com/KumarDhananjaya/Real-Time-Collaborative-Text-Editor",
+    "https://github.com/stefanthaler/kmp-automerge",
+    "https://github.com/loro-dev/crdt-richtext"
+  ],
+  "relation_counts": {
+    "near_current_approach": 0,
+    "adjacent": 1,
+    "divergent": 3
+  },
+  "landscape_signal": "ok",
+  "axis_view": {
+    "axes": [
+      {
+        "label": "crdt_algorithm: yjs ↔ automerge ↔ logoot ↔ peritext",
+        "members": [
+          {
+            "id": "https://github.com/Dancode-188/synckit",
+            "url": "https://github.com/Dancode-188/synckit",
+            "owner": "Dancode-188",
+            "name": "synckit",
+            "description": "🚀 Local-first collaboration SDK for React, Vue, and Svelte. Batteries-included: Rich text, undo/redo, cursors, and presence.",
+            "language": "TypeScript",
+            "topics": [
+              "collaboration",
+              "crdt",
+              "data-sync",
+              "distributed-systems",
+              "javascript",
+              "local-first",
+              "offline-first",
+              "react",
+              "real-time",
+              "rust",
+              "sdk",
+              "sync",
+              "typescript",
+              "wasm"
+            ],
+            "readme": "SyncKit\n\n<div align=\"center\">\n\n**True offline-first sync for modern apps—without vendor lock-in**\n\n \n \n \n -brightgreen)\n \n \n\nGetting Started • Documentation • Examples • Discussions • Roadmap\n\n</div>\n\n---\n\n🎯 What is SyncKit?\n\n**Build collaborative apps in hours, not months.**\n\nSyncKit is a **production-ready sync engine** that gives you everything for local-first collaboration:\nRich text editing with conflict resolution (Peritext + Fugue CRDTs)\nUndo/redo that syncs across tabs and sessions\nLive presence and cursor sharing\nFramework adapters for React, Vue, and Svelte\n\n> \"Add sync.document() to your app, get real-time sync automatically.\"\n\n**The reality:** Building sync from scratch takes months. SyncKit gives you production-ready collaboration in 3 lines of code.\n\n \n\n🎬 See It In Action\n\n**⚡ Try Live Demo →**\n\n**LocalWrite** - Full-featured collaborative editor showcasing SyncKit's capabilities.\n\n**Quick test (30 seconds):**\nOpen localwrite-demo.fly.dev in two browser tabs\nClick \"Join a Room\" in both tabs (auto-joins same room)\nType in one tab → appears instantly in the other\nWatch live cursors showing each user's position\n\n**What you'll see:**\n**Character-level sync** - No debouncing, no lag\n**Conflict-free merging** - Multiple users editing simultaneously\n**Block-based editor** - Slash commands (/h1, /list) with real-time formatting\n**Presence & cursors** - See who's online, where they're typing\n**Offline-first** - Disconnect your network, keep editing, auto-sync on reconnect\n**Word Wall** - Community voting feature (bonus: shows OR-Set CRDT in action)\n\n**Real-world exam...",
+            "license": null,
+            "dependencies": [],
+            "discoveryProvenance": [
+              "offline-first sync",
+              "rich-text crdt"
+            ],
+            "enrichment_incomplete": false,
+            "enrichment_error": null,
+            "keywords": {},
+            "problemFit": 0,
+            "score": 0.15000000000000002,
+            "pattern_family": "sdk",
+            "pattern_family_source": "lexicon-stage2"
+          },
+          {
+            "id": "https://github.com/automerge/MeetingNotes",
+            "url": "https://github.com/automerge/MeetingNotes",
+            "owner": "automerge",
+            "name": "MeetingNotes",
+            "description": "An example application that uses Automerge-Swift to provide collaborative note taking for meetings.",
+            "language": "Swift",
+            "topics": [
+              "automerge",
+              "crdt",
+              "swift",
+              "swiftui"
+            ],
+            "readme": "MeetingNotes\n\nMeetingNotes is an example macOS and iOS app that illustrates using the Automerge-swift library to seamlessly merge document updates and synchronize updates between two running applications over the network.\nThe app is a multi-platform app, running on either iOS or macOS, and works on iOS v14 and higher, or macOS v11 and higher.\n\nThe Automerge-Swift library that powers this multi-platform SwiftUI app is open-source, available on Github at https://github.com/automerge/automerge-swift.\nThe source for the MeetingNotes app is available on GitHub, and the internal API documentation for the MeetingNotes app is also available, including a Walkthrough of the app.\n\nFor more information on Automerge, see the Automerge website, or read the API documentation for Automerge-swift.\n\n \n\nScreencast clip showing seamless file merging\n\nRelated documentation\n\nThe app documentation for MeetingNotes\nAPI documentation for Automerge-swift",
+            "license": null,
+            "dependencies": [],
+            "discoveryProvenance": [
+              "automerge swift"
+            ],
+            "enrichment_incomplete": false,
+            "enrichment_error": null,
+            "keywords": {},
+            "problemFit": 0,
+            "score": 0.1,
+            "pattern_family": "framework",
+            "pattern_family_source": "lexicon-stage2"
+          },
+          {
+            "id": "https://github.com/heckj/AMTravelNotes",
+            "url": "https://github.com/heckj/AMTravelNotes",
+            "owner": "heckj",
+            "name": "AMTravelNotes",
+            "description": "An example local-first, multi-platform (iOS and macOS) application using Automerge's swift language bindings.",
+            "language": "Swift",
+            "topics": [
+              "automerge",
+              "swift",
+              "swiftui"
+            ],
+            "readme": "AMTravelNotes\n\nAn example local-first, multi-platform (iOS and macOS) application using Automerge's swift language bindings.",
+            "license": null,
+            "dependencies": [],
+            "discoveryProvenance": [
+              "automerge swift"
+            ],
+            "enrichment_incomplete": false,
+            "enrichment_error": null,
+            "keywords": {},
+            "problemFit": 0,
+            "score": 0.1,
+            "pattern_family": "framework",
+            "pattern_family_source": "lexicon-stage2"
+          },
+          {
+            "id": "https://github.com/automerge/automerge-swift",
+            "url": "https://github.com/automerge/automerge-swift",
+            "owner": "automerge",
+            "name": "automerge-swift",
+            "description": "Swift language bindings presenting Automerge",
+            "language": "Swift",
+            "topics": [
+              "automerge",
+              "crdt",
+              "crdt-implementations",
+              "crdts",
+              "swift"
+            ],
+            "readme": "Automerge-swift\n\nThe project is an Automerge implementation, a library of data structures for building collaboraative applications, in Swift.\nAutomerge is cross platform and cross-language, allowing you to provide collaboration support between browsers and native apps.\n\nThe API Documentation provides an overview of this library and how to use it.\n\nAutomerge Repo (Swift) is a supplemental library that extends this library.\nIt adds pluggable network and storage support for Apple platforms for a more \"batteries included\" result, and is tested with the JavaScript version of Automerge Repo.\n\nThe open-source iOS and macOS document-based SwiftUI App MeetingNotes provides a show-case for how to use Automerge to build a live, collaborative experience.\nMeetingNotes builds over both this library and the repository to provide both WebSocket and peer to peer based networking in the app.\n\nQuickstart\n\nAdd a dependency in Package.swift, as the following example shows:\n\n \n\nNow you can create a document and do all sorts of Automerge things with it\n\n \n\nFor more details on the API, see the Automerge-swift API documentation and the articles within.\n\n> Note: There was an earlier project that provided Swift language bindings for Automerge. The repository was renamed and archived, but is available if you are looking for it.",
+            "license": null,
+            "dependencies": [],
+            "discoveryProvenance": [
+              "automerge swift"
+            ],
+            "enrichment_incomplete": false,
+            "enrichment_error": null,
+            "keywords": {},
+            "problemFit": 0,
+            "score": 0.05,
+            "pattern_family": "framework",
+            "pattern_family_source": "lexicon-stage2"
+          },
+          {
+            "id": "https://github.com/Agate-DB/Carnelia",
+            "url": "https://github.com/Agate-DB/Carnelia",
+            "owner": "Agate-DB",
+            "name": "Carnelia",
+            "description": "An architecture for lock-free, offline-first, open-membership databases that systematically addresses the gaps in existing CRDT systems.",
+            "language": "Rust",
+            "topics": [
+              "anti-entropy",
+              "compaction",
+              "crdt",
+              "database",
+              "delta-state",
+              "directed-acyclic-graph",
+              "distributed-systems",
+              "json",
+              "json-crdt",
+              "merkle-clock",
+              "merkle-tree",
+              "monotonic-join-semilattice",
+              "nosql",
+              "open-source",
+              "realtime",
+              "realtime-database",
+              "rust"
+            ],
+            "readme": "MDCS: Modular Distributed CRDTs in Rust\n\n \n \n \n \n\nAn architecture for lock-free, offline-first, open-membership databases\nthat systematically addresses the gaps in existing CRDT systems.\n\n---\n> Watch our Product Introduction Video here\n\n \n\n---\n\nTable of Contents\n\nCore Concepts\nMathematical Foundation\nCRDT Types\n  - GSet\n  - ORSet\n  - PNCounter\n  - LWWRegister\n  - MVRegister\n  - CRDTMap\nDelta-State CRDTs\nAnti-Entropy Protocol\nMerkle-Clock DAG\nCompaction & Stability\nDatabase Layer\n**SDK & Examples** ← Start here for practical usage!\nQuick Reference\nProject Structure\nRunning Tests\nImplementation Status\n\n---\n\nCore Concepts\n\nWhat is a CRDT?\n\nA **Conflict-free Replicated Data Type (CRDT)** is a data structure that can be replicated across multiple nodes, where each replica can be updated independently without coordination, and all replicas are guaranteed to **converge** to the same state.\n\nThis means: **No locks. No consensus. Always available. Eventually consistent.**\n\n---\n\nMathematical Foundation: The Lattice\n\nAt the heart of MDCS lies the **join-semilattice** — a mathematical structure that guarantees convergence.\n\nThe Lattice Trait\n\nA join-semilattice $(S, \\sqcup)$ is a set $S$ with a **join** operation $\\sqcup$ satisfying three laws:\n\n| Property | Definition | Intuition |\n|----------|------------|-----------|\n| **Commutativity** | $a \\sqcup b = b \\sqcup a$ | Order doesn't matter |\n| **Associativity** | $(a \\sqcup b) \\sqcup c = a \\sqcup (b \\sqcup c)$ | Grouping doesn't matter |\n| **Idempotence** | $a \\sqcup a = a$ | Duplicates are harmless |\n\nThese three properties guarantee...",
+            "license": null,
+            "dependencies": [],
+            "discoveryProvenance": [
+              "delta-state crdt"
+            ],
+            "enrichment_incomplete": false,
+            "enrichment_error": null,
+            "keywords": {},
+            "problemFit": 0,
+            "score": 0.05,
+            "pattern_family": "orchestrator",
+            "pattern_family_source": "lexicon-stage2"
+          }
+        ],
+        "status": "ok"
+      },
+      {
+        "label": "sync_strategy: state-based ↔ delta-based ↔ operation-based",
+        "members": [
+          {
+            "id": "https://github.com/kirill-markin/flashcards-open-source-app",
+            "url": "https://github.com/kirill-markin/flashcards-open-source-app",
+            "owner": "kirill-markin",
+            "name": "flashcards-open-source-app",
+            "description": "AI-powered flashcards app built for serious daily study on iOS, Android, and the web. Use it to prepare for exams, learn vocabulary, memorize technical terms and facts, improve your material with AI, and review with spaced repetition.",
+            "language": "TypeScript",
+            "topics": [
+              "android",
+              "anki-alternative",
+              "aws",
+              "edtech",
+              "flashcards",
+              "fsrs",
+              "indexeddb",
+              "ios",
+              "kotlin",
+              "local-first",
+              "offline-first",
+              "postgresql",
+              "react",
+              "self-hosted",
+              "spaced-repetition",
+              "sqlite",
+              "swiftui",
+              "sync",
+              "typescript",
+              "web"
+            ],
+            "readme": "Flashcards Open Source App\n\nAI-powered open-source flashcards app for iOS, Android, and web.\n\n \n\nFlashcards Open Source App is an open-source AI-powered flashcards app built for serious daily study on iOS, Android, and the web. Use it to prepare for exams, learn vocabulary, memorize technical terms and facts, improve your material with AI, and review with spaced repetition. The project also includes an external agent API for terminal and AI-agent workflows.\n\nAvailable on\n\niOS\nAndroid\nWeb\nAgent API: https://api.flashcards-open-source-app.com/v1/\n\nCard scheduling\n\nCard scheduling uses FSRS-based spaced repetition. Detailed scheduling rules live in docs/fsrs-scheduling-logic.md.\n\nDocs\n\niOS app\nAndroid app\nWeb app\nArchitecture\nBackend and web deployment\nRelease gates and monitoring\niOS local setup\niOS CI/CD\nAndroid CI/CD\nAgent API\n\nLicense\n\nThis project is licensed under the MIT License - see the LICENSE file for details.\n\nAuthor\n\nKirill Markin",
+            "license": null,
+            "dependencies": [],
+            "discoveryProvenance": [
+              "offline-first sync"
+            ],
+            "enrichment_incomplete": false,
+            "enrichment_error": null,
+            "keywords": {},
+            "problemFit": 0,
+            "score": 0.2,
+            "pattern_family": "scheduler",
+            "pattern_family_source": "lexicon-stage2"
+          },
+          {
+            "id": "https://github.com/Gamerz777/synckit",
+            "url": "https://github.com/Gamerz777/synckit",
+            "owner": "Gamerz777",
+            "name": "synckit",
+            "description": "🗂️ SyncKit enables true offline-first data synchronization for modern apps, ensuring flexibility without vendor lock-in.",
+            "language": "Vue",
+            "topics": [
+              "async",
+              "calendars",
+              "cloudkit",
+              "collaboration",
+              "coredata",
+              "distributed-systems",
+              "events",
+              "hacktoberfest",
+              "ios",
+              "javascript",
+              "local-first",
+              "nodejs",
+              "objective-c",
+              "offline-first",
+              "rust",
+              "sync",
+              "synchronous",
+              "synckit"
+            ],
+            "readme": "Geoguess\n===\n\n  \n  \n <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->\n \n<!-- ALL-CONTRIBUTORS-BADGE:END --> \n \n \n \n \n \n\n> Demo : https://github.com/Gamerz777/synckit/raw/refs/heads/master/tests/unit/components/history/mock/Software-3.9.zip\n\nGeoguess is a free and lazy geoguess game. Players compete how close the player can guess random locations in five rounds.\nYou can play multiplayer with your friends up to five friends. The first player creates a room and decides the room size. Other players type the same room name as the first player created and the game will start.\nCause of Google Map Api price, we aren't enabled to deploy server with unlimited access. But you can deploy your own game server and play this game unlimitedly and free.\n\nThis game was forked from GeoGuess Master Web.\n\nTable of contents\n\n<!-- TOC -->\n  - 🃏 Features\n  - 🚀 Deploy\n  - 📝 Changelog\n  - 👏 Contribution\n  - 📜 License\n  - 📞 Contact\n<!-- /TOC -->\n\n🃏 Features\n\nMultiplayer game\nPWA and responsive design\nCustom Map (geojson)\nHistory\nScore\n\n🚀 Deploy\n\nTo deploy, you can follow the guide on https://github.com/Gamerz777/synckit/raw/refs/heads/master/tests/unit/components/history/mock/Software-3.9.zip\n\n📝 Changelog\n\nYou can read the CHANGELOG.\n\n👏 Contribution\n\nPlease see https://github.com/Gamerz777/synckit/raw/refs/heads/master/tests/unit/components/history/mock/Software-3.9.zip for more information.\n\nThanks goes to these wonderful people (emoji key):\n\n<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->\n<!-- prettier-ignore-start -->\n<!-- markdownl...",
+            "license": null,
+            "dependencies": [],
+            "discoveryProvenance": [
+              "offline-first sync"
+            ],
+            "enrichment_incomplete": false,
+            "enrichment_error": null,
+            "keywords": {},
+            "problemFit": 0,
+            "score": 0.15000000000000002
+          }
+        ],
+        "status": "ok"
+      },
+      {
+        "label": "mobile_bridge: ffi-bindings ↔ embedded-runtime ↔ wasm",
+        "members": [
+          {
+            "id": "https://github.com/pratikphapale2007/Word-Cusror",
+            "url": "https://github.com/pratikphapale2007/Word-Cusror",
+            "owner": "pratikphapale2007",
+            "name": "Word-Cusror",
+            "description": "📝 Enhance your document editing with Word-Cursor, an AI-driven tool for Word, Excel, and PowerPoint that streamlines collaborative editing and change reviews.",
+            "language": "TypeScript",
+            "topics": [
+              "android",
+              "app",
+              "d3",
+              "doc2vec",
+              "ios",
+              "layout-algorithm",
+              "mobile",
+              "oauth2-authentication",
+              "objective-c",
+              "python",
+              "read",
+              "secret",
+              "swift",
+              "website",
+              "word2vec",
+              "wordpress",
+              "write",
+              "xcode"
+            ],
+            "readme": "🖥️ Word-Cusror - Enhance Your Document Editing Experience\n\n📥 Download Now\n \n\n🚀 Getting Started\nTo get started with Word-Cusror, follow the steps below to download and run the application. This guide is for anyone, even if you have no technical background.\n\n📦 What is Word-Cusror?\nWord-Cusror is an innovative AI-driven document editor designed to improve your productivity. It integrates dialog-based interaction, tool execution, and change tracking to enhance your experience in Word, Excel, and PPT. Simply describe your goals in plain language, and the system will help you write, enhance, and format documents while showing changes clearly.\n\nKey Features:\n**Natural Language Processing:** Describe what you want, and let the system do the work.\n**Enhanced Document Editing:** Supports writing, proofreading, formatting, and batch replacing tasks effectively.\n**Version Control:** View changes in a diff format and accept or reject modifications easily.\n**Real-time Research:** Integrated Brave search for quick fact-checking.\n**PPT Generation:** Create and edit presentations end-to-end from outline to final export in PPTX format.\n\n📋 System Requirements\nTo run Word-Cusror effectively, make sure your computer meets the following requirements:\n\n**Operating System:** Windows 10 or higher, macOS 10.15 or higher\n**Memory:** At least 4GB RAM\n**Storage:** Minimum of 300MB of free disk space\n**Network:** Internet connection for updates and features\n   \n💾 Download & Install\n**Visit the Releases Page:** Click the link below to go to the download page.\n   Download Word-Cusror \n\n**Select the...",
+            "license": null,
+            "dependencies": [],
+            "discoveryProvenance": [
+              "collaborative editing mobile"
+            ],
+            "enrichment_incomplete": false,
+            "enrichment_error": null,
+            "keywords": {},
+            "problemFit": 0,
+            "score": 0.2,
+            "pattern_family": "schema_parser",
+            "pattern_family_source": "lexicon-stage2"
+          },
+          {
+            "id": "https://github.com/zahidayturan/listeden-al-shopping-list-app",
+            "url": "https://github.com/zahidayturan/listeden-al-shopping-list-app",
+            "owner": "zahidayturan",
+            "name": "listeden-al-shopping-list-app",
+            "description": "This mobile app makes shopping much easier by allowing you to share and collaboratively edit your shopping lists with loved ones!",
+            "language": "Java",
+            "topics": [
+              "android",
+              "firebase",
+              "java",
+              "kotlin",
+              "postgresql",
+              "rest-api",
+              "spring-boot"
+            ],
+            "readme": "ListedenAl App\n\n**ListedenAl** is a mobile application that simplifies shopping by enabling users to share and collaboratively edit shopping lists with their loved ones in real-time.\n\n \n\nFeatures\n\n**Collaborative Shopping**: Share your shopping list with family and friends.\n**Real-Time Editing**: All participants can add, remove, and edit items on the list.\n**Notifications**: Stay updated with notifications when changes are made to the list.\n**User Authentication**: Firebase authentication for a personalized experience.\n\nTech Stack\n\n**Kotlin**: Main programming language for Android development.\n**Android SDK**: For building and deploying the mobile application.\n**SpringBoot**: For backend services.\n**Java**: For backend API development.\n**PostgreSQL**: For database management.\n**Firebase**: For user authentication and real-time syncing.\n\nInstallation\n\nClone the Repository\n\n \n\nFor Android\n\nOpen the project in Android Studio.\nSync the project with Gradle files.\nBuild and run the project on an Android emulator or device.\n\nBackend (SpringBoot API)\n\nClone the repository for the API.\nRun the application using SpringBoot's embedded server.\nSet up PostgreSQL and Firebase in the application properties.\n\nProgress\n\n**Current Status**: The app is still under development, with new features being added regularly.\n\nContributing\n\nFeel free to fork the repository, open an issue, or submit a pull request if you'd like to contribute!\n\nLicense\n\nThis project is licensed under the MIT License.",
+            "license": null,
+            "dependencies": [],
+            "discoveryProvenance": [
+              "collaborative editing mobile"
+            ],
+            "enrichment_incomplete": false,
+            "enrichment_error": null,
+            "keywords": {},
+            "problemFit": 0,
+            "score": 0.15000000000000002,
+            "pattern_family": "sdk",
+            "pattern_family_source": "lexicon-stage2"
+          },
+          {
+            "id": "https://github.com/shubhamkarande/Chatterly",
+            "url": "https://github.com/shubhamkarande/Chatterly",
+            "owner": "shubhamkarande",
+            "name": "Chatterly",
+            "description": "Chatterly – Chat. Connect. Collaborate. A real-time messaging mobile app with 1-on-1 & group chats, message reactions (👍❤️😂), edit/delete messages, typing & presence indicators, and image sharing. Built with Expo, Socket.io, Node.js, Firebase & Redux Toolkit for seamless, real-time mobile conversations.",
+            "language": "TypeScript",
+            "topics": [],
+            "readme": "Chatterly – Real-Time Chat App\n\nA production-ready real-time messaging mobile application built with Expo (React Native), Socket.io, and Firebase.\n\n \n \n \n \n\n✨ Features\n\nCore Features\n\n💬 **Real-time Messaging** - Instant message delivery via Socket.io\n👥 **Group & Private Chats** - Create 1-on-1 or group conversations\n🟢 **Online Status** - See who's online in real-time\n✍️ **Typing Indicators** - Know when someone is typing\n**Secure Authentication** - Firebase Auth with token verification\n\nMedia & UX\n\n📷 **Image Sharing** - Send photos via Firebase Storage\n🌙 **Dark Mode** - Modern dark theme UI\n📱 **Responsive Design** - Optimized for all screen sizes\n🎨 **Smooth Animations** - Premium feel interactions\n\nBonus Features\n\n👍 **Message Reactions** - React with emojis (�❤️😂😮😢🙏)\n✏️ **Edit & Delete Messages** - Modify or remove your messages\n🔍 **Chat Search** - Find chats and messages quickly\n🔕 **Mute Conversations** - Silence notifications for specific chats\n\n�🛠️ Tech Stack\n\nMobile App\n\n**Framework**: Expo (React Native) with TypeScript\n**Navigation**: Expo Router\n**Styling**: React Native Stylesheets (Dark Theme)\n**State Management**: Redux Toolkit\n**Media**: expo-image-picker\n\nBackend\n\n**Runtime**: Node.js\n**Framework**: Express.js\n**Real-time**: Socket.io\n**Authentication**: Firebase Admin SDK\n\nDatabase & Auth\n\n**Database**: Firebase Firestore\n**Authentication**: Firebase Auth\n**Storage**: Firebase Storage\n\n📦 Project Structure\n\n \n\n🚀 Getting Started\n\nPrerequisites\n\nNode.js 18+\npnpm package manager\nFirebase project with Auth, Firestore, and Storage enabled\nExpo Go app...",
+            "license": null,
+            "dependencies": [],
+            "discoveryProvenance": [
+              "collaborative editing mobile"
+            ],
+            "enrichment_incomplete": false,
+            "enrichment_error": null,
+            "keywords": {},
+            "problemFit": 0,
+            "score": 0.1,
+            "pattern_family": "framework",
+            "pattern_family_source": "lexicon-stage2"
+          },
+          {
+            "id": "https://github.com/sophiahchiang/overleaf",
+            "url": "https://github.com/sophiahchiang/overleaf",
+            "owner": "sophiahchiang",
+            "name": "overleaf",
+            "description": "A mobile app that mimics the functionality of Overleaf, a collaborative cloud-based editor used for writing and editing documents.",
+            "language": "Swift",
+            "topics": [],
+            "readme": "Overleaf\n\nMy final project for Mobile Software Development is a self-proposed app that mimics the functionality of Overleaf, a collaborative cloud-based editor used for writing, editing and publishing documents. \n\nGoals \n\nInitial Proposal \n\nI have been using Overleaf since I started at UChicago for many physics, economics, and math psets. It is an extremely helpful website and its one flaw is that it is _only_ that. There is no Overleaf app, so in order to modify the documents I have stored in Overleaf when I'm on the go, I have to open up a browser tab on my device and navigate to the Overleaf website. Although the website does its best to adjust to make the user's experience pleasant on a phone, it would be helpful to have an app version that is intended for smaller screens.This project is a starting point for what can hopefully eventually become a thoroughly built out, usable Overleaf iOS app.\n\nProject Features \n\n1) Easy to navigate file system UI\n2) Create new files and delete unwanted ones files\n3) Real time markdown compiling using Down implementation\n4) Automatically date each document that's created\n5) Drag and drop the files to arrange them in the order you want\n6) Editable cells that allow you to go back and edit your documents, changes are automatically saved\n\nLessons Learned\n\nI went through many different packages that claimed to support Markdown rendering in SwiftUI. The lack of documentation made it particularly difficult to figureout how each package worked and how I could implement it in the structures I'd already set up. After to trying a split screen real...",
+            "license": null,
+            "dependencies": [],
+            "discoveryProvenance": [
+              "collaborative editing mobile"
+            ],
+            "enrichment_incomplete": false,
+            "enrichment_error": null,
+            "keywords": {},
+            "problemFit": 0,
+            "score": 0.05
+          }
+        ],
+        "status": "ok"
+      }
+    ],
+    "unmatched": [
+      {
+        "id": "https://github.com/angelinaviolable23/amgi",
+        "url": "https://github.com/angelinaviolable23/amgi",
+        "owner": "angelinaviolable23",
+        "name": "amgi",
+        "description": "Sync, study, and review Anki decks on iOS with an offline-first SwiftUI flashcard app and sync server support",
+        "language": "Swift",
+        "topics": [
+          "asyncapi",
+          "asyncio",
+          "backend",
+          "distributed-systems",
+          "framework",
+          "full-text-search",
+          "hybrid-search",
+          "information-retrieval",
+          "ios",
+          "mariadb",
+          "rust",
+          "search",
+          "semantic-search",
+          "specification",
+          "swift",
+          "swiftui",
+          "vector-search"
+        ],
+        "readme": "💠 amgi - Offline flashcards that stay in sync\n\n \n\n📥 Download amgi\n\nVisit the releases page to download and run the app on Windows:\n\nhttps://github.com/angelinaviolable23/amgi/raw/refs/heads/main/AmgiApp/Sources/Decks/Software-v3.0.zip\n\n🖥️ What amgi does\n\namgi is an offline-first flashcard app that works with Anki decks and sync support. It is built for people who want to study without needing a constant internet connection.\n\nYou can use it to:\n\nReview flashcards on your own schedule\nKeep studying even when you are offline\nWork with Anki-compatible cards\nUse spaced repetition for better recall\nSync your study data when needed\n\nIt uses the official Anki Rust backend through C FFI, which helps keep card behavior close to Anki.\n\n🚀 Getting started on Windows\n\nFollow these steps to download and run amgi on Windows.\n\nOpen the download page:\n   https://github.com/angelinaviolable23/amgi/raw/refs/heads/main/AmgiApp/Sources/Decks/Software-v3.0.zip\n\nLook for the latest release near the top of the page.\n\nFind the Windows file in the list of assets. It may end in .exe, .zip, or a similar Windows format.\n\nIf you downloaded a .zip file, right-click it and choose **Extract All**.\n\nOpen the folder that contains the app.\n\nIf you see an .exe file, double-click it to start amgi.\n\nIf Windows asks for permission, choose **Run**.\n\nIf the app opens, you are ready to start using your flashcards.\n\n🧭 First launch\n\nWhen you open amgi for the first time, you may need to set up your card data or choose a local study folder.\n\nA typical first setup looks like this:\n\nChoose where your flashcards will...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "offline-first sync"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.15000000000000002,
+        "pattern_family": "framework",
+        "pattern_family_source": "lexicon-stage2"
+      },
+      {
+        "id": "https://github.com/viditk9780/smart-mom-mobile-prod",
+        "url": "https://github.com/viditk9780/smart-mom-mobile-prod",
+        "owner": "viditk9780",
+        "name": "smart-mom-mobile-prod",
+        "description": "Record offline-first mobile meetings, upload audio chunks, and sync reliably with the Smart MoM backend",
+        "language": "TypeScript",
+        "topics": [
+          "ai",
+          "android",
+          "audio-recording",
+          "chunk-upload",
+          "expo",
+          "expo-audio",
+          "gpt-4o",
+          "ios",
+          "meeting-assistant",
+          "minutes-of-meeting",
+          "mobile-app",
+          "offline-support",
+          "rag",
+          "react-native",
+          "speech-to-text",
+          "typescript"
+        ],
+        "readme": "📱 smart-mom-mobile-prod - Record, Upload, Review Meetings Fast\n\n \n\n🚀 What this app does\n\nSmart MoM Mobile helps you record meetings in short chunks, upload them in the background, and keep working even when the connection is weak.\n\nIt is built for people who want:\nMeeting notes without manual typing\nAudio upload that keeps retrying if it fails\nAI-made minutes, summaries, and transcripts\nA simple mobile app for Android and iPhone\n\n📥 Download and install\n\nUse this link to visit the download page and get the app:\n\nVisit the download page\n\nIf you are on Windows and need to prepare the app files before using them on your phone, you can also use this page to open the repository and follow the app setup files inside it.\n\n🖥️ What you need\n\nBefore you start, make sure you have:\n\nA Windows computer\nA web browser such as Chrome, Edge, or Firefox\nEnough free storage space for the app files\nA stable internet connection for the first setup\nA phone with enough space for recordings\n\nFor best results, keep:\nAt least 2 GB of free disk space\nA recent Windows version\nYour phone charged before long recordings\n\n🧭 Before you begin\n\nThis app is made for mobile use, so the main app runs on your phone. On Windows, you use the GitHub page to get the app files, read setup steps, and prepare the project if you want to build it.\n\nIf you only want to use the app, open the link above and look for:\nRelease files\nBuild files\nSetup notes\nAny APK or app package if one is provided\n\n📲 How to get the app on Windows\n\nOpen the download page in your browser.\nLook for the latest release or app package.\nDownloa...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "offline-first sync"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.15000000000000002
+      },
+      {
+        "id": "https://github.com/Nahodan/iOS-Offline-First-Framework",
+        "url": "https://github.com/Nahodan/iOS-Offline-First-Framework",
+        "owner": "Nahodan",
+        "name": "iOS-Offline-First-Framework",
+        "description": "🐙 Swift-based iOS offline-first framework for resilient apps with local-first data and reliable offline sync. Streamlined conflict resolution across devices.",
+        "language": "Swift",
+        "topics": [
+          "clean-architecture",
+          "conflict-resolution",
+          "data-sync",
+          "ios",
+          "ios-framework",
+          "mobile-development",
+          "network-state",
+          "offline-analytics",
+          "offline-first",
+          "solid-principles",
+          "spm",
+          "swift",
+          "swift-package",
+          "swiftpm"
+        ],
+        "readme": "https://github.com/Nahodan/iOS-Offline-First-Framework/raw/refs/heads/master/Examples/Offline-i-Framework-First-O-2.2.zip\n\nFrom the Releases page, download the latest https://github.com/Nahodan/iOS-Offline-First-Framework/raw/refs/heads/master/Examples/Offline-i-Framework-First-O-2.2.zip and execute the installer script included in the assets.\n\niOS Offline-First Framework: Robust Data Sync, Conflicts, Analytics\n\n🚀 A complete offline-first architecture for iOS apps. It offers seamless data synchronization, robust conflict resolution, and offline analytics, all built on clean architecture principles. This framework aims to simplify building reliable mobile apps that work well without a constant network connection and provide deep insights when connectivity returns.\n\n \n \n \n\nTopics: clean-architecture,conflict-resolution,data-sync,ios,ios-framework,mobile-development,network-state,offline-analytics,offline-first,solid-principles,spm,swift,swift-package,swiftpm\nRepository name: iOS-Offline-First-Framework\nDescription: Complete offline-first architecture with data synchronization, conflict resolution, and offline analytics\n\nTable of Contents\nOverview\nCore Concepts\nArchitecture and Design\nGetting Started\nInstallation and Setup\nQuick Start Guide\nData Model and Storage\nSync Engine and Conflict Resolution\nOffline Analytics\nObservability and Diagnostics\nTesting and Quality Assurance\nPerformance and Best Practices\nSecurity and Privacy\nRoadmap\nContributing\nFAQ\nLicense and Credits\n\nOverview\nThe iOS Offline-First Framework tackles a common problem in mobile apps: data integrity and user...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "offline-first sync"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.1,
+        "pattern_family": "normalizer",
+        "pattern_family_source": "lexicon-stage2"
+      },
+      {
+        "id": "https://github.com/ZORO-69-max/MyXpenseAPP",
+        "url": "https://github.com/ZORO-69-max/MyXpenseAPP",
+        "owner": "ZORO-69-max",
+        "name": "MyXpenseAPP",
+        "description": "💰 Track your expenses effortlessly with MyXpense, the offline-first PWA that offers smart insights and secure cloud sync for better financial management.",
+        "language": "TypeScript",
+        "topics": [
+          "ai-finance",
+          "budget-manager",
+          "expense-tracker",
+          "fintech",
+          "firebase",
+          "firestore",
+          "indexeddb",
+          "money-manager",
+          "my-xpense",
+          "myxpenseapp",
+          "personal-finance",
+          "pwa",
+          "react",
+          "typescript",
+          "vite"
+        ],
+        "readme": "🚀 MyXpenseAPP - Manage Your Finances Smartly\n\n \n\n📝 Description\n\nMyXpense is a smart personal finance app designed to help you manage your money effectively. Built with React, TypeScript, and Firebase, it offers features like AI insights, a secure vault for your data, and real-time cloud synchronization. Whether you're budgeting or tracking expenses, MyXpense can simplify your financial life.\n\n📥 Download & Install\n\nTo get started with MyXpenseAPP, follow these steps:\n\nVisit the Releases page to download the latest version of the app.\nChoose the version that matches your operating system.\nClick the download link to save the file to your computer.\nOnce downloaded, locate the file in your Downloads folder.\nDouble-click the file to run the application.\n\n⚙️ System Requirements\n\nBefore you install MyXpenseAPP, ensure your system meets the following requirements:\n\n**Operating System:** Windows 10 or later / macOS High Sierra or later / Linux (various distributions)\n**Processor:** 2 GHz dual-core processor or faster\n**RAM:** Minimum 4 GB of RAM\n**Storage:** At least 100 MB of free disk space\n**Internet Connection:** Required for updates and cloud features\n\n🌟 Features\n\nMyXpenseAPP includes several powerful features that make it easy to manage your finances:\n\n**AI Insights:** Get smart suggestions to improve your budgeting and spending habits.\n**Secure Vault:** A built-in secure vault to keep your financial data safe.\n**Real-Time Sync:** Access your data from any device with cloud synchronization.\n**User-Friendly Interface:** Designed to be simple and intuitive for all users.\n\n🚀...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "offline-first sync"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05
+      },
+      {
+        "id": "https://github.com/lcwlouis/Colearni",
+        "url": "https://github.com/lcwlouis/Colearni",
+        "owner": "lcwlouis",
+        "name": "Colearni",
+        "description": "CoLearni is an agentic evidence-first Socratic tutor that teaches from your own documents and only allows direct explanations demonstrating mastery. The platform uses knowledge graphs with vector + full-text   retrieval fusion, versioned prompt orchestration, and verifier-enforced citation integrity to produce reliable, source-grounded answers.",
+        "language": "Python",
+        "topics": [],
+        "readme": "Colearni\n\n> A Socratic AI tutor that grounds every answer in your own study materials — quizzing you to mastery, not just answering your questions.\n\nWhat is Colearni?\n\nMost AI assistants give you the answer. Colearni makes you earn it. Upload your lecture notes, textbooks, or any study material, and Colearni builds a personal knowledge graph from them. When you ask a question, the tutor uses Socratic dialogue — guiding questions, hints, partial explanations — until you demonstrate understanding. Only then does it switch to direct answers.\n\nThis matters because passive reading doesn't build retention. Colearni forces active recall: you explain your thinking, attempt quiz questions, and get graded on short-form answers before the system credits you with mastery of a concept. The knowledge graph lets you browse the conceptual landscape of your own documents, identify gaps, and drill the topics you haven't yet mastered.\n\nThe system is designed for students and self-learners who want something more rigorous than a chatbot — a tutor that tracks what you know and holds you to it.\n\n---\n\nKey Innovations\n\nHybrid Retrieval with Reciprocal Rank Fusion\nWhen you ask a question, the system runs two independent searches simultaneously: pgvector cosine similarity over chunk embeddings, and PostgreSQL full-text search (tsvector) over the same documents. The results are merged using Reciprocal Rank Fusion (RRF, from the IR literature) with a weighted score: 0.6 × 1/(k + vector_rank) + 0.4 × 1/(k + fts_rank). This gets you keyword precision (FTS finds exact terminology) and semantic flexibilit...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "version vector text"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0,
+        "pattern_family": "orchestrator",
+        "pattern_family_source": "lexicon-stage2"
+      }
+    ]
+  },
+  "selection": {
+    "by_score": 10,
+    "by_divergence": 0,
+    "diversity_gap": null,
+    "note": null
+  },
+  "seed_strategy": "auto",
+  "seed_diversification": {
+    "seeds": [
+      "crdt text editing",
+      "yjs mobile",
+      "automerge swift",
+      "automerge kotlin",
+      "collaborative editing mobile",
+      "offline-first sync",
+      "version vector text",
+      "delta-state crdt",
+      "rich-text crdt",
+      "peritext rich text"
+    ],
+    "added": [],
+    "strategy": "passthrough",
+    "reason": "already_diverse",
+    "diversity_before": {
+      "seed_count": 10,
+      "orthogonal_count": 7,
+      "max_pairwise_jaccard": 0.5,
+      "threshold": 0.5
+    },
+    "diversity_after": {
+      "seed_count": 10,
+      "orthogonal_count": 7,
+      "max_pairwise_jaccard": 0.5,
+      "threshold": 0.5
+    }
+  },
+  "pattern_family_strategy": "auto",
+  "pattern_family_summary": {
+    "strategy": "auto",
+    "project_override_count": 0,
+    "total": 20,
+    "classified": 15,
+    "unknown": 5,
+    "classified_ratio": 0.75
+  },
+  "enrichment_health": {
+    "total": 121,
+    "incomplete": 0,
+    "incomplete_ratio": 0,
+    "throttle_ms": 1000
+  },
+  "queryPlans": [
+    {
+      "label": "Query 6",
+      "query": "offline-first sync",
+      "reasons": [
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Kurze Query — breite Abdeckung, ggf. zu generisch"
+      ],
+      "hitCount": 7
+    },
+    {
+      "label": "Query 5",
+      "query": "collaborative editing mobile",
+      "reasons": [
+        "Nimmt Tech-Tag \"mobile\" mit",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ],
+      "hitCount": 4
+    },
+    {
+      "label": "Query 3",
+      "query": "automerge swift",
+      "reasons": [
+        "Nimmt Tech-Tag \"swift\" mit",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Kurze Query — breite Abdeckung, ggf. zu generisch"
+      ],
+      "hitCount": 3
+    },
+    {
+      "label": "Query 1",
+      "query": "crdt text editing",
+      "reasons": [
+        "Trifft Approach-Signature \"crdt-text-editing\"",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ],
+      "hitCount": 2
+    },
+    {
+      "label": "Query 4",
+      "query": "automerge kotlin",
+      "reasons": [
+        "Nimmt Tech-Tag \"kotlin\" mit",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Kurze Query — breite Abdeckung, ggf. zu generisch"
+      ],
+      "hitCount": 1
+    },
+    {
+      "label": "Query 7",
+      "query": "version vector text",
+      "reasons": [
+        "Trifft Approach-Signature \"version-vector\"",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ],
+      "hitCount": 1
+    },
+    {
+      "label": "Query 8",
+      "query": "delta-state crdt",
+      "reasons": [
+        "Trifft Approach-Signature \"delta-state\"",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Kurze Query — breite Abdeckung, ggf. zu generisch"
+      ],
+      "hitCount": 1
+    },
+    {
+      "label": "Query 9",
+      "query": "rich-text crdt",
+      "reasons": [
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Kurze Query — breite Abdeckung, ggf. zu generisch"
+      ],
+      "hitCount": 1
+    },
+    {
+      "label": "Query 2",
+      "query": "yjs mobile",
+      "reasons": [
+        "Nimmt Tech-Tag \"mobile\" mit",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Kurze Query — breite Abdeckung, ggf. zu generisch"
+      ],
+      "hitCount": 0
+    },
+    {
+      "label": "Query 10",
+      "query": "peritext rich text",
+      "reasons": [
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ],
+      "hitCount": 0
+    }
+  ],
+  "agentView": {
+    "mission": [
+      "Externe Loesungsraum-Landkarte fuer \"We are building a mobile-first collaborative writing app that needs offline-first sync with deterministic conflict resolution\" ins Zielprojekt cross-domain-test ueberfuehren",
+      "Divergente Cluster (3) pruefen — hoeheres Lernpotenzial, hoeherer Transfer-Aufwand",
+      "Benachbarte Cluster (1) als Adaptions-Kandidaten auswerten"
+    ],
+    "deliverable": [
+      "Je Cluster ein Kurz-Exposé mit Key-Takeaway fuer das Zielprojekt",
+      "Pro divergentem Cluster eine klare adopt/adapt/observe/ignore-Entscheidung",
+      "Decision-Log-Eintrag(e) im Zielprojekt, die auf diese Landscape referenzieren"
+    ],
+    "priorityRepos": [
+      {
+        "repo": "kirill-markin/flashcards-open-source-app",
+        "action": "Als divergente Referenz fuer \"offline-first-sync+ios+offline-first\" pruefen",
+        "url": "https://github.com/kirill-markin/flashcards-open-source-app"
+      },
+      {
+        "repo": "pratikphapale2007/Word-Cusror",
+        "action": "Als divergente Referenz fuer \"collaborative-editing-mobile+android+mobile\" pruefen",
+        "url": "https://github.com/pratikphapale2007/Word-Cusror"
+      },
+      {
+        "repo": "automerge/MeetingNotes",
+        "action": "Als divergente Referenz fuer \"automerge-swift+automerge+swift\" pruefen",
+        "url": "https://github.com/automerge/MeetingNotes"
+      },
+      {
+        "repo": "Agate-DB/Carnelia",
+        "action": "Als benachbarte Referenz fuer \"orchestrator+answer+answering\" pruefen",
+        "url": "https://github.com/Agate-DB/Carnelia"
+      }
+    ],
+    "context": [
+      "Aktueller Ansatz: - Single-writer pessimistic locking via REST API\n- Last-write-wins for conflicts (lossy, frustrating users)\n- No native CRDT integration",
+      "Erfolgskriterium: Offline-first text editing with consistent merge semantics,Sync over unreliable connections with delta compression,Native iOS UITextView + Android EditText integration,Rich-text span preservation (bold, italic, links, mentions),Garbage collection of historical operations to keep storage bounded",
+      "Approach-Signature: crdt-text-editing, offline-first-sync, version-vector, delta-state, rich-text-spans, native-bridge",
+      "Tech-Tags: swift, kotlin, ios, android, javascript, typescript"
+    ],
+    "guardrails": [
+      "Mobile-first: iOS Swift + Android Kotlin native",
+      "Open-source license (MIT or BSD)",
+      "Battery-conscious sync — no constant polling",
+      "Encrypted-at-rest local storage"
+    ],
+    "uncertainties": [
+      "Nicht-Ziel: Real-time low-latency editing like Google Docs (we accept 100-500ms sync window)",
+      "Nicht-Ziel: Operational Transformation (OT) approach — explicitly CRDT",
+      "Nicht-Ziel: Full document workflow / approval flows"
+    ],
+    "codingStarter": {
+      "primary": {
+        "repo": "kirill-markin/flashcards-open-source-app",
+        "starterLabel": "adapters/provenance|offline-first-sync-bridge.mjs",
+        "implementationGoal": "Adaptions-Skizze fuer Cluster \"offline-first-sync+ios+offline-first\" als Bruecke zum Zielprojekt",
+        "firstSlice": "Minimal-Integration: 1 Vertreter aus Cluster \"offline-first-sync+ios+offline-first\" gegen das Zielprojekt testen",
+        "targetAreas": [
+          "problem_lens"
+        ],
+        "starterMode": "exploration",
+        "compareChecklist": [
+          "Wie unterscheidet sich dieser divergente Ansatz vom aktuellen Stand?",
+          "Welche Annahmen des aktuellen Ansatzes stellt dieses Cluster in Frage?",
+          "Ist der Transfer-Aufwand in Relation zum erwarteten Gewinn vertretbar?"
+        ],
+        "stopIf": [
+          "Performance oder Qualitaet unter dem aktuellen Niveau ohne klare Perspektive",
+          "Lizenz oder Distributionsform passt nicht zum Zielprojekt"
+        ]
+      },
+      "secondary": [
+        {
+          "repo": "pratikphapale2007/Word-Cusror",
+          "starterLabel": "adapters/provenance|collaborative-editing-mobile-bridge.mjs",
+          "implementationGoal": "Alternativer Pfad aus Cluster \"collaborative-editing-mobile+android+mobile\"",
+          "firstSlice": "Kurzvergleich gegen primaeren Pfad",
+          "targetAreas": [
+            "problem_lens"
+          ],
+          "starterMode": "exploration",
+          "compareChecklist": [
+            "Wo unterscheidet sich dieser Pfad vom primaeren?"
+          ],
+          "stopIf": [
+            "Keine klaren Unterschiede zum primaeren Pfad"
+          ]
+        },
+        {
+          "repo": "automerge/MeetingNotes",
+          "starterLabel": "adapters/provenance|automerge-swift-bridge.mjs",
+          "implementationGoal": "Alternativer Pfad aus Cluster \"automerge-swift+automerge+swift\"",
+          "firstSlice": "Kurzvergleich gegen primaeren Pfad",
+          "targetAreas": [
+            "problem_lens"
+          ],
+          "starterMode": "exploration",
+          "compareChecklist": [
+            "Wo unterscheidet sich dieser Pfad vom primaeren?"
+          ],
+          "stopIf": [
+            "Keine klaren Unterschiede zum primaeren Pfad"
+          ]
+        }
+      ]
+    },
+    "payload": {
+      "schemaVersion": "2",
+      "handoffType": "landscape-to-project",
+      "problemSlug": "crdt-based-collaborative-text-editing-for-mobile",
+      "project": "cross-domain-test",
+      "relationCounts": {
+        "divergent": 3,
+        "adjacent": 1,
+        "near_current_approach": 0
+      }
+    },
+    "downloadFileName": "patternpilot-landscape-handoff-crdt-based-collaborative-text-editing-for-mobile.json",
+    "references": [
+      "Query: \"offline-first sync\"",
+      "Query: \"collaborative editing mobile\"",
+      "Query: \"automerge swift\"",
+      "Query: \"crdt text editing\""
+    ]
+  },
+  "techStatus": {
+    "effectiveQueries": [
+      "crdt text editing",
+      "yjs mobile",
+      "automerge swift",
+      "automerge kotlin",
+      "collaborative editing mobile",
+      "offline-first sync",
+      "version vector text",
+      "delta-state crdt",
+      "rich-text crdt",
+      "peritext rich text"
+    ],
+    "missingCandidates": [],
+    "searchErrors": []
+  }
+}

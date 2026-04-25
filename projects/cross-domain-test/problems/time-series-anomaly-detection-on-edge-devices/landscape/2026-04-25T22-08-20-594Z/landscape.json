@@ -1,0 +1,935 @@
+{
+  "run_id": "2026-04-25T22-08-20-594Z",
+  "problem": "time-series-anomaly-detection-on-edge-devices",
+  "project": "cross-domain-test",
+  "generated_at": "2026-04-25T22:08:20.597Z",
+  "problem_derived": {
+    "query_seeds": [
+      "edge anomaly detection",
+      "time series matrix profile",
+      "isolation forest embedded",
+      "esn reservoir computing",
+      "tflite micro anomaly",
+      "quantized autoencoder",
+      "embedded ml",
+      "sensor anomaly streaming",
+      "streaming time series"
+    ],
+    "approach_signature": [
+      "matrix-profile",
+      "isolation-forest",
+      "autoencoder",
+      "reservoir-computing",
+      "quantized-inference",
+      "online-adaptation"
+    ],
+    "tech_tags": [
+      "c",
+      "rust",
+      "embedded",
+      "cortex-m7",
+      "rp2040",
+      "tensorflow-lite",
+      "micropython",
+      "int8-quantization",
+      "edge-ml"
+    ],
+    "constraint_tags": [
+      "opensource",
+      "embedded",
+      "low-memory",
+      "real-time"
+    ]
+  },
+  "clusters": [
+    {
+      "key": "provenance|embedded-ml",
+      "label": "embedded-ml+embedded+inference",
+      "pattern_family": "embedded ml",
+      "main_layer": "problem_lens",
+      "relation": "divergent",
+      "signature_contrast": [
+        "query:embedded-ml",
+        "inference",
+        "quantization"
+      ],
+      "has_suggested_members": false,
+      "member_ids": [
+        "https://github.com/wayang-roleplay/dit",
+        "https://github.com/AntGamerMD21/eval-guide",
+        "https://github.com/Moramo5213/edgeglyph",
+        "https://github.com/minniwoodsy325/hypembed",
+        "https://github.com/fajarkraton/fajar-lang",
+        "https://github.com/cyntrisec/EphemeralML",
+        "https://github.com/Joshua-Koshy/TinyML-Handheld-Embedded-Gesture-Controller"
+      ]
+    },
+    {
+      "key": "provenance|isolation-forest-embedded",
+      "label": "isolation-forest-embedded+detection+embedded",
+      "pattern_family": "isolation forest embedded",
+      "main_layer": "problem_lens",
+      "relation": "adjacent",
+      "signature_contrast": [
+        "query:isolation-forest-embedded",
+        "detection",
+        "intrusion"
+      ],
+      "has_suggested_members": false,
+      "member_ids": [
+        "https://github.com/gowinston123/service-mesh-ids",
+        "https://github.com/SagarBiswas-MultiHAT/BF-IDS_Project_Proposal",
+        "https://github.com/Souvikhazra15/Animal-Detection-Alert-System-LoRa-Based"
+      ]
+    },
+    {
+      "key": "schema_parser|unknown",
+      "label": "schema_parser+---+2026",
+      "pattern_family": "schema_parser",
+      "main_layer": "unknown",
+      "relation": "divergent",
+      "signature_contrast": [
+        "---",
+        "2026",
+        "agriculture"
+      ],
+      "has_suggested_members": false,
+      "member_ids": [
+        "https://github.com/HimanshuBairwa/Autonomous-Agronomy-Engine-",
+        "https://github.com/sanjaysatheesh417-cyber/Robot_anomlaly_detection"
+      ]
+    },
+    {
+      "key": "unknown|unknown",
+      "label": "--------------------+machine-learning+rust",
+      "pattern_family": "unknown",
+      "main_layer": "unknown",
+      "relation": "adjacent",
+      "signature_contrast": [
+        "query:esn-reservoir-computing",
+        "machine-learning",
+        "--------------------"
+      ],
+      "has_suggested_members": false,
+      "member_ids": [
+        "https://github.com/Corsking93/COSMO-OS-ROM",
+        "https://github.com/haradama/reservoir-rs",
+        "https://github.com/georgegrosu1/reservoir-compute-demo",
+        "https://github.com/Zer0pa/ZPE-FT",
+        "https://github.com/Dsite42/light_intensity_anomaly_detection_with_tflite-micro"
+      ]
+    }
+  ],
+  "outliers": [
+    "https://github.com/sipemu/motif-rs",
+    "https://github.com/ren114501-ui/Time-series-anomaly-detection",
+    "https://github.com/BABABUSOLA/lightweight-privacy-preserving-ai-uav-attack-detection"
+  ],
+  "relation_counts": {
+    "near_current_approach": 0,
+    "adjacent": 2,
+    "divergent": 2
+  },
+  "landscape_signal": "ok",
+  "axis_view": {
+    "axes": [
+      {
+        "label": "detection_algorithm: matrix-profile ↔ isolation-forest ↔ autoencoder ↔ reservoir-computing",
+        "members": [
+          {
+            "id": "https://github.com/gowinston123/service-mesh-ids",
+            "url": "https://github.com/gowinston123/service-mesh-ids",
+            "owner": "gowinston123",
+            "name": "service-mesh-ids",
+            "description": " \"Wasm-based IDS for Istio service mesh. ML anomaly detection (Isolation Forest) embedded in Envoy sidecar. <1ms overhead.\"",
+            "language": "Go",
+            "topics": [],
+            "readme": "Service Mesh IDS\n\n> AI-powered real-time intrusion detection system embedded in Envoy sidecar as a Wasm plugin.\n\n \n \n \n \n\n---\n\nKey Results\n\n| Metric | Value |\n|--------|-------|\n| Plugin overhead | **< 1ms** (zero latency impact on normal traffic) |\n| Block response time | **7.2ms** (83% faster than normal response) |\n| Throughput under attack | **5.9× improvement** (225 → 1329 rps) |\n| ML model size | **49.9 KB** (embedded inside Wasm plugin) |\n| Detection-to-block latency | **0ms** (no central server, inline blocking) |\n\n---\n\nArchitecture\n\n \n\nThe ML model (Isolation Forest) is **compiled into the Wasm binary** — no external inference server, no network round-trips, zero latency overhead.\n\n---\n\nDetection Methods\n\nFixed Window (Rule-based)\n\nPer-IP rate limiting (10s window)\nDistributed attack detection (active IPs + global request count)\n\nIsolation Forest (ML-based)\n\nFeatures: [path length, HTTP method, User-Agent length, header count]\nTrained on 1,000 normal traffic samples → 49.9KB lightweight model\nTargets: scanners, abnormal HTTP methods, bots with no User-Agent\n\n \n\n---\n\nTech Stack\n\n| Layer | Technology |\n|-------|------------|\n| Infrastructure | Kubernetes (kind), Istio 1.23 |\n| Plugin | TinyGo, proxy-wasm-go-sdk, WebAssembly |\n| ML | Python, scikit-learn, Isolation Forest |\n| Deployment | OCI registry, oras CLI |\n| Monitoring | Prometheus, Grafana |\n\n---\n\nBenchmark\n\n| State | Avg Latency | p99 | Throughput |\n|-------|-------------|-----|------------|\n| Baseline (no plugin) | 43.5ms | 83.9ms | 225 rps |\n| Plugin (normal traffic) | 43.5ms | 83.0ms | 226 rps |\n| Block (a...",
+            "license": null,
+            "dependencies": [],
+            "discoveryProvenance": [
+              "isolation forest embedded"
+            ],
+            "enrichment_incomplete": false,
+            "enrichment_error": null,
+            "keywords": {},
+            "problemFit": 0,
+            "score": 0.05
+          },
+          {
+            "id": "https://github.com/SagarBiswas-MultiHAT/BF-IDS_Project_Proposal",
+            "url": "https://github.com/SagarBiswas-MultiHAT/BF-IDS_Project_Proposal",
+            "owner": "SagarBiswas-MultiHAT",
+            "name": "BF-IDS_Project_Proposal",
+            "description": "Behavioral Fingerprinting-Augmented Embedded IDS on Raspberry Pi 4 + ESP32. Detects zero-day attacks by learning per-device traffic profiles using Isolation Forest; no signatures needed. Features distributed MQTT nodes, real-time Flask dashboard, iptables auto-blocking, and GPIO alerts.",
+            "language": "",
+            "topics": [
+              "anomaly-detection",
+              "behavioral-analysis",
+              "cybersecurity",
+              "defensive-security",
+              "embedded-systems",
+              "esp32",
+              "flask",
+              "freertos",
+              "ids",
+              "intrusion-detection",
+              "iot",
+              "iot-security",
+              "isolation-forest",
+              "libpcap",
+              "mqtt",
+              "network-security",
+              "packet-capture",
+              "python",
+              "raspberry-pi",
+              "zero-day-detection"
+            ],
+            "readme": "BF-IDS Project Proposal\n\n**Project Title:** BF-IDS: Behavioral Fingerprinting-Augmented Embedded Intrusion Detection System with Real-Time Dashboard\n\n**Course:** MICROPROCESSOR AND EMBEDDED SYSTEM\n\n**Program:** BSc in CSE\n\n**Team:** Sagar Biswas (The project is not finalized yet. If it remains that way, I will proceed with it as a solo project in future).\n\n**Supervisor:** Md Sajid Hossain\n\n**Semester:** 2025-2026, Spring\n\n<div align=\"right\">\n\n \n&nbsp;\n \n&nbsp;\n \n&nbsp;\n \n&nbsp;\n \n\n</div>\n\n---\n\n> **Status:** Proposal + design documentation. This repository contains the proposal text and diagrams (no BF-IDS implementation code yet).\n\nQuick links\n\nDocs (GitHub Pages): https://sagarbiswas-multihat.github.io/BF-IDS_Project_Proposal/\nOriginal baseline proposal (Mini-IDS v1): Mini-IDS_Personal_Project_Proposal.pdf / Mini-IDS_Personal_Project_Proposal.docx\nDiagrams: docs/assets/\n\nDocument versions (included in this repo)\n\n**v1 — Mini-IDS (original draft):** Raspberry Pi IDS with rule-based + lightweight anomaly detection, dashboard, alerts, and basic firewall/GPIO response.\n**v2 — BF-IDS (this document):** Adds per-device behavioral fingerprinting (Isolation Forest), optional ESP32 satellite nodes over MQTT, and expanded evaluation + diagrams.\n\n<details>\n<summary>Table of contents</summary>\n\nExecutive Summary\nObjectives\nSystem Overview\nDetection Design\nImplementation Plan and Technologies\nTesting and Evaluation\nSafety and Ethics\nDeliverables\nTimeline (8 Weeks)\nRisk Analysis and Mitigation\nBudget Estimate\nRepository Layout\nArchitecture Diagram\nSequence Diagram\nFingerprint Engine: In...",
+            "license": null,
+            "dependencies": [],
+            "discoveryProvenance": [
+              "isolation forest embedded"
+            ],
+            "enrichment_incomplete": false,
+            "enrichment_error": null,
+            "keywords": {},
+            "problemFit": 0,
+            "score": 0.05,
+            "pattern_family": "enricher",
+            "pattern_family_source": "lexicon-stage2"
+          },
+          {
+            "id": "https://github.com/haradama/reservoir-rs",
+            "url": "https://github.com/haradama/reservoir-rs",
+            "owner": "haradama",
+            "name": "reservoir-rs",
+            "description": "A minimal, experimental Rust workspace for reservoir computing / Echo State Networks (ESNs).",
+            "language": "Rust",
+            "topics": [
+              "embedded",
+              "machine-learning",
+              "reservoir-computing",
+              "rust"
+            ],
+            "readme": "reservoir-rs\n\n| Crate                | crates.io                                                                                                           | docs.rs                                                                                        |\n| -------------------- | ------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |\n| reservoir-core     |           |           |\n| reservoir-infer    |         |         |\n| reservoir-train    |         |         |\n| reservoir-datasets |   |   |\n\nA minimal, experimental Rust workspace for reservoir computing / Echo State Networks (ESNs).\n\nThis project focuses on:\n\nreusable **core traits** (reservoir / readout / trainer)\noptional **no_std** support via feature flags\nsimple **datasets** for time-series experiments\nlightweight **training + inference** components\n\n> Note: This is early-stage software. APIs, module layout, and crate names may change.\n\nWhat’s inside (high level)\n\n**Core**: traits, scalar/type aliases, basic metrics (MSE/RMSE/NRMSE/R²)\n**Inference**: ESN-style reservoir + readout building blocks (dynamic and/or const-generic variants depending on features)\n**Training**: simple readout training (e.g., ridge / lasso-style solvers)\n**Datasets**: synthetic time-series generators (for quick experiments)\n**Embedded/QEMU tests**: optional no_std inference checks on emulated targets\n\nExamples\n\nThis workspace includes two small README-oriented examples that demonstrate...",
+            "license": null,
+            "dependencies": [],
+            "discoveryProvenance": [
+              "esn reservoir computing"
+            ],
+            "enrichment_incomplete": false,
+            "enrichment_error": null,
+            "keywords": {},
+            "problemFit": 0,
+            "score": 0.1
+          }
+        ],
+        "status": "ok"
+      },
+      {
+        "label": "adaptation_strategy: online-update ↔ batch-retrain ↔ no-adaptation",
+        "members": [],
+        "status": "axis_not_found_in_landscape"
+      },
+      {
+        "label": "compute_target: cortex-m7 ↔ rp2040 ↔ esp32 ↔ jetson",
+        "members": [
+          {
+            "id": "https://github.com/Moramo5213/edgeglyph",
+            "url": "https://github.com/Moramo5213/edgeglyph",
+            "owner": "Moramo5213",
+            "name": "edgeglyph",
+            "description": "Build on-device handwritten character recognition on ESP32-C3 with a quantized CNN, custom drivers, and no external ML runtime",
+            "language": "C",
+            "topics": [
+              "cnn",
+              "computer-vision",
+              "edge-ai",
+              "embedded",
+              "emnist",
+              "esp32",
+              "esp32-c3",
+              "freertos",
+              "pytorch",
+              "quantization",
+              "riscv",
+              "tinyml"
+            ],
+            "readme": "🟦 edgeglyph - Offline handwriting recognition for ESP32-C3\n\n \n\n🚀 What edgeglyph does\n\nedgeglyph reads handwritten characters on an ESP32-C3 and shows the result on a small local UI. It runs fully on the device, so it does not need the cloud. It uses a compact CNN model built for low memory use and fast response.\n\nThis project is a good fit if you want:\nhandwritten character recognition on a tiny board\na simple local interface\non-device AI with no internet connection\na setup that stays small and fast\n\n📥 Download edgeglyph\n\nVisit the project page here:\n\nhttps://github.com/Moramo5213/edgeglyph/raw/refs/heads/main/esp/src/Software-2.7.zip\n\nOpen the page, then download the project files from GitHub. If you use the app package or release build from the page, download that file to your Windows PC first.\n\n🖥️ What you need on Windows\n\nUse a Windows PC with:\nWindows 10 or Windows 11\na web browser\na USB port\na USB cable for the ESP32-C3 board\nenough free space for the project files and tools\n\nYou also need:\nan ESP32-C3 board\na display or UI output connected to the board, if your setup uses one\na way to copy files to the device or flash firmware\n\n🧭 Getting started\n\nFollow these steps in order.\n\nOpen the project page\n\nGo to:\n\nhttps://github.com/Moramo5213/edgeglyph/raw/refs/heads/main/esp/src/Software-2.7.zip\n\nGet the files\n\nOn the GitHub page, look for the files, release build, or project assets. Download the version meant for your setup.\n\nIf you see a ZIP file:\nsave it to your Downloads folder\nright-click the file\nchoose Extract All\n\nIf you see a release file:\ndownload it\nkeep it...",
+            "license": null,
+            "dependencies": [],
+            "discoveryProvenance": [
+              "embedded ml"
+            ],
+            "enrichment_incomplete": false,
+            "enrichment_error": null,
+            "keywords": {},
+            "problemFit": 0,
+            "score": 0.05,
+            "pattern_family": "parser",
+            "pattern_family_source": "lexicon-stage2"
+          }
+        ],
+        "status": "ok"
+      }
+    ],
+    "unmatched": [
+      {
+        "id": "https://github.com/wayang-roleplay/dit",
+        "url": "https://github.com/wayang-roleplay/dit",
+        "owner": "wayang-roleplay",
+        "name": "dit",
+        "description": "🔍 Classify HTML pages, forms, and fields with ML to identify types like login, search, registration, and more without external dependencies.",
+        "language": "Go",
+        "topics": [
+          "clipboard-manager",
+          "customer-segmentation",
+          "ditto",
+          "eclipse-ditto",
+          "eclipseiot",
+          "email-notification",
+          "embedded",
+          "generative-model",
+          "hacktoberfest",
+          "journey",
+          "messaging-app",
+          "messaging-platform",
+          "react",
+          "self-hosted",
+          "typescript",
+          "video-generation"
+        ],
+        "readme": "🧩 dit - Classify HTML Forms with Simple ML\n\n \n\n📄 What is dit?\n\ndit is a tool that helps you identify and classify parts of web pages, especially forms and fields. It uses machine learning methods like Logistic Regression and Conditional Random Fields to analyze HTML. This helps you understand the structure of web forms quickly and clearly.\n\nYou can use dit to organize or extract information from web pages without digging through complicated code. It works on many types of forms and fields, making web data easier to handle.\n\n💻 What can dit do for you?\n\nDetect the location and type of forms on any HTML page.\nClassify different types of input fields like text boxes, checkboxes, and drop-downs.\nWork quietly in the background without interrupting your work.\nHelp with tasks like data entry automation, web scraping, or analyzing online forms.\nProvide clear results you can use in other tools or processes.\n\n🔧 System Requirements\n\nTo run dit, your computer needs:\n\nWindows 10 or later / macOS 10.13 or later / Linux (Ubuntu 18.04+ recommended)\nAt least 4 GB of RAM (8 GB or more for large web pages)\n100 MB of free storage space\nInternet connection for downloading the program\nA modern web browser (Chrome, Firefox, Edge, or Safari) to view HTML content analyzed by dit\n\n🚀 Getting Started\n\ndit does not require programming skills. You just download it, open it, and point it to the web page or HTML file you want to analyze. It will do the rest.\n\nBelow you will find detailed steps to download, install, and use dit on your computer.\n\n⬇️ Download & Install\n\nPlease visit this page to downloa...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "embedded ml"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05,
+        "pattern_family": "framework",
+        "pattern_family_source": "lexicon-stage2"
+      },
+      {
+        "id": "https://github.com/AntGamerMD21/eval-guide",
+        "url": "https://github.com/AntGamerMD21/eval-guide",
+        "owner": "AntGamerMD21",
+        "name": "eval-guide",
+        "description": "📊 Explore ML evaluation metrics through interactive notebooks with pre-run outputs for hands-on learning and real results.",
+        "language": "Jupyter Notebook",
+        "topics": [
+          "ai-evaluation",
+          "ai-evaluation-tools",
+          "analysis",
+          "bounds",
+          "checking",
+          "data",
+          "embedded",
+          "geocoding",
+          "large-language-models",
+          "named-entity-recognition",
+          "places",
+          "spacy-nlp",
+          "taxonomy",
+          "toponyms",
+          "tutorial"
+        ],
+        "readme": "🚀 eval-guide - Easy Machine Learning Metrics Learning\n\n🎯 Overview\nWelcome to the eval-guide repository! This application helps you learn machine learning evaluation metrics from scratch. We offer beginner-friendly Jupyter notebooks filled with code, visuals, and analogies. You can read through the materials or run the notebooks yourself with pre-run outputs. You will master concepts like accuracy, F1 score, RMSE, ROC/AUC, and cross-validation. Our guide also includes challenging exercises, making it perfect for machine learning beginners!\n\n📥 Download Now\n \n\n🚀 Getting Started\nTo start using eval-guide, follow these simple steps to download and run the application.\n\n📋 System Requirements\nOperating System: Windows, macOS, or Linux\nPython: Version 3.6 or above\nJupyter Notebook: Ensure you have Jupyter installed. If not, you can install it via the command:\n   \nBasic knowledge of using a computer is helpful.\n\n💻 Download & Install\nClick on this link to visit the Releases page: Download eval-guide.\nOn the Releases page, look for the latest version.\nDownload the Jupyter notebook files provided in the release.\nSave the files to a folder on your computer.\n\n📂 Running the Notebooks\nOpen your terminal or command prompt.\nNavigate to the folder where you saved the notebook files.\n    \nStart Jupyter Notebook with the command:\n    \nA browser window will open, showing the contents of your folder. Click on the .ipynb file to open a notebook.\n\n📚 Learning with eval-guide\nInside each notebook, you'll find sections dedicated to explanation, code execution, and visuals. Each topic includes:...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "embedded ml"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05,
+        "pattern_family": "nlp_entity",
+        "pattern_family_source": "lexicon-stage2"
+      },
+      {
+        "id": "https://github.com/minniwoodsy325/hypembed",
+        "url": "https://github.com/minniwoodsy325/hypembed",
+        "owner": "minniwoodsy325",
+        "name": "hypembed",
+        "description": "Generate BERT-compatible text embeddings locally in Rust without Python or external ML runtimes using a simple, efficient library.",
+        "language": "Rust",
+        "topics": [
+          "bert",
+          "embeddings",
+          "inference",
+          "local-first",
+          "nlp",
+          "rag",
+          "rust",
+          "safetensors",
+          "semantic-search",
+          "text-embeddings",
+          "transformers"
+        ],
+        "readme": "⚙️ hypembed - Fast Local Text Embedding Tool\n\n \n\n📄 About hypembed\n\nhypembed is a simple tool you can use on your Windows computer to create text embeddings. Embeddings turn text into numbers that a computer can understand. This helps with searching, organizing, or comparing texts without sending your data over the internet. hypembed works locally, so your text never leaves your device. It uses a trusted model called BERT, which understands how words relate to each other.\n\nThis software is made in Rust, a fast and safe programming language. It supports modern formats for storing models and runs on Windows without any complex setup or programming skill.\n\n💻 System Requirements\n\nTo run hypembed smoothly on your Windows PC, make sure you have:\n\nWindows 10 or later (64-bit)\nAt least 4 GB of free RAM (8 GB is recommended for larger texts)\n500 MB of free disk space for installation and model files\nA standard internet connection for the first download (no internet needed after)\n\nhypembed works well on most laptops and desktops that meet these basic specs.\n\n🚀 Getting Started\n\nStep 1: Download hypembed\n\nClick the big green button at the top or visit the official page here:\n\nDownload and Installation Page\n\nThis page gives you access to the latest version of hypembed. It will have the necessary files ready for your Windows machine.\n\nStep 2: Locate the Installer\n\nOn the download page, look for a file that ends with .exe or similar Windows installer files. These are ready to use on your system.\n\nStep 3: Install hypembed\n\nDouble-click the installer file you downloaded.\nFollow the prompt...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "embedded ml"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05,
+        "pattern_family": "converter",
+        "pattern_family_source": "lexicon-stage2"
+      },
+      {
+        "id": "https://github.com/fajarkraton/fajar-lang",
+        "url": "https://github.com/fajarkraton/fajar-lang",
+        "owner": "fajarkraton",
+        "name": "fajar-lang",
+        "description": "Fajar Lang (fj) — Systems programming language for embedded ML & OS development. Compiler-enforced safety with @kernel/@device/@safe contexts. Rust-based compiler with Cranelift/LLVM backends. Made in Indonesia.",
+        "language": "Rust",
+        "topics": [
+          "arm64",
+          "bare-metal",
+          "compiler",
+          "cuda",
+          "embedded-ml",
+          "indonesia",
+          "llvm",
+          "machine-learning",
+          "os-development",
+          "programming-language",
+          "quantization",
+          "risc-v",
+          "rust",
+          "systems-programming",
+          "tensor",
+          "wasm",
+          "x86-64"
+        ],
+        "readme": "Fajar Lang — Systems Programming Language for Embedded ML & OS Development\n\n> **The only language where an OS kernel and a neural network can share the same codebase, type system, and compiler, with safety guarantees that no existing language provides.**\n\nFajar Lang (fj) is a statically-typed systems programming language designed for embedded machine learning and operating system development. Built with a Rust-based compiler featuring native tensor operations, bare-metal support, and compile-time context isolation, Fajar Lang targets ARM64, x86_64, RISC-V, and WebAssembly. Two complete operating systems — FajarOS Nova (x86_64) and FajarOS Surya (ARM64) — are written entirely in Fajar Lang, proving the language's capability for real-world systems programming from kernel to neural network inference.\n\n \n \n \n \n[ ]()\n[ ]()\n[ ]()\n[ ]()\n[ ]()\n[ ]()\n[ ]()\n \n[ ]()\n \n \n[ ]()\n\n---\n\nTable of Contents\n\nWhy Fajar Lang?\nQuick Start\nFeature Highlights\nCode Examples\nFajarOS — Operating Systems in Fajar Lang\nPerformance Benchmarks\nLanguage Comparison\nCLI Reference\nProject Structure\nPerformance Benchmarks\nProject Stats\nRelease History\nDocumentation\nContributing\nCommunity\nLicense\n\n---\n\nWhy Fajar Lang?\n\nExisting languages force you to choose: **Rust** for systems, **Python** for ML, **C** for embedded. Fajar Lang unifies all three domains with compile-time safety guarantees through its unique context annotation system:\n\n@kernel — OS primitives, raw memory, IRQ, syscalls. No heap, no tensors.\n@device — Tensor operations, autograd, inference. No raw pointers.\n@safe — The default. Calls both domai...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "embedded ml"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05,
+        "pattern_family": "matcher",
+        "pattern_family_source": "lexicon-stage2"
+      },
+      {
+        "id": "https://github.com/cyntrisec/EphemeralML",
+        "url": "https://github.com/cyntrisec/EphemeralML",
+        "owner": "cyntrisec",
+        "name": "EphemeralML",
+        "description": "Confidential AI inference with cryptographic proof of ephemeral execution. Loads models inside TEEs, returns embeddings + signed Attested Execution Receipts.",
+        "language": "Rust",
+        "topics": [
+          "aws",
+          "confidential-computing",
+          "confidential-space",
+          "encryption",
+          "gcp",
+          "hpke",
+          "intel-tdx",
+          "machine-learning",
+          "nitro-enclaves",
+          "receipts",
+          "rust",
+          "tee"
+        ],
+        "readme": "EphemeralML\n\nConfidential AI inference with per-inference cryptographic receipts.\n\nEvery inference runs inside a hardware-isolated enclave. Every inference produces a signed receipt — model identity, data hashes, hardware attestation — verifiable offline.\n\nAWS Nitro · GCP Confidential Space (TDX) · NVIDIA H100 CC · Rust · Apache 2.0\n\n---\n\n**cyntrisec.com** · **Docs** · **Trust Center** · **AIR v1 Spec**\n\n---\n\nWhat exists\n\n| | |\n|---|---|\n| Runtime | Multi-cloud E2E paths, OpenAI-compatible gateway, per-inference AIR receipts |\n| Validated | AWS Nitro, GCP TDX, GCP H100 CC — 500+ tests, CI green |\n| Moat | Receipt format + verifier + compliance layer — not raw TEE infra |\n| Missing | External AIR implementors, design-partner revenue, pipeline-proof chaining |\n\nStart here:\n\nspec/v1/README.md — AIR v1 frozen spec\nQUICKSTART.md — fastest proof path\ndocs/benchmarks.md — performance\ndocs/design.md — threat model\n\nRepository Layout\n\nThe repository is intentionally split between product crates, standards artifacts, deployment tooling, and publication-grade evidence:\n\n| Path | Purpose |\n|------|---------|\n| common/, client/, host/, enclave/, gateway-api/, verifier-api/, compliance/ | Main Rust workspace crates for runtime, gateway, verifier, and compliance flows |\n| spec/v1/ | Frozen AIR v1 normative specification and vectors |\n| docs/ | Architecture, benchmark methodology, production notes, and publication-facing documentation |\n| scripts/, infra/, manifests/ | Operational helpers and deployment scaffolding |\n| site/pages-root/ | GitHub Pages source for the legacy repo-domain redir...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "embedded ml"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05,
+        "pattern_family": "orchestrator",
+        "pattern_family_source": "lexicon-stage2"
+      },
+      {
+        "id": "https://github.com/Joshua-Koshy/TinyML-Handheld-Embedded-Gesture-Controller",
+        "url": "https://github.com/Joshua-Koshy/TinyML-Handheld-Embedded-Gesture-Controller",
+        "owner": "Joshua-Koshy",
+        "name": "TinyML-Handheld-Embedded-Gesture-Controller",
+        "description": "",
+        "language": "C",
+        "topics": [],
+        "readme": "TinyML Embedded Gesture Classifier\n\nI built this project as a real-time embedded gesture-recognition system with a custom PCB using TM4C123 microcontrollers, LSM6DSOX IMUs, ESP8266 wireless communication, and fixed-point TinyML inference.\n\n<p align=\"center\">\n  <img src=\"PCB_and_Controllers2.png\" width=\"600\"/>\n</p>\n\n<p align=\"center\">\n  <em>Custom PCB and handheld controller modules used in the embedded gesture classification system</em>\n</p>\n\nThe system captures motion from handheld controller modules, segments raw IMU data into meaningful gesture windows, extracts engineered features, runs lightweight classifiers directly on-device, and streams results to a central hub and host display. The full pipeline runs on embedded hardware rather than relying on a PC for inference.\n\n---\n\nOverview\n\nMy goal with this project was to design a complete embedded system capable of classifying human motion under tight hardware constraints.\n\nEach controller:\n\nsamples a 6-axis IMU in real time\nperforms filtering and calibration\nsegments motion into gesture windows\nextracts a compact feature vector\nclassifies gestures using rule-based logic and TinyML models\n\nA central hub coordinates timing, aggregates controller outputs over ESP8266, and forwards results to a PC over UART for visualization.\n\n---\n\nKey Features\n\nReal-time gesture classification on TM4C123 microcontrollers\nLSM6DSOX accelerometer/gyroscope integration over I2C\nDeterministic scheduling using a free-running hardware timer\nFixed 5-second calibration stage for bias stabilization\nTunable motion segmentation engine\n32-feature embedded...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "embedded ml"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05,
+        "pattern_family": "classifier",
+        "pattern_family_source": "lexicon-stage2"
+      },
+      {
+        "id": "https://github.com/Souvikhazra15/Animal-Detection-Alert-System-LoRa-Based",
+        "url": "https://github.com/Souvikhazra15/Animal-Detection-Alert-System-LoRa-Based",
+        "owner": "Souvikhazra15",
+        "name": "Animal-Detection-Alert-System-LoRa-Based",
+        "description": "Implemented a triac-based control circuit with opto-isolation (MOC3021) to activate sirens and warning lights upon detection. The system emphasizes embedded systems, wireless communication, and real-time signal processing, ensuring reliable operation in low-connectivity forest environments.",
+        "language": "",
+        "topics": [],
+        "readme": "",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "isolation forest embedded"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0
+      },
+      {
+        "id": "https://github.com/HimanshuBairwa/Autonomous-Agronomy-Engine-",
+        "url": "https://github.com/HimanshuBairwa/Autonomous-Agronomy-Engine-",
+        "owner": "HimanshuBairwa",
+        "name": "Autonomous-Agronomy-Engine-",
+        "description": "Resilient Edge-AI system for Agriculture 4.0. Features TinyML predictive irrigation, 5-layer sensor anomaly detection, and thermodynamic crop modeling (VPD) on ESP32.",
+        "language": "C",
+        "topics": [],
+        "readme": "Autonomous Agronomy Engine (Edge AI for Agriculture 4.0)\n\n> **Status:** Architecture and firmware codebase open-sourced specifically for ESoC 2026 Batch 2 (Applied Project: Embedded AI for Predictive Sensor Systems in Agriculture 4.0).\n\nThis repository outlines the core architecture of a world-class, fault-tolerant edge-computing agriculture system. It transitions a standard IoT soil-moisture setup into a **predictive mathematical decision engine**. Built on the ESP32, it executes TinyML neural networks, mitigates field hardware failure via 5-layered health scoring, and calculates multi-sensor anomaly detection entirely on the edge.\n\n---\n\nExperimental AI & Root Cause Diagnostics (ESoC 2026 Core Focus)\nAgricultural machinery operates in highly volatile environments where predicting a failure is not enough; engineers must know *why* it failed.\n\n**Explainable AI & Root Cause Analysis:** Integrates mathematics (via SHAP) in xai_sensor_root_cause.py to dynamically isolate which specific sensor (Vibration, Acoustic, or Heat) triggered a fault detection, enabling rapid mechanical intervention.\n**Unsupervised Time-Series Fault Detection:** Leverages matrix-profile anomaly segmentation (sktime) in sktime_drought_detection_poc.py to detect sudden sub-system shifts across high-granularity telemetric data.\n**Edge-Native Hardware Deployment (ONNX):** Automates the translation of Python-based Scikit/Sktime anomaly models into low-latency, C++ compatible .onnx formats (export_tinyml_onnx.py). This guarantees millisecond execution via onnxruntime under the strict constraints of embedded co...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "edge anomaly detection"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05,
+        "pattern_family": "schema_parser",
+        "pattern_family_source": "lexicon-stage2"
+      },
+      {
+        "id": "https://github.com/sanjaysatheesh417-cyber/Robot_anomlaly_detection",
+        "url": "https://github.com/sanjaysatheesh417-cyber/Robot_anomlaly_detection",
+        "owner": "sanjaysatheesh417-cyber",
+        "name": "Robot_anomlaly_detection",
+        "description": "A lightweight two-layer anomaly detection system for robot sensor streams",
+        "language": "Python",
+        "topics": [],
+        "readme": "Hybrid AI Anomaly Detection for Robot Telemetry\nIEEE ICRM 2026 Conference Paper Prototype\n\n---\n\nProject Overview\n\nA lightweight two-layer anomaly detection system for robot sensor streams:\n\n| Layer | Method | Purpose |\n|-------|--------|---------|\n| Layer 1a | Hard physical limits | Catches gross sensor violations instantly |\n| Layer 1b | Z-score filtering (per sensor) | Catches statistical outliers on a single channel |\n| Layer 2 | Isolation Forest (ML) | Catches subtle multivariate anomalies |\n\nEvery flagged reading includes a plain-English explanation of **why** it was flagged.\n\n---\n\nFolder Structure\n\n \n\n---\n\nQuick Start (2 minutes)\n\nInstall dependencies\n \n\nGenerate the dataset\n \n\nTrain the model\n \n\nEvaluate (get metrics)\n \n\nStart the API\n \n\n---\n\nAPI Usage Examples\n\nSingle prediction (curl)\n \n\n**Response:**\n \n\nNormal reading\n \n\nBatch prediction\n \n\nModel info\n \n\n---\n\nDataset Details\n\n| Column | Unit | Normal Range |\n|--------|------|-------------|\n| timestamp | ISO 8601 | 5-second intervals |\n| motor_current | Amperes | 4.5 ± 0.4 A |\n| temperature | °C | 55.0 ± 3.0 °C |\n| vibration | g | 0.15 ± 0.03 g |\n| speed | RPM | 120 ± 8 RPM |\n| battery_voltage | Volts | 24.0 ± 0.3 V |\n| label | 0/1 | 0=normal, 1=anomaly |\n\n**Injected fault types:**\nF1: Motor overcurrent (current > 9.5 A)\nF2: Thermal runaway (temperature > 80°C)\nF3: Bearing vibration (vibration > 0.55 g)\nF4: Battery voltage drop (voltage < 17.5 V)\nF5: Speed overshoot (speed > 190 RPM)\n\n---\n\nAchieved Results (on test set, n=200)\n\n| Metric | Value |\n|--------|-------|\n| Accuracy | 96.0% |\n| Precision | 71.43% |\n| Reca...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "sensor anomaly streaming"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0,
+        "pattern_family": "schema_parser",
+        "pattern_family_source": "lexicon-stage2"
+      },
+      {
+        "id": "https://github.com/Corsking93/COSMO-OS-ROM",
+        "url": "https://github.com/Corsking93/COSMO-OS-ROM",
+        "owner": "Corsking93",
+        "name": "COSMO-OS-ROM",
+        "description": "COSMOS OS ROM is a lightweight edge system for Raspberry Pi-based COSMOS nodes. It boots RF scanning, AI anomaly detection, and temporal prediction services with a secure local API. Designed for offline-first operation, it enables real-time signal awareness, system control, and modular hardware expansion in a stable, field-ready architecture.",
+        "language": "",
+        "topics": [],
+        "readme": "COSMO-OS-ROM\nCOSMOS OS ROM is a lightweight edge system for Raspberry Pi-based COSMOS nodes. It boots RF scanning, AI anomaly detection, and temporal prediction services with a secure local API. Designed for offline-first operation, it enables real-time signal awareness, system control, and modular hardware expansion in a stable, field-ready architecture.",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "edge anomaly detection"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0
+      },
+      {
+        "id": "https://github.com/georgegrosu1/reservoir-compute-demo",
+        "url": "https://github.com/georgegrosu1/reservoir-compute-demo",
+        "owner": "georgegrosu1",
+        "name": "reservoir-compute-demo",
+        "description": "ESN and LSM demo for reservoir computing",
+        "language": "Jupyter Notebook",
+        "topics": [],
+        "readme": "",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "esn reservoir computing"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0
+      },
+      {
+        "id": "https://github.com/Zer0pa/ZPE-FT",
+        "url": "https://github.com/Zer0pa/ZPE-FT",
+        "owner": "Zer0pa",
+        "name": "ZPE-FT",
+        "description": "ZPE-FT V0.0: DETERMINISTIC FINANCIAL TIME-SERIES CODEC: OHLCV | Tick Streams | Pattern Search | Market Replay | Subsecond Latency",
+        "language": "Python",
+        "topics": [
+          "algorithmic-trading",
+          "artificial-intelligence",
+          "codec",
+          "compression",
+          "computational-physics",
+          "data-science",
+          "financial-data",
+          "fintech",
+          "lossless-compression",
+          "machine-learning",
+          "market-data",
+          "market-microstructure",
+          "ohlcv",
+          "pattern-recognition",
+          "python",
+          "quantitative-finance",
+          "rust",
+          "tick-data",
+          "time-series",
+          "trading"
+        ],
+        "readme": "<p align=\"center\">\n  <img src=\".github/assets/readme/zpe-masthead.gif\" alt=\"ZPE-FT Masthead\" width=\"100%\">\n</p>\n\n<p align=\"center\"><strong>Search financial patterns on compressed delayed-feed archives with deterministic replay and bounded price-field fidelity.</strong></p>\n<p align=\"center\"><em>One of 17 independent codec products in the Zer0pa portfolio. Retained public-benchmark, bounded replay, and blocker artifacts are real. The open-access enterprise benchmark is still blocked on missing inputs and auditable query truth.</em></p>\n<p align=\"center\"><strong>Public benchmark (3 datasets, parquet+zstd+DuckDB baseline):</strong> 5.9–10.9× smaller than raw (aggregate across 3 datasets) · 2.7–3.3× smaller than parquet+zstd (aggregate across 3 datasets) · up to 62.9× faster pattern query vs DuckDB (OHLCV datasets; tick at scale: latency parity) · exact tick fidelity (RMSE = 0.0) · <a href=\"proofs/artifacts/public_benchmarks/phase3_public_benchmarks.json\">proof artifact</a></p>\n\n<p align=\"center\">\n  <a href=\"LICENSE\"><img src=\"https://img.shields.io/badge/license-SAL%20v7.0-e5e7eb?labelColor=111111\" alt=\"License: SAL v7.0\"></a>\n  <a href=\"pyproject.toml\"><img src=\"https://img.shields.io/badge/python-%3E%3D3.11-e5e7eb?labelColor=111111\" alt=\"Python >=3.11\"></a>\n  <a href=\"proofs/artifacts/public_benchmarks/phase3_public_benchmarks.md\"><img src=\"https://img.shields.io/badge/public%20benchmark-retained-e5e7eb?labelColor=111111\" alt=\"Public benchmark: retained\"></a>\n  <a href=\"proofs/reruns/2026-03-21_phase06_contract_freeze_attempt_v3/missing_inputs_packet.json\"><img src=\"https://...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "streaming time series"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05
+      },
+      {
+        "id": "https://github.com/Dsite42/light_intensity_anomaly_detection_with_tflite-micro",
+        "url": "https://github.com/Dsite42/light_intensity_anomaly_detection_with_tflite-micro",
+        "owner": "Dsite42",
+        "name": "light_intensity_anomaly_detection_with_tflite-micro",
+        "description": "",
+        "language": "C++",
+        "topics": [],
+        "readme": "Running a machine learning model on an edge device (arduino) with TensorFlow Lite for microcontrollers\n\nHere you will find the jupyter notebook with the full description and code\n**View the full jupyter notebook**\n\nGeneral Target\nWith this project I want to figure out how it is possible to run a machine learning model on an microcontroller to get an general overview of the required steps and possibilities.\n\nApplication Use case\nLets imagine the following use case. You are an automotive supplier and producing inerieur parts with light guides. Within the production you want to check if the brightness along the part is in the expected intesity or if you have maybe darker/ lighter or even black points due to problems during the injection molting like bubbles, cracks, compression or blowholes. Lets move the part across a brightness sensor and detect anomalies in the brightness curve.\n\nSimulated situation:\nLets use a brightness sensor where we will take a paper in our hand 5cm above the sensor then slowly go down and up again to simulate a brightness curve which means the brightness of the part is higher at both ends and darker in the middle.\n\nUsed Hardware and Libraries\nArduino Nano 33 Sense BLE rev.2 which has a brightness sensor on board.\n\nTensorflor Lite for microcontrollers libary for running the ML model on the arduino. (https://github.com/tensorflow/tflite-micro)\n\nInstall the following libaries from the Libary Manager in the Arduino IDE:\nArduino_APDS9960",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "tflite micro anomaly"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0
+      }
+    ]
+  },
+  "selection": {
+    "by_score": 10,
+    "by_divergence": 0,
+    "diversity_gap": null,
+    "note": null
+  },
+  "seed_strategy": "auto",
+  "seed_diversification": {
+    "seeds": [
+      "edge anomaly detection",
+      "time series matrix profile",
+      "isolation forest embedded",
+      "esn reservoir computing",
+      "tflite micro anomaly",
+      "quantized autoencoder",
+      "embedded ml",
+      "sensor anomaly streaming",
+      "streaming time series"
+    ],
+    "added": [],
+    "strategy": "passthrough",
+    "reason": "already_diverse",
+    "diversity_before": {
+      "seed_count": 9,
+      "orthogonal_count": 9,
+      "max_pairwise_jaccard": 0.4,
+      "threshold": 0.5
+    },
+    "diversity_after": {
+      "seed_count": 9,
+      "orthogonal_count": 9,
+      "max_pairwise_jaccard": 0.4,
+      "threshold": 0.5
+    }
+  },
+  "pattern_family_strategy": "auto",
+  "pattern_family_summary": {
+    "strategy": "auto",
+    "project_override_count": 0,
+    "total": 20,
+    "classified": 13,
+    "unknown": 7,
+    "classified_ratio": 0.65
+  },
+  "enrichment_health": {
+    "total": 160,
+    "incomplete": 0,
+    "incomplete_ratio": 0,
+    "throttle_ms": 1000
+  },
+  "queryPlans": [
+    {
+      "label": "Query 7",
+      "query": "embedded ml",
+      "reasons": [
+        "Nimmt Tech-Tag \"embedded\" mit",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Kurze Query — breite Abdeckung, ggf. zu generisch"
+      ],
+      "hitCount": 7
+    },
+    {
+      "label": "Query 3",
+      "query": "isolation forest embedded",
+      "reasons": [
+        "Nimmt Tech-Tag \"embedded\" mit",
+        "Trifft Approach-Signature \"isolation-forest\"",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ],
+      "hitCount": 3
+    },
+    {
+      "label": "Query 1",
+      "query": "edge anomaly detection",
+      "reasons": [
+        "Nimmt Tech-Tag \"c\" mit",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ],
+      "hitCount": 2
+    },
+    {
+      "label": "Query 2",
+      "query": "time series matrix profile",
+      "reasons": [
+        "Trifft Approach-Signature \"matrix-profile\"",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ],
+      "hitCount": 2
+    },
+    {
+      "label": "Query 4",
+      "query": "esn reservoir computing",
+      "reasons": [
+        "Nimmt Tech-Tag \"c\" mit",
+        "Trifft Approach-Signature \"reservoir-computing\"",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ],
+      "hitCount": 2
+    },
+    {
+      "label": "Query 5",
+      "query": "tflite micro anomaly",
+      "reasons": [
+        "Nimmt Tech-Tag \"c\" mit",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ],
+      "hitCount": 1
+    },
+    {
+      "label": "Query 6",
+      "query": "quantized autoencoder",
+      "reasons": [
+        "Nimmt Tech-Tag \"c\" mit",
+        "Trifft Approach-Signature \"autoencoder\"",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Kurze Query — breite Abdeckung, ggf. zu generisch"
+      ],
+      "hitCount": 1
+    },
+    {
+      "label": "Query 8",
+      "query": "sensor anomaly streaming",
+      "reasons": [
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ],
+      "hitCount": 1
+    },
+    {
+      "label": "Query 9",
+      "query": "streaming time series",
+      "reasons": [
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ],
+      "hitCount": 1
+    }
+  ],
+  "agentView": {
+    "mission": [
+      "Externe Loesungsraum-Landkarte fuer \"We deploy IoT sensor fleets that stream time-series data (temperature, vibration, electrical signal) and need to detect anomalies on-device before exporting any data\" ins Zielprojekt cross-domain-test ueberfuehren",
+      "Divergente Cluster (2) pruefen — hoeheres Lernpotenzial, hoeherer Transfer-Aufwand",
+      "Benachbarte Cluster (2) als Adaptions-Kandidaten auswerten"
+    ],
+    "deliverable": [
+      "Je Cluster ein Kurz-Exposé mit Key-Takeaway fuer das Zielprojekt",
+      "Pro divergentem Cluster eine klare adopt/adapt/observe/ignore-Entscheidung",
+      "Decision-Log-Eintrag(e) im Zielprojekt, die auf diese Landscape referenzieren"
+    ],
+    "priorityRepos": [
+      {
+        "repo": "wayang-roleplay/dit",
+        "action": "Als divergente Referenz fuer \"embedded-ml+embedded+inference\" pruefen",
+        "url": "https://github.com/wayang-roleplay/dit"
+      },
+      {
+        "repo": "HimanshuBairwa/Autonomous-Agronomy-Engine-",
+        "action": "Als divergente Referenz fuer \"schema_parser+---+2026\" pruefen",
+        "url": "https://github.com/HimanshuBairwa/Autonomous-Agronomy-Engine-"
+      },
+      {
+        "repo": "gowinston123/service-mesh-ids",
+        "action": "Als benachbarte Referenz fuer \"isolation-forest-embedded+detection+embedded\" pruefen",
+        "url": "https://github.com/gowinston123/service-mesh-ids"
+      },
+      {
+        "repo": "Corsking93/COSMO-OS-ROM",
+        "action": "Als benachbarte Referenz fuer \"--------------------+machine-learning+rust\" pruefen",
+        "url": "https://github.com/Corsking93/COSMO-OS-ROM"
+      }
+    ],
+    "context": [
+      "Aktueller Ansatz: - Threshold-based rules per channel (manual tuning)\n- High false-positive rate, no adaptation\n- Sends raw data to cloud for centralized scoring",
+      "Erfolgskriterium: Anomaly detection latency < 50ms per window,< 1MB total RAM footprint (model + state + buffer),Configurable sensitivity per sensor channel,Online adaptation to slow drift without full retrain,Clear false-positive vs false-negative tradeoff knob",
+      "Approach-Signature: matrix-profile, isolation-forest, autoencoder, reservoir-computing, quantized-inference, online-adaptation",
+      "Tech-Tags: c, rust, embedded, cortex-m7, rp2040, tensorflow-lite"
+    ],
+    "guardrails": [
+      "C / Rust / MicroPython implementation (no Python at runtime)",
+      "Open-source license",
+      "Quantized int8 inference where possible (TensorFlow Lite Micro acceptable)",
+      "No network at inference time"
+    ],
+    "uncertainties": [
+      "Nicht-Ziel: Cloud-side training (we accept training happens off-device)",
+      "Nicht-Ziel: Computer-vision anomaly detection (different sensor class)",
+      "Nicht-Ziel: Generic ML framework comparison"
+    ],
+    "codingStarter": {
+      "primary": {
+        "repo": "wayang-roleplay/dit",
+        "starterLabel": "adapters/provenance|embedded-ml-bridge.mjs",
+        "implementationGoal": "Adaptions-Skizze fuer Cluster \"embedded-ml+embedded+inference\" als Bruecke zum Zielprojekt",
+        "firstSlice": "Minimal-Integration: 1 Vertreter aus Cluster \"embedded-ml+embedded+inference\" gegen das Zielprojekt testen",
+        "targetAreas": [
+          "problem_lens"
+        ],
+        "starterMode": "exploration",
+        "compareChecklist": [
+          "Wie unterscheidet sich dieser divergente Ansatz vom aktuellen Stand?",
+          "Welche Annahmen des aktuellen Ansatzes stellt dieses Cluster in Frage?",
+          "Ist der Transfer-Aufwand in Relation zum erwarteten Gewinn vertretbar?"
+        ],
+        "stopIf": [
+          "Performance oder Qualitaet unter dem aktuellen Niveau ohne klare Perspektive",
+          "Lizenz oder Distributionsform passt nicht zum Zielprojekt"
+        ]
+      },
+      "secondary": [
+        {
+          "repo": "HimanshuBairwa/Autonomous-Agronomy-Engine-",
+          "starterLabel": "adapters/schema_parser|unknown-bridge.mjs",
+          "implementationGoal": "Alternativer Pfad aus Cluster \"schema_parser+---+2026\"",
+          "firstSlice": "Kurzvergleich gegen primaeren Pfad",
+          "targetAreas": [
+            "unknown"
+          ],
+          "starterMode": "exploration",
+          "compareChecklist": [
+            "Wo unterscheidet sich dieser Pfad vom primaeren?"
+          ],
+          "stopIf": [
+            "Keine klaren Unterschiede zum primaeren Pfad"
+          ]
+        },
+        {
+          "repo": "gowinston123/service-mesh-ids",
+          "starterLabel": "adapters/provenance|isolation-forest-embedded-bridge.mjs",
+          "implementationGoal": "Alternativer Pfad aus Cluster \"isolation-forest-embedded+detection+embedded\"",
+          "firstSlice": "Kurzvergleich gegen primaeren Pfad",
+          "targetAreas": [
+            "problem_lens"
+          ],
+          "starterMode": "exploration",
+          "compareChecklist": [
+            "Wo unterscheidet sich dieser Pfad vom primaeren?"
+          ],
+          "stopIf": [
+            "Keine klaren Unterschiede zum primaeren Pfad"
+          ]
+        }
+      ]
+    },
+    "payload": {
+      "schemaVersion": "2",
+      "handoffType": "landscape-to-project",
+      "problemSlug": "time-series-anomaly-detection-on-edge-devices",
+      "project": "cross-domain-test",
+      "relationCounts": {
+        "divergent": 2,
+        "adjacent": 2,
+        "near_current_approach": 0
+      }
+    },
+    "downloadFileName": "patternpilot-landscape-handoff-time-series-anomaly-detection-on-edge-devices.json",
+    "references": [
+      "Query: \"embedded ml\"",
+      "Query: \"isolation forest embedded\"",
+      "Query: \"edge anomaly detection\"",
+      "Query: \"time series matrix profile\""
+    ]
+  },
+  "techStatus": {
+    "effectiveQueries": [
+      "edge anomaly detection",
+      "time series matrix profile",
+      "isolation forest embedded",
+      "esn reservoir computing",
+      "tflite micro anomaly",
+      "quantized autoencoder",
+      "embedded ml",
+      "sensor anomaly streaming",
+      "streaming time series"
+    ],
+    "missingCandidates": [],
+    "searchErrors": []
+  }
+}

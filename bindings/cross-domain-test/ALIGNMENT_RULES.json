@@ -1,0 +1,175 @@
+{
+  "projectKey": "cross-domain-test",
+  "capabilities": [
+    {
+      "id": "ingestion",
+      "label": "ingestion and adapters",
+      "signals": [
+        "fetch",
+        "source",
+        "scrape",
+        "crawler",
+        "connector",
+        "adapter"
+      ],
+      "review_docs": [
+        "README.md"
+      ]
+    },
+    {
+      "id": "data_model",
+      "label": "data model and semantics",
+      "signals": [
+        "schema",
+        "model",
+        "normalize",
+        "entity",
+        "identity",
+        "taxonomy"
+      ],
+      "review_docs": [
+        "README.md"
+      ]
+    },
+    {
+      "id": "quality_governance",
+      "label": "quality and governance",
+      "signals": [
+        "review",
+        "quality",
+        "validation",
+        "governance",
+        "dedupe",
+        "audit"
+      ],
+      "review_docs": [
+        "README.md"
+      ]
+    },
+    {
+      "id": "distribution",
+      "label": "distribution and surfaces",
+      "signals": [
+        "api",
+        "feed",
+        "plugin",
+        "frontend",
+        "widget",
+        "embed"
+      ],
+      "review_docs": [
+        "README.md"
+      ]
+    }
+  ],
+  "layerMappings": {
+    "access_fetch": {
+      "fit_bias": 20,
+      "worker_areas": [
+        "lib/",
+        "src/",
+        "scripts/"
+      ],
+      "review_docs": [
+        "README.md"
+      ],
+      "next_step": "Compare the external fetch pattern against the target repo's ingestion layer."
+    },
+    "source_intake": {
+      "fit_bias": 22,
+      "worker_areas": [
+        "docs/",
+        "sources/",
+        "src/"
+      ],
+      "review_docs": [
+        "README.md"
+      ],
+      "next_step": "Check whether this repo suggests reusable source-system or adapter conventions."
+    },
+    "parsing_extraction": {
+      "fit_bias": 18,
+      "worker_areas": [
+        "lib/",
+        "src/"
+      ],
+      "review_docs": [
+        "README.md"
+      ],
+      "next_step": "Review whether parsing and normalization patterns improve data quality."
+    },
+    "export_feed_api": {
+      "fit_bias": 14,
+      "worker_areas": [
+        "api/",
+        "templates/",
+        "src/"
+      ],
+      "review_docs": [
+        "README.md"
+      ],
+      "next_step": "Treat as a distribution pattern layered on top of the project core."
+    },
+    "distribution_plugin": {
+      "fit_bias": 10,
+      "worker_areas": [
+        "docs/",
+        "src/"
+      ],
+      "review_docs": [
+        "README.md"
+      ],
+      "next_step": "Evaluate as adjacent product surface rather than core system logic."
+    },
+    "ui_discovery_surface": {
+      "fit_bias": 10,
+      "worker_areas": [
+        "src/",
+        "web/",
+        "docs/"
+      ],
+      "review_docs": [
+        "README.md"
+      ],
+      "next_step": "Keep surface ideas separate from ingestion or truth layers."
+    },
+    "location_place_enrichment": {
+      "fit_bias": 12,
+      "worker_areas": [
+        "src/",
+        "lib/"
+      ],
+      "review_docs": [
+        "README.md"
+      ],
+      "next_step": "Treat as enrichment unless the target project is explicitly place-first."
+    }
+  },
+  "gapMappings": {
+    "connector_families": {
+      "fit_bias": 16,
+      "suggested_next_step": "Review whether this should inform adapter families, not just one-off integrations."
+    },
+    "source_systems_and_families": {
+      "fit_bias": 18,
+      "suggested_next_step": "Compare the repo against the target's source-system architecture."
+    },
+    "distribution_surfaces": {
+      "fit_bias": 12,
+      "suggested_next_step": "Read as a surface/distribution signal layered on top of the core."
+    },
+    "location_and_gastro_intelligence": {
+      "fit_bias": 10,
+      "suggested_next_step": "Treat as enrichment signal unless the project already has strong geo semantics."
+    },
+    "risk_and_dependency_awareness": {
+      "fit_bias": 6,
+      "suggested_next_step": "Use primarily as a risk or anti-pattern signal."
+    }
+  },
+  "patternTensions": {
+    "cms_distribution_plugin": "Plugin-heavy patterns usually belong outside the core truth or ingestion engine.",
+    "event_discovery_frontend": "Discovery surfaces can be useful without changing the project core.",
+    "platform_based_place_enrichment": "Platform-bound enrichment should stay controlled and optional."
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "projectKey": "cross-domain-test",
+  "projectLabel": "Cross-Domain Stress Test",
+  "projectRoot": ".",
+  "readBeforeAnalysis": [
+    "AGENT_CONTEXT.md",
+    "README.md",
+    "docs/README.md",
+    "package.json"
+  ],
+  "referenceDirectories": [
+    "lib",
+    "scripts",
+    "docs"
+  ],
+  "discoveryHints": [],
+  "discoveryStrategy": {
+    "broadAnchorCount": 2,
+    "broadSignalCount": 1,
+    "broadMaxTerms": 3,
+    "archetypeAnchorCount": 1,
+    "archetypeSignalCount": 2,
+    "archetypeMaxTerms": 4,
+    "architectureAnchorCount": 1,
+    "architectureSignalCount": 2,
+    "architectureMaxTerms": 4,
+    "dependencyAnchorCount": 1,
+    "dependencySignalCount": 2,
+    "dependencyMaxTerms": 4,
+    "capabilityAnchorCount": 1,
+    "capabilitySignalCount": 2,
+    "capabilityMaxTerms": 4,
+    "manualAnchorCount": 1,
+    "manualMaxTerms": 4,
+    "negativeTermCount": 3,
+    "seedSignalSources": [
+      "discoveryHints"
+    ],
+    "preferredQueryFamilies": [
+      "broad",
+      "archetype",
+      "architecture",
+      "dependency",
+      "capability"
+    ],
+    "seedRepoFields": [
+      "fullName",
+      "name",
+      "description",
+      "homepage",
+      "topics"
+    ],
+    "minSeedSignalHits": 2,
+    "minStrongSeedSignalHits": 1,
+    "defaultStrongSignals": [
+      "api",
+      "calendar",
+      "connector",
+      "crawler",
+      "event",
+      "feed",
+      "plugin",
+      "scraper"
+    ],
+    "defaultNegativeTerms": [
+      "awesome",
+      "boilerplate",
+      "starter",
+      "template",
+      "tutorial"
+    ]
+  },
+  "alignmentRulesFile": "bindings/cross-domain-test/ALIGNMENT_RULES.json",
+  "discoveryPolicyFile": "bindings/cross-domain-test/DISCOVERY_POLICY.json",
+  "analysisQuestions": [
+    "Welche Schicht im Zielrepo wird durch das externe Repo beleuchtet?",
+    "Welche Luecke, Staerkung oder Spannungsflaeche zeigt sich?",
+    "Ist das eher build_core, adapt_pattern, borrow_optional, observe_only oder avoid_as_core_dependency?",
+    "Welche konkrete Folgearbeit sollte fuer das Zielprojekt entstehen?"
+  ],
+  "targetCapabilities": [
+    "ingestion and adapters",
+    "data model and semantics",
+    "quality and governance",
+    "distribution and surfaces"
+  ],
+  "guardrails": [
+    "patternpilot bleibt Analyse- und Entscheidungsschicht, nicht Produktionslogik",
+    "externe Repos nie blind als Kernarchitektur uebernehmen",
+    "Distribution-, Surface- und Core-Logik bewusst getrennt halten"
+  ]
+}

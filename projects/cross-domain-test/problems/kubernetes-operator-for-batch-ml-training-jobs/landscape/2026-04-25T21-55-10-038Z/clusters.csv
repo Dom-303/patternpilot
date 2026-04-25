@@ -1,0 +1,4 @@
+label,pattern_family,main_layer,relation,member_count,signature_contrast
+kubebuilder+kubebuilder+kubernetes,kubebuilder,problem_lens,divergent,10,kubebuilder|query:kubebuilder|controller
+framework+any+kubernetes,framework,unknown,divergent,2,describe|framework|inference
+orchestrator+kubernetes+monitoring,orchestrator,unknown,divergent,3,monitoring|creation|custom

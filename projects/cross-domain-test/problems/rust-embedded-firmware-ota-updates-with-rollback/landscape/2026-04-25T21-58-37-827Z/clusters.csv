@@ -1,0 +1,7 @@
+label,pattern_family,main_layer,relation,member_count,signature_contrast
+rust-no-std-bootloader+bootloader+rust,rust no-std bootloader,problem_lens,divergent,5,query:rust-no-std-bootloader|no-std|rust
+embedded-rust-ota+devices+rust,embedded rust ota,problem_lens,divergent,4,query:embedded-rust-ota|ship|esp32
+mcu-firmware-update+firmware+update,mcu firmware update,problem_lens,divergent,3,query:mcu-firmware-update|update|firmware
+validator+implementing+stm32,validator,unknown,divergent,2,implementing|stm32|boot
+0482+264+achieve,unknown,unknown,divergent,4,0482|264|achieve
+normalizer+benchmarking+embedded,normalizer,unknown,adjacent,2,embedded|benchmarking|binary-format

@@ -1,0 +1,5 @@
+label,pattern_family,main_layer,relation,member_count,signature_contrast
+offline-first-sync+ios+offline-first,offline-first sync,problem_lens,divergent,7,query:offline-first-sync|offline-first|typescript
+collaborative-editing-mobile+android+mobile,collaborative editing mobile,problem_lens,divergent,4,mobile|query:collaborative-editing-mobile|application
+automerge-swift+automerge+swift,automerge swift,problem_lens,divergent,3,automerge|query:automerge-swift|swift
+orchestrator+answer+answering,orchestrator,unknown,adjacent,2,answer|answering|anti-entropy
