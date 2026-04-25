@@ -1,7 +1,7 @@
 # Score-Stabilitaets-Plan — auf Weg zu reproduzierbaren 9-10/10 Reports
 
-- last_updated: 2026-04-24
-- status: Phase 0 done; Phase 1 + Phase 2 scaffolding done (Default off); Phase 3 done (Rate-Limit-Retry Default on, --slow opt-in); Phase 4-5 offen
+- last_updated: 2026-04-25
+- status: Phase 0 done; Phase 1 + Phase 2 scaffolding done (Default off); Phase 3 done (Default on); Phase 4 Layer 1 done (Watchlist-Health-Diagnose, Default on, additiv); Phase 4 Layer 2 (Auto-Discover-Trigger) ist Folge-Commit; Phase 5 offen
 - scope: Landscape- und Discovery-Report
 - zielkorridor: Median 9, Min 8, Max 10 ueber beliebige Problem-Slugs und Zielprojekte
 - begriff: "Problem-Slug" = Eingangsargument von `npm run problem:explore -- <slug>`, z. B. `event-dedup`, `schema-extraction`
@@ -130,8 +130,21 @@ Jede Phase wird gegen drei Kriterien abgeklopft:
 - **Rollback:** Backoff-Schwelle auf `-1` setzen (env var `GITHUB_RATE_LIMIT_FLOOR=-1`) deaktiviert den neuen Pfad, bestehendes Retry bleibt
 - **Acceptance:** Lauf mit 80 Kandidaten auf Standard-Token ohne `403 rate limit` durchlaeuft; Run-Health zeigt `enrichment_incomplete_ratio ≤ 0.05`
 
-### Phase 4 — Discovery-Auto-Fallback
+### Phase 4 — Discovery-Auto-Fallback (Layer 1 done, Layer 2 offen)
 
+- **Status Layer 1:** 2026-04-25 geliefert. Implementierung: `lib/review/watchlist-health.mjs` (pure functions), Integration in `lib/review.mjs`, `--auto-discover` + `--no-auto-discover` Flags in `lib/config.mjs` reserviert. 18 neue Tests in `release:smoke`. Baseline-Scores unveraendert (6/8/7/2)
+- **Layer 1 (Default ON, additiv):** Bei watchlist-laeufen mit `count < 3` enthaelt der Review-Report jetzt
+  - ein **runGapSignal** `gap=watchlist_intake` mit konkretem Discovery-Command
+  - **konkrete nextSteps** (zwei Strings) mit `npm run discover` und `npm run intake` plus Begruendung
+  - ein **strukturiertes Health-Objekt** `review.watchlistHealth = { state, count, threshold, ... }` fuer downstream Konsumenten
+  - bei `selectedUrls > 0` wird Health-Injection unterdrueckt (User hat Korridor explizit gewaehlt)
+- **Layer 2 (offen, opt-in via `--auto-discover`):** Tatsaechlicher inline `discoverGithubCandidates`-Trigger, `appendUrlsToWatchlist`, dann Review. Bewusst nicht in diesem Commit, weil:
+  - `runDiscover` ist heavyweight (Profile + Policy + Benchmark + Feedback Loader, GitHub-API-Calls, Run-Artefakte)
+  - sauberes Inline-Triggering braucht Refactoring-Extraction des Discovery-Cores oder einen reduzierten Helper
+  - UX-Banner-Pflicht (Plan §5 Phase 4) braucht Real-World-Validierung der Auto-Discover-Outputs
+  - Phase 1+2 (Seed-Diversifier + Pattern-Family-Classifier) sollten erst aktiviert sein, bevor Auto-Discovery ihre Ergebnisse in die Watchlist injiziert
+- **Score-Auswirkung Layer 1:** Auf der `04-watchlist-review-empty`-Fixture **kein** Score-Sprung (Layer 1 fuellt `runGapSignals` von 0 auf 1 hits, aber lens-richness braucht ≥3 hits). Der Lift entsteht in der UX (Report ist nicht mehr leer) und wird in Layer 2 zu echtem Score-Lift, sobald `items` durch Auto-Discover gefuellt werden
+- **Aufruf:** automatisch aktiv. Flag `--auto-discover` liegt als Reservierung; `npm run review:watchlist -- --project <project> --auto-discover` parst, fuehrt aktuell aber noch keinen Auto-Discover-Lauf aus
 - **Ziel:** U4 — kein leerer Review-Report mehr. Wenn Watchlist leer ist, macht der Report Discovery-on-the-fly
 - **Konkret:**
   - `scripts/commands/review-watchlist.mjs`: Pre-Check. Wenn Watchlist `< 3` Eintraege, automatisch `npm run discover` im `focused`-Profil mit dem Zielprojekt-Kontext triggern, Ergebnisse in die Watchlist injizieren, dann Review laufen lassen
