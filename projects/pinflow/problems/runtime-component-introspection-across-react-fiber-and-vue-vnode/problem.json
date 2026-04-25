@@ -1,0 +1,111 @@
+{
+  "slug": "runtime-component-introspection-across-react-fiber-and-vue-vnode",
+  "title": "Runtime component introspection across React Fiber and Vue VNode",
+  "status": "active",
+  "project": "pinflow",
+  "created_at": "2026-04-25",
+  "updated_at": "2026-04-25",
+  "latest_landscape": "landscape/2026-04-25T20-40-12-925Z",
+  "last_explore_result": "ok",
+  "fields": {
+    "description": "PinFlow's pixel-to-code workflow needs a unified runtime adapter that introspects component trees from a running web application. Today the system supports React (via Fiber tree walking) and Vue 3 (via VNode introspection). Both APIs are framework-internal, change across minor versions, and must yield stable element IDs across HMR cycles to power source-location mapping for coding agents over MCP. We are looking for libraries that solve framework-agnostic component introspection, fiber/vnode walkers, devtools-protocol bridges, or runtime source-mapping helpers — so we can borrow patterns instead of maintaining brittle hand-written adapters.",
+    "current_approach": "- React adapter walks the Fiber tree via `__REACT_DEVTOOLS_GLOBAL_HOOK__` and a custom commit-renderer interceptor\n- Vue adapter walks the VNode tree via `__VUE_HMR_RUNTIME__` and component-instance introspection\n- Element IDs are content-hashed from props + source location\n- Both adapters live in `packages/runtime-adapter-react` and `packages/runtime-adapter-vue` and share types via `packages/protocol`\n\nThe current pain: each framework's internal API drifts across minor versions, so the adapter packages need maintenance pressure. We want to know whether the open-source community has a more robust pattern.",
+    "success_criteria": [
+      "A reusable adapter pattern that exposes a uniform component-introspection API for React 18+ and Vue 3+",
+      "Stable element IDs that survive hot module replacement at >80% cache hit rate",
+      "Zero production runtime cost (instrumentation must strip out cleanly in production builds)",
+      "Source-location mapping (file path, line, column, component name) available per element"
+    ],
+    "constraints": [
+      "TypeScript implementation",
+      "Open-source license (MIT or Apache-2.0)",
+      "No coupling to a specific bundler beyond Vite/Webpack",
+      "No reliance on production-stripped framework hooks",
+      "Must work in dev-only mode with explicit feature flags"
+    ],
+    "non_goals": [
+      "Solving CSS / Shadow-DOM isolation (separate concern)",
+      "Supporting Angular or Svelte adapters (out of current scope)",
+      "Building a full standalone DevTools UI",
+      "Replacing the React DevTools or Vue DevTools browser extensions"
+    ],
+    "suspected_approach_axes": [
+      "introspection_strategy: framework-internal-hook ↔ devtools-protocol-bridge ↔ source-instrumentation",
+      "id_stability: content-hash ↔ source-location-tuple ↔ structural-fingerprint",
+      "bundle_strategy: dev-only-flag ↔ build-time-strip ↔ runtime-feature-detect"
+    ],
+    "hints": {
+      "search_terms": [
+        "react fiber introspection",
+        "vue vnode walker",
+        "component devtools protocol",
+        "runtime tree walker",
+        "source location mapping",
+        "devtools bridge",
+        "fiber traversal",
+        "component metadata extraction"
+      ],
+      "tech_tags": [
+        "typescript",
+        "react",
+        "vue",
+        "vite",
+        "webpack",
+        "devtools",
+        "hmr",
+        "mcp"
+      ],
+      "constraint_tags": [
+        "opensource",
+        "dev-only",
+        "mit-or-apache",
+        "browser-runtime"
+      ],
+      "approach_keywords": [
+        "framework-adapter",
+        "devtools-protocol",
+        "runtime-tree-walker",
+        "source-location-mapping",
+        "hmr-stable-ids",
+        "instrumentation-strip-prod"
+      ]
+    }
+  },
+  "derived": {
+    "query_seeds": [
+      "react fiber introspection",
+      "vue vnode walker",
+      "component devtools protocol",
+      "runtime tree walker",
+      "source location mapping",
+      "devtools bridge",
+      "fiber traversal",
+      "component metadata extraction"
+    ],
+    "tech_tags": [
+      "typescript",
+      "react",
+      "vue",
+      "vite",
+      "webpack",
+      "devtools",
+      "hmr",
+      "mcp",
+      "ts"
+    ],
+    "constraint_tags": [
+      "opensource",
+      "dev-only",
+      "mit-or-apache",
+      "browser-runtime"
+    ],
+    "approach_signature": [
+      "framework-adapter",
+      "devtools-protocol",
+      "runtime-tree-walker",
+      "source-location-mapping",
+      "hmr-stable-ids",
+      "instrumentation-strip-prod"
+    ]
+  }
+}

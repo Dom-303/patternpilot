@@ -1,0 +1,5 @@
+label,pattern_family,main_layer,relation,member_count,signature_contrast
+fiber+query:react-fiber-introspection+react,react fiber introspection,problem_lens,divergent,7,query:react-fiber-introspection|fiber|threejs
+query:vue-vnode-walker+react+vue,vue vnode walker,problem_lens,divergent,3,query:vue-vnode-walker|vue|simple
+app+assistants+react,unknown,unknown,divergent,2,assistants|build|chrome
+anti-detection+chrome-extension+crawler,scraper,unknown,divergent,2,anti-detection|chrome-extension|crawler

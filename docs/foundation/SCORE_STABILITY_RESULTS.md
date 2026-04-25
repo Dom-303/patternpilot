@@ -56,6 +56,37 @@ spiegeln nicht die Member-Inhalte, und problem_derived-Tokens ueberschneiden
 sich nur wenig mit Repo-Tokens. Beides sind echte Folge-Hebel, kein
 Datenartefakt.
 
+### Lauf 3 — Cross-Project ueber drei Domaenen ✗ FAIL (erwartet)
+
+- **Datum:** 2026-04-25
+- **Quelle:** [`stability/cross-project.md`](stability/cross-project.md)
+- **Setup:** dieselben 4 EventBaer-Worker-Runs aus Lauf 2 + 1 EventBaer-Web (SSR mit PocketBase) + 1 PinFlow (Pixel-zu-Code-Devtool, React Fiber / Vue VNode introspection). Drei Domaenen: data-extraction, web/SSR, devtools/browser
+- **Aggregat (Combined):** Median **7.82/10**, Min **4.75/10**, Max **9.38/10**, Mean **7.59/10**
+- **Aggregat-Split:** Struktur median 10, Inhalt median 5.63
+- **Acceptance:** **FAIL** (combined median 7.82 < 8, min 4.75 < 7)
+
+| Projekt | Domaene | Klassifikation | Combined | Struct | Content |
+|---|---|---|---|---|---|
+| eventbear-worker (4 runs) | data-extraction, scraping | 95-100% | 7-9.38 | 9-10 | 5-8.75 |
+| eventbear-web (1 run) | web frontend, SSR | 85% | **8.13** | 10 | 6.25 |
+| pinflow (1 run) | browser devtool, framework adapters | **65%** | **4.75** | 7 | 2.5 |
+
+**Lessons:**
+
+- **Phase 1 (Seed-Diversifier)** = passthrough auf allen 6 Runs. Keine Cross-Domain-Schwaeche, aber auch keine Cross-Domain-Wirkung
+- **Phase 2 (Pattern-Family-Classifier)** = klare Domaenen-Abhaengigkeit. Lexikon trifft eventbaer-worker-Domaene zu 95-100%, eventbear-web zu 85%, pinflow zu 65%. Das ist exakt der vorhergesagte Cross-Domain-Drop
+- **content axis `problem-fit`** = ebenfalls domaenenabhaengig: eventbear-web 2/2, pinflow 0/2. Repos zur SSR-mit-PocketBase-Frage haben starkes Token-Overlap mit den Problem-Seeds; Repos zu Fiber/VNode-Introspection nicht — die Domaene benutzt zu spezielles Vokabular
+- **content axis `label-fidelity`** = domaenen-unabhaengig schwach (mean 0.17/2 ueber 6 Runs). Das ist ein STRUKTUR-Problem im Cluster-Labeling, nicht ein Domain-Problem. Top-3-Member-Tokens dominieren die Cluster-Token-Verteilung selten
+- **content axis `decision-readiness`** = ueberall 2/2. agentView ist ueberall vollstaendig — keine Cross-Domain-Schwaeche
+
+**Folge-Hebel-Reihenfolge nach diesem Lauf:**
+
+1. **Phase 7.1 — Per-Project-Lexikon** (groesster Cross-Domain-Hebel): pinflow's 4.75 → wahrscheinlich 7-8 sobald `bindings/pinflow/PATTERN_FAMILY_LEXICON.json` existiert mit Familien wie `framework-adapter`, `devtools-protocol`, `runtime-introspection`, `source-mapper`
+2. **Phase 7.0 — Label-Fidelity-Fix** (domain-unabhaengig): Cluster-Labels brauchen einen besseren Builder als nur "top-3 Member-Tokens joined". Realistischer: Pattern-Family + Top-2-distinguishing-Tokens. Wuerde label-fidelity auf 1-2/2 ueber alle Runs heben
+3. **Phase 7.2 — Lexikon-Auto-Extension** kommt erst, wenn 5-10 Runs ueber verschiedene Projekte vorliegen, damit der Auto-Suggester echte Daten zum Lernen hat
+
+Acceptance-FAIL hier ist **kein Bug**, sondern die ehrliche Vermessung. Der Plan hat fuer eventbear-worker geliefert; cross-domain-Acceptance erfordert Phase 7.
+
 Beobachtungen aus dem Lauf:
 
 - **Phase 1 (Seed-Diversifier):** Auf allen drei Slugs `passthrough — already_diverse`. Bestaetigt: die existierende Seed-Generierung ist in den meisten Faellen bereits orthogonal genug; Phase 1 ist Safety-Net fuer Edge-Cases

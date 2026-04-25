@@ -1,0 +1,29 @@
+{
+  "updated_at": "2026-04-25T20:40:12.979Z",
+  "sections": {
+    "problem-explore": {
+      "runtime-component-introspection-across-react-fiber-and-vue-vnode": {
+        "label": "runtime-component-introspection-across-react-fiber-and-vue-vnode",
+        "href": "\\\\wsl.localhost\\Ubuntu-24.04\\home\\domi\\eventbaer\\dev\\patternpilot\\projects\\pinflow\\problems\\runtime-component-introspection-across-react-fiber-and-vue-vnode\\landscape\\2026-04-25T20-40-12-925Z\\landscape.html",
+        "updated_at": "2026-04-25T20:40:12.979Z"
+      }
+    },
+    "docs": {
+      "ui-styleguide": {
+        "label": "UI-Styleguide (Cockpit Night Design System)",
+        "href": "\\\\wsl.localhost\\Ubuntu-24.04\\home\\domi\\eventbaer\\dev\\patternpilot\\docs\\reference\\REPORT_UI_TOKENS.html",
+        "updated_at": "2026-04-25T20:40:12.979Z"
+      },
+      "discovery-demo": {
+        "label": "Discovery-Demo (alle Sections voll befuellt)",
+        "href": "\\\\wsl.localhost\\Ubuntu-24.04\\home\\domi\\eventbaer\\dev\\patternpilot\\runs\\_ui-test\\full-sections-smoke.html",
+        "updated_at": "2026-04-25T20:40:12.979Z"
+      },
+      "landscape-demo": {
+        "label": "Landscape-Demo (alle Sections voll befuellt)",
+        "href": "\\\\wsl.localhost\\Ubuntu-24.04\\home\\domi\\eventbaer\\dev\\patternpilot\\runs\\_ui-test\\landscape-demo-smoke.html",
+        "updated_at": "2026-04-25T20:40:12.979Z"
+      }
+    }
+  }
+}
