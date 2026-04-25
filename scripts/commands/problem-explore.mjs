@@ -1,5 +1,5 @@
 import fs from "node:fs/promises";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { buildGenerateFn } from "../shared/llm-provider.mjs";
@@ -51,13 +51,48 @@ function loadSeedDictionary() {
   }
 }
 
-function loadPatternFamilyLexicon() {
+function loadPatternFamilyLexicon(rootDir, projectKey) {
+  let baseLexicon;
   try {
-    return JSON.parse(readFileSync(PATTERN_FAMILY_LEXICON_PATH, "utf8"));
+    baseLexicon = JSON.parse(readFileSync(PATTERN_FAMILY_LEXICON_PATH, "utf8"));
   } catch (error) {
     console.warn(`[problem:explore] pattern-family-lexicon missing or invalid (${error.message}) — falling back to passthrough.`);
     return { families: [] };
   }
+  if (!projectKey || !rootDir) return baseLexicon;
+
+  // Phase 7.1: per-project Lexikon-Override aus
+  // bindings/<project>/PATTERN_FAMILY_LEXICON.json. Wenn vorhanden,
+  // mergen wir die Familien: gleicher Label-Schluessel → Override
+  // (project gewinnt), neuer Label → Append. So bleibt das generische
+  // Default-Lexikon Sicherheitsnetz, aber projektspezifische Domaenen
+  // koennen ergaenzt oder anders kuratiert werden.
+  const projectLexiconPath = path.join(rootDir, "bindings", projectKey, "PATTERN_FAMILY_LEXICON.json");
+  let projectLexicon = null;
+  try {
+    if (existsSync(projectLexiconPath)) {
+      projectLexicon = JSON.parse(readFileSync(projectLexiconPath, "utf8"));
+    }
+  } catch (error) {
+    console.warn(`[problem:explore] project-lexicon at ${projectLexiconPath} invalid (${error.message}) — using default lexicon only.`);
+    return baseLexicon;
+  }
+  if (!projectLexicon || !Array.isArray(projectLexicon.families)) return baseLexicon;
+
+  const merged = new Map();
+  for (const family of Array.isArray(baseLexicon.families) ? baseLexicon.families : []) {
+    if (family?.label) merged.set(family.label, family);
+  }
+  for (const family of projectLexicon.families) {
+    if (family?.label) merged.set(family.label, family);
+  }
+  console.log(`[problem:explore] pattern-family-lexicon: merged base (${baseLexicon.families?.length ?? 0}) + project '${projectKey}' (${projectLexicon.families.length}) → ${merged.size} families.`);
+  return {
+    version: baseLexicon.version,
+    description: baseLexicon.description,
+    families: [...merged.values()],
+    project_override_count: projectLexicon.families.length,
+  };
 }
 
 async function loadCandidateRepos({ rootDir, config, projectKey, slug, problem, skipDiscovery, options }) {
@@ -205,10 +240,14 @@ export async function runProblemExplore(rootDir, config, options) {
   let patternFamilySummary = null;
   let reposForClustering = reposWithKeywords;
   if (patternFamilyStrategy === "auto") {
-    const lexicon = loadPatternFamilyLexicon();
+    const lexicon = loadPatternFamilyLexicon(rootDir, project);
     const { repos: classifiedRepos, summary } = classifyRepos(reposWithKeywords, lexicon);
     reposForClustering = classifiedRepos;
-    patternFamilySummary = { strategy: "auto", ...summary };
+    patternFamilySummary = {
+      strategy: "auto",
+      project_override_count: lexicon.project_override_count ?? 0,
+      ...summary,
+    };
     console.log(`[problem:explore] pattern-family=auto — classified ${summary.classified}/${summary.total} repos (${Math.round(summary.classified_ratio * 100)}%).`);
   }
 

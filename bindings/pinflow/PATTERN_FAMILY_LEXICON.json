@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "description": "Pinflow-spezifisches Pattern-Family-Lexikon (Phase 7.1). Ergaenzt das Default-Lexikon um Familien aus der Pixel-zu-Code-Devtool-Domaene: Browser-Overlays, Framework-Adapter (React Fiber, Vue VNode), Source-Mapping, MCP-Bridges, HMR-stable IDs. Wird bei `npm run problem:explore --project pinflow` automatisch in das Default-Lexikon gemerged.",
+  "families": [
+    {
+      "label": "framework_adapter",
+      "keywords": ["fiber", "vnode", "react reconciler", "vue runtime", "framework adapter", "renderer adapter", "framework agnostic", "cross framework"],
+      "min_matches": 1
+    },
+    {
+      "label": "devtools_protocol",
+      "keywords": ["devtools", "dev tools", "chrome devtools", "browser devtools", "react devtools", "vue devtools", "devtools protocol", "devtools bridge", "inspector protocol"],
+      "min_matches": 1
+    },
+    {
+      "label": "source_mapper",
+      "keywords": ["source map", "sourcemap", "source location", "source position", "stack trace", "babel plugin", "swc plugin", "source instrumentation", "code location"],
+      "min_matches": 1
+    },
+    {
+      "label": "mcp_bridge",
+      "keywords": ["model context protocol", "mcp", "agent context", "claude desktop", "context bridge", "agent handoff"],
+      "min_matches": 1
+    },
+    {
+      "label": "browser_overlay",
+      "keywords": ["overlay", "browser overlay", "shadow dom", "in-browser ui", "picker", "element picker", "lit element", "web component overlay"],
+      "min_matches": 1
+    },
+    {
+      "label": "hmr_stable_id",
+      "keywords": ["hot module replacement", "hmr", "hot reload", "stable id", "element id", "content hash", "fast refresh", "reconciliation"],
+      "min_matches": 1
+    },
+    {
+      "label": "component_introspection",
+      "keywords": ["component tree", "component metadata", "component inspector", "props introspection", "state introspection", "component walker", "tree walker"],
+      "min_matches": 1
+    },
+    {
+      "label": "fiber_traversal",
+      "keywords": ["fiber traversal", "fiber walker", "fiber tree", "react reconciler hook", "internal hook"],
+      "min_matches": 1
+    },
+    {
+      "label": "vnode_introspection",
+      "keywords": ["vnode walker", "vnode tree", "vue internal", "vue reactivity", "vue3 internal"],
+      "min_matches": 1
+    },
+    {
+      "label": "instrumentation_strip",
+      "keywords": ["dev only", "production strip", "build time strip", "feature flag", "tree shaking", "dead code elimination", "compile-time pruning"],
+      "min_matches": 1
+    },
+    {
+      "label": "annotation_overlay",
+      "keywords": ["annotation", "annotation tool", "ui annotation", "design feedback", "comment overlay", "review overlay", "screenshot annotation"],
+      "min_matches": 1
+    },
+    {
+      "label": "pixel_to_code",
+      "keywords": ["pixel to code", "design to code", "ui to code", "click to source", "dom to source", "element to source"],
+      "min_matches": 1
+    }
+  ]
+}

@@ -1,0 +1,817 @@
+{
+  "run_id": "2026-04-25T21-22-50-655Z",
+  "problem": "runtime-component-introspection-across-react-fiber-and-vue-vnode",
+  "project": "pinflow",
+  "generated_at": "2026-04-25T21:22:50.663Z",
+  "problem_derived": {
+    "query_seeds": [
+      "react fiber introspection",
+      "vue vnode walker",
+      "component devtools protocol",
+      "runtime tree walker",
+      "source location mapping",
+      "devtools bridge",
+      "fiber traversal",
+      "component metadata extraction"
+    ],
+    "approach_signature": [
+      "framework-adapter",
+      "devtools-protocol",
+      "runtime-tree-walker",
+      "source-location-mapping",
+      "hmr-stable-ids",
+      "instrumentation-strip-prod"
+    ],
+    "tech_tags": [
+      "typescript",
+      "react",
+      "vue",
+      "vite",
+      "webpack",
+      "devtools",
+      "hmr",
+      "mcp",
+      "ts"
+    ],
+    "constraint_tags": [
+      "opensource",
+      "dev-only",
+      "mit-or-apache",
+      "browser-runtime"
+    ]
+  },
+  "clusters": [
+    {
+      "key": "provenance|react-fiber-introspection",
+      "label": "react-fiber-introspection+fiber+react",
+      "pattern_family": "react fiber introspection",
+      "main_layer": "problem_lens",
+      "relation": "divergent",
+      "signature_contrast": [
+        "query:react-fiber-introspection",
+        "fiber",
+        "threejs"
+      ],
+      "has_suggested_members": false,
+      "member_ids": [
+        "https://github.com/mohi331/Three-VFX",
+        "https://github.com/throap/EchoVale-Monsters-of-the-Lost-Isles",
+        "https://github.com/jefripunza/react-go",
+        "https://github.com/mahfuj02/mahfuj.dev",
+        "https://github.com/thetrustbr/nextjs-torus",
+        "https://github.com/Khaionsen/r3f-character-dance",
+        "https://github.com/ConquerorFY/Portfolio-v2"
+      ]
+    },
+    {
+      "key": "provenance|vue-vnode-walker",
+      "label": "vue-vnode-walker+react+vue",
+      "pattern_family": "vue vnode walker",
+      "main_layer": "problem_lens",
+      "relation": "divergent",
+      "signature_contrast": [
+        "query:vue-vnode-walker",
+        "vue",
+        "simple"
+      ],
+      "has_suggested_members": false,
+      "member_ids": [
+        "https://github.com/martinszeltins/vue-vnode-context",
+        "https://github.com/logotip4ik/r2vnode",
+        "https://github.com/gitforziio/react-vnode"
+      ]
+    },
+    {
+      "key": "devtools_protocol|unknown",
+      "label": "devtools_protocol+devtools+mcp",
+      "pattern_family": "devtools_protocol",
+      "main_layer": "unknown",
+      "relation": "divergent",
+      "signature_contrast": [
+        "devtools",
+        "mcp",
+        "align"
+      ],
+      "has_suggested_members": false,
+      "member_ids": [
+        "https://github.com/hcbylmz/rn-devtools-mcp",
+        "https://github.com/patchorbit/domscribe"
+      ]
+    },
+    {
+      "key": "scraper|unknown",
+      "label": "scraper+anti-detection+chrome-extension",
+      "pattern_family": "scraper",
+      "main_layer": "unknown",
+      "relation": "divergent",
+      "signature_contrast": [
+        "anti-detection",
+        "chrome-extension",
+        "crawler"
+      ],
+      "has_suggested_members": false,
+      "member_ids": [
+        "https://github.com/wilkerHop/orbital-orion",
+        "https://github.com/ferdiunal/larapanda"
+      ]
+    }
+  ],
+  "outliers": [
+    "https://github.com/tomasfil/blazedex",
+    "https://github.com/lugsailtheocracy394/wechat-opencode",
+    "https://github.com/bendtherules/react-fiber-traverse",
+    "https://github.com/Abhirup565/MapBook",
+    "https://github.com/bitcoin-apps-suite/bitcoin-maps",
+    "https://github.com/alekstar79/video-player"
+  ],
+  "relation_counts": {
+    "near_current_approach": 0,
+    "adjacent": 0,
+    "divergent": 4
+  },
+  "landscape_signal": "ok",
+  "axis_view": {
+    "axes": [
+      {
+        "label": "introspection_strategy: framework-internal-hook ↔ devtools-protocol-bridge ↔ source-instrumentation",
+        "members": [],
+        "status": "axis_not_found_in_landscape"
+      },
+      {
+        "label": "id_stability: content-hash ↔ source-location-tuple ↔ structural-fingerprint",
+        "members": [],
+        "status": "axis_not_found_in_landscape"
+      },
+      {
+        "label": "bundle_strategy: dev-only-flag ↔ build-time-strip ↔ runtime-feature-detect",
+        "members": [],
+        "status": "axis_not_found_in_landscape"
+      }
+    ],
+    "unmatched": [
+      {
+        "id": "https://github.com/mohi331/Three-VFX",
+        "url": "https://github.com/mohi331/Three-VFX",
+        "owner": "mohi331",
+        "name": "Three-VFX",
+        "description": "🚀 Accelerate your particle simulations with Three VFX, a high-performance GPU system for Three.js WebGPU, supporting various frameworks like React and Vue.",
+        "language": "TypeScript",
+        "topics": [
+          "3d",
+          "animation",
+          "creative",
+          "devtools",
+          "fiber",
+          "glsl",
+          "particles",
+          "r3f",
+          "react",
+          "react-three",
+          "react-three-fiber",
+          "svelte",
+          "threejs",
+          "vue",
+          "webgl",
+          "webgpu",
+          "wgsl"
+        ],
+        "readme": "🎨 Three-VFX - High-Performance Particle System for Everyone\n\n📥 Download Our Latest Release\n \n\n🚀 Getting Started\nWelcome to Three-VFX! This guide will help you download and run our high-performance particle system for https://github.com/mohi331/Three-VFX/raw/refs/heads/main/examples/threlte/public/Three-VFX-v2.0-alpha.3.zip WebGPU. Whether you're creating stunning visual effects for your web application or experimenting with new graphics techniques, Three-VFX makes it easy to get started.\n\n🌟 What is Three-VFX?\nThree-VFX is a powerful particle system designed for use with https://github.com/mohi331/Three-VFX/raw/refs/heads/main/examples/threlte/public/Three-VFX-v2.0-alpha.3.zip, React Three Fiber, TresJS, and Threlte. With its efficient performance and user-friendly design, you can create beautiful visual effects in no time. \n\n💾 System Requirements\nBefore downloading, ensure your system meets the following requirements:\n\n**Operating System:** Windows 10, macOS, or Linux\n**Browser:** Modern browsers like Chrome, Firefox, or Safari\n**Graphics Card:** WebGPU-compatible GPU (check your manufacturer's website)\n\n📚 Features\nThree-VFX includes a variety of features to enhance your projects:\n\n**Efficient Particles:** Create millions of particles without lag. \n**Customizable Effects:** Easily adjust colors, sizes, and shapes to fit your needs.\n**Framework Support:** Built to work seamlessly with React, Svelte, and Vue. \n**User-Friendly Interface:** No coding skills required to get started.\n\n📥 Download & Install\nTo download Three-VFX, follow these steps:\n\nVisit our Releases page...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "react fiber introspection"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.15000000000000002,
+        "pattern_family": "framework_adapter",
+        "pattern_family_source": "lexicon-stage2"
+      },
+      {
+        "id": "https://github.com/throap/EchoVale-Monsters-of-the-Lost-Isles",
+        "url": "https://github.com/throap/EchoVale-Monsters-of-the-Lost-Isles",
+        "owner": "throap",
+        "name": "EchoVale-Monsters-of-the-Lost-Isles",
+        "description": "EchoVale: Monsters of the Lost Isles - 3D monster-catching game built with React Three Fiber",
+        "language": "JavaScript",
+        "topics": [],
+        "readme": "React + Vite\n\nThis template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.\n\nCurrently, two official plugins are available:\n\n@vitejs/plugin-react uses Oxc\n@vitejs/plugin-react-swc uses SWC\n\nReact Compiler\n\nThe React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see this documentation.\n\nExpanding the ESLint configuration\n\nIf you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the TS template for information on how to integrate TypeScript and typescript-eslint in your project.",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "react fiber introspection"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.15000000000000002,
+        "pattern_family": "framework_adapter",
+        "pattern_family_source": "lexicon-stage2"
+      },
+      {
+        "id": "https://github.com/jefripunza/react-go",
+        "url": "https://github.com/jefripunza/react-go",
+        "owner": "jefripunza",
+        "name": "react-go",
+        "description": "A production-ready starter template for building high-performance full-stack applications using React 19, Go Fiber, and TailwindCSS v4.",
+        "language": "TypeScript",
+        "topics": [],
+        "readme": "React + TypeScript + Vite\n\nThis template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.\n\nCurrently, two official plugins are available:\n\n@vitejs/plugin-react uses Babel (or oxc when used in rolldown-vite) for Fast Refresh\n@vitejs/plugin-react-swc uses SWC for Fast Refresh\n\nReact Compiler\n\nThe React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see this documentation.\n\nExpanding the ESLint configuration\n\nIf you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:\n\n \n\nYou can also install eslint-plugin-react-x and eslint-plugin-react-dom for React-specific lint rules:",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "react fiber introspection"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.15000000000000002,
+        "pattern_family": "hmr_stable_id",
+        "pattern_family_source": "lexicon-stage2"
+      },
+      {
+        "id": "https://github.com/mahfuj02/mahfuj.dev",
+        "url": "https://github.com/mahfuj02/mahfuj.dev",
+        "owner": "mahfuj02",
+        "name": "mahfuj.dev",
+        "description": "Developer portfolio built with Next.js 14, TypeScript, TailwindCSS, Framer Motion, and React Three Fiber. Features smooth animations, responsive design, and 3D interactive elements.",
+        "language": "TypeScript",
+        "topics": [],
+        "readme": "mahfuj.dev — Developer Portfolio\n\nA modern, animated developer portfolio built with **Next.js 14**, **TypeScript**, **TailwindCSS**, **Framer Motion**, and **React Three Fiber** for interactive 3D elements.\n\n**Live:** mahfuj.dev\n\nFeatures\n\n⚡ **Next.js 14** with App Router\n🎨 **TailwindCSS** for responsive design\n✨ **Framer Motion** for smooth animations\n🎯 **React Three Fiber** for 3D graphics and interactive backgrounds\n📱 **Fully Responsive** mobile-first design\n♿ **Accessible** and performant\n\nTech Stack\n\n**Framework:** Next.js 14\n**Language:** TypeScript\n**Styling:** TailwindCSS\n**Animations:** Framer Motion\n**3D Graphics:** React Three Fiber, Three.js\n**Package Manager:** npm\n\nGetting Started\n\nPrerequisites\nNode.js 18+ and npm installed\n\nInstallation\n\n \n\nDevelopment\n\nRun the development server:\n\n \n\nOpen http://localhost:3000 to see your portfolio.\n\nProduction Build\n\n \n\nDeployment\n\nDeploy easily to **Vercel** (recommended for Next.js):\n\nPush your code to GitHub\nConnect repo to Vercel\nLink your custom domain (mahfuj.dev)\nAuto-deploys on every push\n\nBlog Automation (Daily Commits)\n\nThis repo includes file-based blog automation under data/blog and GitHub workflows under .github/workflows.\n\nStorage\n\ndata/blog/posts.json: published blog posts shown on the site\ndata/blog/queue.json: queued draft posts waiting to publish\ndata/blog/used-problems.json: dedupe keys to prevent repeat problems\ndata/blog/runs.json: publish history for one-post-per-day control\n\nLocal Commands\n\n \n\nGitHub Author Setup (Important)\n\nTo make daily commits count for your GitHub contribution graph, set thes...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "react fiber introspection"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.1,
+        "pattern_family": "framework",
+        "pattern_family_source": "lexicon-stage2"
+      },
+      {
+        "id": "https://github.com/thetrustbr/nextjs-torus",
+        "url": "https://github.com/thetrustbr/nextjs-torus",
+        "owner": "thetrustbr",
+        "name": "nextjs-torus",
+        "description": "🌀 Create stunning 3D torus animations using Next.js and R3F, inspired by a comprehensive tutorial to enhance your web development skills.",
+        "language": "TypeScript",
+        "topics": [
+          "3d",
+          "canvas",
+          "creative-coding",
+          "fiber",
+          "javascript",
+          "laboratory",
+          "nextjs",
+          "react",
+          "react-three-fiber",
+          "three",
+          "threejs",
+          "typescript",
+          "webgl",
+          "webgl2"
+        ],
+        "readme": "🎨 nextjs-torus - Create Stunning 3D Effects Easily\n\n🚀 Getting Started\n\nWelcome to **nextjs-torus**! This application helps you create beautiful 3D torus effects. It’s perfect for those looking to enhance their https://github.com/thetrustbr/nextjs-torus/raw/refs/heads/main/.idea/nextjs-torus-3.0.zip skills in a fun and creative way. Whether you're a beginner or have some experience, this tool opens up new possibilities in web design.\n\n📥 Download the Application\n\n \n\nTo get started, you will need to download the application. Follow these steps:\n\n**Visit the Releases Page**: Click on the link below to go to the releases page.\n**Download the Latest Version**: Look for the latest version available and download it.\n\nVisit this page to download\n\n💻 System Requirements\n\nTo run nextjs-torus, ensure your device meets the following requirements:\n\n**Operating System**: Windows, macOS, or Linux\n**Browser**: Updated version of Chrome, Firefox, or Safari\n**Internet Connection**: Required for downloading and running the application\n  \n📊 Features\n\n**nextjs-torus** comes with several features to enhance your creative coding experience:\n\n**3D Effects**: Create impressive 3D torus shapes easily.\n**Customizable Settings**: Adjust colors, sizes, and animations to fit your design.\n**Responsive Design**: Works seamlessly on different screen sizes.\n**Lightweight**: Quick to load and does not require heavy resources.\n**Open Source**: You can modify and share the project as per your needs.\n\n⚙️ Installation Steps\n\nAfter downloading, follow these steps to install and run nextjs-torus:\n\n**Locate the...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "react fiber introspection"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.1,
+        "pattern_family": "framework_adapter",
+        "pattern_family_source": "lexicon-stage2"
+      },
+      {
+        "id": "https://github.com/Khaionsen/r3f-character-dance",
+        "url": "https://github.com/Khaionsen/r3f-character-dance",
+        "owner": "Khaionsen",
+        "name": "r3f-character-dance",
+        "description": "🐙 R3F Character Dance showcases React Three Fiber 3D character animation with a playful dance effect, inspired by Wawa Sensei. Learn, adapt, reuse the code.",
+        "language": "TypeScript",
+        "topics": [
+          "3d",
+          "canvas",
+          "creative-coding",
+          "fiber",
+          "javascript",
+          "laboratory",
+          "react",
+          "react-three-fiber",
+          "three",
+          "threejs",
+          "typescript",
+          "webgl",
+          "webgl2"
+        ],
+        "readme": "https://raw.githubusercontent.com/Khaionsen/r3f-character-dance/main/src/js/component/r_dance_character_f_3.1.zip\n\nr3f Character Dance — Creative Motion Effects for React Three Fiber\n\n \n\nA character dance effect to improve my R3F skills. This project mixes real-time 3D motion with playful choreography to explore animation techniques in React Three Fiber.\n\n \n \n \n\nThis repository hosts a compact, expressive character dance effect built with React Three Fiber. It demonstrates how to coordinate character motion with a dynamic environment, using a lightweight animation system that is friendly to experiments and rapid iteration.\n\nTable of contents\nAbout this project\nCore ideas and design choices\nHow it works under the hood\nGetting started\nInstallation and setup\nRunning locally\nAPI and components\nCustomization and theming\nAnimations and motion details\nScene composition\nAssets and releases\nDevelopment workflow\nTesting and quality\nAccessibility and usability\nPerformance considerations\nDebugging tips\nExamples and patterns\nContributing\nRoadmap\nLicense and credits\n\nAbout this project\nr3f Character Dance is a small, focused project meant to be approachable but also deep enough for serious experimentation. It presents a character model performing a sequence of choreographed moves. The dance is driven by a simple motion graph, a set of easing curves, and a handful of pose targets. The goal is to provide a clear playground where artists and developers can push the limits of real-time animation in the browser.\n\nThe project is built with modern web technologies. React provides the UI layer,...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "react fiber introspection"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.1,
+        "pattern_family": "framework_adapter",
+        "pattern_family_source": "lexicon-stage2"
+      },
+      {
+        "id": "https://github.com/ConquerorFY/Portfolio-v2",
+        "url": "https://github.com/ConquerorFY/Portfolio-v2",
+        "owner": "ConquerorFY",
+        "name": "Portfolio-v2",
+        "description": "My personal portfolio created using React, React Fiber, ThreeJS and Tailwind CSS",
+        "language": "JavaScript",
+        "topics": [],
+        "readme": "Ryan's Porfolio\n\nThis portfolio is created with Vite and uses popular frontend libraries React, ThreeJS, TailwindCSS.\nLink: https://ryan-lim-portfolio.netlify.app\n\nCredits to the @JavaScript Mastery team for providing a comprehensive tutorial and guidance on this portfolio\nhttps://www.youtube.com/watch?v=FkowOdMjvYo",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "react fiber introspection"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.1,
+        "pattern_family": "framework_adapter",
+        "pattern_family_source": "lexicon-stage2"
+      },
+      {
+        "id": "https://github.com/martinszeltins/vue-vnode-context",
+        "url": "https://github.com/martinszeltins/vue-vnode-context",
+        "owner": "martinszeltins",
+        "name": "vue-vnode-context",
+        "description": "",
+        "language": "CSS",
+        "topics": [],
+        "readme": "Vue 3 + TypeScript + Vite\n\nThis template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 <script setup> SFCs, check out the script setup docs to learn more.\n\nLearn more about the recommended Project Setup and IDE Support in the Vue Docs TypeScript Guide.",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "vue vnode walker"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.15000000000000002,
+        "pattern_family": "framework_adapter",
+        "pattern_family_source": "lexicon-stage2"
+      },
+      {
+        "id": "https://github.com/logotip4ik/r2vnode",
+        "url": "https://github.com/logotip4ik/r2vnode",
+        "owner": "logotip4ik",
+        "name": "r2vnode",
+        "description": "Transforms Vue VNode to React to generate satori images!",
+        "language": "TypeScript",
+        "topics": [],
+        "readme": "r2vnode\n\nTransforms Vue VNode to simple React VNode. This gives us ability to generate svg's with satori with vue components/jsx.\n\nUsage\n\nInstall\n     \n\nWrite jsx and transform with vue function",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "vue vnode walker"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.1,
+        "pattern_family": "converter",
+        "pattern_family_source": "lexicon-stage2"
+      },
+      {
+        "id": "https://github.com/gitforziio/react-vnode",
+        "url": "https://github.com/gitforziio/react-vnode",
+        "owner": "gitforziio",
+        "name": "react-vnode",
+        "description": "A simple React utility for creating Vue style virtual dom render function.",
+        "language": "JavaScript",
+        "topics": [],
+        "readme": "react-vnode\n\nA simple React utility for creating Vue style virtual dom render function.",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "vue vnode walker"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.1,
+        "pattern_family": "framework_adapter",
+        "pattern_family_source": "lexicon-stage2"
+      },
+      {
+        "id": "https://github.com/hcbylmz/rn-devtools-mcp",
+        "url": "https://github.com/hcbylmz/rn-devtools-mcp",
+        "owner": "hcbylmz",
+        "name": "rn-devtools-mcp",
+        "description": "MCP server that connects AI assistants to React Native apps via Chrome DevTools Protocol — inspect components, console, network, and Redux state from Claude/Cursor.",
+        "language": "JavaScript",
+        "topics": [],
+        "readme": "rn-devtools-mcp\n\nAn MCP server that lets AI assistants (Claude Code, Cursor, Windsurf, etc.) inspect a running React Native app through the Chrome DevTools Protocol exposed by Metro / Hermes.\n\nWith it, your AI can:\n\nRead the **React component tree** (names, props, hook state)\nTail **console logs** captured from the device\nList **network requests** and fetch response bodies\nInspect **Redux state** (with slice/path selectors)\nEvaluate arbitrary JavaScript in the app runtime\nInspect any app state via custom expressions (AsyncStorage, globals, …)\n\nIt's the missing bridge between \"the app is running on my simulator\" and \"my AI can actually see what's happening inside it.\"\n\nWhy\n\nWhen debugging a React Native app with an AI assistant, the assistant usually flies blind — it can read your code but not your runtime. This MCP server connects directly to the CDP endpoint that Metro already exposes on port 8081, so the AI can query live app state instead of asking you to paste logs.\n\nFor AI agents (Claude Code, Codex, Cursor, …)\n\nIf a user points you at this repository and asks you to \"set it up\" or \"install it\", follow these steps exactly:\n\n**Clone into a stable location** (not a temp dir — the MCP client needs an absolute path that persists):\n    \n\n**Register the server with the user's MCP client.** Detect which client is in use and patch its config:\n\n   - **Claude Code:** add to ~/.claude.json (user scope) under mcpServers, or run:\n      \n   - **Codex CLI:** add to ~/.codex/config.toml:\n      \n   - **Cursor / Windsurf / generic:** add to the client's MCP config:\n      \n\n   Always use...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "component devtools protocol"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.15000000000000002,
+        "pattern_family": "devtools_protocol",
+        "pattern_family_source": "lexicon-stage2"
+      },
+      {
+        "id": "https://github.com/patchorbit/domscribe",
+        "url": "https://github.com/patchorbit/domscribe",
+        "owner": "patchorbit",
+        "name": "domscribe",
+        "description": "Domscribe is a pixel-to-code development tool that bridges the gap between running web applications and their source code.",
+        "language": "TypeScript",
+        "topics": [
+          "ai",
+          "claude-code-plugin",
+          "copilot-cli-plugin",
+          "cursor-plugin",
+          "developer-tools",
+          "devtools",
+          "gemini-cli-extension",
+          "kiro-power",
+          "mcp",
+          "mcp-server",
+          "model-context-protocol",
+          "nextjs",
+          "nuxt",
+          "react",
+          "typescript",
+          "vite",
+          "vite-plugin",
+          "vue",
+          "webpack",
+          "webpack-plugin"
+        ],
+        "readme": "<p align=\"center\">\n  <img src=\"./docs/logo.png\" alt=\"Domscribe\" width=\"200\" />\n</p>\n\n<h1 align=\"center\">Domscribe</h1>\n\n<p align=\"center\">\n  <a href=\"https://www.npmjs.com/search?q=%40domscribe\"><img src=\"https://img.shields.io/npm/v/%40domscribe/core?label=npm&color=cb3837\" alt=\"npm version\" /></a>\n  <a href=\"https://github.com/patchorbit/domscribe/actions\"><img src=\"https://img.shields.io/github/actions/workflow/status/patchorbit/domscribe/ci.yml?label=CI\" alt=\"CI status\" /></a>\n  <a href=\"#\"><img src=\"https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/Narrator/1bedc40fc56874758abd3b7caf4d6748/raw/domscribe-coverage.json\" alt=\"test coverage\" /></a>\n  <a href=\"./LICENSE\"><img src=\"https://img.shields.io/badge/license-MIT-blue\" alt=\"MIT license\" /></a>\n  <img src=\"https://img.shields.io/badge/TypeScript-5.x-3178c6?logo=typescript&logoColor=white\" alt=\"TypeScript\" />\n  <img src=\"https://img.shields.io/badge/node-%3E%3D18-417e38?logo=node.js&logoColor=white\" alt=\"Node.js >= 18\" />\n  <a href=\"https://github.com/patchorbit/domscribe/pulls\"><img src=\"https://img.shields.io/badge/PRs-welcome-brightgreen\" alt=\"PRs welcome\" /></a>\n</p>\n\n<p align=\"center\">\n  <a href=\"https://www.npmjs.com/package/@domscribe/react\"><img src=\"https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=black\" alt=\"React\" /></a>\n  <a href=\"https://www.npmjs.com/package/@domscribe/vue\"><img src=\"https://img.shields.io/badge/Vue-4FC08D?style=flat&logo=vuedotjs&logoColor=white\" alt=\"Vue\" /></a>\n  <a href=\"https://www.npmjs.com/package/@domscribe/next\"><img src=\"https://img...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "devtools bridge"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.35,
+        "pattern_family": "devtools_protocol",
+        "pattern_family_source": "lexicon-stage2"
+      },
+      {
+        "id": "https://github.com/wilkerHop/orbital-orion",
+        "url": "https://github.com/wilkerHop/orbital-orion",
+        "owner": "wilkerHop",
+        "name": "orbital-orion",
+        "description": "Chrome Extension (Manifest V3) for scraping WhatsApp Web via React Fiber tree traversal. Built with strict TypeScript, functional programming principles, and anti-detection measures.",
+        "language": "TypeScript",
+        "topics": [
+          "anti-detection",
+          "chrome-extension",
+          "functional-programming",
+          "indexeddb",
+          "manifest-v3",
+          "react",
+          "react-fiber",
+          "typescript",
+          "web-scraping",
+          "whatsapp"
+        ],
+        "readme": "React + TypeScript + Vite\n\nThis template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.\n\nCurrently, two official plugins are available:\n\n@vitejs/plugin-react uses Babel (or oxc when used in rolldown-vite) for Fast Refresh\n@vitejs/plugin-react-swc uses SWC for Fast Refresh\n\nReact Compiler\n\nThe React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see this documentation.\n\nExpanding the ESLint configuration\n\nIf you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:\n\n \n\nYou can also install eslint-plugin-react-x and eslint-plugin-react-dom for React-specific lint rules:",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "fiber traversal"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.2,
+        "pattern_family": "scraper",
+        "pattern_family_source": "lexicon-stage2"
+      },
+      {
+        "id": "https://github.com/ferdiunal/larapanda",
+        "url": "https://github.com/ferdiunal/larapanda",
+        "owner": "ferdiunal",
+        "name": "larapanda",
+        "description": "Type-safe Lightpanda SDK for Laravel and PHP with named instances, auto CLI/Docker runtime resolution, MCP integration, and strict markdown/semantic tree outputs.",
+        "language": "PHP",
+        "topics": [
+          "ai",
+          "crawler",
+          "laravel",
+          "lightpanda",
+          "mcp"
+        ],
+        "readme": "Larapanda\n\n \n \n \n \n\n \n\nLanguage versions: English | Türkçe\n\nLarapanda is a type-safe Lightpanda SDK for Laravel and plain PHP applications. It provides named instance profiles, runtime resolution (auto, cli, docker), and immutable method-scoped option objects for fetch, serve, and mcp.\n\nInstallation\n\nPrerequisites\n\nLarapanda uses a runtime resolver (auto, cli, docker). CLI execution (and auto mode when CLI is selected) requires a valid Lightpanda binary. Install Lightpanda from the official source: lightpanda.io.\n\n \n\nInstall the Larapanda SDK package:\n\n \n\nFor Laravel applications, publish the package configuration:\n\n \n\nOptional integration dependencies:\n\n \n\nConfiguration\n\nConfiguration is profile-based. Each client resolves an instance profile by name, and each profile may override the global defaults.\n\n \n\ndefault_instance selects the instance profile used when no explicit profile name is provided.\ndefaults defines baseline runtime settings shared by all instances unless overridden.\ninstances.<name> contains per-profile overrides for runtime mode, binary path, Docker parameters, and process options.\nIn auto runtime mode, Larapanda prefers CLI execution when binary_path is available and executable; otherwise it falls back to Docker.\nintegrations.ai configures AI SDK tool adapters (instance, tool_prefix, exposed_tools, session settings).\nintegrations.mcp configures Laravel MCP server tool adapters (instance, exposed_tools, session settings).\n\nUsage\n\nScenario 1: Quickstart Fetch\n\nResolve the manager, select an instance profile, and execute a markdown fetch.\n\n \n\nScenario 2: Out...",
+        "license": null,
+        "dependencies": [],
+        "discoveryProvenance": [
+          "runtime tree walker"
+        ],
+        "enrichment_incomplete": false,
+        "enrichment_error": null,
+        "keywords": {},
+        "problemFit": 0,
+        "score": 0.05,
+        "pattern_family": "scraper",
+        "pattern_family_source": "lexicon-stage2"
+      }
+    ]
+  },
+  "selection": {
+    "by_score": 10,
+    "by_divergence": 0,
+    "diversity_gap": null,
+    "note": null
+  },
+  "seed_strategy": "auto",
+  "seed_diversification": {
+    "seeds": [
+      "react fiber introspection",
+      "vue vnode walker",
+      "component devtools protocol",
+      "runtime tree walker",
+      "source location mapping",
+      "devtools bridge",
+      "fiber traversal",
+      "component metadata extraction"
+    ],
+    "added": [],
+    "strategy": "passthrough",
+    "reason": "already_diverse",
+    "diversity_before": {
+      "seed_count": 8,
+      "orthogonal_count": 8,
+      "max_pairwise_jaccard": 0.25,
+      "threshold": 0.5
+    },
+    "diversity_after": {
+      "seed_count": 8,
+      "orthogonal_count": 8,
+      "max_pairwise_jaccard": 0.25,
+      "threshold": 0.5
+    }
+  },
+  "pattern_family_strategy": "auto",
+  "pattern_family_summary": {
+    "strategy": "auto",
+    "project_override_count": 12,
+    "total": 20,
+    "classified": 20,
+    "unknown": 0,
+    "classified_ratio": 1
+  },
+  "enrichment_health": {
+    "total": 123,
+    "incomplete": 0,
+    "incomplete_ratio": 0,
+    "throttle_ms": 0
+  },
+  "queryPlans": [
+    {
+      "label": "Query 1",
+      "query": "react fiber introspection",
+      "reasons": [
+        "Nimmt Tech-Tag \"react\" mit",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ],
+      "hitCount": 7
+    },
+    {
+      "label": "Query 2",
+      "query": "vue vnode walker",
+      "reasons": [
+        "Nimmt Tech-Tag \"vue\" mit",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ],
+      "hitCount": 3
+    },
+    {
+      "label": "Query 3",
+      "query": "component devtools protocol",
+      "reasons": [
+        "Nimmt Tech-Tag \"devtools\" mit",
+        "Trifft Approach-Signature \"devtools-protocol\"",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ],
+      "hitCount": 2
+    },
+    {
+      "label": "Query 5",
+      "query": "source location mapping",
+      "reasons": [
+        "Trifft Approach-Signature \"source-location-mapping\"",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ],
+      "hitCount": 2
+    },
+    {
+      "label": "Query 6",
+      "query": "devtools bridge",
+      "reasons": [
+        "Nimmt Tech-Tag \"devtools\" mit",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Kurze Query — breite Abdeckung, ggf. zu generisch"
+      ],
+      "hitCount": 2
+    },
+    {
+      "label": "Query 7",
+      "query": "fiber traversal",
+      "reasons": [
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Kurze Query — breite Abdeckung, ggf. zu generisch"
+      ],
+      "hitCount": 2
+    },
+    {
+      "label": "Query 4",
+      "query": "runtime tree walker",
+      "reasons": [
+        "Trifft Approach-Signature \"runtime-tree-walker\"",
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ],
+      "hitCount": 1
+    },
+    {
+      "label": "Query 8",
+      "query": "component metadata extraction",
+      "reasons": [
+        "OpenSource-Filter wird in der Rangierung beruecksichtigt",
+        "Mehrwort-Query — praezisere Treffer, geringere Trefferquote"
+      ],
+      "hitCount": 1
+    }
+  ],
+  "agentView": {
+    "mission": [
+      "Externe Loesungsraum-Landkarte fuer \"PinFlow's pixel-to-code workflow needs a unified runtime adapter that introspects component trees from a running web application\" ins Zielprojekt pinflow ueberfuehren",
+      "Divergente Cluster (4) pruefen — hoeheres Lernpotenzial, hoeherer Transfer-Aufwand",
+      "Keine benachbarten Cluster — Adaptions-Pfad unklar, Datenbasis pruefen"
+    ],
+    "deliverable": [
+      "Je Cluster ein Kurz-Exposé mit Key-Takeaway fuer das Zielprojekt",
+      "Pro divergentem Cluster eine klare adopt/adapt/observe/ignore-Entscheidung",
+      "Decision-Log-Eintrag(e) im Zielprojekt, die auf diese Landscape referenzieren"
+    ],
+    "priorityRepos": [
+      {
+        "repo": "mohi331/Three-VFX",
+        "action": "Als divergente Referenz fuer \"react-fiber-introspection+fiber+react\" pruefen",
+        "url": "https://github.com/mohi331/Three-VFX"
+      },
+      {
+        "repo": "martinszeltins/vue-vnode-context",
+        "action": "Als divergente Referenz fuer \"vue-vnode-walker+react+vue\" pruefen",
+        "url": "https://github.com/martinszeltins/vue-vnode-context"
+      },
+      {
+        "repo": "hcbylmz/rn-devtools-mcp",
+        "action": "Als divergente Referenz fuer \"devtools_protocol+devtools+mcp\" pruefen",
+        "url": "https://github.com/hcbylmz/rn-devtools-mcp"
+      },
+      {
+        "repo": "wilkerHop/orbital-orion",
+        "action": "Als divergente Referenz fuer \"scraper+anti-detection+chrome-extension\" pruefen",
+        "url": "https://github.com/wilkerHop/orbital-orion"
+      }
+    ],
+    "context": [
+      "Aktueller Ansatz: - React adapter walks the Fiber tree via `__REACT_DEVTOOLS_GLOBAL_HOOK__` and a custom commit-renderer interceptor\n- Vue adapter walks the VNode tree via `__VUE_HMR_RUNTIME__` and component-instance introspection\n- Element IDs are content-hashed from props + source location\n- Both adapters live in `packages/runtime-adapter-react` and `packages/runtime-adapter-vue` and share types via `packages/protocol`\n\nThe current pain: each framework's internal API drifts across minor versions, so the adapter packages need maintenance pressure. We want to know whether the open-source community has a more robust pattern.",
+      "Erfolgskriterium: A reusable adapter pattern that exposes a uniform component-introspection API for React 18+ and Vue 3+,Stable element IDs that survive hot module replacement at >80% cache hit rate,Zero production runtime cost (instrumentation must strip out cleanly in production builds),Source-location mapping (file path, line, column, component name) available per element",
+      "Approach-Signature: framework-adapter, devtools-protocol, runtime-tree-walker, source-location-mapping, hmr-stable-ids, instrumentation-strip-prod",
+      "Tech-Tags: typescript, react, vue, vite, webpack, devtools"
+    ],
+    "guardrails": [
+      "TypeScript implementation",
+      "Open-source license (MIT or Apache-2.0)",
+      "No coupling to a specific bundler beyond Vite/Webpack",
+      "No reliance on production-stripped framework hooks",
+      "Must work in dev-only mode with explicit feature flags"
+    ],
+    "uncertainties": [
+      "Nicht-Ziel: Solving CSS / Shadow-DOM isolation (separate concern)",
+      "Nicht-Ziel: Supporting Angular or Svelte adapters (out of current scope)",
+      "Nicht-Ziel: Building a full standalone DevTools UI",
+      "Nicht-Ziel: Replacing the React DevTools or Vue DevTools browser extensions"
+    ],
+    "codingStarter": {
+      "primary": {
+        "repo": "mohi331/Three-VFX",
+        "starterLabel": "adapters/provenance|react-fiber-introspection-bridge.mjs",
+        "implementationGoal": "Adaptions-Skizze fuer Cluster \"react-fiber-introspection+fiber+react\" als Bruecke zum Zielprojekt",
+        "firstSlice": "Minimal-Integration: 1 Vertreter aus Cluster \"react-fiber-introspection+fiber+react\" gegen das Zielprojekt testen",
+        "targetAreas": [
+          "problem_lens"
+        ],
+        "starterMode": "exploration",
+        "compareChecklist": [
+          "Wie unterscheidet sich dieser divergente Ansatz vom aktuellen Stand?",
+          "Welche Annahmen des aktuellen Ansatzes stellt dieses Cluster in Frage?",
+          "Ist der Transfer-Aufwand in Relation zum erwarteten Gewinn vertretbar?"
+        ],
+        "stopIf": [
+          "Performance oder Qualitaet unter dem aktuellen Niveau ohne klare Perspektive",
+          "Lizenz oder Distributionsform passt nicht zum Zielprojekt"
+        ]
+      },
+      "secondary": [
+        {
+          "repo": "martinszeltins/vue-vnode-context",
+          "starterLabel": "adapters/provenance|vue-vnode-walker-bridge.mjs",
+          "implementationGoal": "Alternativer Pfad aus Cluster \"vue-vnode-walker+react+vue\"",
+          "firstSlice": "Kurzvergleich gegen primaeren Pfad",
+          "targetAreas": [
+            "problem_lens"
+          ],
+          "starterMode": "exploration",
+          "compareChecklist": [
+            "Wo unterscheidet sich dieser Pfad vom primaeren?"
+          ],
+          "stopIf": [
+            "Keine klaren Unterschiede zum primaeren Pfad"
+          ]
+        },
+        {
+          "repo": "hcbylmz/rn-devtools-mcp",
+          "starterLabel": "adapters/devtools_protocol|unknown-bridge.mjs",
+          "implementationGoal": "Alternativer Pfad aus Cluster \"devtools_protocol+devtools+mcp\"",
+          "firstSlice": "Kurzvergleich gegen primaeren Pfad",
+          "targetAreas": [
+            "unknown"
+          ],
+          "starterMode": "exploration",
+          "compareChecklist": [
+            "Wo unterscheidet sich dieser Pfad vom primaeren?"
+          ],
+          "stopIf": [
+            "Keine klaren Unterschiede zum primaeren Pfad"
+          ]
+        }
+      ]
+    },
+    "payload": {
+      "schemaVersion": "2",
+      "handoffType": "landscape-to-project",
+      "problemSlug": "runtime-component-introspection-across-react-fiber-and-vue-vnode",
+      "project": "pinflow",
+      "relationCounts": {
+        "divergent": 4,
+        "adjacent": 0,
+        "near_current_approach": 0
+      }
+    },
+    "downloadFileName": "patternpilot-landscape-handoff-runtime-component-introspection-across-react-fiber-and-vue-vnode.json",
+    "references": [
+      "Query: \"react fiber introspection\"",
+      "Query: \"vue vnode walker\"",
+      "Query: \"component devtools protocol\"",
+      "Query: \"source location mapping\""
+    ]
+  },
+  "techStatus": {
+    "effectiveQueries": [
+      "react fiber introspection",
+      "vue vnode walker",
+      "component devtools protocol",
+      "runtime tree walker",
+      "source location mapping",
+      "devtools bridge",
+      "fiber traversal",
+      "component metadata extraction"
+    ],
+    "missingCandidates": [],
+    "searchErrors": []
+  }
+}
