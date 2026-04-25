@@ -1,7 +1,7 @@
 # Score-Stabilitaets-Plan — auf Weg zu reproduzierbaren 9-10/10 Reports
 
 - last_updated: 2026-04-25
-- status: Phase 0 done; Phase 1 + Phase 2 scaffolding done (Default off); Phase 3 done (Default on); Phase 4 Layer 1 + Layer 2 done (Auto-Discover-Trigger via `--auto-discover`, opt-in); Phase 5 offen
+- status: Phase 0-4 done; Phase 5 done (Stability-Harness + Initial-Baseline-Lauf, Real-World-10-Slug-Lauf folgt asynchron mit GitHub-API-Quota)
 - scope: Landscape- und Discovery-Report
 - zielkorridor: Median 9, Min 8, Max 10 ueber beliebige Problem-Slugs und Zielprojekte
 - begriff: "Problem-Slug" = Eingangsargument von `npm run problem:explore -- <slug>`, z. B. `event-dedup`, `schema-extraction`
@@ -158,8 +158,12 @@ Jede Phase wird gegen drei Kriterien abgeklopft:
 - **Rollback:** CLI-Flag `--no-auto-discover` setzt das Feature fuer einzelne Runs aus; env var `PATTERNPILOT_AUTO_DISCOVERY=false` global
 - **Acceptance:** `npm run review:watchlist` mit leerer Watchlist rendert einen Report mit ≥ 8 gefuellten Sections und sichtbarem Auto-Discovery-Banner im Intro
 
-### Phase 5 — Stability-Test
+### Phase 5 — Stability-Test ✓ done (Harness)
 
+- **Status:** 2026-04-25 geliefert. Implementierung: `lib/scoring/stability.mjs` (pure aggregation: median/min/max/mean, per-axis stats, weakness summary, acceptance check), `scripts/run-stability.mjs` (Harness mit drei Modi: `--from-fixtures`, `--from-runs <project>`, `--runs <comma-list>`), `npm run stability-test` + `npm run stability-test:baseline`. 13 neue Tests in `release:smoke`. Initial-Lauf gegen Baseline-Fixtures geschrieben unter `docs/foundation/stability/baseline-fixtures.md`. Hand-kuratiertes Meta-Doc unter [`SCORE_STABILITY_RESULTS.md`](SCORE_STABILITY_RESULTS.md)
+- **Acceptance-Schwellen** als Code-Konstanten (`ACCEPTANCE_THRESHOLDS` in `lib/scoring/stability.mjs`): median ≥ 8, min ≥ 7, max ≥ 9. Test-anchored. Ein Stability-Lauf mit `npm run stability-test` exited mit Code 1, wenn diese Schwellen nicht erreicht sind — taugt damit fuer CI-Integration
+- **Aktueller Baseline-Lauf (vor Phase-1+2-Aktivierung):** Median 6.5/10, Min 2/10, Max 8/10 — **FAIL** (median 6.5 < 8, min 2 < 7, max 8 < 9). Das ist erwartungsgemaess: die Fixtures wurden mit Default-Flags erstellt
+- **Real-World-Lauf offen:** der echte Phase-5-Beleg ist ein Lauf mit `--seed-strategy auto --pattern-family auto` gegen 10 frische Slugs plus mindestens einem `--auto-discover`-Watchlist-Run. Trigger-Sequenz steht in `SCORE_STABILITY_RESULTS.md`. Dieser Lauf braucht GitHub-API-Quota + ~60 Min Laufzeit und gehoert in eine eigene Session
 - **Ziel:** nachweisen, dass Phase 1-4 zusammen wirken und die Median-Score stabil ueber 8 liegt
 - **Konkret:**
   - 10 frisch gezogene Problem-Slugs (Mix: 4 einfach, 3 mittel, 3 schwer — darunter explizit `event-dedup` und `self-healing`) durch die Pipeline schicken
