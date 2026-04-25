@@ -34,8 +34,8 @@ const BASELINE_EXPECTATIONS = [
     file: "landscape.json",
     kind: "landscape",
     structureTotal: 6,
-    contentTotal: 5,
-    combinedTotal: 5.5,
+    contentTotal: 7.5,
+    combinedTotal: 6.75,
     structureAxes: {
       "cluster-diversity": 2,
       "pattern-family-coverage": 0,
@@ -45,7 +45,7 @@ const BASELINE_EXPECTATIONS = [
     },
     contentAxes: {
       "problem-fit": { applicable: false },
-      "label-fidelity": { score: 0 },
+      "label-fidelity": { score: 1 },
       "classification-confidence": { applicable: false },
       "decision-readiness": { score: 2 },
     },
@@ -55,8 +55,8 @@ const BASELINE_EXPECTATIONS = [
     file: "landscape.json",
     kind: "landscape",
     structureTotal: 8,
-    contentTotal: 5,
-    combinedTotal: 6.5,
+    contentTotal: 10,
+    combinedTotal: 9,
     structureAxes: {
       "cluster-diversity": 2,
       "pattern-family-coverage": 1,
@@ -66,7 +66,7 @@ const BASELINE_EXPECTATIONS = [
     },
     contentAxes: {
       "problem-fit": { applicable: false },
-      "label-fidelity": { score: 0 },
+      "label-fidelity": { score: 2 },
       "classification-confidence": { applicable: false },
       "decision-readiness": { score: 2 },
     },
