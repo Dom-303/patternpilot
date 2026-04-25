@@ -1,7 +1,7 @@
 # Score-Stabilitaets-Plan — auf Weg zu reproduzierbaren 9-10/10 Reports
 
 - last_updated: 2026-04-25
-- status: Phase 0-5 done. Real-World-Lauf mit Phase-1+2+4-Flags erreicht **Acceptance PASS** (Median 10/10, Min 9/10, Max 10/10) — siehe `SCORE_STABILITY_RESULTS.md` Lauf 2
+- status: Phase 0-6 done. Phase 6 erweiterte den Scorer um 4 Inhalts-Achsen (problem-fit, label-fidelity, classification-confidence, decision-readiness) und enthuellt: Struktur 10/10 + Inhalt 6.25/10 = Combined 8.13/10 — Acceptance PASS bleibt, aber `label-fidelity` ist konsistent schwach (mean 0.25/2). Phase 7 = Cross-Domain-Erweiterungen, getriggert von echtem zweitem Zielprojekt.
 - scope: Landscape- und Discovery-Report
 - zielkorridor: Median 9, Min 8, Max 10 ueber beliebige Problem-Slugs und Zielprojekte
 - begriff: "Problem-Slug" = Eingangsargument von `npm run problem:explore -- <slug>`, z. B. `event-dedup`, `schema-extraction`
@@ -157,6 +157,14 @@ Jede Phase wird gegen drei Kriterien abgeklopft:
   - **Seed-Qualitaet:** Auto-Discovery ist nur so gut wie die Seeds, die Phase 1 bereitstellt. **Deshalb muss Phase 1 vor Phase 4 stehen**
 - **Rollback:** CLI-Flag `--no-auto-discover` setzt das Feature fuer einzelne Runs aus; env var `PATTERNPILOT_AUTO_DISCOVERY=false` global
 - **Acceptance:** `npm run review:watchlist` mit leerer Watchlist rendert einen Report mit ≥ 8 gefuellten Sections und sichtbarem Auto-Discovery-Banner im Intro
+
+### Phase 6 — Inhalts-Scorer ✓ done
+
+- **Status:** 2026-04-25 geliefert. Schema-bump v1 → v2. Scorer hat jetzt 9 Achsen in zwei Perspektiven: 5 Strukturachsen (cluster-diversity, pattern-family-coverage, lens-richness, context-alignment, visual-completeness) bleiben unveraendert + 4 neue Inhaltsachsen (problem-fit, label-fidelity, classification-confidence, decision-readiness)
+- **Output-Shape:** `total = combined`, plus `totals.{ structure, content, combined }` plus `axes.{ structure, content }`. Inhaltsachsen koennen `applicable: false` setzen (z.B. wenn `problem_derived` fehlt), dann fallen sie aus dem Inhalts-Mittel raus
+- **Wichtige Eigenschaft:** Inhaltsachsen sind **Heuristiken mit Token-/Set-Overlap-Proxies**. Sie ersetzen kein menschliches Urteil und kein LLM. Sie messen das, was strukturell unsichtbar bleibt — falsch positiv und falsch negativ moeglich. Aber: ein Report mit 10/10 Struktur und 4/10 Inhalt signalisiert messbar, dass die Pipeline Daten ausspuckt, die formal stimmen aber thematisch danebenliegen
+- **Befund auf Phase-5-Real-Runs:** Combined median 8.13/10 (war 10), Inhalt median 6.25/10. **PASS bleibt**, aber `label-fidelity` ist konsistent 0/2 auf allen drei Landscape-Runs. Das ist ein konkretes Signal fuer einen Folge-Hebel — Cluster-Labels (top-3 Member-Tokens) dominieren die Cluster-Inhalte zu wenig, weil viele Member-Keywords ausserhalb der Top-3 liegen
+- **Aufruf:** `npm run score -- <run> --pretty` zeigt die Split-View. `npm run stability-test` aggregiert ueber Combined-Scores; Output-Markdown listet Struktur- und Inhalts-Mediane separat
 
 ### Phase 5 — Stability-Test ✓ done (Harness)
 

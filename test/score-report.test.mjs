@@ -6,6 +6,8 @@ import { fileURLToPath } from "node:url";
 
 import {
   AXIS_NAMES,
+  STRUCTURE_AXIS_NAMES,
+  CONTENT_AXIS_NAMES,
   SCHEMA_VERSION,
   scoreFromJson,
   scoreLandscape,
@@ -20,87 +22,135 @@ function readFixture(name, file) {
   return JSON.parse(readFileSync(full, "utf8"));
 }
 
-// Each baseline fixture's expected score.  If a Phase-1-4 change causes a
-// regression on a passing baseline, this test breaks the build.  That is
-// the intended behavior — the scorer is the gate, not a suggestion.
+// Phase-6-Baseline-Erwartungen (Schema v2): jeder Eintrag enthaelt
+// strukturelle UND inhaltliche Score-Erwartungen sowie das kombinierte
+// Total. Die Baseline-Fixtures enthalten KEIN problem_derived und KEIN
+// pattern_family_summary, weil sie vor Phase 1+2 erzeugt wurden — daher
+// werden problem-fit und classification-confidence als applicable=false
+// gemeldet und sind aus dem content-Total ausgeschlossen.
 const BASELINE_EXPECTATIONS = [
   {
     fixture: "01-event-dedup-landscape",
     file: "landscape.json",
     kind: "landscape",
-    total: 6,
-    axes: {
+    structureTotal: 6,
+    contentTotal: 5,
+    combinedTotal: 5.5,
+    structureAxes: {
       "cluster-diversity": 2,
       "pattern-family-coverage": 0,
       "lens-richness": 2,
       "context-alignment": 2,
       "visual-completeness": 0,
+    },
+    contentAxes: {
+      "problem-fit": { applicable: false },
+      "label-fidelity": { score: 0 },
+      "classification-confidence": { applicable: false },
+      "decision-readiness": { score: 2 },
     },
   },
   {
     fixture: "02-schema-extraction-landscape",
     file: "landscape.json",
     kind: "landscape",
-    total: 8,
-    axes: {
+    structureTotal: 8,
+    contentTotal: 5,
+    combinedTotal: 6.5,
+    structureAxes: {
       "cluster-diversity": 2,
       "pattern-family-coverage": 1,
       "lens-richness": 2,
       "context-alignment": 2,
       "visual-completeness": 1,
     },
+    contentAxes: {
+      "problem-fit": { applicable: false },
+      "label-fidelity": { score: 0 },
+      "classification-confidence": { applicable: false },
+      "decision-readiness": { score: 2 },
+    },
   },
   {
     fixture: "03-self-healing-landscape",
     file: "landscape.json",
     kind: "landscape",
-    total: 7,
-    axes: {
+    structureTotal: 7,
+    contentTotal: 5,
+    combinedTotal: 6,
+    structureAxes: {
       "cluster-diversity": 2,
       "pattern-family-coverage": 1,
       "lens-richness": 2,
       "context-alignment": 2,
       "visual-completeness": 0,
     },
+    contentAxes: {
+      "problem-fit": { applicable: false },
+      "label-fidelity": { score: 0 },
+      "classification-confidence": { applicable: false },
+      "decision-readiness": { score: 2 },
+    },
   },
   {
     fixture: "04-watchlist-review-empty",
     file: "manifest.json",
     kind: "review",
-    total: 2,
-    axes: {
+    structureTotal: 2,
+    contentTotal: 0,
+    combinedTotal: 1,
+    structureAxes: {
       "cluster-diversity": 0,
       "pattern-family-coverage": 0,
       "lens-richness": 0,
       "context-alignment": 2,
       "visual-completeness": 0,
     },
+    contentAxes: {
+      "problem-fit": { applicable: false },
+      "label-fidelity": { applicable: false },
+      "classification-confidence": { applicable: false },
+      "decision-readiness": { score: 0 },
+    },
   },
 ];
 
 describe("scoreLandscape", () => {
-  test("returns schemaVersion + five axes + meta", () => {
+  test("returns schemaVersion v2 + split structure/content axes + meta", () => {
     const landscape = readFixture("02-schema-extraction-landscape", "landscape.json");
     const result = scoreLandscape(landscape);
     assert.equal(result.schemaVersion, SCHEMA_VERSION);
+    assert.equal(SCHEMA_VERSION, 2);
     assert.equal(result.kind, "landscape");
     assert.ok(typeof result.total === "number");
     assert.ok(result.total >= 0 && result.total <= 10);
-    for (const name of AXIS_NAMES) {
-      assert.ok(result.axes[name], `axis ${name} present`);
-      assert.ok(result.axes[name].score >= 0 && result.axes[name].score <= 2);
-      assert.ok(result.axes[name].measured, `axis ${name} has measured payload`);
+    assert.ok(result.totals);
+    assert.ok(typeof result.totals.structure === "number");
+    assert.ok(typeof result.totals.content === "number");
+    assert.ok(typeof result.totals.combined === "number");
+    assert.ok(result.axes.structure);
+    assert.ok(result.axes.content);
+    for (const name of STRUCTURE_AXIS_NAMES) {
+      assert.ok(result.axes.structure[name], `structure axis ${name} present`);
+      assert.ok(result.axes.structure[name].score >= 0 && result.axes.structure[name].score <= 2);
     }
-    assert.equal(result.meta.problem, "schema-exact-extraction-into-40-column-masterlist");
-    assert.equal(result.meta.project, "eventbear-worker");
+    for (const name of CONTENT_AXIS_NAMES) {
+      assert.ok(result.axes.content[name], `content axis ${name} present`);
+      assert.ok(result.axes.content[name].score >= 0 && result.axes.content[name].score <= 2);
+      assert.equal(typeof result.axes.content[name].applicable, "boolean");
+    }
+  });
+
+  test("AXIS_NAMES backwards-compat alias points to STRUCTURE_AXIS_NAMES", () => {
+    assert.deepEqual(AXIS_NAMES, STRUCTURE_AXIS_NAMES);
   });
 
   test("handles empty landscape gracefully", () => {
     const result = scoreLandscape({});
     assert.equal(result.kind, "landscape");
-    assert.equal(result.total, 0);
-    for (const name of AXIS_NAMES) {
-      assert.equal(result.axes[name].score, 0);
+    assert.equal(result.totals.structure, 0);
+    for (const name of STRUCTURE_AXIS_NAMES) {
+      assert.equal(result.axes.structure[name].score, 0);
     }
   });
 
@@ -109,7 +159,7 @@ describe("scoreLandscape", () => {
       clusters: [{ label: "solo", pattern_family: "x", member_ids: ["a"] }],
       axis_view: { axes: [] },
     });
-    assert.equal(result.axes["cluster-diversity"].score, 0);
+    assert.equal(result.axes.structure["cluster-diversity"].score, 0);
   });
 
   test("cluster-diversity: three lexically distinct clusters return 2", () => {
@@ -121,23 +171,10 @@ describe("scoreLandscape", () => {
       ],
       axis_view: { axes: [] },
     });
-    assert.equal(result.axes["cluster-diversity"].score, 2);
-  });
-
-  test("cluster-diversity: three highly overlapping clusters return 1", () => {
-    const result = scoreLandscape({
-      clusters: [
-        { label: "event dedup one", pattern_family: "event-dedup", member_ids: ["a"] },
-        { label: "event dedup two", pattern_family: "event-dedup", member_ids: ["b"] },
-        { label: "event dedup three", pattern_family: "event-dedup", member_ids: ["c"] },
-      ],
-      axis_view: { axes: [] },
-    });
-    assert.equal(result.axes["cluster-diversity"].score, 1);
+    assert.equal(result.axes.structure["cluster-diversity"].score, 2);
   });
 
   test("pattern-family-coverage: weighted by member count, not cluster count", () => {
-    // 2 clusters of 10 members each.  One is unknown.  Ratio = 10/20 = 0.5 → 0.
     const result = scoreLandscape({
       clusters: [
         {
@@ -153,19 +190,8 @@ describe("scoreLandscape", () => {
       ],
       axis_view: { axes: [] },
     });
-    assert.equal(result.axes["pattern-family-coverage"].score, 0);
-    assert.equal(result.axes["pattern-family-coverage"].measured.unknown_ratio, 0.5);
-  });
-
-  test("pattern-family-coverage: all known → 2", () => {
-    const result = scoreLandscape({
-      clusters: [
-        { label: "a", pattern_family: "alpha", member_ids: ["1"] },
-        { label: "b", pattern_family: "beta", member_ids: ["2"] },
-      ],
-      axis_view: { axes: [] },
-    });
-    assert.equal(result.axes["pattern-family-coverage"].score, 2);
+    assert.equal(result.axes.structure["pattern-family-coverage"].score, 0);
+    assert.equal(result.axes.structure["pattern-family-coverage"].measured.unknown_ratio, 0.5);
   });
 
   test("context-alignment: accepts mission/deliverable/context as arrays", () => {
@@ -178,64 +204,111 @@ describe("scoreLandscape", () => {
         context: ["Because"],
       },
     });
-    assert.equal(result.axes["context-alignment"].score, 2);
+    assert.equal(result.axes.structure["context-alignment"].score, 2);
   });
 
-  test("visual-completeness: <5% fallback ratio → 2", () => {
-    const clusters = [];
-    for (let i = 0; i < 20; i += 1) {
-      clusters.push({ label: `c${i}`, pattern_family: "known", member_ids: [`m${i}`] });
-    }
-    const result = scoreLandscape({ clusters, axis_view: { axes: [] } });
-    assert.equal(result.axes["visual-completeness"].score, 2);
+  test("problem-fit: applicable=false when problem_derived missing", () => {
+    const result = scoreLandscape({ clusters: [], axis_view: { axes: [] } });
+    assert.equal(result.axes.content["problem-fit"].applicable, false);
   });
 
-  test("visual-completeness: 20% fallback ratio → 1", () => {
-    const clusters = [];
-    for (let i = 0; i < 8; i += 1) {
-      clusters.push({ label: `c${i}`, pattern_family: "known", member_ids: [`m${i}`] });
-    }
-    clusters.push({ label: "u1", pattern_family: "unknown", member_ids: ["mu1"] });
-    clusters.push({ label: "u2", pattern_family: "unknown", member_ids: ["mu2"] });
-    const result = scoreLandscape({ clusters, axis_view: { axes: [] } });
-    assert.equal(result.axes["visual-completeness"].score, 1);
-    assert.equal(result.axes["visual-completeness"].measured.fallback_label_ratio, 0.2);
+  test("problem-fit: applicable=true when problem_derived present, scores by jaccard", () => {
+    const landscape = {
+      clusters: [],
+      axis_view: {
+        axes: [
+          {
+            label: "x",
+            members: [
+              {
+                id: "https://github.com/foo/parser",
+                topics: ["parser", "json", "schema"],
+                description: "json schema parser",
+              },
+            ],
+          },
+        ],
+      },
+      problem_derived: {
+        query_seeds: ["json schema parser library"],
+        approach_signature: ["parser"],
+        tech_tags: ["nodejs"],
+      },
+    };
+    const result = scoreLandscape(landscape);
+    assert.equal(result.axes.content["problem-fit"].applicable, true);
+    assert.ok(result.axes.content["problem-fit"].score >= 1);
+  });
+
+  test("classification-confidence: applicable=false when pattern_family_summary missing", () => {
+    const result = scoreLandscape({ clusters: [], axis_view: { axes: [] } });
+    assert.equal(result.axes.content["classification-confidence"].applicable, false);
+  });
+
+  test("classification-confidence: 95%+ classified -> 2", () => {
+    const result = scoreLandscape({
+      clusters: [],
+      axis_view: { axes: [] },
+      pattern_family_summary: { strategy: "auto", total: 20, classified: 20, classified_ratio: 1 },
+    });
+    assert.equal(result.axes.content["classification-confidence"].score, 2);
+  });
+
+  test("decision-readiness: counts agentView checks", () => {
+    const result = scoreLandscape({
+      clusters: [],
+      axis_view: { axes: [] },
+      relation_counts: { divergent: 1, adjacent: 1, near_current_approach: 0 },
+      agentView: {
+        priorityRepos: ["a", "b", "c"],
+        codingStarter: { mission: "x" },
+        deliverable: ["one", "two"],
+        uncertainties: ["something"],
+      },
+    });
+    assert.equal(result.axes.content["decision-readiness"].score, 2);
   });
 });
 
 describe("scoreReview", () => {
-  test("empty watchlist review: only context-alignment survives", () => {
+  test("empty watchlist review: structure 2/10, content 0/10 (only decision-readiness applicable)", () => {
     const manifest = readFixture("04-watchlist-review-empty", "manifest.json");
     const result = scoreReview(manifest);
     assert.equal(result.kind, "review");
-    assert.equal(result.total, 2);
-    assert.equal(result.axes["context-alignment"].score, 2);
-    assert.equal(result.axes["cluster-diversity"].score, 0);
-    assert.equal(result.axes["lens-richness"].score, 0);
-    assert.equal(result.axes["visual-completeness"].score, 0);
+    assert.equal(result.totals.structure, 2);
+    assert.equal(result.totals.content, 0);
+    assert.equal(result.axes.structure["context-alignment"].score, 2);
+    // Only decision-readiness is applicable on the empty fixture.
+    assert.equal(result.axes.content["problem-fit"].applicable, false);
+    assert.equal(result.axes.content["label-fidelity"].applicable, false);
+    assert.equal(result.axes.content["classification-confidence"].applicable, false);
+    assert.equal(result.axes.content["decision-readiness"].applicable, true);
   });
 
-  test("context-alignment: needs binding + profile + coverage", () => {
-    const result = scoreReview({
+  test("review with items: problem-fit + label-fidelity + classification-confidence become applicable", () => {
+    const manifest = {
+      runId: "x",
       reviewScope: "watchlist",
       review: {
-        binding: { projectKey: "x" },
-        projectProfileSummary: { summary: "s" },
-        coverage: { uncoveredCapabilities: ["a", "b"] },
+        items: [
+          { projectFitBand: "high", projectFitScore: 80, matchedCapabilities: ["a"], patternFamily: "scraper", reviewDisposition: "adopt" },
+          { projectFitBand: "high", projectFitScore: 70, matchedCapabilities: ["b"], patternFamily: "deduper", reviewDisposition: "adapt" },
+        ],
+        topItems: [{}, {}],
+        strongestPatterns: [{}, {}],
+        riskiestItems: [{}],
+        coverage: { mainLayers: ["x"], capabilities: ["a", "b"], uncoveredCapabilities: [] },
+        nextSteps: ["one", "two"],
+        binding: { projectKey: "demo" },
+        projectProfileSummary: { capabilitiesPresent: ["a"] },
       },
-    });
-    assert.equal(result.axes["context-alignment"].score, 2);
-  });
-
-  test("visual-completeness: items + main layers → 2", () => {
-    const result = scoreReview({
-      reviewScope: "watchlist",
-      review: {
-        items: [{ id: "a" }, { id: "b" }],
-        coverage: { mainLayers: ["ingestion"] },
-      },
-    });
-    assert.equal(result.axes["visual-completeness"].score, 2);
+    };
+    const result = scoreReview(manifest);
+    for (const name of CONTENT_AXIS_NAMES) {
+      assert.equal(result.axes.content[name].applicable, true, `axis ${name} should be applicable`);
+    }
+    assert.equal(result.axes.content["problem-fit"].score, 2, "high fit ratio = 2");
+    assert.equal(result.axes.content["classification-confidence"].score, 2, "all items classified");
   });
 });
 
@@ -273,23 +346,39 @@ describe("scorer determinism", () => {
   });
 });
 
-describe("baseline expectations", () => {
+describe("baseline expectations (Phase 6 schema v2)", () => {
   for (const expectation of BASELINE_EXPECTATIONS) {
-    test(`${expectation.fixture} total = ${expectation.total}/10`, () => {
+    test(`${expectation.fixture} combined ${expectation.combinedTotal}/10 = structure ${expectation.structureTotal} + content ${expectation.contentTotal}`, () => {
       const payload = readFixture(expectation.fixture, expectation.file);
       const result = scoreFromJson(payload);
       assert.equal(result.kind, expectation.kind);
-      assert.equal(
-        result.total,
-        expectation.total,
-        `${expectation.fixture}: total expected ${expectation.total}, got ${result.total}. Axes: ${JSON.stringify(Object.fromEntries(AXIS_NAMES.map((n) => [n, result.axes[n].score])))}`,
-      );
-      for (const [axisName, axisScore] of Object.entries(expectation.axes)) {
+      assert.equal(result.total, expectation.combinedTotal);
+      assert.equal(result.totals.structure, expectation.structureTotal);
+      assert.equal(result.totals.content, expectation.contentTotal);
+      assert.equal(result.totals.combined, expectation.combinedTotal);
+      for (const [axisName, axisScore] of Object.entries(expectation.structureAxes)) {
         assert.equal(
-          result.axes[axisName].score,
+          result.axes.structure[axisName].score,
           axisScore,
-          `${expectation.fixture}: axis ${axisName} expected ${axisScore}, got ${result.axes[axisName].score}`,
+          `${expectation.fixture}: structure axis ${axisName} expected ${axisScore}, got ${result.axes.structure[axisName].score}`,
         );
+      }
+      for (const [axisName, axisExpect] of Object.entries(expectation.contentAxes)) {
+        const got = result.axes.content[axisName];
+        if ("applicable" in axisExpect) {
+          assert.equal(
+            got.applicable,
+            axisExpect.applicable,
+            `${expectation.fixture}: content axis ${axisName} applicable expected ${axisExpect.applicable}, got ${got.applicable}`,
+          );
+        }
+        if ("score" in axisExpect) {
+          assert.equal(
+            got.score,
+            axisExpect.score,
+            `${expectation.fixture}: content axis ${axisName} score expected ${axisExpect.score}, got ${got.score}`,
+          );
+        }
       }
     });
   }

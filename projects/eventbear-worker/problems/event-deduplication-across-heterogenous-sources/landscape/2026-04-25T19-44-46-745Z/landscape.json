@@ -869,5 +869,45 @@
     ],
     "missingCandidates": [],
     "searchErrors": []
+  },
+  "problem_derived": {
+    "query_seeds": [
+      "record linkage library",
+      "entity resolution deduplication",
+      "probabilistic record matching",
+      "fuzzy string matching",
+      "jaro winkler similarity",
+      "blocking key dedup",
+      "splink record linkage",
+      "zingg entity matching",
+      "graph entity resolution",
+      "event canonicalization calendar",
+      "typescript entity resolution",
+      "streaming record deduplication"
+    ],
+    "tech_tags": [
+      "nodejs",
+      "typescript",
+      "javascript",
+      "python",
+      "java",
+      "node",
+      "node.js",
+      "ts",
+      "js",
+      "py"
+    ],
+    "constraint_tags": [
+      "opensource"
+    ],
+    "approach_signature": [
+      "record-linkage",
+      "entity-resolution",
+      "fuzzy-matching",
+      "probabilistic-matching",
+      "blocking",
+      "similarity-scoring",
+      "merge-resolution"
+    ]
   }
 }

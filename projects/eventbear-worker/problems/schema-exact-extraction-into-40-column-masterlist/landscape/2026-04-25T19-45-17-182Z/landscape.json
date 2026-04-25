@@ -958,5 +958,45 @@
     ],
     "missingCandidates": [],
     "searchErrors": []
+  },
+  "problem_derived": {
+    "query_seeds": [
+      "semantic field mapping",
+      "schema alignment library",
+      "table column inference",
+      "named entity extraction events",
+      "ical rrule parser",
+      "structured data extractor",
+      "address parsing library",
+      "csv schema matcher",
+      "json-ld event parser",
+      "schema.org microdata parser",
+      "typescript field mapping",
+      "libpostal address normalization"
+    ],
+    "tech_tags": [
+      "nodejs",
+      "typescript",
+      "javascript",
+      "python",
+      "node",
+      "node.js",
+      "ts",
+      "js",
+      "py"
+    ],
+    "constraint_tags": [
+      "opensource"
+    ],
+    "approach_signature": [
+      "field-mapping",
+      "schema-alignment",
+      "column-inference",
+      "deterministic",
+      "rule-based",
+      "entity-extraction",
+      "date-parsing",
+      "address-parsing"
+    ]
   }
 }

@@ -230,6 +230,15 @@ export async function runProblemExplore(rootDir, config, options) {
     problem: slug,
     project: problem.project,
     generated_at: new Date().toISOString(),
+    // Phase-6-Inhaltsachsen brauchen die problem-derived-Daten (query_seeds,
+    // approach_signature, tech_tags) zum Score-Time. Wir persistieren sie
+    // hier explizit, damit der Scorer rein lesend bleiben kann.
+    problem_derived: {
+      query_seeds: problem.derived?.query_seeds ?? [],
+      approach_signature: problem.derived?.approach_signature ?? [],
+      tech_tags: problem.derived?.tech_tags ?? [],
+      constraint_tags: problem.derived?.constraint_tags ?? []
+    },
     clusters: landscape.clusters
       ? landscape.clusters.map((c) => ({
           key: c.key,

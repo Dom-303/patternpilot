@@ -23,7 +23,11 @@
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { AXIS_NAMES, scoreFromJson } from '../lib/scoring/score-report.mjs';
+import {
+  STRUCTURE_AXIS_NAMES,
+  CONTENT_AXIS_NAMES,
+  scoreFromJson,
+} from '../lib/scoring/score-report.mjs';
 
 const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const BASELINE_DIR = path.join(REPO_ROOT, 'test', 'fixtures', 'score-baseline');
@@ -55,19 +59,33 @@ function resolveRunArtifact(runPath) {
 }
 
 function formatPretty(result) {
-  const axisRows = AXIS_NAMES
-    .map((name) => `  ${name.padEnd(26)} ${result.axes[name].score}/2`)
+  const structureAxes = result.axes?.structure ?? {};
+  const contentAxes = result.axes?.content ?? {};
+  const structureRows = STRUCTURE_AXIS_NAMES
+    .map((name) => `  ${name.padEnd(26)} ${structureAxes[name]?.score ?? 0}/2`)
+    .join('\n');
+  const contentRows = CONTENT_AXIS_NAMES
+    .map((name) => {
+      const axis = contentAxes[name] ?? {};
+      const applicable = axis.applicable !== false;
+      const display = applicable ? `${axis.score ?? 0}/2` : 'n/a';
+      return `  ${name.padEnd(26)} ${display}`;
+    })
     .join('\n');
   const metaLines = Object.entries(result.meta)
     .filter(([, value]) => value !== null && value !== undefined)
     .map(([key, value]) => `  ${key}: ${value}`)
     .join('\n');
+  const totals = result.totals ?? {};
   return [
     `kind: ${result.kind}`,
-    `total: ${result.total}/10`,
+    `total: ${result.total}/10  (combined of structure ${totals.structure ?? '?'}/10 + content ${totals.content ?? '?'}/10)`,
     '',
-    'axes:',
-    axisRows,
+    'structure axes:',
+    structureRows,
+    '',
+    'content axes:',
+    contentRows,
     '',
     'meta:',
     metaLines,
@@ -101,11 +119,11 @@ function runBaseline() {
 }
 
 function formatBaselineTable(summary) {
-  const header = '  name'.padEnd(42) + 'kind      total   ' + AXIS_NAMES.map((n) => n.slice(0, 4)).join('  ');
+  const header = '  name'.padEnd(42) + 'kind      total   struct  content';
   const rows = summary.runs.map((run) => {
     if (run.error) return `  ${run.name.padEnd(40)}ERROR: ${run.error}`;
-    const axisCells = AXIS_NAMES.map((name) => String(run.result.axes[name].score)).join('     ');
-    return `  ${run.name.padEnd(40)}${run.result.kind.padEnd(10)}${String(run.result.total).padEnd(8)}${axisCells}`;
+    const totals = run.result.totals ?? {};
+    return `  ${run.name.padEnd(40)}${run.result.kind.padEnd(10)}${String(run.result.total).padEnd(8)}${String(totals.structure ?? '?').padEnd(8)}${String(totals.content ?? '?')}`;
   });
   return [`baseline: ${summary.baselineDir}`, '', header, ...rows].join('\n');
 }

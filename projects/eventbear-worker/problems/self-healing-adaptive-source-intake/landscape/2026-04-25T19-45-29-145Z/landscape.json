@@ -815,5 +815,44 @@
     ],
     "missingCandidates": [],
     "searchErrors": []
+  },
+  "problem_derived": {
+    "query_seeds": [
+      "wrapper induction",
+      "selector self-healing",
+      "adaptive xpath",
+      "DOM template matching",
+      "scraper auto-recovery",
+      "extraction rule learning",
+      "automatic wrapper maintenance",
+      "wrapper learning system",
+      "playwright auto heal selectors",
+      "crawlee adaptive crawler",
+      "readability article extraction",
+      "structured data linter schema"
+    ],
+    "tech_tags": [
+      "nodejs",
+      "typescript",
+      "playwright",
+      "puppeteer",
+      "crawler",
+      "node",
+      "node.js",
+      "ts"
+    ],
+    "constraint_tags": [
+      "opensource"
+    ],
+    "approach_signature": [
+      "self-healing",
+      "adaptive",
+      "wrapper-induction",
+      "pattern-bank",
+      "auto-onboarding",
+      "feedback-loop",
+      "template-learning",
+      "selector-drift"
+    ]
   }
 }

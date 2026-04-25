@@ -21,7 +21,11 @@ import { existsSync, readFileSync, readdirSync, statSync, writeFileSync, mkdirSy
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { scoreFromJson, AXIS_NAMES } from "../lib/scoring/score-report.mjs";
+import {
+  scoreFromJson,
+  STRUCTURE_AXIS_NAMES,
+  CONTENT_AXIS_NAMES,
+} from "../lib/scoring/score-report.mjs";
 import {
   aggregateStability,
   summarizeAxisWeakness,
@@ -117,19 +121,19 @@ function scoreCollected(runs) {
 
 function buildMarkdown({ source, scored, stability, generatedAt }) {
   const successScores = scored.filter((entry) => entry.score !== null);
-  const headerCells = ["Run", "Kind", "Total", ...AXIS_NAMES.map((name) => name.split("-")[0])];
+  const headerCells = ["Run", "Kind", "Total", "Struct", "Content"];
   const tableHeader = `| ${headerCells.join(" | ")} |`;
   const tableSep = `| ${headerCells.map(() => "---").join(" | ")} |`;
   const rows = scored.map((entry) => {
     if (!entry.score) {
-      return `| ${entry.name} | ERROR | – | ${AXIS_NAMES.map(() => "–").join(" | ")} |`;
+      return `| ${entry.name} | ERROR | – | – | – |`;
     }
-    const axisCells = AXIS_NAMES.map((name) => entry.score.axes[name].score);
-    return `| ${entry.name} | ${entry.score.kind} | ${entry.score.total}/10 | ${axisCells.join(" | ")} |`;
+    const totals = entry.score.totals ?? {};
+    return `| ${entry.name} | ${entry.score.kind} | ${entry.score.total}/10 | ${totals.structure ?? "–"}/10 | ${totals.content ?? "–"}/10 |`;
   });
 
   const weakAxes = summarizeAxisWeakness(stability)
-    .map((entry) => `- **${entry.axis}** — mean ${entry.mean}/2, min ${entry.min}/2`);
+    .map((entry) => `- **[${entry.perspective}] ${entry.axis}** — mean ${entry.mean}/2, min ${entry.min}/2 (anwendbar in ${entry.applicable_runs}/${stability.run_count} Runs)`);
 
   const errorLines = scored
     .filter((entry) => entry.error)
@@ -141,15 +145,29 @@ function buildMarkdown({ source, scored, stability, generatedAt }) {
     `- generated_at: ${generatedAt}`,
     `- source: ${source}`,
     `- run_count: ${stability.run_count} (scored: ${successScores.length})`,
-    `- thresholds: median ≥ ${stability.thresholds.median}, min ≥ ${stability.thresholds.min}, max ≥ ${stability.thresholds.max}`,
+    `- thresholds: combined median ≥ ${stability.thresholds.median}, min ≥ ${stability.thresholds.min}, max ≥ ${stability.thresholds.max}`,
     `- acceptance: ${describeAcceptance(stability)}`,
     "",
     `## Aggregat`,
     "",
+    `### Combined (struktur + inhalt)`,
     `- **median**: ${stability.total.median ?? "–"}/10`,
     `- **min**: ${stability.total.min ?? "–"}/10`,
     `- **max**: ${stability.total.max ?? "–"}/10`,
     `- **mean**: ${stability.total.mean ?? "–"}/10`,
+    "",
+    `### Struktur-Total`,
+    `- **median**: ${stability.structure.median ?? "–"}/10`,
+    `- **min**: ${stability.structure.min ?? "–"}/10`,
+    `- **max**: ${stability.structure.max ?? "–"}/10`,
+    `- **mean**: ${stability.structure.mean ?? "–"}/10`,
+    "",
+    `### Inhalts-Total`,
+    `- **median**: ${stability.content.median ?? "–"}/10`,
+    `- **min**: ${stability.content.min ?? "–"}/10`,
+    `- **max**: ${stability.content.max ?? "–"}/10`,
+    `- **mean**: ${stability.content.mean ?? "–"}/10`,
+    "",
     `- **kinds**: ${Object.entries(stability.kinds).map(([kind, count]) => `${kind}=${count}`).join(", ") || "–"}`,
     "",
     `## Per-Run-Tabelle`,

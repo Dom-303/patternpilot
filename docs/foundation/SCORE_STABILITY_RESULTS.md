@@ -28,20 +28,33 @@ Phase 1+2 erstellt und mit Default-Flags (`--seed-strategy manual`,
 FAIL hier ist die Begruendung, warum der Plan ueberhaupt geschrieben
 wurde — nicht ein Regressions-Signal.
 
-### Lauf 2 — Real-World mit Phase-1+2+4-Flags ✓ PASS
+### Lauf 2 — Real-World mit Phase-1+2+4-Flags ✓ PASS (Phase-6-Rescore)
 
 - **Datum:** 2026-04-25
 - **Quelle:** [`stability/post-phase4-real-world.md`](stability/post-phase4-real-world.md)
 - **Setup:** 3 bestehende Slugs neu durch `problem:explore` mit `--seed-strategy auto --pattern-family auto`, plus `review:watchlist --auto-discover` gegen leere Watchlist
-- **Aggregat:** Median **10/10**, Min **9/10**, Max **10/10**, Mean **9.75/10**
-- **Acceptance:** **PASS** (median 10 ≥ 8, min 9 ≥ 7, max 10 ≥ 9)
+- **Aggregat (Combined):** Median **8.13/10**, Min **7/10**, Max **9.38/10**, Mean **8.16/10**
+- **Aggregat-Split:** Struktur median 10, Inhalt median 6.25
+- **Acceptance:** **PASS** (combined median 8.13 ≥ 8, min 7 ≥ 7, max 9.38 ≥ 9)
 
-| Slug / Mode | Baseline | Phase 1+2+4 | Δ |
-|---|---|---|---|
-| event-deduplication-across-heterogenous-sources | 6/10 | **10/10** | **+4** |
-| schema-exact-extraction-into-40-column-masterlist | 8/10 | **10/10** | **+2** |
-| self-healing-adaptive-source-intake | 7/10 | **9/10** | **+2** |
-| watchlist-review (mit --auto-discover) | 2/10 | **10/10** | **+8** |
+| Slug / Mode | Baseline | Combined | Struktur | Inhalt |
+|---|---|---|---|---|
+| event-deduplication-across-heterogenous-sources | 5.5/10 | **8.75** | 10 | 7.5 |
+| schema-exact-extraction-into-40-column-masterlist | 6.5/10 | **7.5** | 10 | 5 |
+| self-healing-adaptive-source-intake | 6/10 | **7** | 9 | 5 |
+| watchlist-review (mit --auto-discover) | 1/10 | **9.38** | 10 | 8.75 |
+
+**Schwaechste Achsen ueber Lauf 2** (aus `summarizeAxisWeakness`):
+1. `[content] label-fidelity` — mean 0.25/2 (3 von 4 Runs bei 0)
+2. `[content] problem-fit` — mean 1/2 (zwei Slugs bei 0)
+3. `[structure] cluster-diversity` — mean 1.75/2 (self-healing bei 1)
+4. `[structure] pattern-family-coverage` — mean 2/2 (durchgaengig stark)
+
+Der Inhalts-Score-Drop von 10 auf 6.25 ist der ehrliche Befund von Phase 6:
+die Pipeline produziert formal vollstaendige Reports, aber die Cluster-Labels
+spiegeln nicht die Member-Inhalte, und problem_derived-Tokens ueberschneiden
+sich nur wenig mit Repo-Tokens. Beides sind echte Folge-Hebel, kein
+Datenartefakt.
 
 Beobachtungen aus dem Lauf:
 

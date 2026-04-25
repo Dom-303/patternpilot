@@ -1,33 +1,48 @@
 # Score Stability Results
 
-- generated_at: 2026-04-25T19:15:13.746Z
+- generated_at: 2026-04-25T20:35:19.750Z
 - source: test/fixtures/score-baseline
 - run_count: 4 (scored: 4)
-- thresholds: median ≥ 8, min ≥ 7, max ≥ 9
-- acceptance: FAIL (median=6.5 < 8, min=2 < 7, max=8 < 9)
+- thresholds: combined median ≥ 8, min ≥ 7, max ≥ 9
+- acceptance: FAIL (combined median=5.75 < 8, min=1 < 7, max=6.5 < 9)
 
 ## Aggregat
 
+### Combined (struktur + inhalt)
+- **median**: 5.75/10
+- **min**: 1/10
+- **max**: 6.5/10
+- **mean**: 4.75/10
+
+### Struktur-Total
 - **median**: 6.5/10
 - **min**: 2/10
 - **max**: 8/10
 - **mean**: 5.75/10
+
+### Inhalts-Total
+- **median**: 5/10
+- **min**: 0/10
+- **max**: 5/10
+- **mean**: 3.75/10
+
 - **kinds**: landscape=3, review=1
 
 ## Per-Run-Tabelle
 
-| Run | Kind | Total | cluster | pattern | lens | context | visual |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| 01-event-dedup-landscape | landscape | 6/10 | 2 | 0 | 2 | 2 | 0 |
-| 02-schema-extraction-landscape | landscape | 8/10 | 2 | 1 | 2 | 2 | 1 |
-| 03-self-healing-landscape | landscape | 7/10 | 2 | 1 | 2 | 2 | 0 |
-| 04-watchlist-review-empty | review | 2/10 | 0 | 0 | 0 | 2 | 0 |
+| Run | Kind | Total | Struct | Content |
+| --- | --- | --- | --- | --- |
+| 01-event-dedup-landscape | landscape | 5.5/10 | 6/10 | 5/10 |
+| 02-schema-extraction-landscape | landscape | 6.5/10 | 8/10 | 5/10 |
+| 03-self-healing-landscape | landscape | 6/10 | 7/10 | 5/10 |
+| 04-watchlist-review-empty | review | 1/10 | 2/10 | 0/10 |
 
 ## Schwaechste Achsen (Folge-Hebel-Kandidaten)
 
-- **visual-completeness** — mean 0.25/2, min 0/2
-- **pattern-family-coverage** — mean 0.5/2, min 0/2
-- **cluster-diversity** — mean 1.5/2, min 0/2
+- **[content] label-fidelity** — mean 0/2, min 0/2 (anwendbar in 3/4 Runs)
+- **[structure] visual-completeness** — mean 0.25/2, min 0/2 (anwendbar in 4/4 Runs)
+- **[structure] pattern-family-coverage** — mean 0.5/2, min 0/2 (anwendbar in 4/4 Runs)
+- **[structure] cluster-diversity** — mean 1.5/2, min 0/2 (anwendbar in 4/4 Runs)
 
 ## Wie diesen Lauf interpretieren
 
