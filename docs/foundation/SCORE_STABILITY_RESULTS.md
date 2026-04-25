@@ -49,7 +49,7 @@ Beobachtungen aus dem Lauf:
 - **Phase 2 (Pattern-Family-Classifier):** klassifiziert 20/20, 20/20, 19/20 Repos (95-100%). Hebt pattern-family-coverage und visual-completeness ueberall auf 2/2 — der entscheidende Score-Lift
 - **Phase 3 (Rate-Limit-Resilienz):** self-healing lief in den Search-API-30/min-Limit waehrend des sequentiellen 3-Slug-Laufs. Phase 3 fing das nicht ab, weil das ein Per-Minute-Quota-Problem ist statt ein einzelner-Call-Retry. Trotzdem produzierte der Lauf 19/20 klassifizierte Repos und 9/10. Cluster-Diversity fiel auf 1/2, weil weniger Queries Treffer geliefert haben
 - **Phase 4 Layer 1 (Health-Diagnose):** im Review-without-auto-discover-Probelauf sichtbar — `runGapSignals[0].gap=watchlist_intake`, klare Discovery-Empfehlung in nextSteps. Score blieb 2/10 (lens-richness braucht items)
-- **Phase 4 Layer 2 (Auto-Discover-Trigger):** end-to-end. Discovery+Intake fuellten 3 Kandidaten in Watchlist+Queue, anschliessender Review fand die items, Score 10/10. `autoDiscoverResult.profile` kam als `balanced` heraus statt `focused` — kleiner Polish-Punkt fuer einen Folge-Commit (CLI-Default `discoveryProfile: "balanced"` schluckt unsere `focused`-Default-Wahl ueber `??`-Operator)
+- **Phase 4 Layer 2 (Auto-Discover-Trigger):** end-to-end. Discovery+Intake fuellten 3 Kandidaten in Watchlist+Queue, anschliessender Review fand die items, Score 10/10. `autoDiscoverResult.profile` kam zunaechst als `balanced` heraus statt `focused` (CLI-Parser-Default schluckte unsere Wahl ueber den `??`-Operator). Im Folge-Polish behoben: Helper akzeptiert `discoveryProfile`/`analysisDepth` jetzt als top-level-Parameter und faellt deterministisch auf `focused`/`quick` zurueck
 
 Re-Run mit eigenen Slugs:
 
@@ -70,6 +70,50 @@ npm run review:watchlist -- --project <project> --auto-discover
 npm run stability-test -- --runs <comma-list-of-runs> \
   --output docs/foundation/stability/<lauf-name>.md
 ```
+
+## Cross-Project-Generalisierung — ehrliche Grenzen
+
+Der `Lauf 2` PASS gilt strikt fuer das `eventbear-worker`-Projekt und drei
+Slugs aus seiner Domaene (Event-Aggregation, Scraping, Schema-Extraction,
+Dedup). Was davon transferiert sich auf andere Projekte/Domaenen ohne
+weitere Arbeit — und was nicht?
+
+| Phase | Domaenen-Abhaengigkeit | Erwartet auf fremdem Projekt |
+|---|---|---|
+| 0 — Test-Harness | keine | volle Wirkung |
+| 1 — Seed-Diversifier | gering (Tokenizer + Dictionary mit allgemeinen Software-Phrasen) | volle Wirkung; Dictionary-Supplemente ggf. weniger treffend in Nischen-Domaenen |
+| 2 — Pattern-Family-Classifier | **hoch** (Lexikon ist auf Software-Tooling kuratiert) | partiell — gute Wirkung in Domaenen mit "parser/scraper/dedup/schema/orchestrator/...", schwache Wirkung in Nischen-Domaenen (Bioinformatik, FPGA, Mobile-UI, Blockchain-Spezifika) |
+| 3 — Rate-Limit | keine | volle Wirkung |
+| 4 Layer 1 — Health-Diagnose | keine | volle Wirkung |
+| 4 Layer 2 — Auto-Discover | gering (nutzt Project-Binding, dass projektgenau ist) | volle Wirkung — Qualitaet haengt aber an der Discovery-Seed-Qualitaet pro Projekt |
+
+**Bottleneck fuer Cross-Project-Score: Phase 2 Lexikon.** Die 25 Familien
+(parser, validator, scraper, extractor, deduper, normalizer, matcher,
+scheduler, orchestrator, ...) sind generisch genug fuer "Software-
+Tooling im weiten Sinn", aber:
+
+- Ein Patternpilot-Lauf gegen ein Bioinformatik-Repo wuerde auf Begriffe
+  wie "alignment", "variant calling", "FASTQ-parser" treffen — nur "parser"
+  haette davon einen Match
+- Ein Mobile-UI-Projekt sucht nach "navigation patterns", "gesture handling",
+  "animation timeline" — keine Trefferflaeche im aktuellen Lexikon
+
+Wenn jemand also Patternpilot fuer eine fremde Domaene aufsetzt:
+
+1. Phase 1, 3, 4 leisten ihre Arbeit unveraendert
+2. Phase 2 produziert vermutlich 30-60% Klassifikationsrate statt 95-100%
+3. Score landet wahrscheinlich bei 6-8/10 statt 9-10/10
+
+**Was es braeuchte fuer echte Cross-Domain-10/10:**
+
+- **Per-Project-Lexikon:** `bindings/<project>/PATTERN_FAMILY_LEXICON.json` als optionalen Override, der das generische Default-Lexikon ergaenzt oder ersetzt. Kuration durch Projekt-Owner
+- **Lexikon-Auto-Extension:** Ein Helper `npm run lexicon:suggest`, der die haeufigsten Topics+README-Tokens in den `unknown`-Repos eines Laufs analysiert und neue Kandidaten-Familien vorschlaegt
+- **LLM-Fallback (Stage 3):** OQ-005 — opt-in via `--with-llm` fuer die ~5-10% Repos, die selbst nach Lexikon-Update unklassifiziert bleiben
+
+Diese drei sind **nicht** Teil des Score-Stabilitaets-Plans — der Plan
+hat fuer eventbear-worker geliefert, was er versprochen hat. Die Cross-
+Domain-Erweiterung waere ein eigener Plan, idealerweise getriggert durch
+das erste echte zweite Zielprojekt.
 
 ## Acceptance-Schwellen
 

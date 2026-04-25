@@ -105,7 +105,10 @@ describe("runAutoDiscoverForReview — execution path", () => {
     assert.deepEqual(passedOptions.urls, []);
   });
 
-  test("respects user-provided discoveryProfile + analysisDepth overrides", async () => {
+  test("ignores options.discoveryProfile and uses focused-default unless caller overrides at top-level", async () => {
+    // Wichtig: options.discoveryProfile ist beim CLI-Aufruf immer gesetzt
+    // (Default "balanced" aus parseArgs). Das soll Auto-Discover NICHT
+    // durchreichen — Auto-Discover ist Safety-Net = cheap-by-default.
     const fake = makeFakeRunDiscover({ runId: "run-1", candidateUrls: ["https://github.com/x/y"] });
     await runAutoDiscoverForReview({
       rootDir: "/tmp",
@@ -117,6 +120,25 @@ describe("runAutoDiscoverForReview — execution path", () => {
         discoveryProfile: "expansive",
         analysisDepth: "deep",
       },
+      runDiscoverFn: fake.fn,
+      logger: SILENT_LOGGER,
+    });
+    const passed = fake.calls[0].options;
+    assert.equal(passed.discoveryProfile, "focused", "must override CLI-default to focused");
+    assert.equal(passed.analysisDepth, "quick", "must override CLI-default to quick");
+  });
+
+  test("top-level discoveryProfile/analysisDepth overrides are honored", async () => {
+    // Tests / programmatische Aufrufer koennen am Helper top-level overriden.
+    const fake = makeFakeRunDiscover({ runId: "run-1", candidateUrls: ["https://github.com/x/y"] });
+    await runAutoDiscoverForReview({
+      rootDir: "/tmp",
+      config: {},
+      projectKey: "demo",
+      health: assessWatchlistHealth({ watchlistCount: 0 }),
+      options: { autoDiscover: true },
+      discoveryProfile: "expansive",
+      analysisDepth: "deep",
       runDiscoverFn: fake.fn,
       logger: SILENT_LOGGER,
     });
