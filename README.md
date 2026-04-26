@@ -12,11 +12,15 @@ Es hilft dir, externe GitHub-Repositories nicht nur zu sammeln, sondern im Konte
 - Was ist nur interessant?
 - Was solltest du uebernehmen, beobachten oder bewusst nicht uebernehmen?
 
+<p align="center">
+  <img src="assets/patternpilot-overview.png" alt="Patternpilot overview" width="860">
+</p>
+
 
 ## Quick View
 
 <p align="center">
-  <img src="assets/workflow-overview.svg" alt="Patternpilot workflow overview" width="860">
+  <img src="assets/workflow-overview.png" alt="Patternpilot workflow overview" width="860">
 </p>
 
 ### Was Patternpilot macht
@@ -114,7 +118,7 @@ Diese Grafik ist die kuerzeste visuelle Einstiegshilfe.
 Sie ist bewusst fuer normale Nutzer geschrieben: kurzer Schritt, passender Command, kurze Bedeutung.
 
 <p align="center">
-  <img src="assets/onboarding-map.svg" alt="Patternpilot onboarding map" width="860">
+  <img src="assets/onboarding-map.png" alt="Patternpilot onboarding map" width="860">
 </p>
 
 ### Weitere Onboarding-Doku
@@ -159,7 +163,7 @@ Wichtig:
 ### Workspace Auf Einen Blick
 
 <p align="center">
-  <img src="assets/workspace-map.svg" alt="Patternpilot workspace map" width="860">
+  <img src="assets/workspace-map.png" alt="Patternpilot workspace map" width="860">
 </p>
 
 
@@ -330,7 +334,7 @@ npm run doctor -- --offline
 Drei Wege in die Tiefe, je nachdem wie du tickst:
 
 <p align="center">
-  <img src="assets/three-paths.svg" alt="Drei Wege in die Tiefe — Simple Guide, Getting Started, Design Guide" width="860">
+  <img src="assets/three-paths.png" alt="Drei Wege in die Tiefe — Simple Guide, Getting Started, Design Guide" width="860">
 </p>
 
 <table>

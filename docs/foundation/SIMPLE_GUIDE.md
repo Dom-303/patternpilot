@@ -1,7 +1,7 @@
 # Simple Guide
 
 <p align="center">
-  <img src="../../assets/onboarding-map.svg" alt="Patternpilot onboarding map" width="860">
+  <img src="../../assets/onboarding-map.png" alt="Patternpilot onboarding map" width="860">
 </p>
 
 ## Was `patternpilot` fuer dich macht

@@ -1,7 +1,7 @@
 # Advanced Guide
 
 <p align="center">
-  <img src="../../assets/workspace-map.svg" alt="Patternpilot workspace map" width="860">
+  <img src="../../assets/workspace-map.png" alt="Patternpilot workspace map" width="860">
 </p>
 
 ## Zweck
