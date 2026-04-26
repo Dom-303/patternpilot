@@ -63,7 +63,24 @@ Erwartung:
 - frischer Zustand ohne Projekt: `not_ready` mit Bootstrap-Hinweis
 - echter Betriebszustand: klarer Go-/Follow-up-/Hold-Befund
 
-## 6. Fremdprojekt-Beweis nicht vergessen
+## 6. npm Trusted Publishing pruefen
+
+Fuer Releases ohne langlebigen npm-Token:
+
+- npm package settings -> Trusted Publisher
+- Provider: GitHub Actions
+- Organization/user: `Dom-303`
+- Repository: `patternpilot`
+- Workflow filename: `publish.yml`
+
+Der Repo-Workflow liegt unter:
+
+- `.github/workflows/publish.yml`
+
+Er nutzt GitHub OIDC (`id-token: write`) und `npm publish --access public`.
+Bei Trusted Publishing erzeugt npm automatisch Provenance.
+
+## 7. Fremdprojekt-Beweis nicht vergessen
 
 Vor einer echten `v1`-Freigabe sollte mindestens ein frischer Fremdprojekt-Durchlauf belegt sein:
 
@@ -78,7 +95,7 @@ Der aktuelle Produktstatus und Reife-Beleg liegen hier:
 
 - [V1_STATUS.md](V1_STATUS.md)
 
-## 7. Letzte Sicht auf Git
+## 8. Letzte Sicht auf Git
 
 Vor dem Push:
 

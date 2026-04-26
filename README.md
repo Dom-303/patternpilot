@@ -23,13 +23,6 @@ Es hilft dir, externe GitHub-Repositories nicht nur zu sammeln, sondern im Konte
   <img src="assets/workflow-overview.png" alt="Patternpilot workflow overview" width="860">
 </p>
 
-### Sofort Starten
-
-```bash
-npm install -g patternpilot
-patternpilot getting-started
-```
-
 ### Was Patternpilot macht
 
 - bindet dein eigenes Zielrepo als Bezugspunkt an
@@ -87,7 +80,14 @@ flowchart LR
 
 ### Schnellstart
 
-Wenn du einfach nur loslegen willst, nimm genau diese vier Schritte:
+Wenn du einfach nur loslegen willst:
+
+```bash
+npm install -g patternpilot
+patternpilot getting-started
+```
+
+Wenn du im geklonten Repository arbeiten willst, nimm diese vier Schritte:
 
 ```bash
 npm install
