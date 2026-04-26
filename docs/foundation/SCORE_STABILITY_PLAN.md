@@ -158,6 +158,53 @@ Jede Phase wird gegen drei Kriterien abgeklopft:
 - **Rollback:** CLI-Flag `--no-auto-discover` setzt das Feature fuer einzelne Runs aus; env var `PATTERNPILOT_AUTO_DISCOVERY=false` global
 - **Acceptance:** `npm run review:watchlist` mit leerer Watchlist rendert einen Report mit ≥ 8 gefuellten Sections und sichtbarem Auto-Discovery-Banner im Intro
 
+## Phase 8+ — Folge-Hebel (real-world-getriggert)
+
+Diese Hebel sind nach dem Lauf-5-Cross-Domain-Stresstest klar identifiziert,
+aber **nicht jetzt zu bauen**. Sie warten alle auf einen Real-World-Trigger
+und sind in `OPEN_QUESTION.md` als OQ-009 bis OQ-013 mit Detail-Triggern
+und Aufwandschaetzungen festgehalten. Diese Sektion ist die tracked-Kopie
+fuer GitHub-Persistenz (OPEN_QUESTION.md ist lokal gitignored).
+
+### OQ-009 — Label-Fidelity-Scorer-Datenquelle (BALD, ~3 h)
+
+Scorer auf den vollen `cluster.member`-Token-Pool umstellen statt
+`axis_view.members`-Subset. Phase 7.0+7.3 verbessern die Labels lesbar,
+aber die Scorer-Achse zeigt's kaum. Fix: in `problem-explore.mjs` pro
+Cluster ein `member_keywords`-Feld serialisieren, in
+`landscapeLabelFidelity` darauf umstellen. Trigger: jemand sagt "Label
+sieht gut aus, Score sagt 0".
+
+### OQ-010 — Per-Project-Lexikon fuer weitere Domains (BALD pro Zielprojekt, ~30-60 min)
+
+Bei jedem neuen Bootstrap eines Zielprojekts in fremder Domain die
+`npm run lexicon:suggest --project <key>`-Vorschlaege durchgehen, 8-15
+Familien kuratieren, in `bindings/<project>/PATTERN_FAMILY_LEXICON.json`
+ablegen. Empirisch: Pinflow-Lexikon hob Combined 4.75 → 7.5; selbe
+Investition fuer Kubernetes/Rust/Edge wuerde diese Domains aus dem
+6-7-Bereich hochziehen. Trigger: konkretes Real-World-Anwendungsbeduerfnis.
+
+### OQ-011 — LLM-Stage-3 fuer problem-fit (SPAETER)
+
+Erst nach 3-4 kuratierten Domain-Lexika sinnvoll: wenn Klassifikation
+stabil 95-100 % ist und `problem-fit` immer noch der bleibende Engpass
+(0-1/2 auf 7 von 11 aktuellen Runs). Heuristik kann Token-Vokabular-
+Differenzen zwischen Problem-Seeds und Repo-Topics nicht heilen — LLM-
+Embeddings koennten. Muss streng eingehegt werden gegen OQ-005-Grundsatz.
+
+### OQ-012 — Phase-1-Default-Flip auf `auto` (BALD nach 2 Wochen Real-Use, ~10 min)
+
+Aenderung: `lib/config.mjs` Default `seedStrategy: "manual"` → `"auto"`.
+11 Real-Runs zeigten Phase 1 immer als passthrough — Risiko des Flips
+nahe null. Test-Erwartungen anpassen.
+
+### OQ-013 — Phase-2-Default-Flip auf `auto` (BALD nach 2 Wochen Real-Use, ~10 min)
+
+Aenderung: `lib/config.mjs` Default `patternFamilyStrategy: "off"` →
+`"auto"`. Pattern-Family-Klassifikation zeigte in jedem Run positiven
+Effekt. Default-On macht Familie-Spalte ohne Opt-in sichtbar. Bei
+`unknown`-Quote > 30 % auf einer Domain ist das das Signal fuer OQ-010.
+
 ### Phase 7 — Cross-Domain-Erweiterungen ✓ done
 
 - **Status:** 2026-04-25 alle drei Sub-Phasen geliefert. Cross-Project-Acceptance auf Combined median 8.44/min 7/max 10 — vorher 7.82/4.75/9.38
