@@ -23,6 +23,13 @@ Es hilft dir, externe GitHub-Repositories nicht nur zu sammeln, sondern im Konte
   <img src="assets/workflow-overview.png" alt="Patternpilot workflow overview" width="860">
 </p>
 
+### Sofort Starten
+
+```bash
+npm install -g patternpilot
+patternpilot getting-started
+```
+
 ### Was Patternpilot macht
 
 - bindet dein eigenes Zielrepo als Bezugspunkt an
