@@ -1,8 +1,0 @@
-label,pattern_family,main_layer,relation,member_count,signature_contrast
-opendp+differential-privacy+opendp,opendp,problem_lens,adjacent,4,query:opendp|opendp|differential-privacy
-secure-aggregation+learning+python,secure aggregation,problem_lens,divergent,3,query:secure-aggregation|python|adoption
-tensorflow-federated+federated-learning+tensorflow,tensorflow federated,problem_lens,divergent,3,query:tensorflow-federated|tensorflow|fleet-learning
-byzantine-robust-aggregation+combines+pytorch,byzantine robust aggregation,problem_lens,divergent,2,query:byzantine-robust-aggregation|pytorch|combines
-federated-learning-aggregator+advanced+ai-driven,federated learning aggregator,problem_lens,divergent,2,query:federated-learning-aggregator|advanced|ai-driven
-fedml+federated+learning,fedml,problem_lens,divergent,2,query:fedml|federated|learning
-aggregator+aggregation+data,aggregator,unknown,divergent,2,encryption|fastapi|grids

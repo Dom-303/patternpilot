@@ -1,4 +1,0 @@
-label,pattern_family,main_layer,relation,member_count,signature_contrast
-automation+playwright+query:selector-self-healing,selector self-healing,problem_lens,adjacent,10,query:selector-self-healing|e2e-testing|playwright
-automation+data+query:adaptive-xpath,adaptive xpath,problem_lens,divergent,6,query:adaptive-xpath|data|ai-scraping
-based+query:dom-template-matching+query:wrapper-induction,unknown,unknown,divergent,4,query:dom-template-matching|query:wrapper-induction|based

@@ -4,6 +4,27 @@ All notable changes to this project will be documented in this file.
 
 The format is intentionally simple and release-oriented.
 
+## [0.2.0] - 2026-04-26
+
+### Added
+
+- public release package allowlist for npm distribution
+- refreshed README image assets and clearer public onboarding surface
+- report UI hardening for discovery and landscape templates
+- scoring, clustering and stability improvements through the Phase 0-7 hardening work
+- release smoke coverage for package metadata and HTML renderer behavior
+
+### Changed
+
+- product-readiness defaults to the configured default project, with `--all-projects` still available for broader local checks
+- release documentation consistently uses the committed MIT license
+- npm package metadata is aligned for publication without local workspace artifacts
+
+### Notes
+
+- This is the first public GitHub/npm release prepared from the current product state.
+- The older `v0.1.0` tag remains the internal pre-public preparation point.
+
 ## [0.1.0] - 2026-04-18
 
 ### Added

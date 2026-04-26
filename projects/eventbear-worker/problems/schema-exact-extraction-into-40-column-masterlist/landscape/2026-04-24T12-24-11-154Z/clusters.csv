@@ -1,6 +1,0 @@
-label,pattern_family,main_layer,relation,member_count,signature_contrast
-ipv4+python+query:address-parsing-library,address parsing library,problem_lens,divergent,5,query:address-parsing-library|python|ipv4
-bridge+csv+query:csv-schema-matcher,csv schema matcher,problem_lens,divergent,4,query:csv-schema-matcher|csv|bridge
-data+extracting+query:structured-data-extractor,structured data extractor,problem_lens,divergent,4,query:structured-data-extractor|extracting|llm
-query:typescript-field-mapping+react+typescript,typescript field mapping,problem_lens,divergent,4,query:typescript-field-mapping|typescript|react
-acroform+nodejs+service,unknown,unknown,divergent,3,service|nodejs|acroform

@@ -1,4 +1,0 @@
-label,pattern_family,main_layer,relation,member_count,signature_contrast
-pocketbase+query:pocketbase-ssr+server-side-rendering,pocketbase ssr,problem_lens,adjacent,8,query:pocketbase-ssr|pocketbase|server-side-rendering
-data+easy+query:schema-org-event-json-ld,schema.org event json-ld,problem_lens,divergent,3,query:schema-org-event-json-ld|data|easy
-2026+adnane+query:structured-data-injection-nextjs,structured data injection nextjs,problem_lens,divergent,3,query:structured-data-injection-nextjs|2026|adnane

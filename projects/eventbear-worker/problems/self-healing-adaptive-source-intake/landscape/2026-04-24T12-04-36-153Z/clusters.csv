@@ -1,3 +1,0 @@
-label,pattern_family,main_layer,relation,member_count,signature_contrast
-automation+playwright+query:selector-self-healing,selector self-healing,problem_lens,adjacent,16,query:selector-self-healing|browser|e2e-testing
-data+selectors+xpath,unknown,unknown,divergent,4,xpath|data|selectors

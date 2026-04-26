@@ -1,5 +1,0 @@
-label,pattern_family,main_layer,relation,member_count,signature_contrast
-dedupe+python+query:record-linkage-library,record linkage library,problem_lens,adjacent,8,query:record-linkage-library|linkage|record
-dedupe+entity-resolution+python,entity resolution deduplication,problem_lens,adjacent,7,query:entity-resolution-deduplication|entity-resolution|dedupe
-20build+python+query:fuzzy-string-matching,fuzzy string matching,problem_lens,divergent,3,query:fuzzy-string-matching|20build|actions
-feature+fellegi-sunter+implementation,unknown,unknown,divergent,2,feature|fellegi-sunter|implementation

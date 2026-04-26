@@ -312,7 +312,7 @@ Die Lizenz dafuer ist:
 
 - Beitragsregeln: [CONTRIBUTING.md](CONTRIBUTING.md)
 - Changelog: [CHANGELOG.md](CHANGELOG.md)
-- Release Notes: [RELEASE_NOTES_v0.1.0.md](docs/foundation/RELEASE_NOTES_v0.1.0.md)
+- Release Notes: [RELEASE_NOTES_v0.2.0.md](docs/foundation/RELEASE_NOTES_v0.2.0.md)
 - Freigabeform: [OPEN_SOURCE_RELEASE.md](docs/foundation/OPEN_SOURCE_RELEASE.md)
 - Release-Check: [RELEASE_CHECKLIST.md](docs/foundation/RELEASE_CHECKLIST.md)
 - Release-Kommunikation: [RELEASE_COMMUNICATION.md](docs/foundation/RELEASE_COMMUNICATION.md)

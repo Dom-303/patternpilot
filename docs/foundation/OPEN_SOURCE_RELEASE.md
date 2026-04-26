@@ -6,7 +6,7 @@ Die passende erste Freigabe fuer `patternpilot` ist:
 
 - oeffentliches GitHub-Repository
 - Lizenz: MIT
-- erster Tag: `v0.1.0`
+- erster oeffentlicher Tag: `v0.2.0`
 - Positionierung: frueher, aber ernsthafter `v1`-naher Public Release
 
 Das ist bewusst keine ueberverkaufte "`1.0.0` und fertig"-Botschaft.
@@ -50,4 +50,4 @@ Menschen koennen `patternpilot` klonen, anpassen, weiterentwickeln und auch komm
 
 ## Empfehlte erste Release-Botschaft
 
-`patternpilot v0.1.0` ist ein lokales, quelloffenes Repo-Intelligence-Tool, das fremde GitHub-Repositories relativ zu deinem eigenen Projekt bewertet und dich von Intake ueber Review bis zum naechsten klaren Schritt fuehrt.
+`patternpilot v0.2.0` ist ein lokales, quelloffenes Repo-Intelligence-Tool, das fremde GitHub-Repositories relativ zu deinem eigenen Projekt bewertet und dich von Intake ueber Review bis zum naechsten klaren Schritt fuehrt.

@@ -1,5 +1,0 @@
-label,pattern_family,main_layer,relation,member_count,signature_contrast
-kubebuilder+controller+kubebuilder,kubebuilder,problem_lens,divergent,9,kubebuilder|query:kubebuilder|controller
-kubernetes-operator+helm+kubebuilder,kubernetes operator,problem_lens,divergent,3,query:kubernetes-operator|operator|helm
-framework+describe+framework,framework,unknown,divergent,2,describe|framework|inference
-orchestrator+creation+monitoring,orchestrator,unknown,divergent,2,monitoring|creation|custom

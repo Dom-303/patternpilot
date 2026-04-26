@@ -1,6 +1,6 @@
-# Release Notes v0.1.0
+# Release Notes v0.2.0
 
-`patternpilot v0.1.0` ist die erste bewusste Open-Source-Freigabe des Produkts.
+`patternpilot v0.2.0` ist die erste oeffentlich publizierte Open-Source-Freigabe des Produkts.
 
 ## Was neu ist
 
@@ -8,9 +8,10 @@
 - gefuehrtes Onboarding mit `getting-started`, `bootstrap` und GitHub-Token-Setup
 - klare Trennung zwischen `bindings/`, `projects/`, `runs/` und `state/`
 - Intake-, Watchlist-, Review- und Readiness-Flow als zusammenhaengender Produktpfad
-- visuelle Produkt- und Onboarding-Oberflaeche mit statischen SVG-Assets
+- visuelle Produkt- und Onboarding-Oberflaeche mit aktualisierten PNG-Assets
 - neutrale Beispieloberflaeche statt aktiver Dogfood-Defaults
 - dokumentierter Produktstatus mit erfolgreich validiertem Fremdprojekt-Pilot
+- npm-Paket-Guardrails, damit lokale Workspace-Daten nicht veroeffentlicht werden
 
 ## Fuer wen diese Version gedacht ist
 

@@ -1,5 +1,0 @@
-label,pattern_family,main_layer,relation,member_count,signature_contrast
-data+python+query:structured-data-extractor,structured data extractor,problem_lens,divergent,6,query:structured-data-extractor|data|github
-ipv4+python+query:address-parsing-library,address parsing library,problem_lens,divergent,5,query:address-parsing-library|ipv4|ipv6
-bridge+csv+query:csv-schema-matcher,csv schema matcher,problem_lens,divergent,4,query:csv-schema-matcher|csv|bridge
-data-mapping+nodejs+typescript,unknown,unknown,divergent,5,nodejs|data-mapping|nestjs

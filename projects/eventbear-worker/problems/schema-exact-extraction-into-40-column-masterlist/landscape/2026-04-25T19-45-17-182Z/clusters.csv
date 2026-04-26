@@ -1,6 +1,0 @@
-label,pattern_family,main_layer,relation,member_count,signature_contrast
-github+python+query:structured-data-extractor,structured data extractor,problem_lens,divergent,6,query:structured-data-extractor|github|python
--black-000000+query:typescript-field-mapping+typescript,typescript field mapping,problem_lens,divergent,3,query:typescript-field-mapping|typescript|-black-000000
-ical+query:ical-rrule-parser+recurrence,ical rrule parser,problem_lens,divergent,2,ical|query:ical-rrule-parser|recurrence
-addresses+libpostal+query:libpostal-address-normalization,libpostal address normalization,problem_lens,adjacent,2,addresses|libpostal|query:libpostal-address-normalization
-acroform+ai-automation+query:semantic-field-mapping,semantic field mapping,problem_lens,divergent,2,query:semantic-field-mapping|acroform|ai-automation

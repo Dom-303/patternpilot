@@ -1,4 +1,6 @@
 /runs/
+/projects/
+/state/
 npm-debug.log*
 .env
 **/.env

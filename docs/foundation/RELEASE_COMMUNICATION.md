@@ -2,11 +2,11 @@
 
 ## GitHub Release Title
 
-`patternpilot v0.1.0 - first open-source release`
+`patternpilot v0.2.0 - first public open-source release`
 
 ## GitHub Release Body
 
-`patternpilot v0.1.0` ist die erste bewusste Open-Source-Freigabe des Produkts.
+`patternpilot v0.2.0` ist die erste oeffentlich publizierte Open-Source-Freigabe des Produkts.
 
 Highlights:
 
@@ -46,4 +46,4 @@ Der aktuelle Stand ist lokal produktiv nutzbar, mit gefuehrtem Onboarding, Revie
 
 ## Sehr kurze Ein-Zeilen-Version
 
-`patternpilot v0.1.0` ist raus: lokales Open-Source-Repo-Intelligence mit Zielprojekt-Bindung, Intake, Review und klaren naechsten Schritten.
+`patternpilot v0.2.0` ist raus: lokales Open-Source-Repo-Intelligence mit Zielprojekt-Bindung, Intake, Review und klaren naechsten Schritten.
