@@ -322,7 +322,16 @@ Die Lizenz dafuer ist:
 
 ## Jetzt Starten
 
-Pattern Pilot laeuft komplett lokal — kein Account, keine Cloud, keine Telemetrie. Vier Zeilen zum ersten Durchlauf:
+Pattern Pilot laeuft komplett lokal — kein Account, keine Cloud, keine Telemetrie.
+
+Schnellster Einstieg ueber npm:
+
+```bash
+npm install -g patternpilot
+patternpilot getting-started
+```
+
+Vollstaendiger lokaler Workspace aus dem GitHub-Repo:
 
 ```bash
 git clone https://github.com/Dom-303/patternpilot.git

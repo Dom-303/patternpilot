@@ -22,6 +22,15 @@ Darum ist der erste echte Schritt:
 
 ## Der schnellste sinnvolle Start
 
+Wenn du Patternpilot direkt als CLI installieren willst:
+
+```bash
+npm install -g patternpilot
+patternpilot getting-started
+```
+
+Wenn du im geklonten Repository arbeitest:
+
 ```bash
 npm install
 npm run doctor -- --offline
