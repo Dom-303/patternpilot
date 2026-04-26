@@ -337,22 +337,11 @@ Drei Wege in die Tiefe, je nachdem wie du tickst:
   <img src="assets/three-paths.png" alt="Drei Wege in die Tiefe — Simple Guide, Getting Started, Design Guide" width="860">
 </p>
 
-<table>
-<tr>
-<td align="center" width="33%">
-<a href="docs/foundation/SIMPLE_GUIDE.md"><strong>Simple Guide</strong></a><br/>
-<sub>Sprache ohne Jargon.<br/>Fuer den ersten Eindruck.</sub>
-</td>
-<td align="center" width="33%">
-<a href="docs/foundation/GETTING_STARTED.md"><strong>Getting Started</strong></a><br/>
-<sub>Vier Befehle, erster Run.<br/>Direkt zur Praxis.</sub>
-</td>
-<td align="center" width="33%">
-<a href="docs/reference/REPORT_UI_TOKENS.html"><strong>Design-Guide</strong></a><br/>
-<sub>Cockpit Night von innen.<br/>Fuer UI-Neugierige.</sub>
-</td>
-</tr>
-</table>
+<p align="center">
+  <a href="docs/foundation/SIMPLE_GUIDE.md"><strong>Simple Guide</strong></a> ·
+  <a href="docs/foundation/GETTING_STARTED.md"><strong>Getting Started</strong></a> ·
+  <a href="docs/reference/REPORT_UI_TOKENS.html"><strong>Design-Guide</strong></a>
+</p>
 
 
 ## Mitarbeiten
