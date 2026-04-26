@@ -27,6 +27,8 @@ Es hilft dir, externe GitHub-Repositories nicht nur zu sammeln, sondern im Konte
 - faehrt im Problem-Mode gezielte Problem-Landscapes: Cluster-Analyse + KI-Coding-Agent-Handoff + Achsen-View
 - erzeugt zwei final gestaltete HTML-Reports (Discovery/Review + Landscape) im eigenen Cockpit-Night-Design-System
 - trennt bewusst zwischen Produktcode, lokalem Laufzeit-Zustand und projektbezogenen Ergebnissen
+- misst die Qualitaet jedes Runs ueber 9 Achsen (Struktur + Inhalt) und kennt seine eigenen Grenzen — empirisch validiert auf 11 Runs in 9 Domaenen ueber 4 Projekte
+- bietet projektspezifische Pattern-Family-Lexika und einen Suggester-Helper fuer fremde Domaenen
 
 ### Was du dafuer brauchst
 
@@ -201,6 +203,30 @@ Wichtig:
 - `npm run patternpilot -- discover --project my-project --per-page 50 --depth deep`
   Tiefere Discovery mit mehr Kandidaten pro Query.
 
+### Score & Stabilitaet — Pipeline-Qualitaet messen
+
+- `npm run score -- <run-path> --pretty`
+  Bewertet einen einzelnen Landscape- oder Review-Run ueber 9 Achsen (5 Struktur + 4 Inhalt) und gibt einen 0-10-Combined-Score aus.
+- `npm run score:baseline`
+  Re-scort die vier eingefrorenen Baseline-Fixtures unter `test/fixtures/score-baseline/`.
+- `npm run stability-test -- --runs <a,b,c>`
+  Aggregiert N Run-Scores zu Median, Min, Max, Mean — fuer Cross-Project-Vergleiche und Acceptance-Tests.
+- `npm run lexicon:suggest -- --project <key> --output docs/foundation/lexicon-suggestions.md`
+  Schlaegt anhand `unknown`-klassifizierter Repos neue Pattern-Familien fuers Lexikon vor.
+
+Detailliert: [SCORE_STABILITY_PLAN.md](docs/foundation/SCORE_STABILITY_PLAN.md), [SCORE_STABILITY_RESULTS.md](docs/foundation/SCORE_STABILITY_RESULTS.md).
+
+### Phase-Flags fuer Real-World-Runs
+
+Drei opt-in Flags an `problem:explore` und `review:watchlist`, die die Pipeline-Qualitaet bei Bedarf hochziehen:
+
+- `--seed-strategy auto` — Diversifier supplementiert kollabierte Query-Seeds aus einem Dictionary
+- `--pattern-family auto` — Lexikon-basierter Repo-Klassifikator fuellt Cluster-Familien (95-100 % auf in-domain Runs)
+- `--auto-discover` — bei leerer Watchlist triggert `review:watchlist` automatisch eine fokussierte Discovery + Intake
+- `--slow` — Hard-Throttle 1 req/s gegen GitHub-Search-API-Rate-Limit (30/min)
+
+Per-Project-Lexikon: lege `bindings/<project>/PATTERN_FAMILY_LEXICON.json` an, um den Klassifikator fuer eine fremde Domaene zu erweitern. Default-Lexikon und Project-Lexikon werden automatisch gemerged.
+
 
 ## Reports & Design System
 
@@ -235,6 +261,8 @@ Details, was sich aendern darf und was nicht: [`docs/reference/TEMPLATE_LOCK.md`
 
 - Produkt- und Systembild: [OPERATING_MODEL.md](docs/foundation/OPERATING_MODEL.md)
 - Ehrlicher Produktstatus: [V1_STATUS.md](docs/foundation/V1_STATUS.md)
+- Score-Stabilitaets-Plan (10 Phasen): [SCORE_STABILITY_PLAN.md](docs/foundation/SCORE_STABILITY_PLAN.md)
+- Empirische Stabilitaets-Belege: [SCORE_STABILITY_RESULTS.md](docs/foundation/SCORE_STABILITY_RESULTS.md)
 - Projekt-Alignment: [PROJECT_ALIGNMENT_MODEL.md](docs/reference/PROJECT_ALIGNMENT_MODEL.md)
 - GitHub-Discovery-Modell: [GITHUB_DISCOVERY_MODEL.md](docs/reference/GITHUB_DISCOVERY_MODEL.md)
 - GitHub-Token-Setup: [GITHUB_TOKEN_SETUP.md](docs/reference/GITHUB_TOKEN_SETUP.md)
@@ -300,6 +328,10 @@ npm run doctor -- --offline
 ```
 
 Drei Wege in die Tiefe, je nachdem wie du tickst:
+
+<p align="center">
+  <img src="assets/three-paths.svg" alt="Drei Wege in die Tiefe — Simple Guide, Getting Started, Design Guide" width="860">
+</p>
 
 <table>
 <tr>
