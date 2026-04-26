@@ -5,7 +5,7 @@
 Die passende erste Freigabe fuer `patternpilot` ist:
 
 - oeffentliches GitHub-Repository
-- Lizenz: Apache-2.0
+- Lizenz: MIT
 - erster Tag: `v0.1.0`
 - Positionierung: frueher, aber ernsthafter `v1`-naher Public Release
 
@@ -16,20 +16,19 @@ Es ist eher:
 - offen genug fuer Feedback und Weiterentwicklung
 - ehrlich genug bei den letzten verbleibenden Launch-Entscheidungen
 
-## Warum Apache-2.0 hier gut passt
+## Warum MIT hier gut passt
 
-Apache-2.0 ist eine permissive Open-Source-Lizenz.
+MIT ist eine permissive Open-Source-Lizenz.
 
 Sie ist fuer `patternpilot` sinnvoll, weil sie:
 
 - kommerzielle Nutzung erlaubt
 - Veraenderung und Weitergabe erlaubt
-- einen ausdruecklichen Patent-Grant enthaelt
 - fuer ein lokales Tooling-/Automation-Produkt gut verstaendlich ist
 
 Kurz gesagt:
 
-Menschen koennen `patternpilot` klonen, anpassen, weiterentwickeln und auch kommerziell nutzen, solange sie die Lizenzbedingungen einhalten.
+Menschen koennen `patternpilot` klonen, anpassen, weiterentwickeln und auch kommerziell nutzen, solange sie den MIT-Lizenzhinweis beibehalten.
 
 ## Was zur ersten Freigabe gehoert
 

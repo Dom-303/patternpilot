@@ -165,6 +165,19 @@ async function writeProductReadinessArtifacts(rootDir, runId, review, summary, d
   };
 }
 
+export function selectProductReadinessProjectKeys(config, options = {}) {
+  if (options.project) {
+    return [options.project];
+  }
+  if (options.allProjects) {
+    return Object.keys(config.projects ?? {});
+  }
+  if (config.defaultProject) {
+    return [config.defaultProject];
+  }
+  return Object.keys(config.projects ?? {});
+}
+
 export async function runProductReadiness(rootDir, config, options) {
   const generatedAt = new Date().toISOString();
   const auth = inspectGithubAuth(config);
@@ -188,9 +201,7 @@ export async function runProductReadiness(rootDir, config, options) {
     nextJob
   });
   const targets = resolveAutomationAlertTargets(rootDir, config, {});
-  const projectKeys = options.project
-    ? [options.project]
-    : Object.keys(config.projects ?? {});
+  const projectKeys = selectProductReadinessProjectKeys(config, options);
   const projects = [];
   for (const projectKey of projectKeys) {
     projects.push(await collectProjectReadiness(rootDir, config, projectKey, evaluations, alerts, runtimeContext));

@@ -47,7 +47,8 @@ describe("decision summary cutover", () => {
 
     assert.match(html, /Engine-Daten unvollstaendig/);
     assert.match(html, /reportSchemaVersion/);
-    assert.match(html, /section-card warn/);
+    assert.match(html, /section-preview accent-orange/);
+    assert.match(html, /data-section-empty="true"/);
   });
 
   test("missing run fields render missing-data error state", () => {
@@ -227,14 +228,17 @@ describe("recommended actions cutover", () => {
     assert.match(html, /Lizenz \?/);
   });
 
-  test("recommended actions stay empty when run schema is missing", () => {
+  test("recommended actions render an empty section when run schema is missing", () => {
     const html = renderRecommendedActions({
       reportType: "discovery",
       runRoot: { reportSchemaVersion: 1 },
       candidates: [makeCandidate()]
     });
 
-    assert.equal(html, "");
+    assert.match(html, /Empfohlene Aktionen/);
+    assert.match(html, /Keine Handlungsempfehlung verfuegbar/);
+    assert.match(html, /Engine-Daten unvollstaendig/);
+    assert.match(html, /data-section-empty="true"/);
   });
 });
 
@@ -392,7 +396,7 @@ describe("discovery html policy rendering", () => {
 
     assert.match(html, /Discovery-Regelwerk/);
     assert.match(html, /Vom Regelwerk markiert/);
-    assert.match(html, /Der Modus audit hat 5 von 5 bewerteten Kandidaten sichtbar gelassen/);
+    assert.match(html, /Modus audit hat 5 von 5 Kandidaten sichtbar gelassen/);
     assert.match(html, /Regel-Kalibrierung/);
     assert.match(html, /strict_needs_review/);
     assert.match(html, /Audit mode keeps flagged repos visible/);
@@ -413,7 +417,7 @@ describe("discovery html policy rendering", () => {
     assert.match(html, /"primary":/);
     assert.match(html, /"secondary":\s*\[/);
     assert.match(html, /Primaerer Pfad/);
-    assert.match(html, /Sekundaere Vergleichspfade/);
+    assert.match(html, /Sekundaerer Pfad/);
     assert.match(html, /Primaerer Prototyp/);
     assert.match(html, /Unterstuetzender Prototyp/);
   });
@@ -518,7 +522,7 @@ describe("on-demand run html rendering", () => {
       ]
     });
 
-    assert.match(html, /AD-HOC-LAUF/);
+    assert.match(html, /Ad-hoc-Lauf/i);
     assert.match(html, /Laufzusammenfassung/);
     assert.match(html, /Artefakte/);
     assert.match(html, /Was jetzt/);
@@ -531,8 +535,9 @@ describe("on-demand run html rendering", () => {
     assert.match(html, /Lieferziel/);
     assert.match(html, /Wichtiger Kontext/);
     assert.match(html, /Offene Unsicherheiten/);
-    assert.match(html, /Agent Hand-Off oeffnen/);
-    assert.match(html, /Agent Hand-Off herunterladen/);
+    assert.match(html, /data-agent-action="open"/);
+    assert.match(html, /data-agent-action="download"/);
+    assert.match(html, /Herunterladen/);
     assert.match(html, /id="patternpilot-agent-payload"/);
     assert.match(html, /"reportType":\s*"on_demand"/);
     assert.match(html, /"handoffType":\s*"patternpilot_agent_brief"/);
@@ -540,7 +545,7 @@ describe("on-demand run html rendering", () => {
     assert.match(html, /"\.\.\/sample-project"/);
   });
 
-  test("keeps info-modal key normalization escaped in generated html", () => {
+  test("keeps empty-section controls and warning copy in generated html", () => {
     const html = renderOnDemandRunHtmlReport({
       runId: "2026-04-14T18-30-00-000Z",
       projectKey: "sample-project",
@@ -573,7 +578,8 @@ describe("on-demand run html rendering", () => {
       nextActions: []
     });
 
-    assert.match(html, /replace\(\/\\s\+\/g, " "\)/);
-    assert.match(html, /Hier stehen die staerksten Warnsignale aus dem aktuellen Vergleich/);
+    assert.match(html, /show-empty-sections-toggle/);
+    assert.match(html, /Auch leere Felder anzeigen/);
+    assert.match(html, /Keine Kandidaten/);
   });
 });

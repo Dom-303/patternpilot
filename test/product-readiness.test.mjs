@@ -5,6 +5,7 @@ import {
   buildPatternpilotProductReadinessReview,
   renderPatternpilotProductReadinessSummary
 } from "../lib/product-readiness.mjs";
+import { selectProductReadinessProjectKeys } from "../scripts/commands/product-readiness.mjs";
 
 test("buildPatternpilotProductReadinessReview returns ready_with_followups for healthy core plus pilot followups", () => {
   const review = buildPatternpilotProductReadinessReview({
@@ -218,4 +219,28 @@ test("buildPatternpilotProductReadinessReview suppresses freshly completed next 
   assert.equal(review.overallStatus, "ready_with_followups");
   assert.match(review.nextAction ?? "", /re-evaluate/);
   assert.equal(review.projects[0].nextAction, "npm run patternpilot -- re-evaluate --project sample-project --stale-only");
+});
+
+test("selectProductReadinessProjectKeys defaults to the configured default project", () => {
+  const config = {
+    defaultProject: "eventbear-worker",
+    projects: {
+      "eventbear-worker": {},
+      pinflow: {},
+      "eventbear-web": {}
+    }
+  };
+
+  assert.deepEqual(
+    selectProductReadinessProjectKeys(config, {}),
+    ["eventbear-worker"]
+  );
+  assert.deepEqual(
+    selectProductReadinessProjectKeys(config, { allProjects: true }),
+    ["eventbear-worker", "pinflow", "eventbear-web"]
+  );
+  assert.deepEqual(
+    selectProductReadinessProjectKeys(config, { project: "pinflow" }),
+    ["pinflow"]
+  );
 });

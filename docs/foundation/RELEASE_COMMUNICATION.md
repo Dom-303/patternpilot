@@ -18,7 +18,7 @@ Highlights:
 
 Wichtig:
 
-- Lizenz: Apache-2.0
+- Lizenz: MIT
 - Fokus: lokale Nutzung, Intake, Watchlist, Review und Readiness
 - GitHub App und tiefere Automation sind vorhanden, aber nicht noetig fuer den ersten produktiven Start
 
@@ -40,7 +40,7 @@ Weiterfuehrende Doku:
 
 ## Kurze Release-Nachricht
 
-`patternpilot` ist jetzt als Apache-2.0 Open Source veroeffentlicht.
+`patternpilot` ist jetzt als MIT Open Source veroeffentlicht.
 Es hilft dabei, externe GitHub-Repos relativ zum eigenen Projekt zu bewerten, statt sie nur zu sammeln.
 Der aktuelle Stand ist lokal produktiv nutzbar, mit gefuehrtem Onboarding, Review-Flow und dokumentiertem Produktstatus.
 

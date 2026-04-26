@@ -23,7 +23,7 @@ Diese Version ist fuer Menschen und Teams, die:
 ## Wichtige Produktmerkmale
 
 - lokal-first
-- Open Source unter Apache-2.0
+- Open Source unter MIT
 - nutzbar ohne GitHub App
 - stabiler mit verifiziertem GitHub-Token
 
