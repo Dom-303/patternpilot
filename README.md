@@ -325,7 +325,7 @@ Schnellster Einstieg ueber npm:
 
 ```bash
 npm install -g patternpilot
-patternpilot getting-started
+patternpilot init
 ```
 
 Vollstaendiger lokaler Workspace aus dem GitHub-Repo:
