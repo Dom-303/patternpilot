@@ -45,15 +45,54 @@ describe("runGithubStep", () => {
   });
 
   test("M (manual override) lets user enter token even when pre-flight succeeds", async () => {
-    const { prompter } = pipedPrompter(["M", "P", "ghp_manualtoken"]);
+    const { prompter } = pipedPrompter(["M", "P", "", "", "", "ghp_manualtoken"]);
     const state = createWizardState();
     const result = await runGithubStep({
       prompter, state,
       configDir: fs.mkdtempSync(path.join(os.tmpdir(), "pp-gh-")),
       detectFn: async () => ({ source: "gh-cli", token: "ghp_x", user: "@u" }),
-      validateToken: async (t) => ({ ok: true, user: "@manual", scopes: ["public_repo"] })
+      validateToken: async (t) => ({ ok: true, user: "@manual", scopes: ["public_repo"] }),
+      openBrowser: async () => true
     });
     assert.equal(result.token, "ghp_manualtoken");
+    prompter.close();
+  });
+});
+
+describe("PAT path", () => {
+  test("happy path: browser open + token paste + validate", async () => {
+    const { prompter } = pipedPrompter(["P", "", "", "", "ghp_validtoken"]);
+    const state = createWizardState();
+    let openedUrl = null;
+    const result = await runGithubStep({
+      prompter, state,
+      configDir: fs.mkdtempSync(path.join(os.tmpdir(), "pp-gh-")),
+      detectFn: async () => ({ source: "none", token: null, user: null }),
+      validateToken: async (t) => t === "ghp_validtoken"
+        ? { ok: true, user: "@dom-303", scopes: ["public_repo", "read:user"] }
+        : { ok: false, status: 401 },
+      openBrowser: async (url) => { openedUrl = url; return true; }
+    });
+    assert.equal(result.source, "pat");
+    assert.equal(result.token, "ghp_validtoken");
+    assert.match(openedUrl, /github\.com\/settings\/tokens\/new/);
+    assert.match(openedUrl, /scopes=public_repo,read:user/);
+    prompter.close();
+  });
+
+  test("invalid token shows diagnosis with three actions", async () => {
+    const { prompter, captured } = pipedPrompter(["P", "", "", "", "ghp_bad", "S"]);
+    const state = createWizardState();
+    const result = await runGithubStep({
+      prompter, state,
+      configDir: fs.mkdtempSync(path.join(os.tmpdir(), "pp-gh-")),
+      detectFn: async () => ({ source: "none", token: null, user: null }),
+      validateToken: async () => ({ ok: false, status: 401 }),
+      openBrowser: async () => true
+    });
+    assert.match(captured(), /Token wurde abgelehnt/);
+    assert.match(captured(), /HTTP 401/);
+    assert.equal(result.source, "skipped");
     prompter.close();
   });
 });
