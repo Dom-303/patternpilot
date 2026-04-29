@@ -4,6 +4,35 @@ All notable changes to this project will be documented in this file.
 
 The format is intentionally simple and release-oriented.
 
+## [0.3.0] - 2026-04-29
+
+### Added
+
+- **`patternpilot init` — interactive 5-step onboarding wizard** as the new headline first-run experience. Replaces the static `getting-started` text-print in TTY mode (text-print remains as `init --print` for CI). Resolves OQ-006.
+  - Step 1: Auto-scan parents/home for git repos, top 3 by mtime
+  - Step 2: Detect label, language, context files, and watchlist seed from `package.json#dependencies`
+  - Step 3: GitHub auth via gh CLI, Personal Access Token (4 micro-steps with diagnostics), or skip
+  - Step 4: Discovery profile (balanced / focused)
+  - Step 5: Optional first action — intake URL, discover, or define a problem and explore landscape
+- **Re-run menu** when wizard is invoked against existing config: add project, edit, re-auth, set default, cancel
+- **Auto-trigger**: any patternpilot command without configured projects in TTY prompts "Setup jetzt starten? [Y/n]"
+- WSL2 browser-open via `wslview` with `xdg-open` fallback
+- Wizard `--replay <file>` mechanism for scripted/CI testing
+
+### Fixed
+
+- Wizard now actually creates the project (config + bindings + projects) — v0.2.x had a UI walkthrough that recorded choices but never called `runBootstrap`
+- Wizard now actually dispatches first-action and re-run intents (intake/discover/problem/set-default) instead of only recording them
+- Prompter handles Ctrl+D / EOF cleanly (rejects pending resolvers instead of hanging)
+- Prompter pauses while `gh auth login` runs to avoid stdin race
+- Token file enforces `mode 0o600` even on overwrite
+
+### Changed
+
+- `getting-started` and `first-run` are now aliases for `init`
+- README onboarding section points at the wizard
+- `lib/queue.mjs` — OQ-006 marked resolved; `next_recommended_step` updated to mention wizard observation
+
 ## [0.2.0] - 2026-04-26
 
 ### Added
