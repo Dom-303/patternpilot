@@ -4,6 +4,7 @@ export {
   runDiscoverWorkspace,
   runDoctor,
   runGettingStarted,
+  runInit,
   runInitEnv,
   runInitProject,
   runRefreshContext,

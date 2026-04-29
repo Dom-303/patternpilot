@@ -1,0 +1,7 @@
+{
+  "target": "TARGET_PATH_PLACEHOLDER",
+  "context": "accept",
+  "github": { "path": "S" },
+  "discovery": "balanced",
+  "first_action": "nothing"
+}

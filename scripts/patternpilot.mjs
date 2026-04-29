@@ -38,6 +38,7 @@ import {
   runDoctor,
   runBootstrap,
   runGettingStarted,
+  runInit,
   runGithubAppEventPreview,
   runGithubAppInstallationApply,
   runGithubAppInstallationGovernanceApply,
@@ -189,6 +190,7 @@ function printHelp() {
 const COMMANDS_ALLOWED_WITHOUT_PROJECT = new Set([
   "doctor",
   "bootstrap",
+  "init",
   "getting-started",
   "init-env",
   "init-project",
@@ -228,6 +230,7 @@ function buildCommandHandlers(envFiles) {
     runValidateCohort,
     runDiscoveryEvaluate,
     runGettingStarted,
+    runInit,
     runDoctor: (rootDir, config, options) => runDoctor(rootDir, config, options, envFiles),
     runGithubAppEventPreview,
     runGithubAppInstallationApply,
@@ -403,9 +406,25 @@ async function main() {
   }
 
   const hasConfiguredProjects = Object.keys(config.projects ?? {}).length > 0;
+  const isInitCommand = commandEntry.name === "init";
+  const isInteractive = process.stdin.isTTY && process.stdout.isTTY;
+
+  if (!hasConfiguredProjects && !isInitCommand && isInteractive) {
+    const readline = await import("node:readline");
+    const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+    const answer = await new Promise((res) => rl.question(
+      "Patternpilot ist noch nicht eingerichtet. Setup jetzt starten? [Y/n] ",
+      (a) => res(a.trim().toLowerCase())
+    ));
+    rl.close();
+    if (answer === "" || answer === "y" || answer === "j" || answer === "yes" || answer === "ja") {
+      return runInit(rootDir, config, options);
+    }
+  }
+
   if (!hasConfiguredProjects && !COMMANDS_ALLOWED_WITHOUT_PROJECT.has(commandEntry.name)) {
     throw new Error(
-      `No project is configured yet. Run 'npm run getting-started' or 'npm run bootstrap -- --project my-project --target ../my-project --label "My Project"' first.`
+      `No project is configured yet. Run 'patternpilot init' or 'npm run bootstrap -- --project my-project --target ../my-project --label "My Project"' first.`
     );
   }
 

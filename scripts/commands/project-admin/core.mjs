@@ -420,6 +420,19 @@ export async function runInitProject(rootDir, config, options) {
   });
 }
 
+export async function runInit(rootDir, config, options = {}) {
+  const { runWizard } = await import("../../../lib/wizard/index.mjs");
+  return runWizard(rootDir, {
+    flags: {
+      print: options.print === true,
+      reconfigure: options.reconfigure === true,
+      replay: options.replay || null
+    },
+    config,
+    printFn: (r, c) => runGettingStarted(r, c)
+  });
+}
+
 export async function runDiscoverWorkspace(rootDir, config, options) {
   const repos = await discoverWorkspaceProjects(rootDir, config, {
     workspaceRoot: options.workspaceRoot,

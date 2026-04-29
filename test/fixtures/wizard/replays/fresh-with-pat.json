@@ -1,0 +1,10 @@
+{
+  "target": "TARGET_PATH_PLACEHOLDER",
+  "context": "accept",
+  "github": {
+    "path": "P",
+    "token": "ghp_replay_pat_token"
+  },
+  "discovery": "balanced",
+  "first_action": "nothing"
+}

@@ -1,0 +1,55 @@
+# Patternpilot Getting Started
+
+Patternpilot arbeitet immer auf ein Zielprojekt hin.
+Du bindest zuerst ein eigenes Repo an und nutzt danach Intake, Watchlist und Review fuer dieses Ziel.
+
+- einfache_doku: docs/foundation/GETTING_STARTED.md
+- technische_doku: docs/foundation/ADVANCED_GUIDE.md
+- oeffentlich_vs_lokal: docs/foundation/PUBLIC_VS_LOCAL.md
+- fiktives_beispiel: examples/demo-city-guide/README.md
+
+## Frischer Start
+1. Repository installieren und Abhaengigkeiten laden
+   npm install
+2. Lokale Voraussetzungen pruefen
+   npm run doctor -- --offline
+3. Optional, aber fuer echten GitHub-Betrieb empfohlen: GitHub-Zugang einrichten
+   npm run init:env
+   npm run setup:checklist
+   npm run doctor
+4. Eigenes Zielrepo anbinden
+   npm run bootstrap -- --project my-project --target ../my-project --label "My Project"
+5. Dann entweder direkt ein Repo intaken
+   npm run intake -- --project my-project https://github.com/example/repo
+6. Oder zuerst eine Watchlist pflegen
+   edit bindings/my-project/WATCHLIST.txt
+   npm run sync:watchlist -- --project my-project
+
+## Was Danach Entsteht
+- bindings/<project>/: technische Zielrepo-Bindung
+- projects/<project>/: lesbarer Arbeits- und Ergebnisraum
+- runs/<project>/: Laufprotokolle
+- state/repo_intake_queue.csv: operative Intake-Queue
+
+## GitHub-Zugang
+- fuer den ersten lokalen Test optional
+- fuer stabile echte GitHub-Laeufe empfohlen
+- gefuehrter pfad: npm run init:env -> npm run setup:checklist -> npm run doctor
+
+## Aktueller Zustand
+- configured_projects: 4
+- default_project: eventbear-worker
+- eventbear-worker: /home/domi/eventbaer/dev/eventbear-worker (Eventbaer Worker)
+- pinflow: /home/domi/eventbaer/dev/pinflow (PinFlow)
+- eventbear-web: /home/domi/eventbaer/dev/eventbear-web (EventBaer Web)
+- cross-domain-test: /home/domi/eventbaer/dev/patternpilot (Cross-Domain Stress Test)
+
+## Next Step
+
+- npm run intake -- --project eventbear-worker https://github.com/example/repo
+
+## Also Useful
+
+- npm run sync:watchlist -- --project eventbear-worker
+- npm run review:watchlist -- --project eventbear-worker --dry-run
+- npm run show:project -- --project eventbear-worker
