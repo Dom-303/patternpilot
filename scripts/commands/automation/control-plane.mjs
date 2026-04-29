@@ -36,6 +36,22 @@ export async function runAutomationJobs(rootDir, config, options) {
   const generatedAt = new Date().toISOString();
   const { jobsPath, jobs } = await loadAutomationJobs(rootDir, config);
   const { statePath, state } = await loadAutomationJobState(rootDir, config);
+
+  if (!options.skipAutoResume) {
+    const { tickAutoResume } = await import("../../../lib/automation/automation-jobs.mjs");
+    const tick = tickAutoResume(state);
+    if (tick.released.length > 0) {
+      await writeAutomationJobState(rootDir, config, state, options.dryRun);
+      if (!options.json) {
+        console.log(`# Auto-resumed ${tick.released.length} stuck job${tick.released.length === 1 ? "" : "s"}:`);
+        for (const r of tick.released) {
+          console.log(`- ${r.jobId} (locked for ${r.ageMinutes} min)`);
+        }
+        console.log("");
+      }
+    }
+  }
+
   const { historyPath } = await loadAutomationDispatchHistory(rootDir, config);
   const { reviewsPath } = await loadAutomationOperatorReviews(rootDir, config);
   const baseEvaluations = evaluateAutomationJobs(jobs, state, new Date(generatedAt));
