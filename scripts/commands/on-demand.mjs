@@ -176,6 +176,17 @@ export async function runOnDemand(rootDir, config, options) {
   const projectKey = options.project || config.defaultProject;
   const { project, binding } = await loadProjectBinding(rootDir, config, projectKey);
   const alignmentRules = await loadProjectAlignmentRules(rootDir, project, binding);
+
+  if (!options.skipStaleBanner) {
+    const { summarizeStaleData } = await import("../../lib/stale-data/detect.mjs");
+    const { renderStaleDataBanner } = await import("../../lib/stale-data/banner.mjs");
+    const { loadQueueEntries } = await import("../../lib/index.mjs");
+    const queueRows = await loadQueueEntries(rootDir, config);
+    const summary = summarizeStaleData(queueRows, projectKey);
+    const banner = renderStaleDataBanner(summary, projectKey);
+    if (banner) console.log(banner);
+  }
+
   const createdAt = new Date().toISOString();
   const runId = createRunId(new Date(createdAt));
   const explicitUrls = await collectUrls(rootDir, options);

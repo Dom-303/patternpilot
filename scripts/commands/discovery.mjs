@@ -96,6 +96,15 @@ export async function runIntake(rootDir, config, options) {
   const items = [];
   const preloadedCandidates = indexPreloadedCandidates(options.preloadedCandidates ?? []);
   const existingQueueRows = await loadQueueEntries(rootDir, config);
+
+  if (!options.skipStaleBanner) {
+    const { summarizeStaleData } = await import("../../lib/stale-data/detect.mjs");
+    const { renderStaleDataBanner } = await import("../../lib/stale-data/banner.mjs");
+    const summary = summarizeStaleData(existingQueueRows, projectKey);
+    const banner = renderStaleDataBanner(summary, projectKey);
+    if (banner) console.log(banner);
+  }
+
   const knownProjectUrls = new Set(
     existingQueueRows
       .filter((row) => row.project_key === projectKey)
