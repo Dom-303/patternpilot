@@ -80,44 +80,34 @@ flowchart LR
 
 ### Schnellstart
 
-Wenn du einfach nur loslegen willst:
-
 ```bash
 npm install -g patternpilot
-patternpilot getting-started
+patternpilot init
 ```
 
-Wenn du im geklonten Repository arbeiten willst, nimm diese vier Schritte:
+Der interaktive Wizard fragt in fuenf Schritten alles ab, was Patternpilot zum Loslegen braucht: Zielprojekt, Kontext, GitHub-Zugang, Discovery-Profil, optionale erste Aktion. Dauer ≤ 90 Sekunden bei Default-Antworten.
+
+### Was der Wizard tut
+
+1. **Zielprojekt finden** — automatischer Scan der ueblichen Pfade (`../`, `~/dev/`, `~/projects/`), Top 3 zur Auswahl
+2. **Kontext bestaetigen** — Label, Sprache, Context-Files und Watchlist-Seed aus `package.json#dependencies` werden vorgeschlagen
+3. **GitHub-Zugang** — gh CLI oder Personal Access Token oder Skip; bei PAT mit Schritt-fuer-Schritt-Anleitung inkl. vorausgewaehlter Scopes
+4. **Discovery-Profil** — `balanced` (empfohlen) oder `focused`
+5. **Erste Aktion** — sofort `intake`, `discover`, `problem` (Landscape) oder einfach Setup speichern
+
+### Nicht-interaktive Nutzung
+
+Fuer CI, Doku-Generierung oder gepipte Aufrufe:
 
 ```bash
-npm install
-npm run doctor -- --offline
-npm run bootstrap -- --project my-project --target ../my-project --label "My Project"
-npm run intake -- --project my-project https://github.com/example/repo
+patternpilot init --print
 ```
 
-Danach hast du einen ersten echten Durchlauf.
+Zeigt die Schritt-Liste als reinen Text, ohne Fragen zu stellen. Identisch zum frueheren `getting-started`-Output.
 
-### Die Vier Befehle Kurz Erklaert
+### Re-Konfiguration
 
-- `npm install`
-  Installiert `patternpilot` lokal.
-- `npm run doctor -- --offline`
-  Prueft den lokalen Grundzustand ohne GitHub-Zugang.
-- `npm run bootstrap -- --project my-project --target ../my-project --label "My Project"`
-  Bindet dein eigenes Zielprojekt an.
-- `npm run intake -- --project my-project https://github.com/example/repo`
-  Zieht das erste externe Repo in den echten Bewertungsfluss.
-
-### Wenn du direkt sauber mit GitHub arbeiten willst
-
-```bash
-npm run init:env
-npm run setup:checklist
-npm run doctor
-```
-
-Danach kannst du stabiler mit echten GitHub-Repos arbeiten.
+Nach dem ersten Setup oeffnet `patternpilot init` ein Aktionsmenue (neues Projekt hinzufuegen, Token erneuern, Default wechseln, …). Fuer ein vollstaendiges neues Setup `--reconfigure` setzen.
 
 ### Einfacher Start Auf Einen Blick
 
@@ -137,7 +127,7 @@ Sie ist bewusst fuer normale Nutzer geschrieben: kurzer Schritt, passender Comma
 - Technischer und ausfuehrlicher:
   [ADVANCED_GUIDE.md](docs/foundation/ADVANCED_GUIDE.md)
 - Wenn du lieber direkt in der CLI gefuehrt werden willst:
-  `npm run getting-started`
+  `patternpilot init`  (interaktiv)  oder  `patternpilot init --print`  (nur Text)
 
 
 ## Arbeitsmodell Und Repo-Struktur
