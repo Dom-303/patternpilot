@@ -59,4 +59,15 @@ describe("prompter", () => {
     assert.equal(await p.confirm("Ok?", { default: true }), true);
     p.close();
   });
+
+  test("ask rejects when input stream closes before answer (Ctrl+D / EOF)", async () => {
+    const input = Readable.from([]);
+    const output = new Writable({ write(_c, _e, cb) { cb(); } });
+    const p = createPrompter({ input, output });
+
+    await assert.rejects(
+      p.ask("Frage:"),
+      /input.*closed/i
+    );
+  });
 });
