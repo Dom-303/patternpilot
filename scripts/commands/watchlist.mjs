@@ -449,6 +449,24 @@ export async function runReEvaluate(rootDir, config, options) {
   console.log(summary);
   console.log(`Run directory: ${path.relative(rootDir, runDir)}`);
 
+  if (!options.dryRun && updates.length > 0) {
+    const { appendReEvaluateRun } = await import("../../lib/re-evaluate-history.mjs");
+    const driftReasonsCount = {};
+    for (const update of updates) {
+      const reasons = update.triggerReasons ?? [];
+      for (const reason of reasons) {
+        driftReasonsCount[reason] = (driftReasonsCount[reason] ?? 0) + 1;
+      }
+    }
+    await appendReEvaluateRun(rootDir, {
+      runId,
+      projectKey,
+      targetCount: updates.length,
+      driftReasons: driftReasonsCount,
+      remainingTargets: remainingTargetRows
+    });
+  }
+
   if (plannedTargets.length === 0) {
     console.log(`- status: skipped_no_targets`);
     console.log(`- note: Queue entries are already current for this selection.`);
