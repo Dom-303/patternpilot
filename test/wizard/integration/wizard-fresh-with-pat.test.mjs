@@ -59,6 +59,8 @@ describe("wizard integration — fresh + PAT", () => {
     const history = JSON.parse(fs.readFileSync(historyPath, "utf8"));
     assert.equal(history.runs.length, 1);
     assert.equal(history.runs[0].outcome, "completed");
-    assert.equal(history.runs[0].steps.length, 5);
+    // 5 user-facing steps + 1 bootstrap-perform step recorded after step 2
+    assert.equal(history.runs[0].steps.length, 6);
+    assert.ok(history.runs[0].steps.some((s) => s.name === "bootstrap-perform"));
   });
 });
