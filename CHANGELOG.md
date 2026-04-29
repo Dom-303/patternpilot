@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 
 The format is intentionally simple and release-oriented.
 
+## [0.4.0] - 2026-04-29
+
+### Added
+
+- **Stale-data banner** at start of `intake` and `on-demand` runs — shows count, top drift reasons, example URLs, and the concrete refresh command. Resolves OQ-007's user-visibility gap.
+- **Re-evaluate audit log** in `state/re-evaluate-history.json` — every re-evaluate run records what was refreshed, when, and why.
+- **Webhook alert channel** alongside file / github-summary / command / stdout — POSTs JSON to a configurable URL, compatible with Slack / Discord / Teams Inbound Webhooks.
+- **Auto-resume for stuck automation jobs** — jobs locked longer than 6h (configurable per job via `autoResumeMinutes`, opt-out via `0`) are released automatically when `automation-jobs` runs. Resolves OQ-008's recovery gap.
+
+### Notes
+
+- All four additions reuse existing infrastructure — no new subsystems introduced.
+- Stale-banner can be silenced per call with `--skip-stale-banner` (used internally where banner would be noise).
+- Webhook delivery failures are logged but do not break the run.
+
 ## [0.3.0] - 2026-04-29
 
 ### Added
