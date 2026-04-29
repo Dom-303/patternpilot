@@ -38,6 +38,7 @@ import {
   runDoctor,
   runBootstrap,
   runGettingStarted,
+  runInit,
   runGithubAppEventPreview,
   runGithubAppInstallationApply,
   runGithubAppInstallationGovernanceApply,
@@ -189,6 +190,7 @@ function printHelp() {
 const COMMANDS_ALLOWED_WITHOUT_PROJECT = new Set([
   "doctor",
   "bootstrap",
+  "init",
   "getting-started",
   "init-env",
   "init-project",
@@ -228,6 +230,7 @@ function buildCommandHandlers(envFiles) {
     runValidateCohort,
     runDiscoveryEvaluate,
     runGettingStarted,
+    runInit,
     runDoctor: (rootDir, config, options) => runDoctor(rootDir, config, options, envFiles),
     runGithubAppEventPreview,
     runGithubAppInstallationApply,
