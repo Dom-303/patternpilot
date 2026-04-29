@@ -22,4 +22,11 @@ describe("resolveMode", () => {
       /erfordert ein interaktives Terminal/
     );
   });
+
+  test("--replay forces wizard mode even without TTY (test/CI usage)", () => {
+    assert.equal(
+      resolveMode({ flags: { replay: "/tmp/scenario.json" }, isInteractive: false }),
+      "wizard"
+    );
+  });
 });
