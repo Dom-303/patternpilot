@@ -179,6 +179,8 @@ Wichtig:
 
 - `npm run intake -- --project my-project <github-url>`
   Legt einen einzelnen Fund sauber an.
+- `npm run intake -- --project my-project --with-llm-handoff <github-url>`
+  Wie oben + erzeugt zusaetzlich eine `summary-prompt.md` neben dem Dossier, die du in dein eigenes LLM (Claude/ChatGPT/Gemini) kopieren kannst.
 - `npm run sync:watchlist -- --project my-project`
   Arbeitet die Watchlist fuer ein Projekt ab.
 - `npm run review:watchlist -- --project my-project --dry-run`
@@ -187,6 +189,14 @@ Wichtig:
   Sucht optional automatisch nach moeglich passenden GitHub-Repos.
 - `npm run patternpilot -- discover-evaluate --project my-project`
   Bewertet gespeicherte Discovery-Runs und zeigt gute oder noisige Query-Familien.
+- `npm run patternpilot -- decide-prompt --project my-project <github-url>`
+  Erzeugt einen LLM-Handoff-Prompt fuer adopt/adapt/observe/ignore-Entscheidung mit vollem Projekt-Kontext + Queue/Landkarte-Daten.
+
+### Stale-Data, Alerts & Recovery (Operations)
+
+- Stale-Data-Banner erscheint automatisch bei `intake` und `on-demand`, wenn die Queue veraltete Entscheidungs-Daten enthaelt — mit konkretem Refresh-Befehl.
+- Webhook-Alert-Channel fuer Slack/Discord/Teams: in `patternpilot.config.json` unter `automationAlertTargets` mit `type: "webhook"` + `url: "..."`.
+- Auto-Resume fuer geblockte Automation-Jobs: Default 6h, per Job konfigurierbar via `autoResumeMinutes` (oder `0` zum Abschalten).
 
 ### Problem-Mode: von der Frage zur Landscape
 
