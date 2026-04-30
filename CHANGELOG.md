@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 The format is intentionally simple and release-oriented.
 
+## [0.5.0] - 2026-04-30
+
+### Added
+
+- **`intake --with-llm-handoff`** — writes `<repo-slug>.summary-prompt.md` alongside the intake dossier. User copies the prompt into their own LLM (Claude/ChatGPT/Gemini), gets back a structured 4-field repo summary (what it does / strengths / weaknesses / suggested category & pattern_family), and pastes it into the dossier as `## LLM-Augmented Summary`.
+- **`patternpilot decide-prompt <repo-url>`** — new command that generates a structured decision prompt at `projects/<project>/decisions/<repo-slug>.decide-prompt.md` with project context + queue entry + landkarte entry, asking for adopt/adapt/observe/ignore + justification + next step + risks.
+
+### Notes
+
+- Both follow the existing `sharpen-prompt.md` handoff pattern from `problem-create` — zero API integration, zero key management, zero token cost. Uses your own LLM subscription.
+- Output is always marked "LLM-augmented, please verify before promoting" — heuristik-first principle preserved.
+- OQ-005 (LLM augmentation boundary) remains partially open: handoff side addressed, API-based augmentation still stub.
+
 ## [0.4.0] - 2026-04-29
 
 ### Added
