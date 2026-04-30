@@ -182,6 +182,7 @@ import { runProblemResolve } from "./commands/problem-resolve.mjs";
 import { runProblemArchive } from "./commands/problem-archive.mjs";
 import { runProblemExplore } from "./commands/problem-explore.mjs";
 import { runProblemBrief } from "./commands/problem-brief.mjs";
+import { runDecidePrompt } from "./commands/decide-prompt.mjs";
 
 function printHelp() {
   console.log(renderPatternpilotHelp());
@@ -378,7 +379,8 @@ function buildCommandHandlers(envFiles) {
     runProblemResolve,
     runProblemArchive,
     runProblemExplore,
-    runProblemBrief
+    runProblemBrief,
+    runDecidePrompt
   };
 }
 
