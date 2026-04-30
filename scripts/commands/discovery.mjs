@@ -283,6 +283,22 @@ export async function runIntake(rootDir, config, options) {
       dryRun: options.dryRun,
       force: options.force
     });
+
+    if (options.withLlmHandoff && !options.dryRun) {
+      const { buildIntakeSummaryPrompt, intakeSummaryPromptPath } = await import("../../lib/intake/llm-handoff.mjs");
+      const fs = await import("node:fs/promises");
+      const promptPath = intakeSummaryPromptPath(intakeDocPath);
+      const promptContent = buildIntakeSummaryPrompt({
+        dossierContent: intakeDoc,
+        repoSlug: repo.slug,
+        repoUrl: repo.normalizedRepoUrl,
+        projectKey,
+        projectLabel: project.label ?? projectKey
+      });
+      await fs.writeFile(promptPath, promptContent, "utf8");
+      console.log(`  - llm_handoff_prompt: ${path.relative(rootDir, promptPath)}`);
+    }
+
     const wasKnown = knownProjectUrls.has(repo.normalizedRepoUrl);
     const action =
       options.dryRun
